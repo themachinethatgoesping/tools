@@ -8,6 +8,7 @@
 #build dirs
 */build/*
 */builddir/*
+*.vscode/*
 
 # Prerequisites
 *.d

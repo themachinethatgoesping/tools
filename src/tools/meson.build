@@ -3,19 +3,20 @@
 # SPDX-License-Identifier: CC0-1.0
 
 # -- library setup --
-libname = 'themachinethatgoesping_tools'
+libname    = 'themachinethatgoesping_tools'
+headerdir = 'themachinethatgoesping/tools'
 
 # -- source files --
 sources = [
-  "datetime.cpp"
+  'datetime.cpp'
 ]
 
 headers = [
-  "datetime.h"
+  'datetime.h'
 ]
 
 # -- targets --
-tools = library(libname,sources,
+themachinethatgoesping_tools = library(libname,sources,
                       dependencies : [boost, eigen3, omp],
                       override_options: [
                         'b_lundef=false'
@@ -28,7 +29,7 @@ tools = library(libname,sources,
 
 # install headers
 if headers != ['']
-    install_headers(headers, subdir : libname+'/'+dir)
+    install_headers(headers, subdir : headerdir+'/')
 endif
 
 # create pkgconfig file
