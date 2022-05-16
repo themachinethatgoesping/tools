@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+#
+# source: https://github.com/readthedocs/tutorial-template/blob/main/docs/Makefile
+#
+
 # Minimal makefile for Sphinx documentation
 #
 
