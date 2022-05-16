@@ -5,7 +5,7 @@
 # --- Project ---
 # Define project meta data
 project(
-  'tools',
+  'themachinethatgoesping_tools',
   'cpp',
 version : '0.0.1',
 default_options : ['warning_level=3', 'buildtype=release', 'cpp_std=c++20']

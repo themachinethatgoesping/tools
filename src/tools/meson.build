@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 # -- library setup --
-libname = 'tools'
+libname = 'themachinethatgoesping_tools'
 
 # -- source files --
 sources = [
@@ -33,7 +33,7 @@ endif
 
 # create pkgconfig file
 pkg = import('pkgconfig')
-pkg.generate(dsmtoolslib,
+pkg.generate(themachinethatgoesping_tools,
              #requires : [eigen3],#,'aglib','boost'],
              description : 'Shared functions (C++) and small tool functionality (python) for themachinethatgoesping projects',
              url : 'https://github.com/themachinethatgoesping/tools')
