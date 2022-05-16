@@ -5,6 +5,10 @@
 # other
 *.kate-swp
 
+#build dirs
+*/build/*
+*/builddir/*
+
 # Prerequisites
 *.d
 
