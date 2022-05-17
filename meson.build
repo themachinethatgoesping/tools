@@ -13,7 +13,6 @@ default_options : ['warning_level=3', 'buildtype=release', 'cpp_std=c++20']
 
 projectnamespace = 'themachinethatgoesping'
 
-
 # --- dependencies ---
 # system
 omp    = dependency('openmp')
