@@ -28,6 +28,10 @@ if not eigen3.found()
     eigen3 = eigen3.get_variable('eigen_dep')
 endif
 
+# date (to be replaced with c++20 features)
+hinnant_date = subproject('hinnant-date')
+hinnant_date = hinnant_date.get_variable('date_dep')
+
 
 # add src
 subdir('src')

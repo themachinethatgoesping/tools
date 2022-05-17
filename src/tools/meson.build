@@ -17,7 +17,12 @@ headers = [
 
 # -- targets --
 themachinethatgoesping_tools = library(libname,sources,
-                      dependencies : [boost, eigen3, omp],
+                      #include_directories : [hinnant_date]
+                      dependencies : [
+                        boost, 
+                        eigen3, 
+                        omp,
+                        hinnant_date],
                       override_options: [
                         'b_lundef=false'
                     ],
