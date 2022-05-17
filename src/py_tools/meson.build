@@ -2,15 +2,16 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
+# -- module name
 module_name = 'tools'
         
-
+# -- sources
 sources = [
     'module.cpp',
     'm_datetime.cpp'
 ]
 
-
+# define python module
 py_tools = pymod.extension_module(
     module_name,
     sources: sources,
@@ -24,7 +25,8 @@ py_tools = pymod.extension_module(
         #'cpp_rtti=true',
     ],
     cpp_args : '-DPYTHON_LIB='+module_name,
-    install : true
+    install : true,
+    install_dir : pythoninstallpath
 )
 
 

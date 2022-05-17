@@ -24,8 +24,15 @@ if get_option('build_pythonmodule').enabled()
             pybind11 = pybind11.get_variable('pybind11_dep')
         endif
 
-    #put module folders here
-    subdir('py_tools')
+
+        # -- put python module stuff here --
+
+        # set path where to install sources (pythonpath/site-packages/projectnamespace)
+        pythoninstallpath = pymod.get_install_dir() + projectnamespace + '/'
+        message('python module install directory:', pythoninstallpath)
+
+        #put module folders here
+        subdir('py_tools')
 
     endif
 endif

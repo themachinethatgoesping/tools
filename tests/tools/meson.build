@@ -12,7 +12,7 @@ sources = [
 ]
 
 foreach source : sources
-    testname = parentprojectname + '-' + testcomponent + '-' + source.split('.')[0] + '-tests'
+    testname = projectnamespace + '._' + testcomponent + '.' + source.split('.')[0] + '_.test'
 
     testexe = executable(testname,
             sources: [source, 'test_main.cpp'],
@@ -20,6 +20,7 @@ foreach source : sources
             link_language : 'cpp',
             override_options: [
             ],
+            #install : true
             )
 
     test(testname,testexe)

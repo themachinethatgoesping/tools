@@ -11,7 +11,7 @@ version : '0.0.1',
 default_options : ['warning_level=3', 'buildtype=release', 'cpp_std=c++20']
 )
 
-parentprojectname = 'themachinethatgoesping'
+projectnamespace = 'themachinethatgoesping'
 
 
 # --- dependencies ---

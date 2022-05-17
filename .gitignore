@@ -4,6 +4,8 @@
 
 # other
 *.kate-swp
+*.kdev4
+*.user
 
 #build dirs
 */build/*

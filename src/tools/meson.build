@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 # -- library setup --
-libname   = parentprojectname + '_tools'
-headerdir = parentprojectname + '/tools'
+libname   = projectnamespace + '_tools'
+headerdir = projectnamespace + '/tools'
 
 # -- source files --
 sources = [
