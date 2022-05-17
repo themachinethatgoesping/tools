@@ -25,7 +25,7 @@ namespace datetime {
 //------------------------------------- time conversions ------------------------------------------
 /* Converting between std::chrono time points and UnixTime stampes (ref 1970)
  */
-std::chrono::system_clock::time_point UnixTime_to_TimePoint(double UnixTime);
+std::chrono::system_clock::time_point UnixTime_To_TimePoint(double UnixTime);
 double TimePoint_to_UnixTime(std::chrono::system_clock::time_point TimePoint);
 
 
