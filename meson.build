@@ -37,5 +37,5 @@ hinnant_date = hinnant_date.get_variable('date_dep')
 subdir('src')
  
 # add tests
-#subdir('tests')
+subdir('tests')
  
