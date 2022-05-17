@@ -4,23 +4,26 @@
 
 #---------- general test case header --------------
 
-test_name = 'themachinethatgoesping-tools-tests'
+testcomponent = 'tools'
 
 sources = [
     'tutorial.test.cpp',
-    'datetime.test.cpp',
-    'test_main.cpp'
+    'datetime.test.cpp'
 ]
 
-themachinethatgoesping_tools_tests = executable(test_name,
-        sources: sources,
-        dependencies : [catch2, tools_dep],
-        link_language : 'cpp',
-        override_options: [
-        ],
-        )
+foreach source : sources
+    testname = parentprojectname + '-' + testcomponent + '-' + source.split('.')[0] + '-tests'
 
-test(test_name,themachinethatgoesping_tools_tests)
+    testexe = executable(testname,
+            sources: [source, 'test_main.cpp'],
+            dependencies : [catch2, tools_lib_dep],
+            link_language : 'cpp',
+            override_options: [
+            ],
+            )
+
+    test(testname,testexe)
+endforeach
 
 
 

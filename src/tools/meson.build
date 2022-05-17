@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 # -- library setup --
-libname    = 'themachinethatgoesping_tools'
-headerdir = 'themachinethatgoesping/tools'
+libname   = parentprojectname + '_tools'
+headerdir = parentprojectname + '/tools'
 
 # -- source files --
 sources = [
@@ -16,7 +16,7 @@ headers = [
 ]
 
 # -- targets --
-themachinethatgoesping_tools = library(libname,sources,
+tools_lib = library(libname,sources,
                       #include_directories : [hinnant_date]
                       dependencies : [
                         boost, 
@@ -30,15 +30,15 @@ themachinethatgoesping_tools = library(libname,sources,
                       
 
 # -- internal dependency --
-tools_dep = declare_dependency(
+tools_lib_dep = declare_dependency(
   dependencies : [
     boost,
     eigen3,
     omp,
     hinnant_date
   ],
-  link_with : [themachinethatgoesping_tools],
-  include_directories : ['../']
+  link_with : [tools_lib],
+  #include_directories : ['../']
   )
 
 
@@ -51,7 +51,7 @@ endif
 
 # create pkgconfig file
 pkg = import('pkgconfig')
-pkg.generate(themachinethatgoesping_tools,
+pkg.generate(tools_lib,
              #requires : [eigen3],#,'aglib','boost'],
              description : 'Shared functions (C++) and small tool functionality (python) for themachinethatgoesping projects',
              url : 'https://github.com/themachinethatgoesping/tools')
