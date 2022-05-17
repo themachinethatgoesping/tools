@@ -4,4 +4,4 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #import the module functions into the current namespace
-from .@MODULE_NAME@ import *
+from @PYTHON_PACKAGE_NAME@ import tools

@@ -31,6 +31,19 @@ if get_option('build_pythonmodule').enabled()
         pythoninstallpath = pymod.get_install_dir() + projectnamespace + '/'
         message('python module install directory:', pythoninstallpath)
 
+        # __init__.py (in case no other project installs this)
+
+        conf = configuration_data()
+        conf.set('PYTHON_PACKAGE_NAME', projectnamespace)
+
+        init_py = configure_file(
+            configuration: conf,
+            input: '__init__.py.in',
+            output: '__init__.py',
+            install: true,
+            install_dir: pythoninstallpath)
+        
+
         #put module folders here
         subdir('py_tools')
 
