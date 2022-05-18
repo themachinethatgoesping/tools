@@ -25,8 +25,8 @@ namespace timeconv {
 //------------------------------------- time conversions ------------------------------------------
 /* Converting between std::chrono time points and UnixTime stampes (ref 1970)
  */
-std::chrono::system_clock::time_point UnixTime_to_TimePoint(double UnixTime);
-double TimePoint_to_UnixTime(std::chrono::system_clock::time_point TimePoint);
+std::chrono::system_clock::time_point unixtime_to_timepoint(double UnixTime);
+double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
 
 
 //------------------------------------- time conversions ------------------------------------------
@@ -45,11 +45,11 @@ double TimePoint_to_UnixTime(std::chrono::system_clock::time_point TimePoint);
  *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
  */
 // date_string format: %d-%m-%Y_%H:%M:%S [where S is a double with microsecond precision)
-double DateString_to_UnixTime(const std::string &DateString,
+double datestring_to_unixtime(const std::string &DateString,
                               const std::string &format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 
 // format: "%d-%m-%Y_%H:%M:%S" where seconds %S have microsecond precision
-std::string UnixTime_to_DateString(double UnixTime,
+std::string unixtime_to_datestring(double UnixTime,
                                    unsigned int fractionalSecondsDigits = 0,
                                    const std::string &format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 

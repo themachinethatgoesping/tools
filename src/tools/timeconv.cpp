@@ -22,24 +22,24 @@ namespace timeconv {
 
 
 /**
- * @brief UnixTime_to_TimePoint
+ * @brief unixtime_to_timepoint
  *        IMPORTANT: return value will only have microseconds precision!
  * @param UnixTime: Unix time stamp (seconds since 01.01.1970) as double
  * @return chrono::system_clock::time_point
  */
-chrono::system_clock::time_point UnixTime_to_TimePoint(double UnixTime)
+chrono::system_clock::time_point unixtime_to_timepoint(double UnixTime)
 {
     chrono::duration<double> time_since_epoch(UnixTime);
     return (chrono::system_clock::time_point(chrono::duration_cast<chrono::microseconds>(time_since_epoch)));
 }
 
 /**
- * @brief conv_timePoint_to_timeStamp
+ * @brief timepoint_to_unixtime
  *        IMPORTANT: Conversion does only have microseconds precision!
  * @param TimePoint: chrono::system_clock::time_point
  * @return Unix time stamp (seconds since 01.01.1970) as double
  */
-double TimePoint_to_UnixTime(chrono::system_clock::time_point TimePoint)
+double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
 {
     chrono::microseconds us = chrono::duration_cast<chrono::microseconds>(TimePoint.time_since_epoch());
 
@@ -48,7 +48,7 @@ double TimePoint_to_UnixTime(chrono::system_clock::time_point TimePoint)
 }
 
 /**
- * @brief DateString_to_UnixTime
+ * @brief datestring_to_unixtime
  * Converting between date strings and UnixTime stampes (ref 1970)
  * date_string format:
  *      z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!
@@ -67,19 +67,19 @@ double TimePoint_to_UnixTime(chrono::system_clock::time_point TimePoint)
  * @param  format: Format string to convert Date string.
  * @return UnixTime as double (seconds since 01.01.1970)
  */
-double DateString_to_UnixTime(const string& DateString,
+double datestring_to_unixtime(const string& DateString,
                               const string& format)
 {
     date::sys_time<chrono::microseconds> timePoint;
 
     stringstream(DateString) >> date::parse(format,timePoint);
 
-    return TimePoint_to_UnixTime(timePoint);
+    return timepoint_to_unixtime(timePoint);
 
 }
 
 /**
- * @brief UnixTime_to_DateString
+ * @brief unixtime_to_datestring
  * Converting between date strings and UnixTime stampes (ref 1970)
  * date_string format:
  *      z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!
@@ -101,7 +101,7 @@ double DateString_to_UnixTime(const string& DateString,
  * @param format: Format string to convert Date string.
  * @return DateString that fits to the specified format
  */
-string UnixTime_to_DateString(double UnixTime,
+string unixtime_to_datestring(double UnixTime,
                               unsigned int fractionalSecondsDigits,
                               const string& format)
 {
@@ -114,7 +114,7 @@ string UnixTime_to_DateString(double UnixTime,
     UnixTime = std::round(UnixTime * digits);
     UnixTime /= digits;
 
-    auto time = UnixTime_to_TimePoint(UnixTime);
+    auto time = unixtime_to_timepoint(UnixTime);
 
     auto datestring = date::format(format,time);
 

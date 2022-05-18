@@ -7,11 +7,10 @@
 
 #include <chrono>
 
-#include "../../src/tools/timeconv.h"
 
 //using namespace testing;
 using namespace std;
-using namespace themachinethatgoesping;
+//using namespace themachinethatgoesping;
 
 namespace tutorial_tests
 {
