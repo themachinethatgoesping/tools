@@ -33,16 +33,18 @@ jobs:
         with:
           python-version: '3.x'
           
-      - name: Checkout and install meson
-      - run: pip install meson ninja
+      - name: install meson
+        run: pip install meson ninja
       
       - name: configure meson
-      - run: meson setup builddir/
+        run: meson setup builddir/
         env:
           CC: gcc
           
-      - name: test
-      - run: meson test -C builddir/ -v
+      - name: build and test
+        run: meson test -C builddir/ -v
+        
+      
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
