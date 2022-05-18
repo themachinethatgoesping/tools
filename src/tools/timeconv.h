@@ -20,7 +20,7 @@ namespace themachinethatgoesping {
 
 namespace tools {
 
-namespace datetime {
+namespace timeconv {
 
 //------------------------------------- time conversions ------------------------------------------
 /* Converting between std::chrono time points and UnixTime stampes (ref 1970)
@@ -53,7 +53,7 @@ std::string UnixTime_to_DateString(double UnixTime,
                                    unsigned int fractionalSecondsDigits = 0,
                                    const std::string &format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 
-} //namespace datetime
+} //namespace timeconv
 
 } //namespace tools
 

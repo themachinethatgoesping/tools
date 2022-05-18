@@ -8,7 +8,7 @@ module_name = 'tools'
 # -- sources
 sources = [
     'module.cpp',
-    'm_datetime.cpp'
+    'm_timeconv.cpp'
 ]
 
 # define python module

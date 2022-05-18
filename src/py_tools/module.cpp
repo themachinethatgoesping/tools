@@ -6,7 +6,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/iostream.h>
 
-#include "m_datetime.h"
+#include "m_timeconv.h"
 
 
 
@@ -14,7 +14,7 @@ PYBIND11_MODULE(PYTHON_LIB,m)
 {
     pybind11::add_ostream_redirect(m, "ostream_redirect");
 
-    init_m_datetime(m);
+    init_m_timeconv(m);
     m.doc() ="Small python tool functions for themachinethatgoesping";
 
 

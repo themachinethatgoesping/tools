@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: MPL-2.0
 
 // -- module header
-#include "m_datetime.h"
+#include "m_timeconv.h"
 
 // -- c++ library headers
-#include "../tools/datetime.h"
+#include "../tools/timeconv.h"
 
 // -- include system headers
 #include <sstream>
@@ -18,15 +18,15 @@
 namespace py = pybind11;
 namespace pingtools = themachinethatgoesping::tools;
 
-void init_m_datetime(py::module &m)
+void init_m_timeconv(py::module &m)
 {
-    auto m_time = m.def_submodule("datetime", "Convinient functions for converting time strings.");
+    auto m_time = m.def_submodule("timeconv", "Convinient functions for converting time strings.");
 
     {
-        m_time.def("UnixTime_to_TimePoint", &pingtools::datetime::UnixTime_to_TimePoint,
+        m_time.def("UnixTime_to_TimePoint", &pingtools::timeconv::UnixTime_to_TimePoint,
                    // doc.str().c_str(),
                    py::arg("unixtime"));
-        m_time.def("TimePoint_to_UnixTime", &pingtools::datetime::TimePoint_to_UnixTime,
+        m_time.def("TimePoint_to_UnixTime", &pingtools::timeconv::TimePoint_to_UnixTime,
                    // doc.str().c_str(),
                    py::arg("TimePoint"));
         // std::chrono::system_clock::time_point UnixTime_to_TimePoint(double UnixTime);
@@ -47,7 +47,7 @@ void init_m_datetime(py::module &m)
             << "\n\t-%M: Minutes as int mm"
             << "\n\t-%S: Seconds as int SS"
             << std::endl;
-        m_time.def("DateString_to_UnixTime", &pingtools::datetime::DateString_to_UnixTime,
+        m_time.def("DateString_to_UnixTime", &pingtools::timeconv::DateString_to_UnixTime,
                    doc.str().c_str(),
                    py::arg("unixtime"),
                    py::arg("format") = "%z__%d-%m-%Y__%H:%M:%S");
@@ -70,7 +70,7 @@ void init_m_datetime(py::module &m)
             << "\n\t-%M: Minutes as int mm"
             << "\n\t-%S: Seconds as int SS"
             << std::endl;
-        m_time.def("UnixTime_to_DateString", &pingtools::datetime::UnixTime_to_DateString,
+        m_time.def("UnixTime_to_DateString", &pingtools::timeconv::UnixTime_to_DateString,
                    doc.str().c_str(),
                    py::arg("unixtime"),
                    py::arg("fractionalSecondsDigits") = 0,

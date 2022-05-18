@@ -8,7 +8,7 @@ testcomponent = 'tools'
 
 sources = [
     'tutorial.test.cpp',
-    'datetime.test.cpp'
+    'timeconv.test.cpp'
 ]
 
 foreach source : sources

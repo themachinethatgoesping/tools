@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include "datetime.h"
+#include "timeconv.h"
 #include <cmath>
 #include <sstream>
 #include <iomanip>
@@ -18,7 +18,7 @@ namespace themachinethatgoesping {
 
 namespace tools {
 
-namespace datetime {
+namespace timeconv {
 
 
 /**
@@ -139,7 +139,7 @@ string UnixTime_to_DateString(double UnixTime,
 
 
 
-} //namespace datetime
+} //namespace timeconv
 
 } //namespace tools
 

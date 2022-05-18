@@ -8,11 +8,11 @@ headerdir = projectnamespace + '/tools'
 
 # -- source files --
 sources = [
-  'datetime.cpp'
+  'timeconv.cpp'
 ]
 
 headers = [
-  'datetime.h'
+  'timeconv.h'
 ]
 
 # -- targets --
