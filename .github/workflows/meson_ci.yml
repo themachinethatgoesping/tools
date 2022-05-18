@@ -24,16 +24,16 @@ env:
   
 jobs:
 
-  linux:
-    build:
+  build-linux:
       runs-on: ubuntu-latest
       
       steps:
-      - name: Checkout and install meson
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+          
+      - name: Checkout and install meson
       - run: pip install meson ninja
       
       - name: configure meson
