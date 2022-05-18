@@ -2,21 +2,19 @@ name: ci_meson
 
 on:
   push:
-    push:
-      branches: [ main ]
-    paths:
-      - "**meson.build"
-      - "**.cpp"
-      - "**.c"
-      - "**.h"
+    branches: [ main ]
+    #paths:
+    #  - "**meson.build"
+    #  - "**.cpp"
+    #  - "**.c"
+    #  - "**.h"
   pull_request:
-    pull_request:
-      branches: [ main ]
-    paths:
-      - "**meson.build"
-      - "**.cpp"
-      - "**.c"
-      - "**.h"
+    branches: [ main ]
+    #paths:
+    #  - "**meson.build"
+    #  - "**.cpp"
+    #  - "**.c"
+    #  - "**.h"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
