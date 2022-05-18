@@ -37,6 +37,9 @@ hinnant_date = hinnant_date.get_variable('date_dep')
 # add src
 subdir('src')
  
+ # add python files
+subdir('py_ext')
+
 # add tests
 subdir('tests')
  
