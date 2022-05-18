@@ -33,6 +33,9 @@ jobs:
           
       - name: install meson
         run: pip install meson ninja
+        
+      - name: install dependecies
+        run: apt install libboost-dev
       
       - name: configure meson
         run: meson setup builddir/
