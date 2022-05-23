@@ -46,12 +46,12 @@ jobs:
       run: pip install meson ninja pytest
 
     - name: configure meson
-      run: meson setup builddir/
+      run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/;
       env:
         CC: gcc
 
     - name: compile project
-      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
@@ -89,12 +89,12 @@ jobs:
       run: pip install meson ninja pytest
 
     - name: configure meson
-      run: meson setup builddir/
+      run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/;
       env:
         CC: gcc
 
     - name: compile project
-      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
@@ -132,12 +132,12 @@ jobs:
       run: pip install meson ninja pytest
       
     - name: configure meson
-      run: meson setup builddir/
+      run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/;
       env:
         CC: gcc
 
     - name: compile project
-      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
