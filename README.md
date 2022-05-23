@@ -7,8 +7,8 @@ SPDX-License-Identifier: CC0-1.0
   <img src="https://github.com/themachinethatgoesping/tools/actions/workflows/meson_ci.yml/badge.svg" alt='CI status'/>
 </a>
 
-<a href="https://themachinethatgoesping.readthedocs.io">
-  <img src="https://readthedocs.org/projects/themachinethatgoesping/badge/?version=latest" alt='readthedocs'/>
+<a href="https://themachinethatgoesping.readthedocs.io/projects/tools/">
+  <img src="https://readthedocs.org/projects/themachinethatgoesping/projects/tools/badge/?version=latest" alt='readthedocs'/>
 </a>
 
 # tools
