@@ -34,7 +34,7 @@ jobs:
         python-version: '3.x'
         
     - name: update apt and install prequisits
-      run: apt update && apt-get install -y sudo python3-pip
+      run: apt update && apt-get install -y sudo python3-pip build-essential
 
     - name: install meson
       run: pip install meson ninja
