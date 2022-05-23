@@ -51,7 +51,7 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson configure -Dpython.install_env=auto; meson compile -C builddir/
+      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
@@ -94,7 +94,7 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson configure -Dpython.install_env=auto; meson compile -C builddir/
+      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
@@ -137,7 +137,7 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson configure -Dpython.install_env=auto; meson compile -C builddir/
+      run: meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/; meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
