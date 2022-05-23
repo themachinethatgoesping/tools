@@ -24,6 +24,7 @@ jobs:
 
   build-on-linux:
     runs-on: ubuntu-latest
+    container: ubuntu:latest #pull directly from dockerhub
     
 
     steps:
