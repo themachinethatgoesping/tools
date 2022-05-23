@@ -8,7 +8,7 @@ SPDX-License-Identifier: CC0-1.0
 </a>
 
 <a href="https://themachinethatgoesping.readthedocs.io/projects/tools/">
-  <img src="https://readthedocs.org/projects/themachinethatgoesping/projects/tools/badge/?version=latest" alt='readthedocs'/>
+  <img src="https://readthedocs.org/projects/themachinethatgoesping/tools/badge/?version=latest" alt='readthedocs'/>
 </a>
 
 # tools
