@@ -40,7 +40,7 @@ jobs:
       run: pip install meson ninja
 
     - name: install dependecies
-      run: sudo apt-get install -y libboost-dev libcurl4-openssl-dev
+      run: sudo apt-get install -y libboost-all-dev libcurl4-openssl-dev
 
     - name: configure meson
       run: meson setup builddir/
