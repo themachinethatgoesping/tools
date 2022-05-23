@@ -22,16 +22,16 @@ on:
   
 jobs:
 
-  build-on-linux:
+  build-on-ubuntu-latest:
     runs-on: ubuntu-latest
     container: ubuntu:latest #pull directly from dockerhub
     
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
+    #- uses: actions/setup-python@v1
+    #  with:
+    #    python-version: '3.x'
         
     - name: update apt and install sudo
       run: apt update && apt-get install -y sudo 
@@ -56,6 +56,43 @@ jobs:
       with:
         name: Linux_Meson_Testlog
         path: builddir/meson-logs/testlog.txt
+        
+
+  build-on-ubuntu-20_04:
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04 #pull directly from dockerhub
+    
+
+    steps:
+    - uses: actions/checkout@v1
+    #- uses: actions/setup-python@v1
+    #  with:
+    #    python-version: '3.x'
+        
+    - name: update apt and install sudo
+      run: apt update && apt-get install -y sudo 
+
+    - name: install dependecies
+      run: sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
+
+    - name: install meson
+      run: pip install meson ninja
+      
+    - name: configure meson
+      run: meson setup builddir/
+      env:
+        CC: gcc
+
+    - name: build and test
+      run: meson test -C builddir/ -v
+        
+      
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Linux_Meson_Testlog
+        path: builddir/meson-logs/testlog.txt
+    
 
 #   build-on-windows:
 #     runs-on: windows-latest
