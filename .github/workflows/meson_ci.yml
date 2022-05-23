@@ -34,7 +34,7 @@ jobs:
         python-version: '3.x'
 
     - name: install meson
-      run: pip install meson ninja
+      run: sudo apt-get update; sudo apt-get install -y python3-pip; install meson ninja
 
     - name: install dependecies
       run: sudo apt-get update; sudo apt-get install -y libboost-dev libcurl4-openssl-dev
