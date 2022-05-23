@@ -50,7 +50,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
-        name: Linux_Meson_Testlog
+        name: Ubuntu_22.04_Testlog
         path: builddir/meson-logs/testlog.txt
         
 
@@ -82,7 +82,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
-        name: Linux_Meson_Testlog
+        name: Ubuntu_20.04_Testlog
         path: builddir/meson-logs/testlog.txt  
 
 
@@ -114,7 +114,7 @@ jobs:
 #     - uses: actions/upload-artifact@v1
 #       if: failure()
 #       with:
-#         name: Linux_Meson_Testlog
+#         name: archlinux_Testlog
 #         path: builddir/meson-logs/testlog.txt
     
 
