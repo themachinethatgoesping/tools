@@ -30,7 +30,7 @@ tools_lib = library(libname,sources,
                       
 
 # -- internal dependency --
-tools_lib_dep = declare_dependency(
+tools_dep = declare_dependency(
   dependencies : [
     boost,
     eigen3,

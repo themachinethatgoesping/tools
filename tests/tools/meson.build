@@ -16,7 +16,7 @@ foreach source : sources
 
     testexe = executable(testname,
             sources: [source, 'test_main.cpp'],
-            dependencies : [catch2, tools_lib_dep],
+            dependencies : [catch2, tools_dep],
             link_language : 'cpp',
             override_options: [
             ],
