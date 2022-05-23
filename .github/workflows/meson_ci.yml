@@ -22,9 +22,9 @@ on:
   
 jobs:
 
-  build-on-ubuntu-latest:
+  build-on-ubuntu-22_04:
     runs-on: ubuntu-latest
-    container: ubuntu:latest #pull directly from dockerhub
+    container: ubuntu:22:04 #pull directly from dockerhub
     
 
     steps:
