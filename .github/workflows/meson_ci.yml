@@ -33,14 +33,14 @@ jobs:
       with:
         python-version: '3.x'
         
-    - name: install prequisits
+    - name: update apt and install prequisits
       run: apt update && apt-get install -y sudo python3-pip
 
     - name: install meson
       run: pip install meson ninja
 
     - name: install dependecies
-      run: sudo apt-get update; sudo apt-get install -y libboost-dev libcurl4-openssl-dev
+      run: sudo apt-get install -y libboost-dev libcurl4-openssl-dev
 
     - name: configure meson
       run: meson setup builddir/
