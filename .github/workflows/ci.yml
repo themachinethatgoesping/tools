@@ -51,13 +51,13 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson compile -C builddir/ -v
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
 
     - name: install project
-      run: meson install -C builddir/ -v
+      run: meson install -C builddir/
 
     - name: test (pytest)
       run: pytest -v
@@ -94,13 +94,13 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson compile -C builddir/ -v
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
 
     - name: install project
-      run: meson install -C builddir/ -v
+      run: meson install -C builddir/
 
     - name: test (pytest)
       run: pytest -v
@@ -137,13 +137,13 @@ jobs:
         CC: gcc
 
     - name: compile project
-      run: meson compile -C builddir/ -v
+      run: meson compile -C builddir/
 
     - name: test (cpp)
       run: meson test -C builddir/ -v
 
     - name: install project
-      run: meson install -C builddir/ -v
+      run: meson install -C builddir/
 
     - name: test (pytest)
       run: pytest -v
