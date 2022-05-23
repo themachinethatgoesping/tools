@@ -70,10 +70,10 @@ jobs:
     #    python-version: '3.x'
         
     - name: update apt and install sudo
-      run: apt update && apt-get install -yqq sudo 
+      run: export DEBIAN_FRONTEND=noninteractive; apt update && apt-get install -y sudo 
 
     - name: install dependecies
-      run: sudo apt-get install -yqq build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
+      run: sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
 
     - name: install meson
       run: pip install meson ninja
