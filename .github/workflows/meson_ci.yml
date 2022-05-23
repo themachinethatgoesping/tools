@@ -28,15 +28,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    #- uses: actions/setup-python@v1
-    #  with:
-    #    python-version: '3.x'
         
     - name: update apt and install sudo
-      run: pacman -Syu --noconfirm; pacman -Syy --noconfirm sudo 
+      run: export DEBIAN_FRONTEND=noninteractive; apt update && apt-get install -y sudo 
 
     - name: install dependecies
-      run: pacman -Syy --noconfirm build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
+      run: export DEBIAN_FRONTEND=noninteractive; sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
 
     - name: install meson
       run: pip install meson ninja
@@ -63,15 +60,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    #- uses: actions/setup-python@v1
-    #  with:
-    #    python-version: '3.x'
         
     - name: update apt and install sudo
       run: export DEBIAN_FRONTEND=noninteractive; apt update && apt-get install -y sudo 
 
     - name: install dependecies
-      run: sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
+      run: export DEBIAN_FRONTEND=noninteractive; sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
 
     - name: install meson
       run: pip install meson ninja
@@ -98,15 +92,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    #- uses: actions/setup-python@v1
-    #  with:
-    #    python-version: '3.x'
         
     - name: update and install sudo
-      run: export DEBIAN_FRONTEND=noninteractive; apt update && apt-get install -y sudo 
+      run: pacman -Syu --noconfirm; pacman -Syy --noconfirm sudo 
 
     - name: install dependecies
-      run: sudo apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
+      run: pacman -Syy --noconfirm build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev
 
     - name: install meson
       run: pip install meson ninja
