@@ -97,7 +97,7 @@ jobs:
       run: pacman -Syu --noconfirm; pacman -Syy --noconfirm sudo 
 
     - name: install dependecies
-      run: sudo pacman -Syy --noconfirm ccache pkg-config cmake python-pip boost curl 
+      run: sudo pacman -Syy --noconfirm base-devel ccache pkg-config cmake python-pip boost curl 
 
     - name: install meson
       run: pip install meson ninja
