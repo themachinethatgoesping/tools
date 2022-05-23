@@ -33,15 +33,19 @@ jobs:
       with:
         python-version: '3.x'
         
-    - name: update apt and install prequisits
-      run: apt update && apt-get install -y sudo python3-pip build-essential
+    - name: update apt and install sudo
+      run: apt update && apt-get install -y sudo 
+
+    - name: install dependecies
+      run: >
+        sudo apt-get install -y build-essential ccache 
+                                pkg-config cmake
+                                python3-pip 
+                                libboost-all-dev libcurl4-openssl-dev
 
     - name: install meson
       run: pip install meson ninja
-
-    - name: install dependecies
-      run: sudo apt-get install -y libboost-all-dev libcurl4-openssl-dev
-
+      
     - name: configure meson
       run: meson setup builddir/
       env:
