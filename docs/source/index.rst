@@ -2,10 +2,10 @@
 ..
 .. SPDX-License-Identifier: MPL-2.0
 
-Welcome to themachinethatgoesping's documentation (tools)!
+Welcome to :doc:`themachinethatgoesping <themachinethatgoesping:index>`'s documentation (tools)!
 ===================================
 
-**themachinethatgoesping** (tmtgp or ping) is about to become a set Python libraries for enabling advanced processing strategies for multibeam and singlebeam echosounder data. This will become a common/shared tools library.
+**themachinethatgoesping** (tmtgp or ping) [:doc:`link <themachinethatgoesping:index>`] is about to become a set Python libraries for enabling advanced processing strategies for multibeam and singlebeam echosounder data. This will become a common/shared tools library.
 
 We just started, and serious development will not happen before the end of may 2022.
 
@@ -23,5 +23,6 @@ Contents
 
 .. toctree::
 
+   themachinethatgoesping <https://themachinethatgoesping.readthedocs.io/en/latest/>
    usage
    api
