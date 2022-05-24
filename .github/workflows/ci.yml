@@ -189,31 +189,36 @@ jobs:
         path: builddir/meson-logs/testlog.txt
     
 
-  # build-on-windows:
-  #   runs-on: windows-latest
-  #   #container: python:latest #pull directly from dockerhub   
-  #   steps:
+  build-on-windows:
+    runs-on: windows-latest
+    #container: python:latest #pull directly from dockerhub   
+    steps:
 
-  #   - uses: actions/setup-python@v3
-  #     with:
-  #       python-version: '3.x'
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
 
-  #   - name: checkout main repository
-  #     uses: actions/checkout@v3
-  #     with:
-  #       submodules: recursive
+    - name: checkout main repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: vcpkg dependencies
+      run: git clone https://github.com/Microsoft/vcpkg.git
+      run: .\vcpkg\bootstrap-vcpkg.bat
+      run: vcpkg install boost
 
 
-  #   - run: pip install meson ninja
-  #   - run: meson setup builddir/
-  #     env:
-  #       CC: gcc
-  #   - run: meson test -C builddir/ -v
-  #   - uses: actions/upload-artifact@v1
-  #     if: failure()
-  #     with:
-  #       name: Windows_Meson_Testlog
-  #       path: builddir/meson-logs/testlog.txt
+    - run: pip install meson ninja
+    - run: meson setup builddir/
+      env:
+        CC: gcc
+    - run: meson test -C builddir/ -v
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Windows_Meson_Testlog
+        path: builddir/meson-logs/testlog.txt
 
 #   macos:
 #     runs-on: macos-latest
