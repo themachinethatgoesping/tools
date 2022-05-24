@@ -203,10 +203,10 @@ jobs:
       with:
         submodules: recursive
 
-    - name: vcpkg dependencies
+    - name: install vcpk
       run: git clone https://github.com/Microsoft/vcpkg.git
-      run: .\vcpkg\bootstrap-vcpkg.bat
-      run: vcpkg install boost
+    - run: .\vcpkg\bootstrap-vcpkg.bat
+    - run: vcpkg install boost
 
 
     - run: pip install meson ninja
