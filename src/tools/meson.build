@@ -19,10 +19,10 @@ headers = [
 tools_lib = library(libname,sources,
                       #include_directories : [hinnant_date]
                       dependencies : [
-                        boost, 
-                        eigen3, 
-                        omp,
-                        hinnant_date],
+                        boost_dep, 
+                        eigen3_dep, 
+                        omp_dep,
+                        hinnant_date_dep],
                       override_options: [
                         'b_lundef=false'
                     ],
@@ -32,10 +32,10 @@ tools_lib = library(libname,sources,
 # -- internal dependency --
 tools_dep = declare_dependency(
   dependencies : [
-    boost,
-    eigen3,
-    omp,
-    hinnant_date
+    boost_dep,
+    eigen3_dep,
+    omp_dep,
+    hinnant_date_dep
   ],
   link_with : [tools_lib],
   #include_directories : ['../']

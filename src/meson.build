@@ -15,13 +15,13 @@ pymod = import('python').find_installation(get_option('python_path'), required :
 if get_option('build_pythonmodule').enabled()
     
     if pymod.found()
-        python3 = pymod.dependency()
+        python3_dep = pymod.dependency()
         
-        pybind11 = dependency('pybind11', required : false)
+        pybind11_dep = dependency('pybind11', required : false)
 
-        if not pybind11.found()
-            pybind11 = subproject('pybind11')
-            pybind11 = pybind11.get_variable('pybind11_dep')
+        if not pybind11_dep.found()
+            pybind11_project = subproject('pybind11')
+            pybind11_dep     = pybind11_project.get_variable('pybind11_dep')
         endif
 
 
