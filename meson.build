@@ -30,7 +30,7 @@ if not eigen3_dep.found()
 endif
 
 # date (to be replaced with c++20 features)
-hinnant_date_project = subproject('hinnant-date', default_options : 'use_system_tzdb=true')
+hinnant_date_project = subproject('hinnant-date', default_options : 'use_manual_tzdb=true')
 #hinnant_date_dep = hinnant_date_project.get_variable('date_dep')
 hinnant_date_incl = hinnant_date_project.get_variable('i')
 
