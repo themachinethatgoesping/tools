@@ -12,7 +12,6 @@ project(
   version : '0.0.1.6-1',
   default_options : ['warning_level=3', 'buildtype=release', 'cpp_std=c++17']
 )
-)
 
 projectnamespace = 'themachinethatgoesping'
 
