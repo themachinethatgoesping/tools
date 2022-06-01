@@ -23,7 +23,7 @@ if get_option('build_pythonmodule').enabled()
             pth = pythoninstallpath + source.replace(fields[-1],'/')
         endif
 
-        install_data(source, install_dir : pth)
+        install_data(source, install_dir : pth, install_tag : 'python-module')
     endforeach
 
         

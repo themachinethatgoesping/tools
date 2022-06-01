@@ -26,7 +26,8 @@ tools_lib = library(libname,sources,
                       override_options: [
                         'b_lundef=false'
                     ],
-                      install : true)
+                      install : true, 
+                      install_tag : 'library')
                       
 
 # -- internal dependency --
