@@ -16,18 +16,32 @@ headers = [
 ]
 
 # -- targets --
-tools_lib = library(libname,sources,
-                      #include_directories : [hinnant_date]
-                      dependencies : [
-                        boost_dep, 
-                        eigen3_dep, 
-                        omp_dep,
-                        hinnant_date_dep],
-                      override_options: [
-                        'b_lundef=false'
-                    ],
-                      install : true, 
-                      install_tag : 'library')
+# for now force static linking on windows
+if build_machine.system() == 'windows'
+  tools_lib = static_library(libname,sources,
+                        dependencies : [
+                          boost_dep, 
+                          eigen3_dep, 
+                          omp_dep,
+                          hinnant_date_dep],
+                        override_options: [
+                          'b_lundef=false'
+                      ],
+                        install : true, 
+                        install_tag : 'library')
+else  
+  tools_lib = library(libname,sources,
+                        dependencies : [
+                          boost_dep, 
+                          eigen3_dep, 
+                          omp_dep,
+                          hinnant_date_dep],
+                        override_options: [
+                          'b_lundef=false'
+                      ],
+                        install : true, 
+                        install_tag : 'library')
+endif
                       
 
 # -- internal dependency --
