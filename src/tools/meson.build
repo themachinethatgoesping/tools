@@ -28,7 +28,8 @@ if build_machine.system() == 'windows'
                           'b_lundef=false'
                       ],
                         install : true, 
-                        install_tag : 'library')
+                        install_tag : 'library'
+                        )
 else  
   tools_lib = library(libname,sources,
                         dependencies : [
@@ -40,7 +41,8 @@ else
                           'b_lundef=false'
                       ],
                         install : true, 
-                        install_tag : 'library')
+                        install_tag : 'library'
+                        )
 endif
                       
 
@@ -61,7 +63,7 @@ tools_dep = declare_dependency(
 
 # install headers
 if headers != ['']
-    install_headers(headers, subdir : headerdir+'/')
+#    install_headers(headers, subdir : headerdir+'/')
 endif
 
 # create pkgconfig file

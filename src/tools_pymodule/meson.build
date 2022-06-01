@@ -27,7 +27,7 @@ py_tools = pymod.extension_module(
     cpp_args : '-DPYTHON_LIB='+module_name,
     install : true,
     install_dir : pythoninstallpath,
-    install_tag : 'python-module'
+    install_tag : 'python-runtime'
 )
 
 

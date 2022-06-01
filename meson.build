@@ -19,7 +19,7 @@ projectnamespace = 'themachinethatgoesping'
 # system
 omp_dep    = dependency('openmp')
 
-# boost
+# # boost
 boost_modules = dependency('boost', modules : ['filesystem'])
 boost_dep     = dependency('boost')
 
@@ -31,20 +31,19 @@ if not eigen3_dep.found()
     eigen3_dep = eigen3_project.get_variable('eigen_dep')
 endif
 
-# date (to be replaced with c++20 features)
+#date (to be replaced with c++20 features)
 hinnant_date_project = subproject('hinnant-date', default_options : 'use_manual_tzdb=true')
-#hinnant_date_dep = hinnant_date_project.get_variable('date_dep')
 hinnant_date_incl = hinnant_date_project.get_variable('i')
 
 hinnant_date_dep = declare_dependency(
-  include_directories : hinnant_date_incl
-  )
+ include_directories : hinnant_date_incl
+ )
 
 
 # add src
 subdir('src')
  
- # add python files
+# add python files
 subdir('py_ext')
 
 # add tests
