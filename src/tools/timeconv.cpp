@@ -127,7 +127,7 @@ string unixtime_to_datestring(double UnixTime,
         else
         {
             if(pos+fractionalSecondsDigits > datestring.size())
-                fractionalSecondsDigits = datestring.size()-pos;
+                fractionalSecondsDigits = static_cast<unsigned int>(datestring.size()-pos);
 
             datestring.replace(pos+fractionalSecondsDigits +1,datestring.size(),"");
         }
