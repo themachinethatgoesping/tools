@@ -17,7 +17,7 @@ headers = [
 
 # -- targets --
 # for now force static linking on windows
-if build_machine.system() == 'windows'
+if build_machine.system() != 'linux'
   tools_lib = static_library(libname,sources,
                         dependencies : [
                           boost_dep, 
