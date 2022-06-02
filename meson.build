@@ -27,7 +27,7 @@ else
 endif
 
 # # boost
-boost_modules = dependency('boost', modules : ['filesystem'])
+boost_modules = dependency('boost', modules : ['filesystem'], static : true)
 boost_dep     = dependency('boost')
 
 # eigen 3
