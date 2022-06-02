@@ -14,3 +14,5 @@ if get_option('build_tests').enabled()
     subdir('tools')
 endif
 
+
+subdir('pytests')

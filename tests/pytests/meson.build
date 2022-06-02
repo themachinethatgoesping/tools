@@ -4,9 +4,8 @@
 
 # -- python sources --
 sources = [
-    '__init__.py',
-    'tools_ext/__init__.py',
-    'tools_ext/timeconv_ext.py',
+    'tests/test_timeconv.py',
+    'tests/test_timeconv_ext.py'
 ]
 
 
