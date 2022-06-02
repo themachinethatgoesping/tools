@@ -17,10 +17,13 @@ projectnamespace = 'themachinethatgoesping'
 
 # --- dependencies ---
 # system
-#if meson.get_compiler('cpp').get_id() == 'clang'
-#  add_project_arguments('-Xpreprocess', language : 'cpp')
-#endif
-#omp_dep    = dependency('openmp')
+if meson.get_compiler('cpp').get_id() == 'clang'
+  add_project_arguments('-Xpreprocess -fopenmp', language : 'cpp')
+  omp_dep = declare_dependency(
+ )
+else
+  omp_dep = dependency('openmp')
+endif
 
 # # boost
 boost_modules = dependency('boost', modules : ['filesystem'])
