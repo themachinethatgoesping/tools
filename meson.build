@@ -25,7 +25,6 @@ if meson.get_compiler('cpp').get_id() == 'clang'
 else
   omp_dep = dependency('openmp')
 endif
-omp_dep = dependency('openmp')
 
 # # boost
 boost_modules = dependency('boost', modules : ['filesystem'], static : true)
