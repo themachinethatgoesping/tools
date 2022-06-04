@@ -21,24 +21,12 @@ namespace tools {
 namespace timeconv {
 
 
-/**
- * @brief unixtime_to_timepoint
- *        IMPORTANT: return value will only have microseconds precision!
- * @param UnixTime: Unix time stamp (seconds since 01.01.1970) as double
- * @return chrono::system_clock::time_point
- */
 chrono::system_clock::time_point unixtime_to_timepoint(double UnixTime)
 {
     chrono::duration<double> time_since_epoch(UnixTime);
     return (chrono::system_clock::time_point(chrono::duration_cast<chrono::microseconds>(time_since_epoch)));
 }
 
-/**
- * @brief timepoint_to_unixtime
- *        IMPORTANT: Conversion does only have microseconds precision!
- * @param TimePoint: chrono::system_clock::time_point
- * @return Unix time stamp (seconds since 01.01.1970) as double
- */
 double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
 {
     chrono::microseconds us = chrono::duration_cast<chrono::microseconds>(TimePoint.time_since_epoch());
@@ -47,26 +35,6 @@ double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
     return ((double)timeUSec)/1000000.0;
 }
 
-/**
- * @brief datestring_to_unixtime
- * Converting between date strings and UnixTime stampes (ref 1970)
- * date_string format:
- *      z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!
- *          if no z is given the string will be interpreted as utc 0
- *      d: day as   int dd
- *      m: month as int mm
- *      b: month as string Bbb
- *      Y: year is  int YYYY
- *      H: hours as int HH
- *      M: Minutes as int mm
- *      S: Seconds as int SS
- *
- *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
- *
- * @param  DateString: DateString to be converted. Must fit format string.
- * @param  format: Format string to convert Date string.
- * @return UnixTime as double (seconds since 01.01.1970)
- */
 double datestring_to_unixtime(const string& DateString,
                               const string& format)
 {
@@ -78,29 +46,6 @@ double datestring_to_unixtime(const string& DateString,
 
 }
 
-/**
- * @brief unixtime_to_datestring
- * Converting between date strings and UnixTime stampes (ref 1970)
- * date_string format:
- *      z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!
- *          if no z is given the string will be interpreted as utc 0
- *      d: day as   int dd
- *      m: month as int mm
- *      b: month as string Bbb
- *      Y: year is  int YYYY
- *      H: hours as int HH
- *      M: Minutes as int mm
- *      S: Seconds as int SS
- *
- * Default format is: "%z__%d-%m-%Y__%H:%M:%S."
- *
- * @param UnixTime: seconds since 01.01.1970 as double
- * @param fractionalSecondsDigits: How many digits to use for the split seconds.
- *          Minimum is 0 (second resolution)
- *          Maximum is 6 (microsecond resolutiuon)
- * @param format: Format string to convert Date string.
- * @return DateString that fits to the specified format
- */
 string unixtime_to_datestring(double UnixTime,
                               unsigned int fractionalSecondsDigits,
                               const string& format)

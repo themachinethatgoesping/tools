@@ -4,6 +4,7 @@
 
 // -- module header
 #include "m_timeconv.h"
+#include "docstrings.h" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
 #include "../tools/timeconv.h"
@@ -34,45 +35,16 @@ void init_m_timeconv(py::module &m)
 
 
         std::stringstream doc;
-        doc << "Convert a date string to a unix time"
-            << "\n\n\t unixtime: Seconds since 1-Jan-1970 0:00:00 as double"
-            << "\n\t format: Format string for output"
-            << "\n\n\t -- date_string format --"
-            << "\n\t-%z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!"
-            << "\n\t\tif no z is given the string will be interpreted as utc 0"
-            << "\n\t-%d: day as   int dd"
-            << "\n\t-%m: month as int mm"
-            << "\n\t-%b: month as string Bbb"
-            << "\n\t-%Y: year is  int YYYY"
-            << "\n\t-%H: hours as int HH"
-            << "\n\t-%M: Minutes as int mm"
-            << "\n\t-%S: Seconds as int SS"
-            << std::endl;
         m_time.def("datestring_to_unixtime", &pingtools::timeconv::datestring_to_unixtime,
-                   doc.str().c_str(),
+                   DOC(themachinethatgoesping,tools,timeconv,datestring_to_unixtime),
                    py::arg("unixtime"),
                    py::arg("format") = "%z__%d-%m-%Y__%H:%M:%S");
     }
 
     {
         std::stringstream doc;
-        doc << "Convert a unix time to a date string"
-            << "\n\n\t unixtime: Seconds since 1-Jan-1970 0:00:00 as double"
-            << "\n\t fractionalSecondsDigits: Amount of digits to display fractional seconds parts"
-            << "\n\t format: Format string for output"
-            << "\n\n\t -- date_string format --"
-            << "\n\t-%z: zone (in hhmm (as hours/minuts east of utc); z may only be at the beginning of the string!"
-            << "\n\t\tif no z is given the string will be interpreted as utc 0"
-            << "\n\t-%d: day as   int dd"
-            << "\n\t-%m: month as int mm"
-            << "\n\t-%b: month as string Bbb"
-            << "\n\t-%Y: year is  int YYYY"
-            << "\n\t-%H: hours as int HH"
-            << "\n\t-%M: Minutes as int mm"
-            << "\n\t-%S: Seconds as int SS"
-            << std::endl;
         m_time.def("unixtime_to_datestring", &pingtools::timeconv::unixtime_to_datestring,
-                   doc.str().c_str(),
+                   DOC(themachinethatgoesping,tools,timeconv,unixtime_to_datestring),
                    py::arg("unixtime"),
                    py::arg("fractionalSecondsDigits") = 0,
                    py::arg("format") = "%z__%d-%m-%Y__%H:%M:%S" //,
