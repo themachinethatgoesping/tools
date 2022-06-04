@@ -63,7 +63,7 @@ tools_dep = declare_dependency(
 
 # install headers
 if headers != ['']
-#    install_headers(headers, subdir : headerdir+'/')
+    install_headers(headers, subdir : headerdir+'/')
 endif
 
 # create pkgconfig file
