@@ -54,5 +54,3 @@ subdir('py_ext')
 
 # add tests
 subdir('tests')
- 
-run_target('docs', command : ['doxygen', meson.source_root() + '/Doxyfile'])
