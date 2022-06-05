@@ -7,6 +7,10 @@ name: CI
 on:
   push:
     branches: [ main ]
+    
+    paths-ignore:
+      - '.github/workflows/python-package*'
+      - '.github/workflows/cibuildwheels*'
     #paths:
     #  - "**meson.build"
     #  - "**.cpp"
@@ -14,6 +18,9 @@ on:
     #  - "**.h"
   pull_request:
     branches: [ main ]
+    
+    paths-ignore:
+      - '.github/workflows/python-package*'
     #paths:
     #  - "**meson.build"
     #  - "**.cpp"
@@ -26,6 +33,7 @@ on:
   
 jobs:
   linux:
+    name: Build and install with meson on ${{matrix.container}}
     strategy:
       matrix:
         include:  
@@ -88,54 +96,123 @@ jobs:
         path: builddir/meson-logs/testlog.txt
     
 
-#   build-on-windows:
-#     runs-on: windows-latest
-#     #container: python:latest #pull directly from dockerhub   
-#     steps:
+  build-on-windows:
+    name: Build and install with meson on windows
+    strategy:
+        matrix:
+          boost-version: [1.79.0]
+          boost-version_: [1_79_0]
+          boost-modules: [--with-filesystem]
+          
+    
+    env:
+      CC: msvc-14.3
 
-#     - uses: actions/setup-python@v3
-#       with:
-#         python-version: '3.x'
+    runs-on: windows-latest
+    #container: python:latest #pull directly from dockerhub   
+    steps:
 
-#     - name: checkout main repository
-#       uses: actions/checkout@v3
-#       with:
-#         submodules: recursive
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+    
+    # make sure meson can find msvc
+    - name: Prepare MSVC
+      uses: bus1/cabuild/action/msdevshell@v1
+      with:
+        architecture: x64
 
-#     - name: install vcpk
-#       run: git clone https://github.com/Microsoft/vcpkg.git
-#     - run: .\vcpkg\bootstrap-vcpkg.bat
-#     - run: vcpkg install boost
+    - name: checkout main repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
+    - name: Cache Boost
+      id: cache-boost
+      uses: actions/cache@v3
+      with:
+        path: c:\Boost
+        key: windows-msvc-14.3-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
+  
+    - name: Install dependencies on windows
+      if: steps.cache-boost.outputs.cache-hit != 'true'
+      run: |
+        Invoke-WebRequest -Uri https://boostorg.jfrog.io/artifactory/main/release/${{matrix.boost-version}}/source/boost_${{matrix.boost-version_}}.7z -outfile boost.7z
+        7z x boost.7z 
+        cd .\boost_${{matrix.boost-version_}}\
+        .\bootstrap.bat
+        .\b2.exe install --variant=release --threading=multi --link=static ${{matrix.boost-modules}}
+        cd ..
+        #rm -rv boost*
 
-#     - run: pip install meson ninja
-#     - run: meson setup builddir/
-#       env:
-#         CC: gcc
-#     - run: meson test -C builddir/ -v
-#     - uses: actions/upload-artifact@v1
-#       if: failure()
-#       with:
-#         name: Windows_Meson_Testlog
-#         path: builddir/meson-logs/testlog.txt
+    # same as for linux
 
-#   macos:
-#     runs-on: macos-latest
-#     steps:
-#     - uses: actions/checkout@v1
-#     - uses: actions/setup-python@v1
-#       with:
-#         python-version: '3.x'
-#     - run: brew install gcc
-#     - run: pip install meson ninja
-#     - run: meson setup builddir/
-#       env:
-#         CC: gcc
-#     - run: meson test -C builddir/ -v
-#     - uses: actions/upload-artifact@v1
-#       if: failure()
-#       with:
-#         name: MacOS_Meson_Testlog
-#         path: builddir/meson-logs/testlog.txt
+    - name: install dependcies (meson & pythone)
+      run: pip install meson ninja pytest
+
+    - name: configure meson
+      run: |
+        meson setup builddir/ -D"python.install_env=auto" -Dcpp_std=c++17 -Ddefault_library=static -D"python.install_env=auto"
+
+    - name: compile project
+      run: meson compile -C builddir/
+
+    - name: test (cpp)
+      run: meson test -C builddir/ -v
+
+    - name: install project
+      run: meson install -C builddir/
+
+    - name: test (pytest)
+      run: pytest -v
+    
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Windows_Meson_Testlog
+        path: builddir/meson-logs/testlog.txt
+
+  macos:
+    name: Build and install with meson on macOS
+    runs-on: macos-latest
+    
+    env:
+      CC: msvc-14.3
+      
+    steps:
+    
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+        
+    - name: checkout main repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        
+    - run: brew install libomp boost
+    
+    - run: pip install meson ninja pytest
+    
+    - name: configure meson
+      run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+
+    - name: compile project
+      run: meson compile -C builddir/
+
+    - name: test (cpp)
+      run: meson test -C builddir/ -v
+
+    - name: install project
+      run: meson install -C builddir/
+
+    - name: test (pytest)
+      run: pytest -v
+      
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: ${{matrix.container}}_Testlog
+        path: builddir/meson-logs/testlog.txt
 
       
