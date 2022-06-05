@@ -7,10 +7,11 @@
 project(
   'themachinethatgoesping_tools',
   'cpp',
-  license : 'MPL-2.0',
+  license: 'MPL-2.0',
 
-  version : '0.0.1.6-1',
-  default_options : ['warning_level=3', 'buildtype=release', 'cpp_std=c++17']
+  version: '0.0.1.6-1',
+  default_options: ['warning_level=3', 'buildtype=release', 'cpp_std=c++17'],
+  meson_version: '>=0.62' #force new meson version to limit necessary testing
 )
 
 projectnamespace = 'themachinethatgoesping'
@@ -19,18 +20,18 @@ projectnamespace = 'themachinethatgoesping'
 # system
 if meson.get_compiler('cpp').get_id() == 'clang'
   omp_dep = declare_dependency(
-    compile_args : ['-Xpreprocessor', '-fopenmp']
+    compile_args: ['-Xpreprocessor', '-fopenmp']
   )
 else
   omp_dep = dependency('openmp')
 endif
 
 # # boost
-boost_modules = dependency('boost', modules : ['filesystem'], static : true)
+boost_modules = dependency('boost', modules: ['filesystem'], static: true)
 boost_dep     = dependency('boost')
 
 # eigen 3
-eigen3_dep = dependency('eigen3', required : false)
+eigen3_dep = dependency('eigen3', required: false)
 
 if not eigen3_dep.found()
     eigen3_project = subproject('eigen')
@@ -38,7 +39,7 @@ if not eigen3_dep.found()
 endif
 
 #date (to be replaced with c++20 features)
-hinnant_date_project = subproject('hinnant-date', default_options : 'use_manual_tzdb=true')
+hinnant_date_project = subproject('hinnant-date', default_options: 'use_manual_tzdb=true')
 hinnant_date_incl = hinnant_date_project.get_variable('i')
 
 hinnant_date_dep = declare_dependency(
