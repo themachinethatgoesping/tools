@@ -13,7 +13,16 @@ class Test_tools_timeconv:
 
         assert timeconv.datestring_to_unixtime(timeconv.unixtime_to_datestring(unixtime)) == pytest.approx(unixtime)
 
-    #test case 2
+
+    #test case 2-0
+    def test_datestring_to_unixtime_shoud_convert_specified_unixtime_to_specified_datestring(self):
+        unixtime   = 1234567890.123456
+        datestring = "+0000__13-02-2009__23:31:30.123456"
+
+        assert timeconv.datestring_to_unixtime(datestring) == pytest.approx(unixtime)
+        assert timeconv.unixtime_to_datestring(unixtime,fractionalSecondsDigits=6) == datestring
+
+    #test case 2-1
     def test_datestring_to_unixtime_should_be_reversible(self):
         unixtime   = time.time()
         datestring = timeconv.unixtime_to_datestring(unixtime,fractionalSecondsDigits=3)
