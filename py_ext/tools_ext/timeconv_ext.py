@@ -16,34 +16,36 @@ from themachinethatgoesping.tools.timeconv import *
 
 def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
                            format: str = '%z__%d-%m-%Y__%H:%M:%S') -> str:
-    """ 
-    Converting between date strings and python datetime objects
+    """Converting between date strings and python datetime objects
     date_string format:
         z: zone (in hhmm (as hours/minuts east of utc)  
             z may only be at the beginning of the string!
             If no z is given the string will be interpreted as utc 0
-            d: day as   int dd
-            m: month as int mm
-            b: month as string bb
-            Y: year is  int YYYY
-            H: hours as int HH
-            M: Minutes as int mm
-            S: Seconds as int SS
+        d: day as   int dd
+        m: month as int mm
+        b: month as string bb
+        Y: year is  int YYYY
+        H: hours as int HH
+        M: Minutes as int mm
+        S: Seconds as int SS
 
-    :param dt: 
+    Parameters
+    ----------
+    dt : datetime
         datetime to be converted
-    :param fractionalSecondsDigits: 
+    fractionalSecondsDigits : int, optional
         How many digits to use for the split seconds.
-            Minimum is 0 (second resolution)
-            Maximum is 6 (microsecond resolutiuon)
-    :param format: 
-        Format string to convert Date string. Default Format:
-        "%z__%d-%m-%Y__%H:%M:%S" see:
-        https://m.cplusplus.com/reference/ctime/strftime/
-    :return: 
+        Minimum is 0 (second resolution)
+        Maximum is 6 (microsecond resolutiuon), by default 0
+    format : _type_, optional
+        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        by default '%z__%d-%m-%Y__%H:%M:%S'
+
+    Returns
+    -------
+    str
         DateString that fits to the specified format
     """
-
     return unixtime_to_datestring(dt.timestamp(),
                                   fractionalSecondsDigits=fractionalSecondsDigits,
                                   format=format)
@@ -51,27 +53,30 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
 
 def datestring_to_datetime(datestring: str,
                            format: str = '%z__%d-%m-%Y__%H:%M:%S') -> datetime:
-    """
-    Converting between date strings and python datetime objects
+    """Converting between date strings and python datetime objects
     date_string format:
         z: zone (in hhmm (as hours/minuts east of utc)  
-            z may only be at the beginning of the string!
-            If no z is given the string will be interpreted as utc 0
-            d: day as   int dd
-            m: month as int mm
-            b: month as string bb
-            Y: year is  int YYYY
-            H: hours as int HH
-            M: Minutes as int mm
-            S: Seconds as int SS
+        z may only be at the beginning of the string!
+        If no z is given the string will be interpreted as utc 0
+        d: day as   int dd
+        m: month as int mm
+        b: month as string bb
+        Y: year is  int YYYY
+        H: hours as int HH
+        M: Minutes as int mm
+        S: Seconds as int SS
 
-    :param datestring: 
+    Parameters
+    ----------
+    dt : datetime
         DateString to be converted. Must fit format string.
-    :param format:
-        Format string to convert Date string. Default Format:
-        "%z__%d-%m-%Y__%H:%M:%S" see
-        https://m.cplusplus.com/reference/ctime/strftime/
-    :return: 
+    format : _type_, optional
+        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        by default '%z__%d-%m-%Y__%H:%M:%S'
+
+    Returns
+    -------
+    datetime
         python datetime object
     """
     return datetime.fromtimestamp(datestring_to_unixtime(datestring,
