@@ -76,15 +76,15 @@ public:
     return nearest(targetX, y1, y2, _average_halves);
   }
 
-  double interpolate(double targetX) final
-  {
-    return I_Interpolator::interpolate(targetX);
-  }
+  // double interpolate(double targetX) final
+  // {
+  //   return I_Interpolator::interpolate(targetX);
+  // }
   
-  std::vector<double> interpolate(const std::vector<double>& targetsX) final
-  {
-    return I_Interpolator::interpolate(targetsX);
-  }
+  // std::vector<double> interpolate(const std::vector<double>& targetsX) final
+  // {
+  //   return I_Interpolator::interpolate(targetsX);
+  // }
 };
 
 } // namespace interpolation

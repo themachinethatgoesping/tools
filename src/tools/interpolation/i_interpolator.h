@@ -302,12 +302,12 @@ public:
     // if target value is smaller than the min value of the last, decrement
     // backwards
     if (targetX > std::get<0>(_XY[_lastXPair._xmax_index])) {
-      long int i = _lastXPair._xmax_index;
+      size_t i = _lastXPair._xmax_index;
       while (true) {
         ++i;
 
         // if i is smaler than the index
-        if (long int last = _XY.size() - 1; i > last) {
+        if (size_t last = _XY.size() - 1; i > last) {
           // set the new last pair (will be used for interpolation)
           switch (_extr_mode) {
             case _t_extr_mode::fail: {

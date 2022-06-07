@@ -58,15 +58,15 @@ public:
     return linear(targetX, y1, y2);
   }
 
-  double interpolate(double targetX)
-  {
-      return I_Interpolator::interpolate(targetX);
-  }
+  // double interpolate(double targetX)
+  // {
+  //     return I_Interpolator::interpolate(targetX);
+  // }
   
-  std::vector<double> interpolate(const std::vector<double>& targetsX) final
-  {
-    return I_Interpolator::interpolate(targetsX);
-  }
+  // std::vector<double> interpolate(const std::vector<double>& targetsX) final
+  // {
+  //   return I_Interpolator::interpolate(targetsX);
+  // }
 };
 
 } // namespace interpolation
