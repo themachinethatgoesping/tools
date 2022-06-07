@@ -63,6 +63,7 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
 
   SECTION("preset values should be interpolated correctly")
   {
+
     REQUIRE(interpolator.interpolate(-7.6) == Approx(1));
     REQUIRE(interpolator.interpolate(-7.5) == Approx(1));
     REQUIRE(interpolator.interpolate(-7.4) == Approx(0));
@@ -78,6 +79,14 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
     REQUIRE(interpolator.interpolate(8.9) == Approx(0));
     REQUIRE(interpolator.interpolate(9.0) == Approx(0));
     REQUIRE(interpolator.interpolate(9.1) == Approx(-1));
+  }
+
+  SECTION("preset value vectors should be interpolated correctly")
+  {
+    std::vector<double> targets_x  = {-2.6,-2.5,-2.4};
+    std::vector<double> expected_y = {0, 0, 1};
+
+    REQUIRE(interpolator.interpolate(targets_x) == expected_y);
   }
 
   SECTION("exact 0.5 cases should be handled as expected")

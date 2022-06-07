@@ -69,7 +69,7 @@ public:
       return y1;
   }
 
-  double interpolate(double targetX,
+  double interpolate_pair(double targetX,
                      const double& y1,
                      const double& y2) const final
   {
@@ -79,6 +79,11 @@ public:
   double interpolate(double targetX) final
   {
     return I_Interpolator::interpolate(targetX);
+  }
+  
+  std::vector<double> interpolate(const std::vector<double>& targetsX) final
+  {
+    return I_Interpolator::interpolate(targetsX);
   }
 };
 

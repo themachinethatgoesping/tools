@@ -80,6 +80,13 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly",
     CHECK(interpolator.interpolate(10) == Approx(-2./3.));
   }
 
+  SECTION("preset value vectors should be interpolated correctly")
+  {
+    std::vector<double> targets_x  = {-2.6,-2.5,-2.4};
+    std::vector<double> expected_y = {0.48, 0.5, 0.52};
+
+    REQUIRE(interpolator.interpolate(targets_x) == expected_y);
+  }
 
   SECTION("extrapolation should be linear in default mode")
   {

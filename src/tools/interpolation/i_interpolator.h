@@ -393,9 +393,26 @@ public:
     }
 
     /* interpolate useing the (new) last XPair */
-    return interpolate(_lastXPair.calc_targetX(targetX),
+    return interpolate_pair(_lastXPair.calc_targetX(targetX),
                        std::get<1>(_XY[_lastXPair._xmin_index]),
                        std::get<1>(_XY[_lastXPair._xmax_index]));
+  }
+
+  /**
+   * @brief Interpolat multiple vector values in a loop
+   * 
+   * @param targetsX x values to interpolate
+   * @return std::vector of interpolated y values
+   */
+  virtual std::vector<YType> interpolate(const std::vector<double>& targetsX)
+  {
+    std::vector<YType> y_values;
+    y_values.reserve(targetsX.size());
+    for(const auto targetX : targetsX){
+      y_values.push_back(interpolate(targetX));
+    }
+
+    return y_values;
   }
 
   //--------------------------------
@@ -412,7 +429,7 @@ public:
    * @param y1 larger y value
    * @return interpolated y value
    */
-  virtual YType interpolate(double targetX,
+  virtual YType interpolate_pair(double targetX,
                             const YType& y1,
                             const YType& y2) const = 0;
 
