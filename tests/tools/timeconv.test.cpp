@@ -13,11 +13,9 @@
 using namespace std;
 using namespace themachinethatgoesping::tools;
 
-namespace themachinethatgoesping_tools_tests
-{
+#define TESTTAG "[timeconv]"
 
-
-TEST_CASE("unixtime_to_timepoint: should be reversible","[timeconv]")
+TEST_CASE("unixtime_to_timepoint: should be reversible",TESTTAG)
 {
     auto now = chrono::system_clock::now();
 
@@ -27,7 +25,7 @@ TEST_CASE("unixtime_to_timepoint: should be reversible","[timeconv]")
 
 }
 
-TEST_CASE("unixtime_to_timepoint: should not loose microseconds during the conversation","[timeconv]")
+TEST_CASE("unixtime_to_timepoint: should not loose microseconds during the conversation",TESTTAG)
 {
 
     auto now = chrono::system_clock::now();
@@ -44,7 +42,7 @@ TEST_CASE("unixtime_to_timepoint: should not loose microseconds during the conve
     REQUIRE(chrono::duration_cast<chrono::microseconds>(now - then).count() == 1234567);
 }
 
-TEST_CASE("unixtime_to_datestring: should convert a specified timepoint to specified string","[timeconv]")
+TEST_CASE("unixtime_to_datestring: should convert a specified timepoint to specified string",TESTTAG)
 {
     auto unixtime   = 1234567890.123456;
     auto datestring = "+0000__13-02-2009__23:31:30.123456";
@@ -54,7 +52,7 @@ TEST_CASE("unixtime_to_datestring: should convert a specified timepoint to speci
 
 }
 
-TEST_CASE("unixtime_to_datestring: should be reversible","[timeconv]")
+TEST_CASE("unixtime_to_datestring: should be reversible",TESTTAG)
 {
     auto now = chrono::system_clock::now();
 
@@ -65,7 +63,7 @@ TEST_CASE("unixtime_to_datestring: should be reversible","[timeconv]")
 
 }
 
-TEST_CASE("datestring_to_unixtime: should be reversible","[timeconv]")
+TEST_CASE("datestring_to_unixtime: should be reversible",TESTTAG)
 {
     auto now = chrono::system_clock::now();
 
@@ -77,7 +75,7 @@ TEST_CASE("datestring_to_unixtime: should be reversible","[timeconv]")
 }
 
 
-TEST_CASE("datestring_to_unixtime: should convert zone to UTC by default","[timeconv]")
+TEST_CASE("datestring_to_unixtime: should convert zone to UTC by default",TESTTAG)
 {
     auto datestring1  = "+0500__05-06-2017__08:09:12";
     auto datestring2  = "-0500__05-06-2017__08:09:12";
@@ -91,7 +89,7 @@ TEST_CASE("datestring_to_unixtime: should convert zone to UTC by default","[time
 }
 
 
-TEST_CASE("unixtime_to_datestring: should round fractional seconds correctly","[timeconv]")
+TEST_CASE("unixtime_to_datestring: should round fractional seconds correctly",TESTTAG)
 {
     auto datestring     = "+0000__05-06-2017__08:09:12.123456";
     auto datestring2    = "+0000__05-06-2017__08:09:12.1234567";
@@ -113,7 +111,7 @@ TEST_CASE("unixtime_to_datestring: should round fractional seconds correctly","[
 }
 
 
-TEST_CASE("datestring_to_unixtime: should read fractional second digits correctly", "[timeconv]")
+TEST_CASE("datestring_to_unixtime: should read fractional second digits correctly", TESTTAG)
 {
     auto datestring     = "+0000__05-06-2017__08:09:12.123456";
     auto unixtime1      = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%3S");
@@ -139,7 +137,7 @@ TEST_CASE("datestring_to_unixtime: should read fractional second digits correctl
 }
 
 
-TEST_CASE("datestring_to_unixtime: should use UTC0 as default","[timeconv]")
+TEST_CASE("datestring_to_unixtime: should use UTC0 as default",TESTTAG)
 {
     auto datestring = "05-06-2017__08:09:12";
     auto unixtime   = timeconv::datestring_to_unixtime(datestring, "%d-%m-%Y__%H:%M:%S");
@@ -149,4 +147,3 @@ TEST_CASE("datestring_to_unixtime: should use UTC0 as default","[timeconv]")
 
 }
 
-}

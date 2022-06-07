@@ -8,11 +8,14 @@ testcomponent = 'tools'
 
 sources = [
     'tutorial.test.cpp',
-    'timeconv.test.cpp'
+    'timeconv.test.cpp',
+    'interpolation/nearest.test.cpp',
+    'interpolation/linear.test.cpp'
 ]
 
 foreach source : sources
     testname = projectnamespace + '._' + testcomponent + '.' + source.split('.')[0] + '_.test'
+    testname = testname.replace('/','.')
 
     testexe = executable(testname,
             sources: [source, 'test_main.cpp'],
