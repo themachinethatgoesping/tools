@@ -202,7 +202,7 @@ public:
     std::vector<std::pair<double, YType>> XY;
     XY.reserve(X.size());
 
-    for (uint i = 0; i < X.size(); ++i) {
+    for (unsigned int i = 0; i < X.size(); ++i) {
       XY.push_back(std::make_pair(X[i], Y[i]));
     }
 
