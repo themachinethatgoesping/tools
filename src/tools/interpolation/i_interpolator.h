@@ -348,7 +348,7 @@ public:
     // if target value is smaller than the min value of the last, decrement
     // backwards
     else if (targetX < std::get<0>(_XY[_lastXPair._xmin_index])) {
-      long int i = _lastXPair._xmin_index;
+      long int i = static_cast<long int>(_lastXPair._xmin_index);
       while (true) {
         --i;
 
