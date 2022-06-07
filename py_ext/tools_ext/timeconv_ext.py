@@ -16,18 +16,7 @@ from themachinethatgoesping.tools.timeconv import *
 
 def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
                            format: str = '%z__%d-%m-%Y__%H:%M:%S') -> str:
-    """Converting between date strings and python datetime objects
-    date_string format:
-        z: zone (in hhmm (as hours/minuts east of utc)  
-            z may only be at the beginning of the string!
-            If no z is given the string will be interpreted as utc 0
-        d: day as   int dd
-        m: month as int mm
-        b: month as string bb
-        Y: year is  int YYYY
-        H: hours as int HH
-        M: Minutes as int mm
-        S: Seconds as int SS
+    """Converting python datetime objects to datestrings
 
     Parameters
     ----------
@@ -39,6 +28,7 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
         Maximum is 6 (microsecond resolutiuon), by default 0
     format : _type_, optional
         %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
         by default '%z__%d-%m-%Y__%H:%M:%S'
 
     Returns
@@ -53,25 +43,15 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
 
 def datestring_to_datetime(datestring: str,
                            format: str = '%z__%d-%m-%Y__%H:%M:%S') -> datetime:
-    """Converting between date strings and python datetime objects
-    date_string format:
-        z: zone (in hhmm (as hours/minuts east of utc)  
-        z may only be at the beginning of the string!
-        If no z is given the string will be interpreted as utc 0
-        d: day as   int dd
-        m: month as int mm
-        b: month as string bb
-        Y: year is  int YYYY
-        H: hours as int HH
-        M: Minutes as int mm
-        S: Seconds as int SS
+    """Converting date strings to python datetime objects
 
     Parameters
     ----------
-    dt : datetime
+    datestring : str
         DateString to be converted. Must fit format string.
     format : _type_, optional
         %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
         by default '%z__%d-%m-%Y__%H:%M:%S'
 
     Returns

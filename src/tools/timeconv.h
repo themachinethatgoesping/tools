@@ -47,23 +47,12 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
 //------------------------------------- time conversions ------------------------------------------
 /**
  * @brief Converting between date strings and UnixTime stampes (ref 1970)
- * date_string format:
- *      z: zone (in hhmm (as hours/minuts east of utc)
- *          z may only be at the beginning of the string!
- *          If no z is given the string will be interpreted as utc 0
- *      d: day as   int dd
- *      m: month as int mm
- *      b: month as string bb
- *      Y: year is  int YYYY
- *      H: hours as int HH
- *      M: Minutes as int mm
- *      S: Seconds as int SS
- * 
  *
  * @param  DateString: DateString to be converted. Must fit format string.
  * @param  format: Format string to convert Date string.
  *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
- *      see https://m.cplusplus.com/reference/ctime/strftime/
+ *      see https://m.cplusplus.com/reference/ctime/strftime/ * 
+        https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
  * @return UnixTime as double (seconds since 01.01.1970)
  */
 double datestring_to_unixtime(const std::string &DateString,
@@ -72,18 +61,6 @@ double datestring_to_unixtime(const std::string &DateString,
 
 /**
  * @brief Converting between date strings and UnixTime stampes (ref 1970)
- * date_string format:
- *      z: zone (in hhmm (as hours/minuts east of utc)
- *          z may only be at the beginning of the string!
- *          If no z is given the string will be interpreted as utc 0
- *      d: day as   int dd
- *      m: month as int mm
- *      b: month as string bb
- *      Y: year is  int YYYY
- *      H: hours as int HH
- *      M: Minutes as int mm
- *      S: Seconds as int SS
- *
  *
  * @param UnixTime: seconds since 01.01.1970 as double
  * @param fractionalSecondsDigits: How many digits to use for the split seconds.
@@ -91,7 +68,8 @@ double datestring_to_unixtime(const std::string &DateString,
  *          Maximum is 6 (microsecond resolutiuon)
  * @param format: Format string to convert Date string.
  *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
- *      see: https://m.cplusplus.com/reference/ctime/strftime/
+ *      see: https://m.cplusplus.com/reference/ctime/strftime/ * 
+        https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
  * @return DateString that fits to the specified format
  */
 std::string unixtime_to_datestring(double UnixTime,

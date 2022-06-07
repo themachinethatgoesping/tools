@@ -25,11 +25,6 @@
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
 R"doc(Converting between date strings and UnixTime stampes (ref 1970)
-date_string format: z: zone (in hhmm (as hours/minuts east of utc) z
-may only be at the beginning of the string! If no z is given the
-string will be interpreted as utc 0 d: day as int dd m: month as int
-mm b: month as string bb Y: year is int YYYY H: hours as int HH M:
-Minutes as int mm S: Seconds as int SS
 
 Parameter ``DateString:``:
     DateString to be converted. Must fit format string.
@@ -37,7 +32,9 @@ Parameter ``DateString:``:
 Parameter ``format:``:
     Format string to convert Date string. Default Format:
     "%z__%d-%m-%Y__%H:%M:%S" see
-    https://m.cplusplus.com/reference/ctime/strftime/
+    https://m.cplusplus.com/reference/ctime/strftime/ * https://themac
+    hinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.h
+    tml#format-string
 
 Returns:
     UnixTime as double (seconds since 01.01.1970))doc";
@@ -54,11 +51,6 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
 R"doc(Converting between date strings and UnixTime stampes (ref 1970)
-date_string format: z: zone (in hhmm (as hours/minuts east of utc) z
-may only be at the beginning of the string! If no z is given the
-string will be interpreted as utc 0 d: day as int dd m: month as int
-mm b: month as string bb Y: year is int YYYY H: hours as int HH M:
-Minutes as int mm S: Seconds as int SS
 
 Parameter ``UnixTime:``:
     seconds since 01.01.1970 as double
@@ -70,7 +62,9 @@ Parameter ``fractionalSecondsDigits:``:
 Parameter ``format:``:
     Format string to convert Date string. Default Format:
     "%z__%d-%m-%Y__%H:%M:%S" see:
-    https://m.cplusplus.com/reference/ctime/strftime/
+    https://m.cplusplus.com/reference/ctime/strftime/ * https://themac
+    hinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.h
+    tml#format-string
 
 Returns:
     DateString that fits to the specified format)doc";
