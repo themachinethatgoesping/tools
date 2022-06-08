@@ -69,14 +69,35 @@ init_subm_linearinterpolator(pybind11::module& m)
              I_Interpolator,
              interpolate_2),
          py::arg("targets_x"))
-    .def(
-      "sortX",
-      &LinearInterpolator::sortX,
-      DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, sortX))
-    .def(
-      "checkX",
-      &LinearInterpolator::checkX,
-      DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, checkX))
+    .def("set_extrapolation_mode",
+         &LinearInterpolator::set_extrapolation_mode,
+         DOC(themachinethatgoesping,
+             tools,
+             vectorinterpolators,
+             I_Interpolator,
+             set_extrapolation_mode),
+         py::arg("extrapolation_mode"))
+    .def("get_extrapolation_mode",
+         &LinearInterpolator::get_extrapolation_mode,
+         DOC(themachinethatgoesping,
+             tools,
+             vectorinterpolators,
+             I_Interpolator,
+             get_extrapolation_mode))
+    .def("checkX",
+         &LinearInterpolator::checkX,
+         DOC(themachinethatgoesping,
+             tools,
+             vectorinterpolators,
+             I_Interpolator,
+             checkX))
+    .def("sortX",
+         &LinearInterpolator::sortX,
+         DOC(themachinethatgoesping,
+             tools,
+             vectorinterpolators,
+             I_Interpolator,
+             sortX))
     .def("set_data_XY",
          py::overload_cast<const std::vector<std::pair<double, double>>&,
                            bool,
@@ -123,20 +144,5 @@ init_subm_linearinterpolator(pybind11::module& m)
              tools,
              vectorinterpolators,
              I_Interpolator,
-             get_data_XY))
-    .def("set_extrapolation_mode",
-         &LinearInterpolator::set_extrapolation_mode,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             set_extrapolation_mode),
-         py::arg("extrapolation_mode"))
-    .def("get_extrapolation_mode",
-         &LinearInterpolator::get_extrapolation_mode,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             get_extrapolation_mode));
+             get_data_XY));
 }
