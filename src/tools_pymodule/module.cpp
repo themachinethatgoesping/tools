@@ -7,7 +7,7 @@
 #include <pybind11/iostream.h>
 
 #include "m_timeconv.h"
-#include "interpolation/module.h"
+#include "vectorinterpolators/module.h"
 
 
 
@@ -18,6 +18,6 @@ PYBIND11_MODULE(PYTHON_LIB,m)
     m.doc() ="Small python tool functions for themachinethatgoesping";
 
     init_m_timeconv(m);
-    init_m_interpolation(m);
+    init_m_vectorinterpolators(m);
 
 }

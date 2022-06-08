@@ -15,7 +15,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace interpolation {
+namespace vectorinterpolators {
 
 /**
  * @brief Interpolator class to find nearest neighbors in vector data

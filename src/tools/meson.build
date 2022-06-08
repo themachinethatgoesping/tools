@@ -13,10 +13,10 @@ sources = [
 
 headers = [
   'timeconv.h',
-  'interpolation.h',
-  'interpolation/i_interpolator.h',
-  'interpolation/linearinterpolator.h',
-  'interpolation/nearestinterpolator.h'
+  'vectorinterpolators.h',
+  'vectorinterpolators/i_interpolator.h',
+  'vectorinterpolators/linearinterpolator.h',
+  'vectorinterpolators/nearestinterpolator.h'
 ]
 
 # -- targets --

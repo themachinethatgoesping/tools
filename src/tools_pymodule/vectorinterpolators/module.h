@@ -6,4 +6,4 @@
 #include <pybind11/pybind11.h>
 
 // -- initialize module --
-void init_m_interpolation(pybind11::module& m);
+void init_m_vectorinterpolators(pybind11::module& m);

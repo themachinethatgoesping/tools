@@ -16,7 +16,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace interpolation {
+namespace vectorinterpolators {
 
 
 /**

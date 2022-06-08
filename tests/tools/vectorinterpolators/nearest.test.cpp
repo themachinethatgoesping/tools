@@ -7,13 +7,13 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 
-#include "../../src/tools/interpolation.h"
+#include "../../src/tools/vectorinterpolators.h"
 
 // using namespace testing;
 using namespace std;
 using namespace themachinethatgoesping::tools;
 
-#define TESTTAG "[interpolation]"
+#define TESTTAG "[vectorinterpolators]"
 
 TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
           TESTTAG)
@@ -22,19 +22,19 @@ TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
   std::vector<double> x = { -10, -5, 0, 6, 12 };
   std::vector<double> y = { 1, 0, 1, 0, -1 };
 
-  interpolation::NearestInterpolator interpolator(x, y);
+  vectorinterpolators::NearestInterpolator interpolator(x, y);
 
   // initialize test data (wrong order)
   std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
   std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
 
   // throw because sortX is false but checkX is not false
-  REQUIRE_THROWS_AS(interpolation::NearestInterpolator(
+  REQUIRE_THROWS_AS(vectorinterpolators::NearestInterpolator(
                       x_wrong_order, y_wrong_order, false, true),
                     std::runtime_error);
 
   // do not throw because vector is sorted this time
-  interpolation::NearestInterpolator interpolator_sorted(
+  vectorinterpolators::NearestInterpolator interpolator_sorted(
     x_wrong_order, y_wrong_order, true, true);
 
   // interpolators should be the same after sorting the elements
@@ -46,7 +46,7 @@ TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
 
   // interpolator should fail if there is a double x element!
   REQUIRE_THROWS_AS(
-    interpolation::NearestInterpolator(x_duplicates, y_duplicates, true, true),
+    vectorinterpolators::NearestInterpolator(x_duplicates, y_duplicates, true, true),
     std::runtime_error);
 }
 
@@ -57,7 +57,7 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
   std::vector<double> x = { -10, -5, 0, 6, 12 };
   std::vector<double> y = { 1, 0, 1, 0, -1 };
 
-  interpolation::NearestInterpolator interpolator(x, y);
+  vectorinterpolators::NearestInterpolator interpolator(x, y);
 
   SECTION("existing values should be looked up correctly")
   {
@@ -95,11 +95,11 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
 
   SECTION("extrapolation mode should cause:")
   {
-    for (auto mode : interpolation::t_extr_mode_all) {
+    for (auto mode : vectorinterpolators::t_extr_mode_all) {
       interpolator.set_extrapolation_mode(mode);
 
       switch (mode) {
-        case interpolation::t_extr_mode::fail:
+        case vectorinterpolators::t_extr_mode::fail:
           SECTION(" - fail when set to fail")
           {
             REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),

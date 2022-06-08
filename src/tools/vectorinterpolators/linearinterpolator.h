@@ -15,7 +15,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace interpolation {
+namespace vectorinterpolators {
 
 class LinearInterpolator : public I_Interpolator<double>
 {

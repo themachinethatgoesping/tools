@@ -8,12 +8,12 @@
 #include <tuple>
 #include <vector>
 
-#include "../../tools/interpolation/linearinterpolator.h"
 #include "../docstrings.h"
+#include "../../tools/vectorinterpolators.h"
 #include "module.h"
 
 namespace py = pybind11;
-using namespace themachinethatgoesping::tools::interpolation;
+using namespace themachinethatgoesping::tools::vectorinterpolators;
 
 #include <pybind11/pybind11.h>
 
@@ -23,16 +23,16 @@ void init_subm_linearinterpolator(pybind11::module& m);  // subm_linearinterpola
 
 
 // -- create submodule --
-void init_m_interpolation(pybind11::module& m)
+void init_m_vectorinterpolators(pybind11::module& m)
 {
   //module description
-  auto m_interpolation = m.def_submodule(
-    "interpolation",
+  auto m_vectorinterpolators = m.def_submodule(
+    "vectorinterpolators",
     "Classes for getting interpolated values from within vectors");
 
   //small classes
   pybind11::enum_<t_extr_mode>(
-    m_interpolation,
+    m_vectorinterpolators,
     "t_extr_mode",
     DOC(themachinethatgoesping, tools, interpolation, t_extr_mode))
     .value("extrapolate", t_extr_mode::extrapolate)
@@ -41,6 +41,6 @@ void init_m_interpolation(pybind11::module& m)
     .export_values();
 
   //interpolator classes
-  init_subm_nearestinterpolator(m_interpolation);
-  init_subm_linearinterpolator(m_interpolation);
+  init_subm_nearestinterpolator(m_vectorinterpolators);
+  init_subm_linearinterpolator(m_vectorinterpolators);
 }

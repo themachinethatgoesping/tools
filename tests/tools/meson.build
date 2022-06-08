@@ -9,8 +9,8 @@ testcomponent = 'tools'
 sources = [
     'tutorial.test.cpp',
     'timeconv.test.cpp',
-    'interpolation/nearest.test.cpp',
-    'interpolation/linear.test.cpp'
+    'vectorinterpolators/nearest.test.cpp',
+    'vectorinterpolators/linear.test.cpp'
 ]
 
 foreach source : sources
