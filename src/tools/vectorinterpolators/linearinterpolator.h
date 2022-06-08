@@ -50,17 +50,11 @@ public:
    * inbetween)
    * @return Interpolated value for target position
    */
-
-  static inline double linear(double targetX, double y1, double y2)
-  {
-    return (double)(targetX * (y2) + (double(1.0) - targetX) * (y1));
-  }
-
-  double interpolate_pair(double targetX,
+  double interpolate_pair(double target_x,
                           const double& y1,
                           const double& y2) const final
   {
-    return linear(targetX, y1, y2);
+    return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
   }
 };
 

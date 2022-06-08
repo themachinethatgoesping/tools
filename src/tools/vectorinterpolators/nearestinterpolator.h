@@ -70,22 +70,15 @@ public:
    * @param p2    : An array of size 2 containing the x and y position of the
    *second point (x,y)
    * @return p1[1],p2[1]
-   **/
-  static double nearest(double target,
-                        double y1,
-                        double y2)
-  {
-    if (target < 0.5)
-      return y1;
-    
-    return y2;
-  }
-
-  double interpolate_pair(double targetX,
+   */
+  double interpolate_pair(double target_x,
                      const double& y1,
                      const double& y2) const final
   {
-    return nearest(targetX, y1, y2);
+    if (target_x < 0.5)
+      return y1;
+    
+    return y2;
   }
 
 };
