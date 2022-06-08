@@ -24,6 +24,10 @@ namespace vectorinterpolators {
 class NearestInterpolator : public I_Interpolator<double>
 {
 public:
+  NearestInterpolator()
+    : I_Interpolator<double>({ 0, 1 }, { 0, 1 })
+  {}
+
   /**
    * @brief Construct a new Nearest Interpolator object from a vector of pairs
    * usage: interpolated_y_value = interpolator.interpolate(x_value)

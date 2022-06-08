@@ -26,19 +26,19 @@ class LinearInterpolator : public I_Interpolator<double>
 
 public:
   LinearInterpolator()
-    : I_Interpolator<double>({ 0, 1 }, { 0, 1 }, false, false)
+    : I_Interpolator<double>({ 0, 1 }, { 0, 1 })
   {}
 
   LinearInterpolator(const std::vector<std::pair<double, double>>& XY,
                      bool sortX = false,
-                     bool checkX = false,
+                     bool checkX = true,
                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
     : I_Interpolator<double>(XY, sortX, checkX, extrapolation_mode)
   {}
   LinearInterpolator(const std::vector<double>& X,
                      const std::vector<double>& Y,
                      bool sortX = false,
-                     bool checkX = false,
+                     bool checkX = true,
                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
     : I_Interpolator<double>(X, Y, sortX, checkX, extrapolation_mode)
   {}

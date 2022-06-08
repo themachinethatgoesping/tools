@@ -110,7 +110,7 @@ init_subm_nearestinterpolator(pybind11::module& m)
              set_data_XY),
          py::arg("XY"),
          py::arg("sortX") = false,
-         py::arg("checkX") = false)
+         py::arg("checkX") = true)
     .def("set_data_XY",
          py::overload_cast<const std::vector<double>&,
                            const std::vector<double>&,
@@ -124,7 +124,7 @@ init_subm_nearestinterpolator(pybind11::module& m)
          py::arg("X"),
          py::arg("Y"),
          py::arg("sortX") = false,
-         py::arg("checkX") = false)
+         py::arg("checkX") = true)
     .def("get_data_X",
          &NearestInterpolator::get_data_X,
          DOC(themachinethatgoesping,
