@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
 // SPDX-FileCopyrightText: 2022 GEOMAR Helmholtz Centre for Ocean Research Kiel
 //
 // SPDX-License-Identifier: MPL-2.0
@@ -21,21 +22,21 @@ namespace pingtools = themachinethatgoesping::tools;
 
 void init_m_timeconv(py::module &m)
 {
-    auto m_time = m.def_submodule("timeconv", "Convinient functions for converting time strings.");
+    auto m_timeconv = m.def_submodule("timeconv", "Convinient functions for converting time strings.");
 
     {
         // this does not yet work the way I want it
         // maybe when c++20 chrono is finally avaliable to all compilers (utc_time instead of system time)
-        // m_time.def("UnixTime_to_TimePoint", &pingtools::timeconv::UnixTime_to_TimePoint,
+        // m_timeconv.def("UnixTime_to_TimePoint", &pingtools::timeconv::UnixTime_to_TimePoint,
         //            // doc.str().c_str(),
         //            py::arg("unixtime"));
-        // m_time.def("timepoint_to_unixtime", &pingtools::timeconv::timepoint_to_unixtime,
+        // m_timeconv.def("timepoint_to_unixtime", &pingtools::timeconv::timepoint_to_unixtime,
         //            // doc.str().c_str(),
         //            py::arg("TimePoint"));
 
 
         std::stringstream doc;
-        m_time.def("datestring_to_unixtime", &pingtools::timeconv::datestring_to_unixtime,
+        m_timeconv.def("datestring_to_unixtime", &pingtools::timeconv::datestring_to_unixtime,
                    DOC(themachinethatgoesping,tools,timeconv,datestring_to_unixtime),
                    py::arg("unixtime"),
                    py::arg("format") = "%z__%d-%m-%Y__%H:%M:%S");
@@ -43,7 +44,7 @@ void init_m_timeconv(py::module &m)
 
     {
         std::stringstream doc;
-        m_time.def("unixtime_to_datestring", &pingtools::timeconv::unixtime_to_datestring,
+        m_timeconv.def("unixtime_to_datestring", &pingtools::timeconv::unixtime_to_datestring,
                    DOC(themachinethatgoesping,tools,timeconv,unixtime_to_datestring),
                    py::arg("unixtime"),
                    py::arg("fractionalSecondsDigits") = 0,

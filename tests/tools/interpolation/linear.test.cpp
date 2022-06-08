@@ -4,8 +4,8 @@
 
 #include <catch2/catch.hpp>
 
-#include <chrono>
 #include <boost/algorithm/algorithm.hpp>
+#include <chrono>
 
 #include "../../src/tools/interpolation.h"
 
@@ -23,27 +23,31 @@ TEST_CASE("LinearInterpolator: sorting and checking should work as expected",
   std::vector<double> y = { 1, 0, 1, 0, -1 };
 
   interpolation::LinearInterpolator interpolator(x, y);
-  
+
   // initialize test data (wrong order)
   std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
   std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
 
-  //throw because sortX is false but checkX is not false
-  REQUIRE_THROWS_AS(interpolation::LinearInterpolator(x_wrong_order, y_wrong_order,false, true),std::runtime_error);
-  
-  //do not throw because vector is sorted this time
-  interpolation::LinearInterpolator interpolator_sorted(x_wrong_order, y_wrong_order,true, true);
+  // throw because sortX is false but checkX is not false
+  REQUIRE_THROWS_AS(interpolation::LinearInterpolator(
+                      x_wrong_order, y_wrong_order, false, true),
+                    std::runtime_error);
 
-  //interpolators should be the same after sorting the elements
-  REQUIRE(interpolator.get_XY() == interpolator.get_XY());
+  // do not throw because vector is sorted this time
+  interpolation::LinearInterpolator interpolator_sorted(
+    x_wrong_order, y_wrong_order, true, true);
 
+  // interpolators should be the same after sorting the elements
+  REQUIRE(interpolator.get_data_XY() == interpolator.get_data_XY());
 
   // initialize test data (duplicates)
   std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
   std::vector<double> y_duplicates = { 0, 1, 1, 0, 1, -1 };
 
-  //interpolator should fail if there is a double x element!
-  REQUIRE_THROWS_AS(interpolation::LinearInterpolator(x_duplicates, y_duplicates,true, true),std::runtime_error);
+  // interpolator should fail if there is a double x element!
+  REQUIRE_THROWS_AS(
+    interpolation::LinearInterpolator(x_duplicates, y_duplicates, true, true),
+    std::runtime_error);
 }
 
 TEST_CASE("LinearInterpolator: should perform basic interpolations correctly",
@@ -71,50 +75,54 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly",
     CHECK(interpolator.interpolate(-2.5) == Approx(0.5));
     CHECK(interpolator.interpolate(-2.4) == Approx(0.52));
 
-    CHECK(interpolator.interpolate(2) == Approx(2./3.));
-    CHECK(interpolator.interpolate(3.0) == Approx(1./2.));
-    CHECK(interpolator.interpolate(4) == Approx(1./3.));
+    CHECK(interpolator.interpolate(2) == Approx(2. / 3.));
+    CHECK(interpolator.interpolate(3.0) == Approx(1. / 2.));
+    CHECK(interpolator.interpolate(4) == Approx(1. / 3.));
 
-    CHECK(interpolator.interpolate(8) == Approx(-1./3.));
-    CHECK(interpolator.interpolate(9.0) == Approx(-1./2.));
-    CHECK(interpolator.interpolate(10) == Approx(-2./3.));
+    CHECK(interpolator.interpolate(8) == Approx(-1. / 3.));
+    CHECK(interpolator.interpolate(9.0) == Approx(-1. / 2.));
+    CHECK(interpolator.interpolate(10) == Approx(-2. / 3.));
   }
 
   SECTION("preset value vectors should be interpolated correctly")
   {
-    std::vector<double> targets_x  = {-2.6,-2.5,-2.4};
-    std::vector<double> expected_y = {0.48, 0.5, 0.52};
+    std::vector<double> targets_x = { -2.6, -2.5, -2.4 };
+    std::vector<double> expected_y = { 0.48, 0.5, 0.52 };
 
     REQUIRE(interpolator.interpolate(targets_x) == expected_y);
   }
 
-  SECTION("extrapolation should be linear in default mode")
+  SECTION("extrapolation mode should cause:")
   {
-    for (auto mode :
-         { "none", "extrapolate", "default", "standard" }) {
+    for (auto mode : interpolation::t_extr_mode_all) {
+      interpolator.set_extrapolation_mode(mode);
 
-      if (!boost::iequals(mode,"none"))
-        interpolator.set_extrapolation_mode(mode);
-      REQUIRE(interpolator.interpolate(-11) == Approx(1.2));
-      REQUIRE(interpolator.interpolate(14) == Approx(-4/3.));
+      switch (mode) {
+        case interpolation::t_extr_mode::fail:
+          SECTION(" - fail when set to fail")
+          {
+            REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
+                              std::out_of_range);
+            REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
+                              std::out_of_range);
+          }
+          break;
 
+        case interpolation::t_extr_mode::nearest:
+          SECTION(" - extrapolate nearst when set")
+          {
+            REQUIRE(interpolator.interpolate(-11) == Approx(1));
+            REQUIRE(interpolator.interpolate(13) == Approx(-1));
+          }
+          break;
+
+        default:
+          SECTION(" - extrapolation in all other cases")
+          REQUIRE(interpolator.interpolate(-11) == Approx(1.2));
+          REQUIRE(interpolator.interpolate(14) == Approx(-4 / 3.));
+
+          break;
+      }
     }
-
-    //test nearest interpolation
-    interpolator.set_extrapolation_mode("nearest");
-    REQUIRE(interpolator.interpolate(-11) == Approx(1));
-    REQUIRE(interpolator.interpolate(13) == Approx(-1));
-    interpolator.set_extrapolation_mode("default");
-  }
-
-  SECTION(
-    "extrapolation should fail with out_of_range exception in 'fail' mode")
-  {
-    // check faile exception
-    interpolator.set_extrapolation_mode("fail");
-    REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
-                      std::out_of_range);
-    REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
-                      std::out_of_range);
   }
 }

@@ -8,7 +8,10 @@ module_name = 'tools'
 # -- sources
 sources = [
     'module.cpp',
-    'm_timeconv.cpp'
+    'm_timeconv.cpp',
+    'interpolation/module.cpp',
+    'interpolation/subm_nearestinterpolator.cpp',
+    'interpolation/subm_linearinterpolator.cpp'
 ]
 
 # define python module

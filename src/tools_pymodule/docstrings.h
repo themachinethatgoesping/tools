@@ -37,9 +37,9 @@ by provding vectors for x and y (same size). X must be sorted and no
 duplicates are allowed. then call class.Interpolate(new x value) to
 get a corresponding y value at this x position. This interface
 implements the search for the x position within this vector (closest 2
-x/y value pair) and computes an x interpolation value (targetX) Then
-it call the Interpolate functions of the implementation classes that
-use this interface to interpolate between these pairs.
+x/y value pair) and computes an x interpolation value (target_data_X)
+Then it call the Interpolate functions of the implementation classes
+that use this interface to interpolate between these pairs.
 
 Template parameter ``YType:``:
     type of the y values (typically double, but will be a vector for
@@ -81,21 +81,21 @@ datapoitns)doc";
 
 static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_checkX = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_extr_mode = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_extr_mode = R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_X =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_data_X =
 R"doc(return the x component of the internal data vector
 
 Returns:
     std::vector<double>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_XY =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_data_XY =
 R"doc(return the internal data vector
 
 Returns:
     const std::vector<std::pair<double,YType>>&)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_Y =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_get_data_Y =
 R"doc(return the y component of the itnernal data vector
 
 Returns:
@@ -107,7 +107,7 @@ static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolat
 R"doc(Search for the closest x values in the internal data and then
 interpolate between the coressponding y functions.
 
-Parameter ``targetX``:
+Parameter ``target_data_X``:
     x value where for which the corresponding y value is to be
     interpolated
 
@@ -127,7 +127,7 @@ static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolat
 R"doc(Interface for implementing an interpolation between two y values using
 a given interpolation factor
 
-Parameter ``targetX``:
+Parameter ``target_data_X``:
     interpolation factor. 0 means return smaller y value, 1 means
     return larger y value
 
@@ -140,9 +140,9 @@ Parameter ``y1``:
 Returns:
     interpolated y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_lastXPair = R"doc(< last pair (for faster consequtive searches))doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_last_x_pair = R"doc(< last pair (for faster consequtive searches))doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_set_XY =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_set_data_XY =
 R"doc(change the input data to this vector of XY pairs
 
 Parameter ``XY:``:
@@ -155,7 +155,7 @@ Parameter ``sortX:``:
 Parameter ``checkX:``:
     check if the inptur data vector is valid)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_set_XY_2 =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_set_data_XY_2 =
 R"doc(change the input data to these X and Y vectors
 
 Parameter ``X:``:
@@ -178,38 +178,28 @@ R"doc(sort internal vectors by X. This is necessary if the input data was
 not sorted by X so far! TODO: provide function to deal with x value
 duplicates)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_calc_targetX =
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_calc_target_data_X =
 R"doc(compute the interpolation factor between xmin and xmax
 
-Parameter ``targetX``:
+Parameter ``target_data_X``:
     x value for which we want to know the interpolation factor
 
 Returns:
     interpolation factor)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_t_XPair = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_t_x_pair = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_xfactor = R"doc(< 1/(xmax-xmin))doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_xfactor = R"doc(< 1/(xmax-xmin))doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_xmax = R"doc(< larger xvalue)doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_xmax = R"doc(< larger xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_xmax_index = R"doc(< index of the larger x value (in the internal vector))doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_xmax_index = R"doc(< index of the larger x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_xmin = R"doc(< smaller xvalue)doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_xmin = R"doc(< smaller xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_XPair_xmin_index = R"doc(< index of the smaller x value (in the internal vector))doc";
-
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_extr_mode = R"doc(extrapolation mode type.)doc";
-
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_extr_mode_extrapolate = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_extr_mode_fail = R"doc(< return nearest value in the vector.)doc";
-
-static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_extr_mode_nearest =
-R"doc(< throw out_of_range exception if given x value exceeds < boundaries
-of internal vector)doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_I_Interpolator_t_x_pair_xmin_index = R"doc(< index of the smaller x value (in the internal vector))doc";
 
 static const char *__doc_themachinethatgoesping_tools_interpolation_LinearInterpolator = R"doc()doc";
 
@@ -234,15 +224,68 @@ Parameter ``v``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator = R"doc(Interpolator class to find nearest neighbors in vector data)doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_NearestInterpolator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_NearestInterpolator =
+R"doc(Construct a new Nearest Interpolator object from a vector of pairs
+usage: interpolated_y_value = interpolator.interpolate(x_value)
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_NearestInterpolator_2 = R"doc()doc";
+Parameter ``XY``:
+    vector of x,y pairs. X must be unique and sorted (unless sortX is
+    set).
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_average_halves = R"doc()doc";
+Parameter ``sortX``:
+    Setting this true will sort XY by X (deactiave for performance
+    reasons)
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_get_average_halves = R"doc()doc";
+Parameter ``checkX``:
+    Check if the inputdata is valid (deactiave for performance
+    reasons)
+
+Parameter ``extrapolation_mode``:
+    extrapolation mode (nearest or fail))doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_NearestInterpolator_2 =
+R"doc(Construct a new Nearest Interpolator object from a vector of pairs
+usage: interpolated_y_value = interpolator.interpolate(x_value)
+
+Parameter ``X``:
+    X vector; must be unique and sorted (unless sortX is set). same
+    size as Y!
+
+Parameter ``Y``:
+    Y vector; must be unique and sorted (unless sortX is set). same
+    size as X!
+
+Parameter ``sortX``:
+    Setting this true will sort XY by X (deactiave for performance
+    reasons)
+
+Parameter ``checkX``:
+    Check if the inputdata is valid (deactiave for performance
+    reasons)
+
+Parameter ``extrapolation_mode``:
+    extrapolation mode (nearest or fail))doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_interpolate =
+R"doc(get nearest y value for given target_x
+
+Parameter ``target_x``:
+    x value for which a y value is to be interpolated
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_interpolate_2 =
+R"doc(get nearest y values for given x targets (vectorized call)
+
+Parameter ``targets_x``:
+    vector of x values. For each of these values find the corrspondig
+    y value
+
+Returns:
+    corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_interpolate_pair = R"doc()doc";
 
@@ -260,14 +303,18 @@ Parameter ``p2``:
     : An array of size 2 containing the x and y position of the second
     point (x,y)
 
-Parameter ``average_halves:``:
-    if true, the average_halves of both will be used when target is
-    0.5, if False v[1] is used
-
 Returns:
-    p1[1],p2[1] or average_halves of the 2)doc";
+    p1[1],p2[1])doc";
 
-static const char *__doc_themachinethatgoesping_tools_interpolation_NearestInterpolator_set_average_halves = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_interpolation_t_extr_mode = R"doc(extrapolation mode type.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_t_extr_mode_extrapolate = R"doc(< interpolate using the closest value pair in the internal x vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_t_extr_mode_fail = R"doc(< return nearest value in the vector.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_interpolation_t_extr_mode_nearest =
+R"doc(< throw out_of_range exception if given x value exceeds < boundaries
+of internal vector)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
 R"doc(Converting between date strings and UnixTime stampes (ref 1970)

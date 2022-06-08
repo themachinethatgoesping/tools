@@ -18,13 +18,32 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace interpolation {
 
+
+/**
+ * @brief extrapolation mode type.
+ *
+ */
+enum class t_extr_mode
+{
+  extrapolate = 0, ///< interpolate using the closest value pair in the internal x vector
+  fail = 1,   ///< return nearest value in the vector.
+  nearest = 2 ///< throw out_of_range exception if given x value exceeds
+              ///< boundaries of internal vector
+};
+
+static const std::array<t_extr_mode,3> t_extr_mode_all = {
+  t_extr_mode::extrapolate,
+  t_extr_mode::fail,
+  t_extr_mode::nearest
+};
+
 /**
  * @brief Interface class for interpolator classes
  * Create an interpolator object by provding vectors for x and y (same size). X
  * must be sorted and no duplicates are allowed. then call class.Interpolate(new
  * x value) to get a corresponding y value at this x position. This interface
  * implements the search for the x position within this vector (closest 2 x/y
- * value pair) and computes an x interpolation value (targetX) Then it call the
+ * value pair) and computes an x interpolation value (target_data_X) Then it call the
  * Interpolate functions of the implementation classes that use this interface
  * to interpolate between these pairs.
  *
@@ -35,20 +54,8 @@ template<typename YType>
 class I_Interpolator
 {
 protected:
-  /**
-   * @brief extrapolation mode type.
-   *
-   */
-  enum class _t_extr_mode
-  {
-    extrapolate =
-      0, ///< interpolate using the closest value pair in the internal x vector
-    fail = 1,   ///< return nearest value in the vector.
-    nearest = 2 ///< throw out_of_range exception if given x value exceeds
-                ///< boundaries of internal vector
-  } _extr_mode = _t_extr_mode::extrapolate;
 
-  struct _t_XPair
+  struct _t_x_pair
   {
     size_t
       _xmin_index; ///< index of the smaller x value (in the internal vector)
@@ -58,7 +65,7 @@ protected:
     double _xmax;    ///< larger xvalue
     double _xfactor; ///< 1/(xmax-xmin)
 
-    _t_XPair(size_t xmin_index, size_t xmax_index, double xmin, double xmax)
+    _t_x_pair(size_t xmin_index, size_t xmax_index, double xmin, double xmax)
       : _xmin_index(xmin_index)
       , _xmax_index(xmax_index)
       , _xmin(xmin)
@@ -69,12 +76,18 @@ protected:
     /**
      * @brief compute the interpolation factor between xmin and xmax
      *
-     * @param targetX x value for which we want to know the interpolation factor
+     * @param target_data_X x value for which we want to know the interpolation factor
      * @return interpolation factor
      */
-    double calc_targetX(double targetX) { return (targetX - _xmin) * _xfactor; }
+    double calc_target_data_X(double target_data_X) { return (target_data_X - _xmin) * _xfactor; }
 
-  } _lastXPair; ///< last pair (for faster consequtive searches)
+  } _last_x_pair; ///< last pair (for faster consequtive searches)
+
+  /**
+   * @brief extrapolation mode type.
+   *
+   */
+  t_extr_mode _extr_mode;
 
   std::vector<std::pair<double, YType>> _XY; ///< main data vector containing pairs of corresponding x and y datapoitns
 
@@ -89,10 +102,12 @@ public:
    */
   I_Interpolator(const std::vector<std::pair<double, YType>>& XY,
                  bool sortX = false,
-                 bool checkX = false)
-    : _lastXPair(0, 1, 0, 1)
+                 bool checkX = true,
+                 t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    : _last_x_pair(0, 1, 0, 1),
+      _extr_mode(extrapolation_mode)
   {
-    set_XY(XY, sortX, checkX);
+    set_data_XY(XY, sortX, checkX);
   }
   /**
    * @brief Construct a new i interpolator object from two (x and y) data
@@ -107,10 +122,12 @@ public:
   I_Interpolator(const std::vector<double>& X,
                  const std::vector<YType>& Y,
                  bool sortX = false,
-                 bool checkX = false)
-    : _lastXPair(0, 1, 0, 1)
+                 bool checkX = true,
+                 t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    : _last_x_pair(0, 1, 0, 1),
+      _extr_mode(extrapolation_mode)
   {
-    set_XY(X, Y, sortX, checkX);
+    set_data_XY(X, Y, sortX, checkX);
   }
 
   virtual ~I_Interpolator() = default;
@@ -160,13 +177,13 @@ public:
    * (necessary if the vector was not sorted before)
    * @param checkX: check if the inptur data vector is valid
    */
-  virtual void set_XY(const std::vector<std::pair<double, YType>>& XY,
+  virtual void set_data_XY(const std::vector<std::pair<double, YType>>& XY,
                       bool sortx = false,
-                      bool checkx = false)
+                      bool checkx = true)
   {
     if (XY.size() < 2)
       throw(
-        std::runtime_error("ERROR[Interpolation::set_XY]: list size is < 2!"));
+        std::runtime_error("ERROR[Interpolation::set_data_XY]: list size is < 2!"));
 
     // set list
     _XY = XY;
@@ -178,7 +195,7 @@ public:
     if (checkx)
       checkX();
 
-    _lastXPair = _t_XPair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
+    _last_x_pair = _t_x_pair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
   }
 
   /**
@@ -190,14 +207,14 @@ public:
    * (necessary if the vector was not sorted before)
    * @param checkX: check if the inptur data vector is valid
    */
-  virtual void set_XY(const std::vector<double>& X,
+  virtual void set_data_XY(const std::vector<double>& X,
                       const std::vector<YType>& Y,
                       bool sortx = false,
-                      bool checkx = false)
+                      bool checkx = true)
   {
     if (X.size() != Y.size())
       throw(std::runtime_error(
-        "ERROR[Interpolation::set_XY]: list sizes do not match"));
+        "ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
     std::vector<std::pair<double, YType>> XY;
     XY.reserve(X.size());
@@ -206,7 +223,7 @@ public:
       XY.push_back(std::make_pair(X[i], Y[i]));
     }
 
-    set_XY(XY, sortx, checkx);
+    set_data_XY(XY, sortx, checkx);
   }
 
   // -----------------------
@@ -217,14 +234,14 @@ public:
    *
    * @return const std::vector<std::pair<double,YType>>&
    */
-  const std::vector<std::pair<double, YType>>& get_XY() const { return _XY; }
+  const std::vector<std::pair<double, YType>>& get_data_XY() const { return _XY; }
 
   /**
    * @brief return the x component of the internal data vector
    *
    * @return std::vector<double>
    */
-  std::vector<double> get_X() const
+  std::vector<double> get_data_X() const
   {
     std::vector<double> X;
     X.reserve(_XY.size());
@@ -240,7 +257,7 @@ public:
    *
    * @return std::vector<YType>
    */
-  std::vector<YType> get_Y() const
+  std::vector<YType> get_data_Y() const
   {
     std::vector<YType> Y;
     Y.reserve(_XY.size());
@@ -251,58 +268,35 @@ public:
     return Y;
   }
 
-  virtual void set_extrapolation_mode(const std::string mode)
+  void set_extrapolation_mode(const t_extr_mode extrapolation_mode)
   {
-    if (boost::iequals(mode, "nearest"))
-      _extr_mode = _t_extr_mode::nearest;
-    else if (boost::iequals(mode, "extrapolate"))
-      _extr_mode = _t_extr_mode::extrapolate;
-    else if (boost::iequals(mode, "default"))
-      _extr_mode = _t_extr_mode::extrapolate;
-    else if (boost::iequals(mode, "standard"))
-      _extr_mode = _t_extr_mode::extrapolate;
-    else if (boost::iequals(mode, "fail"))
-      _extr_mode = _t_extr_mode::fail;
-    else
-      throw std::out_of_range("ERROR[interpolate::set_extrapolation_mode]: "
-                              "unkonw extrapolation mode: " +
-                              mode + "!");
+    _extr_mode = extrapolation_mode;
   }
 
-  virtual std::string get_extrapolation_mode() const
+  t_extr_mode get_extrapolation_mode() const
   {
-    switch (_extr_mode) {
-      case _t_extr_mode::nearest:
-        return "nearest";
-      case _t_extr_mode::extrapolate:
-        return "extrapolate";
-      case _t_extr_mode::fail:
-        return "fail";
-      default:
-        return "unknown";
-    }
+    return _extr_mode;
   }
 
   //-------------------------
   // interpolation functions
   //-------------------------
 
+  
   /**
-   * @brief Search for the closest x values in the internal data and then
-   * interpolate between the coressponding y functions.
-   *
-   * @param targetX x value where for which the corresponding y value is to be
-   * interpolated
-   * @return interpolated y value
+   * @brief get neares y values for given x target
+   * 
+   * @param targets_x vector of x values. For each of these values find the corrspondig y value 
+   * @return corresponding y value 
    */
-  virtual YType interpolate(double targetX)
+  virtual YType interpolate(double target_data_X)
   {
     /* find correct xpair */
 
     // if target value is smaller than the min value of the last, decrement
     // backwards
-    if (targetX > std::get<0>(_XY[_lastXPair._xmax_index])) {
-      size_t i = _lastXPair._xmax_index;
+    if (target_data_X > std::get<0>(_XY[_last_x_pair._xmax_index])) {
+      size_t i = _last_x_pair._xmax_index;
       while (true) {
         ++i;
 
@@ -310,23 +304,23 @@ public:
         if (size_t last = _XY.size() - 1; i > last) {
           // set the new last pair (will be used for interpolation)
           switch (_extr_mode) {
-            case _t_extr_mode::fail: {
+            case t_extr_mode::fail: {
               std::string msg;
-              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(targetX) +
+              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_data_X) +
                      "] is out of range  (too large)(" +
                      std::to_string(std::get<0>(_XY.front())) + "/" +
                      std::to_string(std::get<0>(_XY.back())) +
                      ")! (and fail on extrapolate was set)";
               throw(std::out_of_range(msg));
             }
-            case _t_extr_mode::nearest:
-              _lastXPair = _t_XPair(last - 1,
+            case t_extr_mode::nearest:
+              _last_x_pair = _t_x_pair(last - 1,
                                     last,
                                     std::get<0>(_XY[last - 1]),
                                     std::get<0>(_XY[last]));
               return std::get<1>(_XY[last]);
             default:
-              _lastXPair = _t_XPair(last - 1,
+              _last_x_pair = _t_x_pair(last - 1,
                                     last,
                                     std::get<0>(_XY[last - 1]),
                                     std::get<0>(_XY[last]));
@@ -336,10 +330,10 @@ public:
         }
 
         // if target value is larger or equal than the value at i
-        if (targetX <= std::get<0>(_XY[i])) {
+        if (target_data_X <= std::get<0>(_XY[i])) {
           // set the new last pair (will be used for interpolation)
-          _lastXPair =
-            _t_XPair(i - 1, i, std::get<0>(_XY[i - 1]), std::get<0>(_XY[i]));
+          _last_x_pair =
+            _t_x_pair(i - 1, i, std::get<0>(_XY[i - 1]), std::get<0>(_XY[i]));
           break;
         }
       }
@@ -347,8 +341,8 @@ public:
 
     // if target value is smaller than the min value of the last, decrement
     // backwards
-    else if (targetX < std::get<0>(_XY[_lastXPair._xmin_index])) {
-      long int i = static_cast<long int>(_lastXPair._xmin_index);
+    else if (target_data_X < std::get<0>(_XY[_last_x_pair._xmin_index])) {
+      long int i = static_cast<long int>(_last_x_pair._xmin_index);
       while (true) {
         --i;
 
@@ -357,59 +351,60 @@ public:
 
           // set the new last pair (will be used for interpolation)
           switch (_extr_mode) {
-            case _t_extr_mode::fail: {
+            case t_extr_mode::fail: {
               std::string msg;
-              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(targetX) +
+              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_data_X) +
                      "] is out of range (too small)(" +
                      std::to_string(std::get<0>(_XY.front())) + "/" +
                      std::to_string(std::get<0>(_XY.back())) +
                      ")! (and fail on extrapolate was set)";
               throw(std::out_of_range(msg));
             }
-            case _t_extr_mode::nearest:
-              _lastXPair =
-                _t_XPair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
+            case t_extr_mode::nearest:
+              _last_x_pair =
+                _t_x_pair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
               return std::get<1>(_XY[0]);
             default:
-              _lastXPair =
-                _t_XPair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
+              _last_x_pair =
+                _t_x_pair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
               break;
           }
           break;
         }
 
         // if target value is larger or equal than the value at i
-        if (targetX >= std::get<0>(_XY[i])) {
-          _lastXPair =
-            _t_XPair(i, i + 1, std::get<0>(_XY[i]), std::get<0>(_XY[i + 1]));
+        if (target_data_X >= std::get<0>(_XY[i])) {
+          _last_x_pair =
+            _t_x_pair(i, i + 1, std::get<0>(_XY[i]), std::get<0>(_XY[i + 1]));
           break;
         }
       }
     }
 
-    else // targetX <= _XY[_lastXPair._xmax_index] && targetX >=
+    else // target_data_X <= _XY[_lastXPair._xmax_index] && target_data_X >=
          // _XY[_lastXPair._xmin_index]
     {
     }
 
-    /* interpolate useing the (new) last XPair */
-    return interpolate_pair(_lastXPair.calc_targetX(targetX),
-                       std::get<1>(_XY[_lastXPair._xmin_index]),
-                       std::get<1>(_XY[_lastXPair._xmax_index]));
+    /* interpolate useing the (new) last XPair (call function from derived class) */
+    return interpolate_pair(_last_x_pair.calc_target_data_X(target_data_X),
+                       std::get<1>(_XY[_last_x_pair._xmin_index]),
+                       std::get<1>(_XY[_last_x_pair._xmax_index]));
   }
 
+  
   /**
-   * @brief Interpolat multiple vector values in a loop
+   * @brief get nearest y values for given x targets (vectorized call)
    * 
-   * @param targetsX x values to interpolate
-   * @return std::vector of interpolated y values
+   * @param targets_x vector of x values. For each of these values find the corrspondig y value 
+   * @return corresponding y value 
    */
   virtual std::vector<YType> interpolate(const std::vector<double>& targetsX)
   {
     std::vector<YType> y_values;
     y_values.reserve(targetsX.size());
-    for(const auto targetX : targetsX){
-      y_values.push_back(interpolate(targetX));
+    for(const auto target_data_X : targetsX){
+      y_values.push_back(interpolate(target_data_X));
     }
 
     return y_values;
@@ -423,13 +418,13 @@ public:
    * @brief Interface for implementing an interpolation between two y values
    * using a given interpolation factor
    *
-   * @param targetX interpolation factor. 0 means return smaller y value, 1
+   * @param target_data_X interpolation factor. 0 means return smaller y value, 1
    * means return larger y value
    * @param y1 smaller y value
    * @param y1 larger y value
    * @return interpolated y value
    */
-  virtual YType interpolate_pair(double targetX,
+  virtual YType interpolate_pair(double target_data_X,
                             const YType& y1,
                             const YType& y2) const = 0;
 

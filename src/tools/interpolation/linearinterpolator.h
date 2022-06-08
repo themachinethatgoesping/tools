@@ -27,14 +27,16 @@ public:
 
   LinearInterpolator(const std::vector<std::pair<double, double>>& XY,
                      bool sortX = false,
-                     bool checkX = false)
-    : I_Interpolator<double>(XY, sortX, checkX)
+                     bool checkX = false,
+                     t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    : I_Interpolator<double>(XY, sortX, checkX, extrapolation_mode)
   {}
   LinearInterpolator(const std::vector<double>& X,
                      const std::vector<double>& Y,
                      bool sortX = false,
-                     bool checkX = false)
-    : I_Interpolator<double>(X, Y, sortX, checkX)
+                     bool checkX = false,
+                     t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    : I_Interpolator<double>(X, Y, sortX, checkX, extrapolation_mode)
   {}
 
   /**
@@ -50,23 +52,12 @@ public:
     return (double)(targetX * (y2) + (double(1.0) - targetX) * (y1));
   }
 
-
   double interpolate_pair(double targetX,
-                     const double& y1,
-                     const double& y2) const final
+                          const double& y1,
+                          const double& y2) const final
   {
     return linear(targetX, y1, y2);
   }
-
-  // double interpolate(double targetX)
-  // {
-  //     return I_Interpolator::interpolate(targetX);
-  // }
-  
-  // std::vector<double> interpolate(const std::vector<double>& targetsX) final
-  // {
-  //   return I_Interpolator::interpolate(targetsX);
-  // }
 };
 
 } // namespace interpolation

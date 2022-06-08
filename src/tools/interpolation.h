@@ -2,5 +2,5 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include "interpolation/linear.h"
-#include "interpolation/nearest.h"
+#include "interpolation/linearinterpolator.h"
+#include "interpolation/nearestinterpolator.h"

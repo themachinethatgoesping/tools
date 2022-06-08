@@ -12,7 +12,11 @@ sources = [
 ]
 
 headers = [
-  'timeconv.h'
+  'timeconv.h',
+  'interpolation.h',
+  'interpolation/i_interpolator.h',
+  'interpolation/linearinterpolator.h',
+  'interpolation/nearestinterpolator.h'
 ]
 
 # -- targets --
@@ -27,8 +31,7 @@ if build_machine.system() != 'linux'
                         override_options: [
                           'b_lundef=false'
                       ],
-                        install : true, 
-                        install_tag : 'library'
+                        install : true
                         )
 else  
   tools_lib = library(libname,sources,
@@ -40,8 +43,7 @@ else
                         override_options: [
                           'b_lundef=false'
                       ],
-                        install : true, 
-                        install_tag : 'library'
+                        install : true
                         )
 endif
                       
