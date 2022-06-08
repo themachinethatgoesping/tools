@@ -34,7 +34,7 @@ void init_m_vectorinterpolators(pybind11::module& m)
   pybind11::enum_<t_extr_mode>(
     m_vectorinterpolators,
     "t_extr_mode",
-    DOC(themachinethatgoesping, tools, interpolation, t_extr_mode))
+    DOC(themachinethatgoesping, tools, vectorinterpolators, t_extr_mode))
     .value("extrapolate", t_extr_mode::extrapolate)
     .value("nearest", t_extr_mode::nearest)
     .value("fail", t_extr_mode::fail)

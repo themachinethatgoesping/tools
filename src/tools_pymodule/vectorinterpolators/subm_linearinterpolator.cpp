@@ -23,16 +23,16 @@ init_subm_linearinterpolator(pybind11::module& m)
   py::class_<LinearInterpolator>(
     m,
     "LinearInterpolator",
-    DOC(themachinethatgoesping, tools, interpolation, LinearInterpolator))
+    DOC(themachinethatgoesping, tools, vectorinterpolators, LinearInterpolator))
     .def(py::init<const std::vector<std::pair<double, double>>&,
                   bool,
                   bool,
                   t_extr_mode>(),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
-             LinearInterpolator,
-             LinearInterpolator),
+             vectorinterpolators,
+             I_Interpolator,
+             I_Interpolator),
          py::arg("XY"),
          py::arg("sortX") = false,
          py::arg("checkX") = true,
@@ -44,9 +44,9 @@ init_subm_linearinterpolator(pybind11::module& m)
                   t_extr_mode>(),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
-             LinearInterpolator,
-             LinearInterpolator_2),
+             vectorinterpolators,
+             I_Interpolator,
+             I_Interpolator),
          py::arg("X") = std::vector<double>({ 0, 1 }),
          py::arg("Y") = std::vector<double>({ 0, 1 }),
          py::arg("sortX") = false,
@@ -56,7 +56,7 @@ init_subm_linearinterpolator(pybind11::module& m)
          py::overload_cast<double>(&LinearInterpolator::interpolate),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              interpolate),
          py::arg("target_x"))
@@ -65,25 +65,25 @@ init_subm_linearinterpolator(pybind11::module& m)
            &LinearInterpolator::interpolate),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              interpolate_2),
          py::arg("targets_x"))
     .def(
       "sortX",
       &LinearInterpolator::sortX,
-      DOC(themachinethatgoesping, tools, interpolation, I_Interpolator, sortX))
+      DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, sortX))
     .def(
       "checkX",
       &LinearInterpolator::checkX,
-      DOC(themachinethatgoesping, tools, interpolation, I_Interpolator, checkX))
+      DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, checkX))
     .def("set_data_XY",
          py::overload_cast<const std::vector<std::pair<double, double>>&,
                            bool,
                            bool>(&LinearInterpolator::set_data_XY),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              set_data_XY),
          py::arg("XY"),
@@ -96,7 +96,7 @@ init_subm_linearinterpolator(pybind11::module& m)
                            bool>(&LinearInterpolator::set_data_XY),
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              set_data_XY_2),
          py::arg("X"),
@@ -107,28 +107,28 @@ init_subm_linearinterpolator(pybind11::module& m)
          &LinearInterpolator::get_data_X,
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              get_data_X))
     .def("get_data_Y",
          &LinearInterpolator::get_data_X,
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              get_data_Y))
     .def("get_data_XY",
          &LinearInterpolator::get_data_XY,
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              get_data_XY))
     .def("set_extrapolation_mode",
          &LinearInterpolator::set_extrapolation_mode,
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              set_extrapolation_mode),
          py::arg("extrapolation_mode"))
@@ -136,7 +136,7 @@ init_subm_linearinterpolator(pybind11::module& m)
          &LinearInterpolator::get_extrapolation_mode,
          DOC(themachinethatgoesping,
              tools,
-             interpolation,
+             vectorinterpolators,
              I_Interpolator,
              get_extrapolation_mode));
 }

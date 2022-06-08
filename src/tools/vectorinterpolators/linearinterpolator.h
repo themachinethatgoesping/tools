@@ -17,6 +17,10 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
 
+/**
+ * @brief Interpolator class to find linear interpolated values within vector data
+ * 
+ */
 class LinearInterpolator : public I_Interpolator<double>
 {
 

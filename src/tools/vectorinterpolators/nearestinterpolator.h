@@ -18,7 +18,7 @@ namespace tools {
 namespace vectorinterpolators {
 
 /**
- * @brief Interpolator class to find nearest neighbors in vector data
+ * @brief Interpolator class to find nearest neighbors within vector data
  * 
  */
 class NearestInterpolator : public I_Interpolator<double>

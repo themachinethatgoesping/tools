@@ -21,7 +21,7 @@ namespace vectorinterpolators {
 
 /**
  * @brief extrapolation mode type.
- *
+ * 
  */
 enum class t_extr_mode
 {
@@ -93,12 +93,13 @@ protected:
 
 public:
   /**
-   * @brief Construct a new i interpolator object from a vector of x,y pairs
-   *
-   * @param XY: input data vector given as vector<pair<X,Y>>
-   * @param sortX: sort the input data vector after interpolator construction
-   * (necessary if the vector was not sorted before)
-   * @param checkX: check if the inptur data vector is valid
+   * @brief Construct a new Interpolator object from a vector of pairs
+   * usage: interpolated_y_value = interpolator.interpolate(x_value)
+   * 
+   * @param XY vector of x,y pairs. X must be unique and sorted (unless sortX is set).
+   * @param sortX Setting this true will sort XY by X (deactiave for performance reasons)
+   * @param checkX Check if the inputdata is valid (deactiave for performance reasons)
+   * @param extrapolation_mode extrapolation mode (nearest or fail)
    */
   I_Interpolator(const std::vector<std::pair<double, YType>>& XY,
                  bool sortX = false,
@@ -110,14 +111,14 @@ public:
     set_data_XY(XY, sortX, checkX);
   }
   /**
-   * @brief Construct a new i interpolator object from two (x and y) data
-   * vectors (of same size)
-   *
-   * @param X: x vector (must be same size)
-   * @param Y: y vector (must be same size)
-   * @param sortX: sort the input data vector after interpolator construction
-   * (necessary if the vector was not sorted before)
-   * @param checkX: check if the inptur data vector is valid
+   * @brief Construct a new Interpolator object from a vector of pairs
+   * usage: interpolated_y_value = interpolator.interpolate(x_value)
+   * 
+   * @param X X vector; must be unique and sorted (unless sortX is set). same size as Y!
+   * @param Y Y vector; must be unique and sorted (unless sortX is set). same size as X!
+   * @param sortX Setting this true will sort XY by X (deactiave for performance reasons)
+   * @param checkX Check if the inputdata is valid (deactiave for performance reasons)
+   * @param extrapolation_mode extrapolation mode (nearest or fail)
    */
   I_Interpolator(const std::vector<double>& X,
                  const std::vector<YType>& Y,
