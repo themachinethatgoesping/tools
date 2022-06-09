@@ -43,7 +43,7 @@ static const std::array<t_extr_mode,3> t_extr_mode_all = {
  * must be sorted and no duplicates are allowed. then call class.Interpolate(new
  * x value) to get a corresponding y value at this x position. This interface
  * implements the search for the x position within this vector (closest 2 x/y
- * value pair) and computes an x interpolation value (target_data_X) Then it call the
+ * value pair) and computes an x interpolation value (target_x) Then it call the
  * Interpolate functions of the implementation classes that use this interface
  * to interpolate between these pairs.
  *
@@ -76,10 +76,10 @@ protected:
     /**
      * @brief compute the interpolation factor between xmin and xmax
      *
-     * @param target_data_X x value for which we want to know the interpolation factor
+     * @param target_x x value for which we want to know the interpolation factor
      * @return interpolation factor
      */
-    double calc_target_data_X(double target_data_X) { return (target_data_X - _xmin) * _xfactor; }
+    double calc_target_x(double target_x) { return (target_x - _xmin) * _xfactor; }
 
   } _last_x_pair; ///< last pair (for faster consequtive searches)
 
@@ -287,16 +287,16 @@ public:
   /**
    * @brief get neares y values for given x target
    * 
-   * @param targets_x vector of x values. For each of these values find the corrspondig y value 
+   * @param target_x find the corresponding y value for this x value
    * @return corresponding y value 
    */
-  virtual YType interpolate(double target_data_X)
+  virtual YType interpolate(double target_x)
   {
     /* find correct xpair */
 
     // if target value is smaller than the min value of the last, decrement
     // backwards
-    if (target_data_X > std::get<0>(_XY[_last_x_pair._xmax_index])) {
+    if (target_x > std::get<0>(_XY[_last_x_pair._xmax_index])) {
       size_t i = _last_x_pair._xmax_index;
       while (true) {
         ++i;
@@ -307,7 +307,7 @@ public:
           switch (_extr_mode) {
             case t_extr_mode::fail: {
               std::string msg;
-              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_data_X) +
+              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                      "] is out of range  (too large)(" +
                      std::to_string(std::get<0>(_XY.front())) + "/" +
                      std::to_string(std::get<0>(_XY.back())) +
@@ -331,7 +331,7 @@ public:
         }
 
         // if target value is larger or equal than the value at i
-        if (target_data_X <= std::get<0>(_XY[i])) {
+        if (target_x <= std::get<0>(_XY[i])) {
           // set the new last pair (will be used for interpolation)
           _last_x_pair =
             _t_x_pair(i - 1, i, std::get<0>(_XY[i - 1]), std::get<0>(_XY[i]));
@@ -342,7 +342,7 @@ public:
 
     // if target value is smaller than the min value of the last, decrement
     // backwards
-    else if (target_data_X < std::get<0>(_XY[_last_x_pair._xmin_index])) {
+    else if (target_x < std::get<0>(_XY[_last_x_pair._xmin_index])) {
       long int i = static_cast<long int>(_last_x_pair._xmin_index);
       while (true) {
         --i;
@@ -354,7 +354,7 @@ public:
           switch (_extr_mode) {
             case t_extr_mode::fail: {
               std::string msg;
-              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_data_X) +
+              msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                      "] is out of range (too small)(" +
                      std::to_string(std::get<0>(_XY.front())) + "/" +
                      std::to_string(std::get<0>(_XY.back())) +
@@ -374,7 +374,7 @@ public:
         }
 
         // if target value is larger or equal than the value at i
-        if (target_data_X >= std::get<0>(_XY[i])) {
+        if (target_x >= std::get<0>(_XY[i])) {
           _last_x_pair =
             _t_x_pair(i, i + 1, std::get<0>(_XY[i]), std::get<0>(_XY[i + 1]));
           break;
@@ -382,13 +382,13 @@ public:
       }
     }
 
-    else // target_data_X <= _XY[_lastXPair._xmax_index] && target_data_X >=
+    else // target_x <= _XY[_lastXPair._xmax_index] && target_x >=
          // _XY[_lastXPair._xmin_index]
     {
     }
 
     /* interpolate useing the (new) last XPair (call function from derived class) */
-    return interpolate_pair(_last_x_pair.calc_target_data_X(target_data_X),
+    return interpolate_pair(_last_x_pair.calc_target_x(target_x),
                        std::get<1>(_XY[_last_x_pair._xmin_index]),
                        std::get<1>(_XY[_last_x_pair._xmax_index]));
   }
@@ -404,8 +404,8 @@ public:
   {
     std::vector<YType> y_values;
     y_values.reserve(targetsX.size());
-    for(const auto target_data_X : targetsX){
-      y_values.push_back(interpolate(target_data_X));
+    for(const auto target_x : targetsX){
+      y_values.push_back(interpolate(target_x));
     }
 
     return y_values;
@@ -419,13 +419,13 @@ public:
    * @brief Interface for implementing an interpolation between two y values
    * using a given interpolation factor
    *
-   * @param target_data_X interpolation factor. 0 means return smaller y value, 1
+   * @param target_x interpolation factor. 0 means return smaller y value, 1
    * means return larger y value
    * @param y1 smaller y value
    * @param y1 larger y value
    * @return interpolated y value
    */
-  virtual YType interpolate_pair(double target_data_X,
+  virtual YType interpolate_pair(double target_x,
                             const YType& y1,
                             const YType& y2) const = 0;
 
