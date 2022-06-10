@@ -51,7 +51,7 @@ hinnant_date_dep = declare_dependency(
 subdir('src')
  
 # add python files
-subdir('py_ext')
+subdir('python')
 
 # add tests
 subdir('tests')

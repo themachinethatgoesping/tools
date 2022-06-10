@@ -4,7 +4,6 @@
 
 # -- python sources --
 sources = [
-    '__init__.py',
     'tools_ext/__init__.py',
     'tools_ext/timeconv_ext.py',
 ]
