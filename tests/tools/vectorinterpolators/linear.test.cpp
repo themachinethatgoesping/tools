@@ -28,17 +28,10 @@ TEST_CASE("LinearInterpolator: sorting and checking should work as expected",
   std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
   std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
 
-  // throw because sortX is false but checkX is not false
+  // throw because x elements are in wrong order
   REQUIRE_THROWS_AS(vectorinterpolators::LinearInterpolator(
-                      x_wrong_order, y_wrong_order, false, true),
+                      x_wrong_order, y_wrong_order),
                     std::runtime_error);
-
-  // do not throw because vector is sorted this time
-  vectorinterpolators::LinearInterpolator interpolator_sorted(
-    x_wrong_order, y_wrong_order, true, true);
-
-  // interpolators should be the same after sorting the elements
-  REQUIRE(interpolator.get_data_XY() == interpolator.get_data_XY());
 
   // initialize test data (duplicates)
   std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
@@ -46,7 +39,7 @@ TEST_CASE("LinearInterpolator: sorting and checking should work as expected",
 
   // interpolator should fail if there is a double x element!
   REQUIRE_THROWS_AS(
-    vectorinterpolators::LinearInterpolator(x_duplicates, y_duplicates, true, true),
+    vectorinterpolators::LinearInterpolator(x_duplicates, y_duplicates),
     std::runtime_error);
 }
 

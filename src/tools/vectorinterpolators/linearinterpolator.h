@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_interpolator.h"
+#include "i_pairinterpolator.h"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -21,26 +21,22 @@ namespace vectorinterpolators {
  * @brief Interpolator class to find linear interpolated values within vector data
  * 
  */
-class LinearInterpolator : public I_Interpolator<double>
+class LinearInterpolator : public I_PairInterpolator<double>
 {
 
 public:
   LinearInterpolator()
-    : I_Interpolator<double>({ 0, 1 }, { 0, 1 })
+    : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
   {}
 
   LinearInterpolator(const std::vector<std::pair<double, double>>& XY,
-                     bool sortX = false,
-                     bool checkX = true,
                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-    : I_Interpolator<double>(XY, sortX, checkX, extrapolation_mode)
+    : I_PairInterpolator<double>(XY, extrapolation_mode)
   {}
   LinearInterpolator(const std::vector<double>& X,
                      const std::vector<double>& Y,
-                     bool sortX = false,
-                     bool checkX = true,
                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-    : I_Interpolator<double>(X, Y, sortX, checkX, extrapolation_mode)
+    : I_PairInterpolator<double>(X, Y,extrapolation_mode)
   {}
 
   /**
@@ -56,6 +52,7 @@ public:
   {
     return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
   }
+
 };
 
 } // namespace interpolation

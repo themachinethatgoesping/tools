@@ -14,18 +14,13 @@ class Test_tools_vectorinterpolators_nearest:
     X_duplicates = [-10, -5, -5, 0, 6, 12]
     Y_duplicates = [1, 0, 1, 1, 0, -1]
 
-    #check of exceptions are raise (checkX should be active by default)
+    #check of exceptions are raise
     with pytest.raises(RuntimeError):
       vip.NearestInterpolator(X_wrong_order, Y_wrong_order)
 
-    #check of exceptions are raise (duplicates should raise even if sortX is active)
+    #check of exceptions are raise ib dyokucates
     with pytest.raises(RuntimeError):
-      vip.NearestInterpolator(X_duplicates, Y_duplicates, sortX=True)
-
-    #sorting should cause X,Y _ wrong_order to be the same as XY
-    data_xy_1 = vip.NearestInterpolator(X,Y).get_data_XY()
-    data_xy_2 = vip.NearestInterpolator(X_wrong_order,Y_wrong_order,sortX=True).get_data_XY()
-    assert data_xy_1 == data_xy_2
+      vip.NearestInterpolator(X_duplicates, Y_duplicates)
 
 
   def test_NearestInterpolator_should_perform_basic_interpolations(self):

@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_interpolator.h"
+#include "i_pairinterpolator.h"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -21,44 +21,36 @@ namespace vectorinterpolators {
  * @brief Interpolator class to find nearest neighbors within vector data
  * 
  */
-class NearestInterpolator : public I_Interpolator<double>
+class NearestInterpolator : public I_PairInterpolator<double>
 {
 public:
   NearestInterpolator()
-    : I_Interpolator<double>({ 0, 1 }, { 0, 1 })
+    : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
   {}
 
   /**
    * @brief Construct a new Nearest Interpolator object from a vector of pairs
    * usage: interpolated_y_value = interpolator.interpolate(x_value)
    * 
-   * @param XY vector of x,y pairs. X must be unique and sorted (unless sortX is set).
-   * @param sortX Setting this true will sort XY by X (deactiave for performance reasons)
-   * @param checkX Check if the inputdata is valid (deactiave for performance reasons)
+   * @param XY vector of x,y pairs. X must be unique and sorted in ascending order.
    * @param extrapolation_mode extrapolation mode (nearest or fail)
    */
   NearestInterpolator(const std::vector<std::pair<double, double>>& XY,
-                      bool sortX = false,
-                      bool checkX = true,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-    : I_Interpolator<double>(XY, sortX, checkX, extrapolation_mode)
+    : I_PairInterpolator<double>(XY, extrapolation_mode)
   {}
   /**
    * @brief Construct a new Nearest Interpolator object from a vector of pairs
    * usage: interpolated_y_value = interpolator.interpolate(x_value)
    * 
-   * @param X X vector; must be unique and sorted (unless sortX is set). same size as Y!
-   * @param Y Y vector; must be unique and sorted (unless sortX is set). same size as X!
-   * @param sortX Setting this true will sort XY by X (deactiave for performance reasons)
-   * @param checkX Check if the inputdata is valid (deactiave for performance reasons)
+   * @param X X vector; must be unique and sorted in ascending order. same size as Y!
+   * @param Y Y vector; must be unique and sorted in ascending order. same size as X!
    * @param extrapolation_mode extrapolation mode (nearest or fail)
    */
   NearestInterpolator(const std::vector<double>& X,
                       const std::vector<double>& Y,
-                      bool sortX = false,
-                      bool checkX = true,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-    : I_Interpolator<double>(X, Y, sortX, checkX, extrapolation_mode)
+    : I_PairInterpolator<double>(X, Y, extrapolation_mode)
   {}
   ~NearestInterpolator() = default;
 

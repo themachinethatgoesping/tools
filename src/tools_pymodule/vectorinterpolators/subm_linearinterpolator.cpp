@@ -23,24 +23,18 @@ init_subm_linearinterpolator(pybind11::module& m)
   py::class_<LinearInterpolator>(
     m,
     "LinearInterpolator",
-    DOC(themachinethatgoesping, tools, vectorinterpolators, LinearInterpolator))
-    .def(py::init<const std::vector<std::pair<double, double>>&,
-                  bool,
-                  bool,
-                  t_extr_mode>(),
+    DOC(
+      themachinethatgoesping, tools, vectorinterpolators, LinearInterpolator))
+    .def(py::init<const std::vector<std::pair<double, double>>&, t_extr_mode>(),
          DOC(themachinethatgoesping,
              tools,
              vectorinterpolators,
              I_Interpolator,
              I_Interpolator),
          py::arg("XY"),
-         py::arg("sortX") = false,
-         py::arg("checkX") = true,
          py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
     .def(py::init<const std::vector<double>&,
                   const std::vector<double>&,
-                  bool,
-                  bool,
                   t_extr_mode>(),
          DOC(themachinethatgoesping,
              tools,
@@ -49,8 +43,6 @@ init_subm_linearinterpolator(pybind11::module& m)
              I_Interpolator),
          py::arg("X") = std::vector<double>({ 0, 1 }),
          py::arg("Y") = std::vector<double>({ 0, 1 }),
-         py::arg("sortX") = false,
-         py::arg("checkX") = true,
          py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
     .def("interpolate",
          py::overload_cast<double>(&LinearInterpolator::interpolate),
@@ -84,65 +76,24 @@ init_subm_linearinterpolator(pybind11::module& m)
              vectorinterpolators,
              I_Interpolator,
              get_extrapolation_mode))
-    .def("checkX",
-         &LinearInterpolator::checkX,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             checkX))
-    .def("sortX",
-         &LinearInterpolator::sortX,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             sortX))
     .def("set_data_XY",
-         py::overload_cast<const std::vector<std::pair<double, double>>&,
-                           bool,
-                           bool>(&LinearInterpolator::set_data_XY),
+         py::overload_cast<const std::vector<std::pair<double, double>>&>(
+           &LinearInterpolator::set_data_XY),
          DOC(themachinethatgoesping,
              tools,
              vectorinterpolators,
              I_Interpolator,
              set_data_XY),
-         py::arg("XY"),
-         py::arg("sortX") = false,
-         py::arg("checkX") = true)
-    .def("set_data_XY",
-         py::overload_cast<const std::vector<double>&,
-                           const std::vector<double>&,
-                           bool,
-                           bool>(&LinearInterpolator::set_data_XY),
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             set_data_XY_2),
-         py::arg("X"),
-         py::arg("Y"),
-         py::arg("sortX") = false,
-         py::arg("checkX") = true)
-    .def("get_data_X",
-         &LinearInterpolator::get_data_X,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             get_data_X))
-    .def("get_data_Y",
-         &LinearInterpolator::get_data_X,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             get_data_Y))
-    .def("get_data_XY",
-         &LinearInterpolator::get_data_XY,
-         DOC(themachinethatgoesping,
-             tools,
-             vectorinterpolators,
-             I_Interpolator,
-             get_data_XY));
+         py::arg("XY"))
+    .def(
+      "set_data_XY",
+      py::overload_cast<const std::vector<double>&, const std::vector<double>&>(
+        &LinearInterpolator::set_data_XY),
+      DOC(themachinethatgoesping,
+          tools,
+          vectorinterpolators,
+          I_Interpolator,
+          set_data_XY_2),
+      py::arg("X"),
+      py::arg("Y"));
 }
