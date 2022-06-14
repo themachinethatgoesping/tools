@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "i_interpolator.h"
+#include "linearinterpolator.h"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -25,6 +26,7 @@ namespace vectorinterpolators {
 class AkimaInterpolator : public I_Interpolator<double>
 {
   double _min_x,_min_y,_max_x,_max_y;
+  LinearInterpolator _min_linearinterpolator, _max_linearinterpolator;
   std::unique_ptr<boost::math::interpolators::makima<std::vector<double>>> _akima_spline;
 
 public:
@@ -78,6 +80,35 @@ public:
    */
   double interpolate(double target_x) final
   {
+    if (target_x < _min_x)
+    {
+      switch (I_Interpolator::_extr_mode)
+      {
+      case t_extr_mode::nearest:
+        return _min_y;
+        break;      
+      case t_extr_mode::extrapolate:
+        return _min_linearinterpolator.interpolate(target_x);
+        break;
+      default: //fail
+        break;
+      }
+    }
+    else if (target_x > _max_x)
+    {
+      switch (I_Interpolator::_extr_mode)
+      {
+      case t_extr_mode::nearest:
+        return _max_y;
+        break;      
+      case t_extr_mode::extrapolate:
+        return _max_linearinterpolator.interpolate(target_x);
+        break;
+      default: //fail
+        break;
+      }
+    }
+
     return _akima_spline->operator()(target_x);
   }
 
@@ -104,8 +135,20 @@ public:
     _max_x = x[x.size()-1];
     _min_y = y[0];
     _max_y = y[y.size()-1];
+
+    double min_x_3 = x[0] + (x[1]-x[0]) * 0.01;
+    double max_x_3 = x[x.size()-1] - (x[x.size()-1]-x[x.size()-2]) * 0.01;
     
     _akima_spline = std::make_unique<boost::math::interpolators::makima<std::vector<double>>>(std::move(x),std::move(y));
+
+    std::vector<std::pair<double,double>> min_elements,max_elements;
+    min_elements.push_back(std::make_pair(_min_x,_min_y));
+    min_elements.push_back(std::make_pair(min_x_3,_akima_spline->operator()(min_x_3)));
+    max_elements.push_back(std::make_pair(max_x_3,_akima_spline->operator()(max_x_3)));
+    max_elements.push_back(std::make_pair(_max_x,_max_y));
+
+    _min_linearinterpolator = LinearInterpolator(min_elements);
+    _max_linearinterpolator = LinearInterpolator(max_elements);
   }
 
   /**
