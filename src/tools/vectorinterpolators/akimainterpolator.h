@@ -24,7 +24,7 @@ namespace vectorinterpolators {
  */
 class AkimaInterpolator : public I_Interpolator<double>
 {
-private:
+  double _min_x,_min_y,_max_x,_max_y;
   std::unique_ptr<boost::math::interpolators::makima<std::vector<double>>> _akima_spline;
 
 public:
@@ -99,6 +99,12 @@ public:
     auto x = X;
     auto y = Y;
 
+    // save min/max xy for extrapolation
+    _min_x = x[0];
+    _max_x = x[x.size()-1];
+    _min_y = y[0];
+    _max_y = y[y.size()-1];
+    
     _akima_spline = std::make_unique<boost::math::interpolators::makima<std::vector<double>>>(std::move(x),std::move(y));
   }
 
