@@ -11,7 +11,8 @@ sources = [
     'm_timeconv.cpp',
     'vectorinterpolators/module.cpp',
     'vectorinterpolators/subm_nearestinterpolator.cpp',
-    'vectorinterpolators/subm_linearinterpolator.cpp'
+    'vectorinterpolators/subm_linearinterpolator.cpp',
+    'vectorinterpolators/subm_akimainterpolator.cpp'
 ]
 
 # define python module

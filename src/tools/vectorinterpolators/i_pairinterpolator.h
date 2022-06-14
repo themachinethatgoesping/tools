@@ -116,7 +116,7 @@ public:
   {
     if (XY.size() < 2)
       throw(
-        std::runtime_error("ERROR[Interpolation::set_data_XY]: list size is < 2!"));
+        std::invalid_argument("ERROR[Interpolation::set_data_XY]: list size is < 2!"));
 
     // set list
     _XY = XY;
@@ -137,7 +137,7 @@ public:
                       const std::vector<YType>& Y)
   {
     if (X.size() != Y.size())
-      throw(std::runtime_error(
+      throw(std::invalid_argument(
         "ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
     std::vector<std::pair<double, YType>> XY;

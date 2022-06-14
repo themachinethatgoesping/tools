@@ -15,11 +15,11 @@ class Test_tools_vectorinterpolators_nearest:
     Y_duplicates = [1, 0, 1, 1, 0, -1]
 
     #check of exceptions are raise
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
       vip.NearestInterpolator(X_wrong_order, Y_wrong_order)
 
     #check of exceptions are raise ib dyokucates
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
       vip.NearestInterpolator(X_duplicates, Y_duplicates)
 
 

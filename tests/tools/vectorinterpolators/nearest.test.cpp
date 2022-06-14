@@ -31,7 +31,7 @@ TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
   // throw because sortX is false but checkX is not false
   REQUIRE_THROWS_AS(vectorinterpolators::NearestInterpolator(
                       x_wrong_order, y_wrong_order),
-                    std::runtime_error);
+                    std::invalid_argument);
 
   // initialize test data (duplicates)
   std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
@@ -40,7 +40,7 @@ TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
   // interpolator should fail if there is a double x element!
   REQUIRE_THROWS_AS(
     vectorinterpolators::NearestInterpolator(x_duplicates, y_duplicates),
-    std::runtime_error);
+    std::invalid_argument);
 }
 
 TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",

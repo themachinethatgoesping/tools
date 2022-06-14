@@ -15,11 +15,11 @@ class Test_tools_vectorinterpolators_nearest:
     Y_duplicates = [1, 0, 1, 1, 0, -1]
 
     #check of exceptions is raised on wrong order
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
       vip.LinearInterpolator(X_wrong_order, Y_wrong_order)
 
     #check of exception is raised on duplicates
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
       vip.LinearInterpolator(X_duplicates, Y_duplicates)
 
 

@@ -140,15 +140,15 @@ protected:
   {
     if (XY.size() < 2)
       throw(
-        std::runtime_error("ERROR[Interpolation::checkXY]: list size is < 2!"));
+        std::invalid_argument("ERROR[Interpolation::checkXY]: list size is < 2!"));
 
     for (size_t i = 0; i < XY.size() - 1; ++i) {
       if (std::get<0>(XY[i]) == std::get<0>(XY[i + 1]))
         throw(
-          std::runtime_error("ERROR[Interpolation::checkXY]: double x values!"));
+          std::invalid_argument("ERROR[Interpolation::checkXY]: double x values!"));
 
       if (std::get<0>(XY[i]) > std::get<0>(XY[i + 1]))
-        throw(std::runtime_error("ERROR[Interpolation::checkXY]: List is not "
+        throw(std::invalid_argument("ERROR[Interpolation::checkXY]: List is not "
                                  "sorted in asscending order!"));
     }
   }
