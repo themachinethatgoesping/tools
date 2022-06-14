@@ -4,3 +4,4 @@
 
 #include "vectorinterpolators/linearinterpolator.h"
 #include "vectorinterpolators/nearestinterpolator.h"
+#include "vectorinterpolators/akimainterpolator.h"

@@ -10,7 +10,8 @@ sources = [
     'tutorial.test.cpp',
     'timeconv.test.cpp',
     'vectorinterpolators/nearest.test.cpp',
-    'vectorinterpolators/linear.test.cpp'
+    'vectorinterpolators/linear.test.cpp',
+    'vectorinterpolators/akima.test.cpp'
 ]
 
 foreach source : sources

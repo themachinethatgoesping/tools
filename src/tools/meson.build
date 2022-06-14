@@ -16,7 +16,8 @@ headers = [
   'vectorinterpolators.h',
   'vectorinterpolators/i_interpolator.h',
   'vectorinterpolators/linearinterpolator.h',
-  'vectorinterpolators/nearestinterpolator.h'
+  'vectorinterpolators/nearestinterpolator.h',
+  'vectorinterpolators/akimainterpolator.h'
 ]
 
 # -- targets --

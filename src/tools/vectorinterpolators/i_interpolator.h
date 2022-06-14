@@ -285,7 +285,7 @@ public:
 
   
   /**
-   * @brief get neares y values for given x target
+   * @brief get the interolated y value for given x target
    * 
    * @param target_x find the corresponding y value for this x value
    * @return corresponding y value 
