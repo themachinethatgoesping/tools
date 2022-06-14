@@ -120,6 +120,18 @@ public:
     set_data_XY(X, Y);
   }
 
+  
+  /**
+   * @brief get nearest y values for given x targets (vectorized call)
+   * 
+   * @param targets_x vector of x values. For each of these values find the corrspondig y value 
+   * @return corresponding y value 
+   */
+  std::vector<double> interpolate(const std::vector<double>& targetsX)
+  {
+    return I_Interpolator<double>::interpolate(targetsX);
+  }
+
 };
 
 } // namespace interpolation

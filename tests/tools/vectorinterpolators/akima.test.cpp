@@ -56,32 +56,26 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
       REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
   }
 
-  // SECTION("preset values should be interpolated correctly")
-  // {
-  //   CHECK(interpolator.interpolate(-7.6) == Approx(0.52));
-  //   CHECK(interpolator.interpolate(-7.5) == Approx(0.5));
-  //   CHECK(interpolator.interpolate(-7.4) == Approx(0.48));
+  SECTION("preset values should be interpolated correctly")
+  {
+    CHECK(interpolator.interpolate(-7.5) == Approx(0.2684859155));
+    CHECK(interpolator.interpolate(-2.6) == Approx(0.5509550555));
+    CHECK(interpolator.interpolate(3.0) == Approx(0.5808823529));
 
-  //   CHECK(interpolator.interpolate(-2.6) == Approx(0.48));
-  //   CHECK(interpolator.interpolate(-2.5) == Approx(0.5));
-  //   CHECK(interpolator.interpolate(-2.4) == Approx(0.52));
+    CHECK(interpolator.interpolate(8) == Approx(-1. / 3.));
+    CHECK(interpolator.interpolate(9.0) == Approx(-1. / 2.));
+    CHECK(interpolator.interpolate(10) == Approx(-2. / 3.));
+  }
 
-  //   CHECK(interpolator.interpolate(2) == Approx(2. / 3.));
-  //   CHECK(interpolator.interpolate(3.0) == Approx(1. / 2.));
-  //   CHECK(interpolator.interpolate(4) == Approx(1. / 3.));
+  SECTION("preset value vectors should be interpolated correctly")
+  {
+    std::vector<double> targets_x = { -7.5, -2.6, 3.0, 8, 9.0, 10 };
+    std::vector<double> expected_y = { 0.2684859155, 0.5509550555, 0.5808823529,-1. / 3.,-1. / 2.,-2. / 3.};
 
-  //   CHECK(interpolator.interpolate(8) == Approx(-1. / 3.));
-  //   CHECK(interpolator.interpolate(9.0) == Approx(-1. / 2.));
-  //   CHECK(interpolator.interpolate(10) == Approx(-2. / 3.));
-  // }
-
-  // SECTION("preset value vectors should be interpolated correctly")
-  // {
-  //   std::vector<double> targets_x = { -2.6, -2.5, -2.4 };
-  //   std::vector<double> expected_y = { 0.48, 0.5, 0.52 };
-
-  //   REQUIRE(interpolator.interpolate(targets_x) == expected_y);
-  // }
+    auto comp_y = interpolator.interpolate(targets_x);
+    for (unsigned int i = 0; i < targets_x.size(); ++i)
+      REQUIRE(comp_y[i] == Approx(expected_y[i]));
+  }
 
   // SECTION("extrapolation mode should cause:")
   // {
