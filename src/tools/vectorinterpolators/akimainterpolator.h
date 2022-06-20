@@ -25,8 +25,10 @@ namespace vectorinterpolators {
  */
 class AkimaInterpolator : public I_Interpolator<double>
 {
-  double _min_x, _min_y, _max_x, _max_y;
-  LinearInterpolator _min_linearinterpolator, _max_linearinterpolator;
+  double _min_x, _min_y, _max_x, _max_y;  ///< min/max x and y values
+  double _min_x_1, _max_x_1; ///< one value above min and max x
+
+  LinearInterpolator _min_linearextrapolator, _max_linearextrapolator;
   std::unique_ptr<boost::math::interpolators::makima<std::vector<double>>>
     _akima_spline;
 
@@ -87,7 +89,7 @@ public:
         case t_extr_mode::nearest:
           return _min_y;
         case t_extr_mode::extrapolate:
-          return _min_linearinterpolator.interpolate(target_x);
+          return _min_linearextrapolator.interpolate(target_x);
         default: // fail
           std::string msg;
           msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
@@ -102,7 +104,7 @@ public:
         case t_extr_mode::nearest:
           return _max_y;
         case t_extr_mode::extrapolate:
-          return _max_linearinterpolator.interpolate(target_x);
+          return _max_linearextrapolator.interpolate(target_x);
         default: // fail
           std::string msg;
           msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
@@ -136,17 +138,69 @@ public:
 
     // save min/max xy for extrapolation
     _min_x = x[0];
+    _min_x_1 = x[1];
     _max_x = x[x.size() - 1];
+    _max_x_1 = x[x.size() - 2];
     _min_y = y[0];
     _max_y = y[y.size() - 1];
 
-    double min_x_3 = x[0] + (x[1] - x[0]) * 0.01;
-    double max_x_3 =
-      x[x.size() - 1] - (x[x.size() - 1] - x[x.size() - 2]) * 0.01;
-
     _akima_spline =
       std::make_unique<boost::math::interpolators::makima<std::vector<double>>>(
-        std::move(x), std::move(y));
+        std::move(x), std::move(y));        
+
+    _init_linearextrapolators();
+  }
+
+  void append(double x, double y)
+  {
+    _akima_spline->push_back(x,y);
+
+    // _akime_spline push back only accepts x > max_x
+    _max_x_1 = _max_x;
+    _max_x = x;
+    _max_y = y;
+
+    _init_linearextrapolators();
+  }
+
+  void extend(const std::vector<double>& X, const std::vector<double>& Y)
+  {
+    if (X.size() != Y.size())
+      throw(std::invalid_argument(
+        "ERROR[Interpolator::extend]: list sizes do not match"));
+
+    for (unsigned int i = 0; i < X.size(); ++i)
+    {
+      _akima_spline->push_back(X[i],Y[i]);
+    }
+
+    // _akime_spline push back only accepts x > max_x
+    _max_x_1 = _max_x;
+    _max_x = X.back();
+    _max_y = Y.back();
+
+    _init_linearextrapolators();
+  }
+
+  void extend(const std::vector<std::pair<double,double>>& XY)
+  {
+    for (const auto& xy : XY)
+    {
+      _akima_spline->push_back(std::get<0>(xy),std::get<1>(xy));
+    }
+
+    // _akime_spline push back only accepts x > max_x
+    _max_x_1 = _max_x;
+    _max_x = std::get<0>(XY.back());
+    _max_y = std::get<1>(XY.back());
+
+    _init_linearextrapolators();
+  }
+
+  void _init_linearextrapolators()
+  {
+    double min_x_3 = _min_x + (_min_x_1 - _min_x) * 0.01;
+    double max_x_3 = _max_x - (_max_x - _max_x_1) * 0.01;
 
     std::vector<std::pair<double, double>> min_elements, max_elements;
     min_elements.push_back(std::make_pair(_min_x, _min_y));
@@ -156,8 +210,8 @@ public:
       std::make_pair(max_x_3, _akima_spline->operator()(max_x_3)));
     max_elements.push_back(std::make_pair(_max_x, _max_y));
 
-    _min_linearinterpolator = LinearInterpolator(min_elements);
-    _max_linearinterpolator = LinearInterpolator(max_elements);
+    _min_linearextrapolator = LinearInterpolator(min_elements);
+    _max_linearextrapolator = LinearInterpolator(max_elements);
   }
 
   /**

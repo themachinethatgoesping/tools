@@ -23,14 +23,30 @@ TEST_CASE("AkimaInterpolator: sorting and checking should work as expected",
   std::vector<double> y = { 1, 0, 1, 0, -1 };
 
   vectorinterpolators::AkimaInterpolator interpolator(x, y);
+  // interpolator should fail if double x elements are appendet
+  REQUIRE_THROWS(interpolator.append(12, -1));
+  interpolator.set_data_XY(x,y);
+  REQUIRE_THROWS(interpolator.append(11, -1));
+  interpolator.set_data_XY(x,y);
+  interpolator.append(13, -1);
+
+  REQUIRE_THROWS(interpolator.extend({ 12, 13 }, { -1, 1 }));
+  interpolator.set_data_XY(x,y);
+  REQUIRE_THROWS(interpolator.extend({ 11, 13 }, { -1, 1 }));
+  interpolator.set_data_XY(x,y);
+  REQUIRE_THROWS(interpolator.extend({ 14, 13 }, { -1, 1 }));
+  interpolator.set_data_XY(x,y);
+  REQUIRE_THROWS(interpolator.extend({ 14, 14 }, { -1, 1 }));
+  interpolator.set_data_XY(x,y);
+  interpolator.extend({ 13, 14 }, { -1, 1 });
 
   // initialize test data (wrong order)
   std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
   std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
 
   // throw because sx is nort sorted
-  REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(
-                      x_wrong_order, y_wrong_order));
+  REQUIRE_THROWS(
+    vectorinterpolators::AkimaInterpolator(x_wrong_order, y_wrong_order));
 
   // initialize test data (duplicates)
   std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
@@ -45,10 +61,15 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
           TESTTAG)
 {
   // initialize test data
-  std::vector<double> x = { -10, -5, 0, 6, 12 };
-  std::vector<double> y = { 1, 0, 1, 0, -1 };
+  // std::vector<double> x = { -10, -5, 0, 6, 12 };
+  // std::vector<double> y = { 1, 0, 1, 0, -1 };
+  std::vector<double> x = { -10, -5, 0, 6 };
+  std::vector<double> y = { 1, 0, 1, 0 };
 
   vectorinterpolators::AkimaInterpolator interpolator(x, y);
+
+  // append some data
+  interpolator.append(12, -1);
 
   SECTION("existing values should be looked up correctly")
   {
@@ -70,7 +91,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
   SECTION("preset value vectors should be interpolated correctly")
   {
     std::vector<double> targets_x = { -7.5, -2.6, 3.0, 8, 9.0, 10 };
-    std::vector<double> expected_y = { 0.2684859155, 0.5509550555, 0.5808823529,-1. / 3.,-1. / 2.,-2. / 3.};
+    std::vector<double> expected_y = { 0.2684859155, 0.5509550555, 0.5808823529,
+                                       -1. / 3.,     -1. / 2.,     -2. / 3. };
 
     auto comp_y = interpolator.interpolate(targets_x);
     for (unsigned int i = 0; i < targets_x.size(); ++i)
