@@ -78,7 +78,7 @@ public:
    * usage: interpolated_y_value = interpolator.interpolate(x_value)
    * 
    * @param XY vector of x,y pairs. X must be unique and sorted
-   * @param extrapolation_mode extrapolation mode (nearest or fail)
+   * @param extrapolation_mode :py:class:`t_extr_mode <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the extrapolation mode
    */
   I_PairInterpolator(const std::vector<std::pair<double, YType>>& XY,
                  t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
@@ -93,7 +93,7 @@ public:
    * 
    * @param X X vector; must be unique and sorted in ascending order. same size as Y!
    * @param Y Y vector; must be unique and sorted in ascending order. same size as X!
-   * @param extrapolation_mode extrapolation mode (nearest or fail)
+   * @param extrapolation_mode :py:class:`t_extr_mode <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the extrapolation mode
    */
   I_PairInterpolator(const std::vector<double>& X,
                  const std::vector<YType>& Y,
@@ -112,7 +112,7 @@ public:
    *
    * @param XY: input data vector given as vector<pair<X,Y>>
    */
-  virtual void set_data_XY(const std::vector<std::pair<double, YType>>& XY)
+  void set_data_XY(const std::vector<std::pair<double, YType>>& XY) final
   {
     if (XY.size() < 2)
       throw(
@@ -122,7 +122,7 @@ public:
     _XY = XY;
 
     // make sure the vector is sorted
-    I_Interpolator<YType>::checkXY(_XY);
+    I_Interpolator<YType>::_check_XY(_XY);
 
     _last_x_pair = _t_x_pair(0, 1, std::get<0>(_XY[0]), std::get<0>(_XY[1]));
   }
@@ -133,8 +133,7 @@ public:
    * @param X: x vector (must be same size, must be sorted in ascending order)
    * @param Y: y vector (must be same size)
    */
-  virtual void set_data_XY(const std::vector<double>& X,
-                      const std::vector<YType>& Y)
+  void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) final
   {
     if (X.size() != Y.size())
       throw(std::invalid_argument(
@@ -148,6 +147,47 @@ public:
     }
 
     set_data_XY(XY);
+  }
+
+  // -----------------------
+  // append/extend functions
+  // -----------------------
+  void append(double x, double y) final
+  {
+    if (x <= std::get<0>(_XY.back()))
+    {
+        throw(std::invalid_argument("ERROR[Interpolation::append]: appendet x value is not larger than existing x values in the interpolator."));
+    }
+    
+    _XY.push_back(std::make_pair(x,y));
+  }
+
+  void append(std::pair<double , double> xy) final
+  {
+    if (std::get<0>(xy) <= std::get<0>(_XY.back()))
+    {
+        throw(std::invalid_argument("ERROR[Interpolation::append]: appendet x value is not larger than existing x values in the interpolator."));
+    }
+    
+    _XY.push_back(xy);
+  }
+
+  void extend(const std::vector<double>& X, const std::vector<double>& Y) final
+  {
+    if (X.size() != Y.size())
+      throw(std::invalid_argument(
+        "ERROR[Interpolator::extend]: list sizes do not match"));
+
+    for (unsigned int i = 0; i < X.size(); ++i) {
+      append(X[i], Y[i]);
+    }
+  }
+
+  void extend(const std::vector<std::pair<double, double>>& XY) final
+  {
+    for (const auto& xy : XY) {
+      append(xy);
+    }
   }
 
   // -----------------------

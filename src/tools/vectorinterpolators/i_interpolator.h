@@ -90,11 +90,21 @@ public:
   // -----------------------
   // getter setter functions
   // -----------------------
+  /**
+   * @brief Set the extrapolation mode
+   * 
+   * @param extrapolation_mode :py:class:`t_extr_mode <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object (enumerator) that describes the extrapolation mode
+   */
   void set_extrapolation_mode(const t_extr_mode extrapolation_mode)
   {
     _extr_mode = extrapolation_mode;
   }
 
+  /**
+   * @brief Get the currently set extrapolation mode
+   * 
+   * @return :py:class:`t_extr_mode <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object (enumerator) that describes the extrapolation mode
+   */
   t_extr_mode get_extrapolation_mode() const
   {
     return _extr_mode;
@@ -130,25 +140,56 @@ public:
     return y_values;
   }
 
+  /**
+   * @brief append an x- and the corresponding y value to the interpolator data.
+   * 
+   * @param x value, must be > than all existing x values
+   * @param y corresponding y value
+   */
+  virtual void append(double x, double y) = 0;
+
+  /**
+   * @brief append a x and y value pair to the interpolator data
+   * 
+   * @param xy x and y value pair. x must be > than all existing x values
+   */
+  virtual void append(std::pair<double , double> xy) = 0;
+
+  /**
+   * @brief append x and y value lists to the interplator data
+   * 
+   * @param X list of x values. Must be sorted in ascending order. All x values must be larger than the largest x value in the interpolator data.
+   * @param Y list of corresponding Y values. Must be same size as X
+   */
+  virtual void extend(const std::vector<double>& X, const std::vector<double>& Y) = 0;
+
+  
+  /**
+   * @brief append a list of x and y value pairs to the interplator data
+   * 
+   * @param XY list of x,y value pairs. X Must be sorted in ascending order. All x values must be larger than the largest x value in the interpolator data.
+   */
+  virtual void extend(const std::vector<std::pair<double, double>>& XY) = 0;
+
 
 protected:  
   /**
    * @brief check if input data is valid (e.g. sorted, no duplicated x values)
    *
    */
-  static void checkXY(const std::vector<std::pair<double,YType>>& XY)
+  static void _check_XY(const std::vector<std::pair<double,YType>>& XY)
   {
     if (XY.size() < 2)
       throw(
-        std::invalid_argument("ERROR[Interpolation::checkXY]: list size is < 2!"));
+        std::invalid_argument("ERROR[Interpolation::_check_XY]: list size is < 2!"));
 
     for (size_t i = 0; i < XY.size() - 1; ++i) {
       if (std::get<0>(XY[i]) == std::get<0>(XY[i + 1]))
         throw(
-          std::invalid_argument("ERROR[Interpolation::checkXY]: double x values!"));
+          std::invalid_argument("ERROR[Interpolation::_check_XY]: double x values!"));
 
       if (std::get<0>(XY[i]) > std::get<0>(XY[i + 1]))
-        throw(std::invalid_argument("ERROR[Interpolation::checkXY]: List is not "
+        throw(std::invalid_argument("ERROR[Interpolation::_check_XY]: List is not "
                                  "sorted in asscending order!"));
     }
   }
@@ -157,22 +198,22 @@ protected:
    * @brief check if input data is valid (e.g. sorted, no duplicated x values)
    *
    */
-  static void checkXY(const std::vector<double>& X, const std::vector<YType>& Y)
+  static void _check_XY(const std::vector<double>& X, const std::vector<YType>& Y)
   {
     if (X.size() < 2)
       throw(
-        std::runtime_error("ERROR[Interpolation::checkXY]: list size is < 2!"));
+        std::runtime_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
     if (X.size() != Y.size())
       throw(
-        std::runtime_error("ERROR[Interpolation::checkXY]: list X and Y list sizes do not match!"));
+        std::runtime_error("ERROR[Interpolation::_check_XY]: list X and Y list sizes do not match!"));
 
     for (size_t i = 0; i < X.size() - 1; ++i) {
       if (X[i] == X[i + 1])
         throw(
-          std::runtime_error("ERROR[Interpolation::checkXY]: double x values!"));
+          std::runtime_error("ERROR[Interpolation::_check_XY]: double x values!"));
 
       if (X[i] > X[i + 1])
-        throw(std::runtime_error("ERROR[Interpolation::checkXY]: List is not "
+        throw(std::runtime_error("ERROR[Interpolation::_check_XY]: List is not "
                                  "sorted in asscending order!"));
     }
   }

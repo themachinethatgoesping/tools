@@ -15,47 +15,26 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-TEST_CASE("NearestInterpolator: sorting and checking should work as expected",
-          TESTTAG)
-{
-  // initialize test data (correct order)
-  std::vector<double> x = { -10, -5, 0, 6, 12 };
-  std::vector<double> y = { 1, 0, 1, 0, -1 };
-
-  vectorinterpolators::NearestInterpolator interpolator(x, y);
-
-  // initialize test data (wrong order)
-  std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
-  std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
-
-  // throw because sortX is false but checkX is not false
-  REQUIRE_THROWS_AS(vectorinterpolators::NearestInterpolator(
-                      x_wrong_order, y_wrong_order),
-                    std::invalid_argument);
-
-  // initialize test data (duplicates)
-  std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
-  std::vector<double> y_duplicates = { 0, 1, 1, 0, 1, -1 };
-
-  // interpolator should fail if there is a double x element!
-  REQUIRE_THROWS_AS(
-    vectorinterpolators::NearestInterpolator(x_duplicates, y_duplicates),
-    std::invalid_argument);
-}
-
 TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
           TESTTAG)
 {
   // initialize test data
-  std::vector<double> x = { -10, -5, 0, 6, 12 };
-  std::vector<double> y = { 1, 0, 1, 0, -1 };
+  std::vector<double> x = { -10, -5, 0, 6 };
+  std::vector<double> y = { 1, 0, 1, 0 };
+  double x_append = 12;
+  double y_append = -1;
 
   vectorinterpolators::NearestInterpolator interpolator(x, y);
+
+  // append some data
+  interpolator.append(x_append, y_append);
 
   SECTION("existing values should be looked up correctly")
   {
     for (unsigned int i = 0; i < x.size(); ++i)
       REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
+
+    REQUIRE(interpolator.interpolate(x_append) == Approx(y_append));
   }
 
   SECTION("preset values should be interpolated correctly")
@@ -95,9 +74,9 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
         case vectorinterpolators::t_extr_mode::fail:
           SECTION(" - fail when set to fail")
           {
-            REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
+            REQUIRE_THROWS_AS(interpolator.interpolate(-11),
                               std::out_of_range);
-            REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
+            REQUIRE_THROWS_AS(interpolator.interpolate(13),
                               std::out_of_range);
           }
           break;
@@ -105,7 +84,7 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
         default:
           SECTION(" - nearest extrapolation in all other cases")
             REQUIRE(interpolator.interpolate(-11) == Approx(1));
-            REQUIRE(interpolator.interpolate(13) == Approx(-1));
+            REQUIRE(interpolator.interpolate(13) == Approx(y_append));
 
           break;
       }

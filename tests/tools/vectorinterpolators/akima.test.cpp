@@ -15,47 +15,6 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-TEST_CASE("AkimaInterpolator: sorting and checking should work as expected",
-          TESTTAG)
-{
-  // initialize test data (correct order)
-  std::vector<double> x = { -10, -5, 0, 6, 12 };
-  std::vector<double> y = { 1, 0, 1, 0, -1 };
-
-  vectorinterpolators::AkimaInterpolator interpolator(x, y);
-  // interpolator should fail if double x elements are appendet
-  REQUIRE_THROWS(interpolator.append(12, -1));
-  interpolator.set_data_XY(x,y);
-  REQUIRE_THROWS(interpolator.append(11, -1));
-  interpolator.set_data_XY(x,y);
-  interpolator.append(13, -1);
-
-  REQUIRE_THROWS(interpolator.extend({ 12, 13 }, { -1, 1 }));
-  interpolator.set_data_XY(x,y);
-  REQUIRE_THROWS(interpolator.extend({ 11, 13 }, { -1, 1 }));
-  interpolator.set_data_XY(x,y);
-  REQUIRE_THROWS(interpolator.extend({ 14, 13 }, { -1, 1 }));
-  interpolator.set_data_XY(x,y);
-  REQUIRE_THROWS(interpolator.extend({ 14, 14 }, { -1, 1 }));
-  interpolator.set_data_XY(x,y);
-  interpolator.extend({ 13, 14 }, { -1, 1 });
-
-  // initialize test data (wrong order)
-  std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
-  std::vector<double> y_wrong_order = { 0, 1, 1, 0, -1 };
-
-  // throw because sx is nort sorted
-  REQUIRE_THROWS(
-    vectorinterpolators::AkimaInterpolator(x_wrong_order, y_wrong_order));
-
-  // initialize test data (duplicates)
-  std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
-  std::vector<double> y_duplicates = { 0, 1, 1, 0, 1, -1 };
-
-  // interpolator should fail if there is a double x element!
-  REQUIRE_THROWS(
-    vectorinterpolators::AkimaInterpolator(x_duplicates, y_duplicates));
-}
 
 TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
           TESTTAG)
@@ -65,16 +24,20 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
   // std::vector<double> y = { 1, 0, 1, 0, -1 };
   std::vector<double> x = { -10, -5, 0, 6 };
   std::vector<double> y = { 1, 0, 1, 0 };
+  double x_append = 12;
+  double y_append = -1;
 
   vectorinterpolators::AkimaInterpolator interpolator(x, y);
 
   // append some data
-  interpolator.append(12, -1);
+  interpolator.append(x_append, y_append);
 
   SECTION("existing values should be looked up correctly")
   {
     for (unsigned int i = 0; i < x.size(); ++i)
       REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
+
+    REQUIRE(interpolator.interpolate(x_append) == y_append);
   }
 
   SECTION("preset values should be interpolated correctly")

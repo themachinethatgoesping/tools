@@ -4,30 +4,24 @@ import pytest
 
 
 # define class for grouping (test sections)
-class Test_tools_vectorinterpolators_nearest:
-    def test_AkimaInterpolator_should_sort_and_check_lists(self):
-        X = [-10, -5, 0, 6, 12]
-        Y = [1, 0, 1, 0, -1]
-        X_wrong_order = [-5, -10, 0, 6, 12]
-        Y_wrong_order = [0, 1, 1, 0, -1]
-        X_duplicates = [-10, -5, -5, 0, 6, 12]
-        Y_duplicates = [1, 0, 1, 1, 0, -1]
-
-        # check of exceptions is raised on wrong order
-        with pytest.raises(ValueError):
-            vip.AkimaInterpolator(X_wrong_order, Y_wrong_order)
-
-        # check of exception is raised on duplicates
-        with pytest.raises(ValueError):
-            vip.AkimaInterpolator(X_duplicates, Y_duplicates)
+class Test_tools_vectorinterpolators_akima:
 
     def test_AkimaInterpolator_should_perform_basic_interpolations(self):
-        X = [-10, -5, 0, 6, 12]
-        Y = [1, 0, 1, 0, -1]
+        #X = [-10, -5, 0, 6, 12]
+        #Y = [1, 0, 1, 0, -1]
+        X = [-10, -5, 0, 6]
+        Y = [1, 0, 1, 0]
+        x_append = 12
+        y_append = -1
+
         interpolator = vip.AkimaInterpolator(X, Y)
+        interpolator.append((x_append,y_append))
 
         # existing values should be looked up correctly
         assert interpolator.interpolate(X) == pytest.approx(Y)
+
+        # existing values should be looked up correctly for appendet values
+        assert interpolator.interpolate(x_append) == pytest.approx(y_append)
 
         # preset values should be interpolated correctly
         X_val = [-7.6, -7.5, -7.4, 8, 9, 10]
@@ -45,6 +39,8 @@ class Test_tools_vectorinterpolators_nearest:
         interpolator = vip.AkimaInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.fail
         )
+        interpolator.append((x_append,y_append))
+
         with pytest.raises(IndexError):
             interpolator.interpolate(-11)
         with pytest.raises(IndexError):
@@ -54,12 +50,16 @@ class Test_tools_vectorinterpolators_nearest:
         interpolator = vip.AkimaInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.nearest
         )
+        interpolator.append((x_append,y_append))
+
         assert interpolator.interpolate(-11) == pytest.approx(Y[0])
-        assert interpolator.interpolate(13) == pytest.approx(Y[-1])
+        assert interpolator.interpolate(13) == pytest.approx(y_append)
 
         # extrapolation mode extrapolate
         interpolator = vip.AkimaInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.extrapolate
         )
+        interpolator.append((x_append,y_append))
+        
         assert interpolator.interpolate(-11) == pytest.approx(1.3006871830985922)
         assert interpolator.interpolate(14) == pytest.approx(-4 / 3)
