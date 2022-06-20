@@ -25,9 +25,10 @@ namespace vectorinterpolators {
  */
 class AkimaInterpolator : public I_Interpolator<double>
 {
-  double _min_x,_min_y,_max_x,_max_y;
+  double _min_x, _min_y, _max_x, _max_y;
   LinearInterpolator _min_linearinterpolator, _max_linearinterpolator;
-  std::unique_ptr<boost::math::interpolators::makima<std::vector<double>>> _akima_spline;
+  std::unique_ptr<boost::math::interpolators::makima<std::vector<double>>>
+    _akima_spline;
 
 public:
   AkimaInterpolator()
@@ -42,7 +43,8 @@ public:
    * https://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/makima.html
    * usage: interpolated_y_value = interpolator.interpolate(x_value)
    *
-   * @param XY vector of x,y pairs. X must be unique and sorted in ascending order
+   * @param XY vector of x,y pairs. X must be unique and sorted in ascending
+   * order
    * @param extrapolation_mode extrapolation mode (nearest or fail)
    */
   AkimaInterpolator(const std::vector<std::pair<double, double>>& XY,
@@ -68,7 +70,7 @@ public:
                     t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
     : I_Interpolator<double>(extrapolation_mode)
   {
-    set_data_XY(X,Y);
+    set_data_XY(X, Y);
   }
   ~AkimaInterpolator() = default;
 
@@ -80,38 +82,40 @@ public:
    */
   double interpolate(double target_x) final
   {
-    if (target_x < _min_x)
-    {
-      switch (I_Interpolator::_extr_mode)
-      {
-      case t_extr_mode::nearest:
-        return _min_y;
-        break;      
-      case t_extr_mode::extrapolate:
-        return _min_linearinterpolator.interpolate(target_x);
-        break;
-      default: //fail
-        break;
+    if (target_x < _min_x) {
+      switch (I_Interpolator::_extr_mode) {
+        case t_extr_mode::nearest:
+          return _min_y;
+        case t_extr_mode::extrapolate:
+          return _min_linearinterpolator.interpolate(target_x);
+        default: // fail
+          std::string msg;
+          msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
+                 "] is out of range (too small)(" +
+                 std::to_string(_min_x) + "/" +
+                 std::to_string(_max_x) +
+                 ")! (and fail on extrapolate was set)";
+          throw(std::out_of_range(msg));
       }
-    }
-    else if (target_x > _max_x)
-    {
-      switch (I_Interpolator::_extr_mode)
-      {
-      case t_extr_mode::nearest:
-        return _max_y;
-        break;      
-      case t_extr_mode::extrapolate:
-        return _max_linearinterpolator.interpolate(target_x);
-        break;
-      default: //fail
-        break;
+    } else if (target_x > _max_x) {
+      switch (I_Interpolator::_extr_mode) {
+        case t_extr_mode::nearest:
+          return _max_y;
+        case t_extr_mode::extrapolate:
+          return _max_linearinterpolator.interpolate(target_x);
+        default: // fail
+          std::string msg;
+          msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
+                 "] is out of range  (too large)(" +
+                 std::to_string(_min_x) + "/" +
+                 std::to_string(_max_x) +
+                 ")! (and fail on extrapolate was set)";
+          throw(std::out_of_range(msg));
       }
     }
 
     return _akima_spline->operator()(target_x);
   }
-
 
   /**
    * @brief change the input data to these X and Y vectors
@@ -132,20 +136,25 @@ public:
 
     // save min/max xy for extrapolation
     _min_x = x[0];
-    _max_x = x[x.size()-1];
+    _max_x = x[x.size() - 1];
     _min_y = y[0];
-    _max_y = y[y.size()-1];
+    _max_y = y[y.size() - 1];
 
-    double min_x_3 = x[0] + (x[1]-x[0]) * 0.01;
-    double max_x_3 = x[x.size()-1] - (x[x.size()-1]-x[x.size()-2]) * 0.01;
-    
-    _akima_spline = std::make_unique<boost::math::interpolators::makima<std::vector<double>>>(std::move(x),std::move(y));
+    double min_x_3 = x[0] + (x[1] - x[0]) * 0.01;
+    double max_x_3 =
+      x[x.size() - 1] - (x[x.size() - 1] - x[x.size() - 2]) * 0.01;
 
-    std::vector<std::pair<double,double>> min_elements,max_elements;
-    min_elements.push_back(std::make_pair(_min_x,_min_y));
-    min_elements.push_back(std::make_pair(min_x_3,_akima_spline->operator()(min_x_3)));
-    max_elements.push_back(std::make_pair(max_x_3,_akima_spline->operator()(max_x_3)));
-    max_elements.push_back(std::make_pair(_max_x,_max_y));
+    _akima_spline =
+      std::make_unique<boost::math::interpolators::makima<std::vector<double>>>(
+        std::move(x), std::move(y));
+
+    std::vector<std::pair<double, double>> min_elements, max_elements;
+    min_elements.push_back(std::make_pair(_min_x, _min_y));
+    min_elements.push_back(
+      std::make_pair(min_x_3, _akima_spline->operator()(min_x_3)));
+    max_elements.push_back(
+      std::make_pair(max_x_3, _akima_spline->operator()(max_x_3)));
+    max_elements.push_back(std::make_pair(_max_x, _max_y));
 
     _min_linearinterpolator = LinearInterpolator(min_elements);
     _max_linearinterpolator = LinearInterpolator(max_elements);
@@ -169,18 +178,17 @@ public:
     set_data_XY(X, Y);
   }
 
-  
   /**
    * @brief get nearest y values for given x targets (vectorized call)
-   * 
-   * @param targets_x vector of x values. For each of these values find the corrspondig y value 
-   * @return corresponding y value 
+   *
+   * @param targets_x vector of x values. For each of these values find the
+   * corrspondig y value
+   * @return corresponding y value
    */
   std::vector<double> interpolate(const std::vector<double>& targetsX)
   {
     return I_Interpolator<double>::interpolate(targetsX);
   }
-
 };
 
 } // namespace interpolation

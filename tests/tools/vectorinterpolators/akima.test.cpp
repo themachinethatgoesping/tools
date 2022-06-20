@@ -77,37 +77,37 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly",
       REQUIRE(comp_y[i] == Approx(expected_y[i]));
   }
 
-  // SECTION("extrapolation mode should cause:")
-  // {
-  //   for (auto mode : vectorinterpolators::t_extr_mode_all) {
-  //     interpolator.set_extrapolation_mode(mode);
+  SECTION("extrapolation mode should cause:")
+  {
+    for (auto mode : vectorinterpolators::t_extr_mode_all) {
+      interpolator.set_extrapolation_mode(mode);
 
-  //     switch (mode) {
-  //       case vectorinterpolators::t_extr_mode::fail:
-  //         SECTION(" - fail when set to fail")
-  //         {
-  //           REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
-  //                             std::out_of_range);
-  //           REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
-  //                             std::out_of_range);
-  //         }
-  //         break;
+      switch (mode) {
+        case vectorinterpolators::t_extr_mode::fail:
+          SECTION(" - fail when set to fail")
+          {
+            REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
+                              std::out_of_range);
+            REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
+                              std::out_of_range);
+          }
+          break;
 
-  //       case vectorinterpolators::t_extr_mode::nearest:
-  //         SECTION(" - extrapolate nearst when set")
-  //         {
-  //           REQUIRE(interpolator.interpolate(-11) == Approx(1));
-  //           REQUIRE(interpolator.interpolate(13) == Approx(-1));
-  //         }
-  //         break;
+        case vectorinterpolators::t_extr_mode::nearest:
+          SECTION(" - extrapolate nearst when set")
+          {
+            REQUIRE(interpolator.interpolate(-11) == Approx(1));
+            REQUIRE(interpolator.interpolate(13) == Approx(-1));
+          }
+          break;
 
-  //       default:
-  //         SECTION(" - extrapolation in all other cases")
-  //         REQUIRE(interpolator.interpolate(-11) == Approx(1.2));
-  //         REQUIRE(interpolator.interpolate(14) == Approx(-4 / 3.));
+        default:
+          SECTION(" - extrapolation in all other cases")
+          CHECK(interpolator.interpolate(-100) == Approx(28.0618464789));
+          CHECK(interpolator.interpolate(100) == Approx(-15 - 2 / 3.));
 
-  //         break;
-  //     }
-  //   }
-  // }
+          break;
+      }
+    }
+  }
 }
