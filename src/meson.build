@@ -37,3 +37,16 @@ if get_option('build_pythonmodule').enabled()
 
     endif
 endif
+
+
+# -- tests (catch2) --
+if get_option('build_tests').enabled()
+    catch2 = dependency('catch2', required : false)
+
+    if not catch2.found()
+        catch2 = subproject('catch2')
+        catch2 = catch2.get_variable('catch2_dep')
+    endif
+
+    subdir('tests')
+endif

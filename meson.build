@@ -48,11 +48,9 @@ hinnant_date_dep = declare_dependency(
  )
 
 
-# add src
+# add c++ src
 subdir('src')
  
-# add python files
+# add python src
 subdir('python')
 
-# add tests
-subdir('tests')
