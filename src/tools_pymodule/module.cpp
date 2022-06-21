@@ -3,21 +3,18 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <pybind11/pybind11.h>
 #include <pybind11/iostream.h>
+#include <pybind11/pybind11.h>
 
 #include "m_timeconv.hpp"
 #include "vectorinterpolators/module.hpp"
 
-
-
-PYBIND11_MODULE(PYTHON_LIB,m)
+PYBIND11_MODULE(PYTHON_LIB, m)
 {
     pybind11::add_ostream_redirect(m, "ostream_redirect");
 
-    m.doc() ="Small python tool functions for themachinethatgoesping";
+    m.doc() = "Small python tool functions for themachinethatgoesping";
 
     init_m_timeconv(m);
     init_m_vectorinterpolators(m);
-
 }

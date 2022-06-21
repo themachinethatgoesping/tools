@@ -52,9 +52,8 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
  * @return UnixTime as double (seconds since 01.01.1970)
  */
-double datestring_to_unixtime(
-    const std::string& DateString,
-    const std::string& format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
+double datestring_to_unixtime(const std::string& DateString,
+                              const std::string& format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 
 /**
  * @brief Converting between date strings and UnixTime stampes (ref 1970)
@@ -70,11 +69,12 @@ double datestring_to_unixtime(
  * @return DateString that fits to the specified format
  */
 std::string unixtime_to_datestring(
-    double UnixTime, unsigned int fractionalSecondsDigits = 0,
-    const std::string& format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
+    double             UnixTime,
+    unsigned int       fractionalSecondsDigits = 0,
+    const std::string& format                  = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 
-}  // namespace timeconv
+} // namespace timeconv
 
-}  // namespace tools
+} // namespace tools
 
-}  // namespace themachinethatgoesping
+} // namespace themachinethatgoesping

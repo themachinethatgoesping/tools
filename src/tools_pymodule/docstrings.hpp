@@ -3,51 +3,37 @@
   Do not edit! They were automatically extracted by pybind11_mkdoc.
  */
 
-#define __EXPAND(x)                                      x
-#define __COUNT(_1, _2, _3, _4, _5, _6, _7, COUNT, ...)  COUNT
-#define __VA_SIZE(...)                                   __EXPAND(__COUNT(__VA_ARGS__, 7, 6, 5, 4, 3, 2, 1))
-#define __CAT1(a, b)                                     a ## b
-#define __CAT2(a, b)                                     __CAT1(a, b)
-#define __DOC1(n1)                                       __doc_##n1
-#define __DOC2(n1, n2)                                   __doc_##n1##_##n2
-#define __DOC3(n1, n2, n3)                               __doc_##n1##_##n2##_##n3
-#define __DOC4(n1, n2, n3, n4)                           __doc_##n1##_##n2##_##n3##_##n4
-#define __DOC5(n1, n2, n3, n4, n5)                       __doc_##n1##_##n2##_##n3##_##n4##_##n5
-#define __DOC6(n1, n2, n3, n4, n5, n6)                   __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
-#define __DOC7(n1, n2, n3, n4, n5, n6, n7)               __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
-#define DOC(...)                                         __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
+#define __EXPAND(x)                                     x
+#define __COUNT(_1, _2, _3, _4, _5, _6, _7, COUNT, ...) COUNT
+#define __VA_SIZE(...)                                  __EXPAND(__COUNT(__VA_ARGS__, 7, 6, 5, 4, 3, 2, 1))
+#define __CAT1(a, b)                                    a##b
+#define __CAT2(a, b)                                    __CAT1(a, b)
+#define __DOC1(n1)                                      __doc_##n1
+#define __DOC2(n1, n2)                                  __doc_##n1##_##n2
+#define __DOC3(n1, n2, n3)                              __doc_##n1##_##n2##_##n3
+#define __DOC4(n1, n2, n3, n4)                          __doc_##n1##_##n2##_##n3##_##n4
+#define __DOC5(n1, n2, n3, n4, n5)                      __doc_##n1##_##n2##_##n3##_##n4##_##n5
+#define __DOC6(n1, n2, n3, n4, n5, n6)                  __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
+#define __DOC7(n1, n2, n3, n4, n5, n6, n7)              __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
+#define DOC(...)                                        __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator = R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_2 = R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_2 = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate = R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate_2 = R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate_2 = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_RPY_convention = R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_RPY_convention = R"doc()doc";
-
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp =
-R"doc(Slerp2: Slerp interpolation between two values
-
-Parameter ``target:``:
-    the target point [0.0 - 1.0]
-
-Parameter ``v``:
-    : An array of size 2 containing 2 values (to interpolate
-    inbetween)
-
-Returns:
-    Interpolated value for target position)doc";
-
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_2 =
-R"doc(Slerp2: Slerp interpolation between two values
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp =
+    R"doc(Slerp2: Slerp interpolation between two values
 
 Parameter ``target:``:
     the target point [0.0 - 1.0]
@@ -59,8 +45,8 @@ Parameter ``v``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_3 =
-R"doc(Slerp2: Slerp interpolation between two values
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_2 =
+    R"doc(Slerp2: Slerp interpolation between two values
 
 Parameter ``target:``:
     the target point [0.0 - 1.0]
@@ -72,8 +58,8 @@ Parameter ``v``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_4 =
-R"doc(Slerp2: Slerp interpolation between two values
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_3 =
+    R"doc(Slerp2: Slerp interpolation between two values
 
 Parameter ``target:``:
     the target point [0.0 - 1.0]
@@ -85,26 +71,49 @@ Parameter ``v``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_4 =
+    R"doc(Slerp2: Slerp interpolation between two values
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_2 = R"doc()doc";
+Parameter ``target:``:
+    the target point [0.0 - 1.0]
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_3 = R"doc()doc";
+Parameter ``v``:
+    : An array of size 2 containing 2 values (to interpolate
+    inbetween)
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_euler_from_quaternion = R"doc()doc";
+Returns:
+    Interpolated value for target position)doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator =
+    R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy_2 = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_2 =
+    R"doc()doc";
 
-static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_to_XY = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_3 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_euler_from_quaternion =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem_2 = R"doc()doc";
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy_2 =
+    R"doc()doc";
+
+static const char* __doc_DSMToolsLib_Interpolation_SlerpInterpolator_to_XY = R"doc()doc";
+
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem =
+        R"doc()doc";
+
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem_2 =
+        R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector =
+    R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
 parameters x,y,z as a Vector
 
 Parameter ``x:``:
@@ -122,8 +131,8 @@ Parameter ``w:``:
 Returns:
     returns the Quaternion that holds a vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_2 =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_2 =
+    R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
 parameters x,y,z as a Vector
 
 Parameter ``xyz:``:
@@ -135,8 +144,8 @@ Parameter ``w:``:
 Returns:
     returns the Quaternion that holds a vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_3 =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_3 =
+    R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
 parameters x,y,z as a Vector
 
 Parameter ``x:``:
@@ -154,8 +163,8 @@ Parameter ``w:``:
 Returns:
     returns the Quaternion that holds a vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_4 =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_4 =
+    R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
 parameters x,y,z as a Vector
 
 Parameter ``xyz:``:
@@ -167,20 +176,26 @@ Parameter ``w:``:
 Returns:
     returns the Quaternion that holds a vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz_2 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz_2 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_3 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_3 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_4 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_4 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
-R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
+    R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
 pitch, yaw
 
 Parameter ``roll:``:
@@ -204,8 +219,8 @@ Parameter ``z:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
+    R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
 parameters roll, pitch, yaw
 
 Parameter ``roll:``:
@@ -223,8 +238,8 @@ Parameter ``v:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_3 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_3 =
+    R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
 parameters roll, pitch, yaw
 
 Parameter ``rpy:``:
@@ -239,8 +254,8 @@ Parameter ``w:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_4 =
-R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_4 =
+    R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
 pitch, yaw
 
 Parameter ``roll:``:
@@ -264,8 +279,8 @@ Parameter ``z:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_5 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_5 =
+    R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
 parameters roll, pitch, yaw
 
 Parameter ``roll:``:
@@ -283,8 +298,8 @@ Parameter ``v:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_6 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_6 =
+    R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
 parameters roll, pitch, yaw
 
 Parameter ``rpy:``:
@@ -299,30 +314,47 @@ Parameter ``w:``:
 Returns:
     returns vector with rotated xyz)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_convention_to_string = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_rpy_convention_to_string =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_string_to_rpy_convention = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_string_to_rpy_convention =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_2 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_2 =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down_2 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up_2 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_roll_pitch_yaw = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_roll_pitch_yaw =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_yaw_pitch_roll = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_yaw_pitch_roll =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
-R"doc(Converting between date strings and UnixTime stampes (ref 1970)
+static const char* __doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
+    R"doc(Converting between date strings and UnixTime stampes (ref 1970)
 
 Parameter ``DateString:``:
     DateString to be converted. Must fit format string.
@@ -337,8 +369,8 @@ Parameter ``format:``:
 Returns:
     UnixTime as double (seconds since 01.01.1970))doc";
 
-static const char *__doc_themachinethatgoesping_tools_timeconv_timepoint_to_unixtime =
-R"doc(timepoint_to_unixtime IMPORTANT: Conversion does only have
+static const char* __doc_themachinethatgoesping_tools_timeconv_timepoint_to_unixtime =
+    R"doc(timepoint_to_unixtime IMPORTANT: Conversion does only have
 microseconds precision!
 
 Parameter ``TimePoint:``:
@@ -347,8 +379,8 @@ Parameter ``TimePoint:``:
 Returns:
     Unix time stamp (seconds since 01.01.1970) as double)doc";
 
-static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
-R"doc(Converting between date strings and UnixTime stampes (ref 1970)
+static const char* __doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
+    R"doc(Converting between date strings and UnixTime stampes (ref 1970)
 
 Parameter ``UnixTime:``:
     seconds since 01.01.1970 as double
@@ -367,8 +399,8 @@ Parameter ``format:``:
 Returns:
     DateString that fits to the specified format)doc";
 
-static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_timepoint =
-R"doc(unixtime_to_timepoint IMPORTANT: return value will only have
+static const char* __doc_themachinethatgoesping_tools_timeconv_unixtime_to_timepoint =
+    R"doc(unixtime_to_timepoint IMPORTANT: return value will only have
 microseconds precision!
 
 Parameter ``UnixTime:``:
@@ -377,14 +409,17 @@ Parameter ``UnixTime:``:
 Returns:
     chrono::system_clock::time_point)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
-R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
+    R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_2 =
-R"doc(Construct a new Akima Spline Interpolator object from a vector of
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_2 =
+        R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
 kima.html usage: interpolated_y_value =
@@ -399,8 +434,9 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_3 =
-R"doc(Construct a new Akima Spline Interpolator object from a vector of
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_3 =
+        R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
 kima.html usage: interpolated_y_value =
@@ -419,23 +455,31 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_akima_spline = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_akima_spline =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend =
+    R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
-R"doc(internal function to initialize the linear extrapolation objects
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
+        R"doc(internal function to initialize the linear extrapolation objects
 _min_x, _min_x1, _max_x, _max_x_1, _min_y, _max_y and the
 _akima_spline must be set/initialized before calling this function)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate =
-R"doc(get the interolated y value for given x target
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate =
+        R"doc(get the interolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -443,8 +487,9 @@ Parameter ``target_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate_2 =
+        R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
     vector of x values. For each of these values find the corrspondig
@@ -453,24 +498,37 @@ Parameter ``targets_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x = R"doc(< min/max x and y values)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x =
+    R"doc(< min/max x and y values)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x_1 = R"doc(< one value above min and max x)doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x_1 =
+        R"doc(< one value above min and max x)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_y = R"doc(< min/max x and y values)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_y =
+    R"doc(< min/max x and y values)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_linearextrapolator = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_linearextrapolator =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x = R"doc(< min/max x and y values)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x =
+    R"doc(< min/max x and y values)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x_1 = R"doc(< one value above min and max x)doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x_1 =
+        R"doc(< one value above min and max x)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_y = R"doc(< min/max x and y values)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_y =
+    R"doc(< min/max x and y values)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
-R"doc(change the input data to these X and Y vectors
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
+        R"doc(change the input data to these X and Y vectors
 
 Parameter ``X:``:
     x vector (must be same size)
@@ -478,14 +536,15 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY_2 =
-R"doc(change the input data to this vector of XY pairs
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY_2 =
+        R"doc(change the input data to this vector of XY pairs
 
 Parameter ``XY:``:
     input data vector given as vector<pair<X,Y>>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
-R"doc(Interface class for interpolator classes Create an interpolator object
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
+    R"doc(Interface class for interpolator classes Create an interpolator object
 by provding vectors for x and y (same size). X must be sorted and no
 duplicates are allowed. then call class.Interpolate(new x value) to
 get a corresponding y value at this x position.
@@ -494,15 +553,16 @@ Template parameter ``YType:``:
     type of the y values (typically double, but will be a vector for
     the slerp interpolator class))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_I_Interpolator =
-R"doc(Construct a new Interpolator object from two vectors usage:
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_I_Interpolator =
+        R"doc(Construct a new Interpolator object from two vectors usage:
 interpolated_y_value = interpolator.interpolate(x_value)
 
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append =
-R"doc(append an x- and the corresponding y value to the interpolator data.
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append =
+    R"doc(append an x- and the corresponding y value to the interpolator data.
 
 Parameter ``x``:
     value, must be > than all existing x values
@@ -510,18 +570,21 @@ Parameter ``x``:
 Parameter ``y``:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append_2 =
-R"doc(append a x and y value pair to the interpolator data
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append_2 =
+    R"doc(append a x and y value pair to the interpolator data
 
 Parameter ``xy``:
     x and y value pair. x must be > than all existing x values)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY =
+    R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY_2 = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY_2 =
+        R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
-R"doc(append x and y value lists to the interplator data
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
+    R"doc(append x and y value lists to the interplator data
 
 Parameter ``X``:
     list of x values. Must be sorted in ascending order. All x values
@@ -530,26 +593,29 @@ Parameter ``X``:
 Parameter ``Y``:
     list of corresponding Y values. Must be same size as X)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend_2 =
-R"doc(append a list of x and y value pairs to the interplator data
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend_2 =
+    R"doc(append a list of x and y value pairs to the interplator data
 
 Parameter ``XY``:
     list of x,y value pairs. X Must be sorted in ascending order. All
     x values must be larger than the largest x value in the
     interpolator data.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(extrapolation mode type.)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode =
+    R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_extrapolation_mode =
-R"doc(Get the currently set extrapolation mode
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_extrapolation_mode =
+        R"doc(Get the currently set extrapolation mode
 
 Returns:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate =
-R"doc(get the interolated y value for given x target
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate =
+        R"doc(get the interolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -557,8 +623,9 @@ Parameter ``target_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate_2 =
+        R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
     vector of x values. For each of these values find the corrspondig
@@ -567,8 +634,9 @@ Parameter ``targets_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY =
-R"doc(change the input data to these X and Y vectors
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY =
+        R"doc(change the input data to these X and Y vectors
 
 Parameter ``X:``:
     x vector (must be same size, must be sorted in ascending order)
@@ -576,22 +644,24 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY_2 =
-R"doc(change the input data to this vector of XY pairs
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY_2 =
+        R"doc(change the input data to this vector of XY pairs
 
 Parameter ``XY:``:
     input data vector given as vector<pair<X,Y>>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_extrapolation_mode =
-R"doc(Set the extrapolation mode
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_extrapolation_mode =
+        R"doc(Set the extrapolation mode
 
 Parameter ``extrapolation_mode``:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator =
-R"doc(Interface class for interpolator classes This template clas implements
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator =
+    R"doc(Interface class for interpolator classes This template clas implements
 base functions interpolators that interpolate between two values
 (pairs). This interface implements the search for the x position
 within this vector (closest 2 x/y value pair) and computes an x
@@ -603,8 +673,9 @@ Template parameter ``YType:``:
     type of the y values (typically double, but will be a vector for
     the slerp interpolator class))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator =
-R"doc(Construct a new Interpolator object from a vector of pairs usage:
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator =
+        R"doc(Construct a new Interpolator object from a vector of pairs usage:
 interpolated_y_value = interpolator.interpolate(x_value)
 
 Parameter ``XY``:
@@ -615,8 +686,9 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator_2 =
-R"doc(Construct a new Interpolator object from a vector of pairs usage:
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator_2 =
+        R"doc(Construct a new Interpolator object from a vector of pairs usage:
 interpolated_y_value = interpolator.interpolate(x_value)
 
 Parameter ``X``:
@@ -632,40 +704,52 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_XY =
-R"doc(< main data vector containing pairs of corresponding x and y
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_XY =
+    R"doc(< main data vector containing pairs of corresponding x and y
 datapoitns)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append_2 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend_2 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_X =
-R"doc(return the x component of the internal data vector
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_X =
+        R"doc(return the x component of the internal data vector
 
 Returns:
     std::vector<double>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_XY =
-R"doc(return the internal data vector
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_XY =
+        R"doc(return the internal data vector
 
 Returns:
     const std::vector<std::pair<double,YType>>&)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
-R"doc(return the y component of the itnernal data vector
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
+        R"doc(return the y component of the itnernal data vector
 
 Returns:
     std::vector<YType>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_extrapolation_mode = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_extrapolation_mode =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate =
-R"doc(get the interolated y value for given x target
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate =
+        R"doc(get the interolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -673,8 +757,9 @@ Parameter ``target_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_2 =
+        R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
     vector of x values. For each of these values find the corrspondig
@@ -683,8 +768,9 @@ Parameter ``targets_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
-R"doc(Interface for implementing an interpolation between two y values using
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
+        R"doc(Interface for implementing an interpolation between two y values using
 a given interpolation factor
 
 Parameter ``target_x``:
@@ -700,16 +786,20 @@ Parameter ``y1``:
 Returns:
     interpolated y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consequtive searches))doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair =
+        R"doc(< last pair (for faster consequtive searches))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
-R"doc(change the input data to this vector of XY pairs
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
+        R"doc(change the input data to this vector of XY pairs
 
 Parameter ``XY:``:
     input data vector given as vector<pair<X,Y>>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY_2 =
-R"doc(change the input data to these X and Y vectors
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY_2 =
+        R"doc(change the input data to these X and Y vectors
 
 Parameter ``X:``:
     x vector (must be same size, must be sorted in ascending order)
@@ -717,12 +807,17 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_extrapolation_mode = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_extrapolation_mode =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_calc_target_x =
-R"doc(compute the interpolation factor between xmin and xmax
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_calc_target_x =
+        R"doc(compute the interpolation factor between xmin and xmax
 
 Parameter ``target_x``:
     x value for which we want to know the interpolation factor
@@ -730,28 +825,48 @@ Parameter ``target_x``:
 Returns:
     interpolation factor)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor = R"doc(< 1/(xmax-xmin))doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor =
+        R"doc(< 1/(xmax-xmin))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax = R"doc(< larger xvalue)doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax =
+        R"doc(< larger xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax_index = R"doc(< index of the larger x value (in the internal vector))doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax_index =
+        R"doc(< index of the larger x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin = R"doc(< smaller xvalue)doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin =
+        R"doc(< smaller xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin_index = R"doc(< index of the smaller x value (in the internal vector))doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin_index =
+        R"doc(< index of the smaller x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator = R"doc(Find linear interpolated values within vector data)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator =
+    R"doc(Find linear interpolated values within vector data)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_2 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_2 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_3 = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_3 =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_interpolate_pair =
-R"doc(Interpolate: Interpolate interpolation between two values
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_interpolate_pair =
+        R"doc(Interpolate: Interpolate interpolation between two values
 
 Parameter ``target:``:
     the target point [0.0 - 1.0]
@@ -763,12 +878,16 @@ Parameter ``v``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator = R"doc(Interpolator class to find nearest neighbors within vector data)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator =
+    R"doc(Interpolator class to find nearest neighbors within vector data)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator = R"doc()doc";
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator =
+        R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_2 =
-R"doc(Construct a new Nearest Interpolator object from a vector of pairs
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_2 =
+        R"doc(Construct a new Nearest Interpolator object from a vector of pairs
 usage: interpolated_y_value = interpolator.interpolate(x_value)
 
 Parameter ``XY``:
@@ -778,8 +897,9 @@ Parameter ``XY``:
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_3 =
-R"doc(Construct a new Nearest Interpolator object from a vector of pairs
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_3 =
+        R"doc(Construct a new Nearest Interpolator object from a vector of pairs
 usage: interpolated_y_value = interpolator.interpolate(x_value)
 
 Parameter ``X``:
@@ -793,8 +913,9 @@ Parameter ``Y``:
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_interpolate_pair =
-R"doc(Nearest: Nearest neighbor interpolation between two values
+static const char*
+    __doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_interpolate_pair =
+        R"doc(Nearest: Nearest neighbor interpolation between two values
 
 Parameter ``target:``:
     the x position of the target point
@@ -810,17 +931,19 @@ Parameter ``p2``:
 Returns:
     p1[1],p2[1])doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode = R"doc(extrapolation mode type.)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode =
+    R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_extrapolate = R"doc(< interpolate using the closest value pair in the internal x vector)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_extrapolate =
+    R"doc(< interpolate using the closest value pair in the internal x vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_fail =
-R"doc(< throw out_of_range exception if given x value exceeds boundaries of
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_fail =
+    R"doc(< throw out_of_range exception if given x value exceeds boundaries of
 internal vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nearest = R"doc(< return nearest value in the vector.)doc";
+static const char* __doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nearest =
+    R"doc(< return nearest value in the vector.)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
 #endif
-

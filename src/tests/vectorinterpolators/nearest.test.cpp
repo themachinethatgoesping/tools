@@ -15,79 +15,78 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-TEST_CASE("NearestInterpolator: should perform basic interpolations correctly",
-          TESTTAG)
+TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", TESTTAG)
 {
-  // initialize test data
-  std::vector<double> x = { -10, -5, 0, 6 };
-  std::vector<double> y = { 1, 0, 1, 0 };
-  double x_append = 12;
-  double y_append = -1;
+    // initialize test data
+    std::vector<double> x        = { -10, -5, 0, 6 };
+    std::vector<double> y        = { 1, 0, 1, 0 };
+    double              x_append = 12;
+    double              y_append = -1;
 
-  vectorinterpolators::NearestInterpolator interpolator(x, y);
+    vectorinterpolators::NearestInterpolator interpolator(x, y);
 
-  // append some data
-  interpolator.append(x_append, y_append);
+    // append some data
+    interpolator.append(x_append, y_append);
 
-  SECTION("existing values should be looked up correctly")
-  {
-    for (unsigned int i = 0; i < x.size(); ++i)
-      REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
+    SECTION("existing values should be looked up correctly")
+    {
+        for (unsigned int i = 0; i < x.size(); ++i)
+            REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
 
-    REQUIRE(interpolator.interpolate(x_append) == Approx(y_append));
-  }
-
-  SECTION("preset values should be interpolated correctly")
-  {
-
-    REQUIRE(interpolator.interpolate(-7.6) == Approx(1));
-    REQUIRE(interpolator.interpolate(-7.5) == Approx(0));
-    REQUIRE(interpolator.interpolate(-7.4) == Approx(0));
-
-    REQUIRE(interpolator.interpolate(-2.6) == Approx(0));
-    REQUIRE(interpolator.interpolate(-2.5) == Approx(1));
-    REQUIRE(interpolator.interpolate(-2.4) == Approx(1));
-
-    REQUIRE(interpolator.interpolate(2.9) == Approx(1));
-    REQUIRE(interpolator.interpolate(3.0) == Approx(0));
-    REQUIRE(interpolator.interpolate(3.1) == Approx(0));
-
-    REQUIRE(interpolator.interpolate(8.9) == Approx(0));
-    REQUIRE(interpolator.interpolate(9.0) == Approx(-1));
-    REQUIRE(interpolator.interpolate(9.1) == Approx(-1));
-  }
-
-  SECTION("preset value vectors should be interpolated correctly")
-  {
-    std::vector<double> targets_x = { -2.6, -2.5, -2.4 };
-    std::vector<double> expected_y = { 0, 1, 1 };
-
-    REQUIRE(interpolator.interpolate(targets_x) == expected_y);
-  }
-
-  SECTION("extrapolation mode should cause:")
-  {
-    for (auto mode : vectorinterpolators::t_extr_mode_all) {
-      interpolator.set_extrapolation_mode(mode);
-
-      switch (mode) {
-        case vectorinterpolators::t_extr_mode::fail:
-          SECTION(" - fail when set to fail")
-          {
-            REQUIRE_THROWS_AS(interpolator.interpolate(-11),
-                              std::out_of_range);
-            REQUIRE_THROWS_AS(interpolator.interpolate(13),
-                              std::out_of_range);
-          }
-          break;
-
-        default:
-          SECTION(" - nearest extrapolation in all other cases")
-            REQUIRE(interpolator.interpolate(-11) == Approx(1));
-            REQUIRE(interpolator.interpolate(13) == Approx(y_append));
-
-          break;
-      }
+        REQUIRE(interpolator.interpolate(x_append) == Approx(y_append));
     }
-  }
+
+    SECTION("preset values should be interpolated correctly")
+    {
+
+        REQUIRE(interpolator.interpolate(-7.6) == Approx(1));
+        REQUIRE(interpolator.interpolate(-7.5) == Approx(0));
+        REQUIRE(interpolator.interpolate(-7.4) == Approx(0));
+
+        REQUIRE(interpolator.interpolate(-2.6) == Approx(0));
+        REQUIRE(interpolator.interpolate(-2.5) == Approx(1));
+        REQUIRE(interpolator.interpolate(-2.4) == Approx(1));
+
+        REQUIRE(interpolator.interpolate(2.9) == Approx(1));
+        REQUIRE(interpolator.interpolate(3.0) == Approx(0));
+        REQUIRE(interpolator.interpolate(3.1) == Approx(0));
+
+        REQUIRE(interpolator.interpolate(8.9) == Approx(0));
+        REQUIRE(interpolator.interpolate(9.0) == Approx(-1));
+        REQUIRE(interpolator.interpolate(9.1) == Approx(-1));
+    }
+
+    SECTION("preset value vectors should be interpolated correctly")
+    {
+        std::vector<double> targets_x  = { -2.6, -2.5, -2.4 };
+        std::vector<double> expected_y = { 0, 1, 1 };
+
+        REQUIRE(interpolator.interpolate(targets_x) == expected_y);
+    }
+
+    SECTION("extrapolation mode should cause:")
+    {
+        for (auto mode : vectorinterpolators::t_extr_mode_all)
+        {
+            interpolator.set_extrapolation_mode(mode);
+
+            switch (mode)
+            {
+                case vectorinterpolators::t_extr_mode::fail:
+                    SECTION(" - fail when set to fail")
+                    {
+                        REQUIRE_THROWS_AS(interpolator.interpolate(-11), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.interpolate(13), std::out_of_range);
+                    }
+                    break;
+
+                default:
+                    SECTION(" - nearest extrapolation in all other cases")
+                    REQUIRE(interpolator.interpolate(-11) == Approx(1));
+                    REQUIRE(interpolator.interpolate(13) == Approx(y_append));
+
+                    break;
+            }
+        }
+    }
 }
