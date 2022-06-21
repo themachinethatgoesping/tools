@@ -139,14 +139,14 @@ template<typename floattype>
 Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
                                                  bool                     input_in_degrees = true)
 {
-    static const floattype to_rad = M_PI / 180.;
+    static const floattype _quaternion_from_ypr_to_rad = M_PI / 180.;
 
     // convert to rad
     if (input_in_degrees)
     {
-        ypr[0] *= to_rad;
-        ypr[1] *= to_rad;
-        ypr[2] *= to_rad;
+        ypr[0] *= _quaternion_from_ypr_to_rad;
+        ypr[1] *= _quaternion_from_ypr_to_rad;
+        ypr[2] *= _quaternion_from_ypr_to_rad;
     }
 
     // creaste quaternion by rotating arround axes first, yaw, then pitch, then roll
@@ -198,12 +198,12 @@ std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
      */
     ypr = normalize_angles_rad(ypr);
 
-    static const floattype to_degrees = 180 / M_PI;
+    static const floattype _ypr_from_quaternion_to_degrees = 180 / M_PI;
     if (output_to_degrees)
     {
-        ypr[0] *= to_degrees;
-        ypr[1] *= to_degrees;
-        ypr[2] *= to_degrees;
+        ypr[0] *= _ypr_from_quaternion_to_degrees;
+        ypr[1] *= _ypr_from_quaternion_to_degrees;
+        ypr[2] *= _ypr_from_quaternion_to_degrees;
     }
 
     return ypr;

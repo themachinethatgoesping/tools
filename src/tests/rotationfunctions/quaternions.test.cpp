@@ -31,7 +31,7 @@ TEST_CASE("normalize_angles", TESTTAG)
         boost::random::uniform_real_distribution<double> pitch_dist(-1000., 1000.);
         boost::random::uniform_real_distribution<double> roll_dist(-1000., 1000);
 
-        for (unsigned int i; i < 10000; ++i)
+        for (unsigned int c; c < 10000; ++c)
         {
             auto yaw   = yaw_dist(gen);
             auto pitch = pitch_dist(gen);
