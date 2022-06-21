@@ -4,6 +4,15 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+/**
+ * @brief Interface class for vector pair interpolators.
+ * Pair interpolator means that the actual interpolation only uses two values
+ * This interface class implements functions to search for the correct interpolation pair within the vector.
+ * 
+ * @authors Peter Urban
+ * 
+ */
+
 #pragma once
 
 #include <algorithm>
@@ -14,7 +23,7 @@
 #include <utility>
 #include <vector>
 
-#include "i_interpolator.h"
+#include "i_interpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

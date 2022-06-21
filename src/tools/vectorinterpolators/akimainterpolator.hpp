@@ -4,6 +4,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+/**
+ * @brief (Modified) akima interpolator class. Uses boost makima interpolator
+ * 
+ * @authors Peter Urban
+ * 
+ */
+
 #pragma once
 
 #include <array>
@@ -12,15 +19,15 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_interpolator.h"
-#include "linearinterpolator.h"
+#include "i_interpolator.hpp"
+#include "linearinterpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
 
 /**
- * @brief Interpolator class to find nearest neighbors within vector data
+ * @brief Interpolator class to perform a (modified) akima interpolation. Uses boost makima interpolator.
  *
  */
 class AkimaInterpolator : public I_Interpolator<double>

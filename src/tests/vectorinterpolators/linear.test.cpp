@@ -7,7 +7,7 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 
-#include "../../src/tools/vectorinterpolators.h"
+#include "../../src/tools/vectorinterpolators.hpp"
 
 // using namespace testing;
 using namespace std;

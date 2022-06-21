@@ -9,9 +9,9 @@
 #include <tuple>
 #include <vector>
 
-#include "../../tools/vectorinterpolators/akimainterpolator.h"
-#include "../docstrings.h"
-#include "module.h"
+#include "../../tools/vectorinterpolators/akimainterpolator.hpp"
+#include "../docstrings.hpp"
+#include "module.hpp"
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;

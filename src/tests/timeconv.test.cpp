@@ -7,7 +7,7 @@
 
 #include <chrono>
 
-#include "../../src/tools/timeconv.h"
+#include "../../src/tools/timeconv.hpp"
 
 //using namespace testing;
 using namespace std;

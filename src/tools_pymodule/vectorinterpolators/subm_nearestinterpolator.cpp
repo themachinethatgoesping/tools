@@ -9,9 +9,9 @@
 #include <tuple>
 #include <vector>
 
-#include "../../tools/vectorinterpolators/nearestinterpolator.h"
-#include "../docstrings.h"
-#include "module.h"
+#include "../../tools/vectorinterpolators/nearestinterpolator.hpp"
+#include "../docstrings.hpp"
+#include "module.hpp"
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;

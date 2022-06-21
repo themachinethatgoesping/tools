@@ -4,6 +4,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+/**
+ * @brief Nearest neighbor vector interpolator class. 
+ * 
+ * @authors Peter Urban
+ * 
+ */
+
 #pragma once
 
 #include <array>
@@ -11,7 +18,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_pairinterpolator.h"
+#include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

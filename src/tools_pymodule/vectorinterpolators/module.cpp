@@ -8,9 +8,9 @@
 #include <tuple>
 #include <vector>
 
-#include "../docstrings.h"
-#include "../../tools/vectorinterpolators.h"
-#include "module.h"
+#include "../docstrings.hpp"
+#include "../../tools/vectorinterpolators.hpp"
+#include "module.hpp"
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;

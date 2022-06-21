@@ -4,6 +4,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+/**
+ * @brief Interface class for vector interpolators
+ * 
+ * @authors Peter Urban
+ * 
+ */
+
 #pragma once
 
 #include <algorithm>

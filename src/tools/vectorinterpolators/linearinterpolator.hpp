@@ -4,6 +4,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+/**
+ * @brief Linear vector interpolator class. 
+ * 
+ * @authors Peter Urban
+ * 
+ */
+
 #pragma once
 
 #include <array>
@@ -11,14 +18,14 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_pairinterpolator.h"
+#include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
 
 /**
- * @brief Interpolator class to find linear interpolated values within vector data
+ * @brief Find linear interpolated values within vector data
  * 
  */
 class LinearInterpolator : public I_PairInterpolator<double>
