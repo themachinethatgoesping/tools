@@ -31,7 +31,7 @@ TEST_CASE("normalize_angles", TESTTAG)
         boost::random::uniform_real_distribution<double> pitch_dist(-1000., 1000.);
         boost::random::uniform_real_distribution<double> roll_dist(-1000., 1000);
 
-        for (unsigned int c; c < 10000; ++c)
+        for (unsigned int c = 0; c < 10000; ++c)
         {
             auto yaw   = yaw_dist(gen);
             auto pitch = pitch_dist(gen);
@@ -107,7 +107,7 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
         boost::random::uniform_real_distribution<double> pitch_dist(-90., 90.);
         boost::random::uniform_real_distribution<double> roll_dist(-180., 180);
 
-        for (unsigned int i; i < 1000; ++i)
+        for (unsigned int i = 0; i < 1000; ++i)
         {
             auto yaw   = yaw_dist(gen);
             auto pitch = pitch_dist(gen);
@@ -188,7 +188,7 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
 
         std::vector<std::array<double, 3>> YPR;
         std::vector<double>                Y, P, R;
-        for (unsigned int i; i < 10000; ++i)
+        for (unsigned int i = 0; i < 10000; ++i)
         {
             auto yaw   = yaw_dist(gen);
             auto pitch = pitch_dist(gen);
