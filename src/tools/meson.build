@@ -59,6 +59,7 @@ tools_dep = declare_dependency(
     hinnant_date_dep
   ],
   link_with : [tools_lib],
+  compile_args : ['-D_USE_MATH_DEFINES']
   #include_directories : ['../']
   )
 
