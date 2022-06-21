@@ -4,12 +4,9 @@
 // SPDX-License-Identifier: MPL-2.0
 
 /**
- * @file timeconv.h
  * @brief Converting chrono time points / unix timestamps (double) and date time
- * strings to each other
+ * strings to each other. unix timestamps are always treated as UTC
  * @authors Peter Urban
- * @copyright 2022 GEOMAR Helmholtz Centre for Ocean Research Kiel
- * @copyright 2022 Ghent University
  *
  */
 

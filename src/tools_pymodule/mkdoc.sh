@@ -8,10 +8,10 @@ import os
 headers = []
 for r,d,f in os.walk('../tools'):
     for file in f:
-        if file.endswith('.h'):
+        if file.endswith('.hpp'):
             headers.append(r + '/' + file)
 headers.sort()
 
 #this only works using the xonsh shell which can call bash commands from python
-echo running python3 -m pybind11_mkdoc -o docstrings.h @(headers)
-python3 -m pybind11_mkdoc -o docstrings.h @(headers)
+echo running python3 -m pybind11_mkdoc -o docstrings.hpp @(headers)
+python3 -m pybind11_mkdoc -o docstrings.hpp @(headers)

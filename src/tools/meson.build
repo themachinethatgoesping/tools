@@ -12,12 +12,12 @@ sources = [
 ]
 
 headers = [
-  'timeconv.h',
-  'vectorinterpolators.h',
-  'vectorinterpolators/i_interpolator.h',
-  'vectorinterpolators/linearinterpolator.h',
-  'vectorinterpolators/nearestinterpolator.h',
-  'vectorinterpolators/akimainterpolator.h'
+  'timeconv.hpp',
+  'vectorinterpolators.hpp',
+  'vectorinterpolators/i_interpolator.hpp',
+  'vectorinterpolators/linearinterpolator.hpp',
+  'vectorinterpolators/nearestinterpolator.hpp',
+  'vectorinterpolators/akimainterpolator.hpp'
 ]
 
 # -- targets --

@@ -23,13 +23,303 @@
 #endif
 
 
-static const char *__doc_Bilinear = R"doc()doc";
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator = R"doc()doc";
 
-static const char *__doc_Linear_old =
-R"doc(This is snipped that was once used for reaching a tri linear
-interpolation. It is currently not used within the machinethatgoesping)doc";
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_2 = R"doc()doc";
 
-static const char *__doc_Trilinear = R"doc()doc";
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Interpolate_2 = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_RPY_convention = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp =
+R"doc(Slerp2: Slerp interpolation between two values
+
+Parameter ``target:``:
+    the target point [0.0 - 1.0]
+
+Parameter ``v``:
+    : An array of size 2 containing 2 values (to interpolate
+    inbetween)
+
+Returns:
+    Interpolated value for target position)doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_2 =
+R"doc(Slerp2: Slerp interpolation between two values
+
+Parameter ``target:``:
+    the target point [0.0 - 1.0]
+
+Parameter ``v``:
+    : An array of size 2 containing 2 values (to interpolate
+    inbetween)
+
+Returns:
+    Interpolated value for target position)doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_3 =
+R"doc(Slerp2: Slerp interpolation between two values
+
+Parameter ``target:``:
+    the target point [0.0 - 1.0]
+
+Parameter ``v``:
+    : An array of size 2 containing 2 values (to interpolate
+    inbetween)
+
+Returns:
+    Interpolated value for target position)doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_Slerp_4 =
+R"doc(Slerp2: Slerp interpolation between two values
+
+Parameter ``target:``:
+    the target point [0.0 - 1.0]
+
+Parameter ``v``:
+    : An array of size 2 containing 2 values (to interpolate
+    inbetween)
+
+Returns:
+    Interpolated value for target position)doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_2 = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_SlerpInterpolator_3 = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_euler_from_quaternion = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_quaternion_from_euler_rpy_2 = R"doc()doc";
+
+static const char *__doc_DSMToolsLib_Interpolation_SlerpInterpolator_to_XY = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector =
+R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``x:``:
+    x as double or float
+
+Parameter ``y:``:
+    y as double or float
+
+Parameter ``z:``:
+    z as double or float
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_2 =
+R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``xyz:``:
+    x, y, z as Array<floattype, 3>
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_3 =
+R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``x:``:
+    x as double or float
+
+Parameter ``y:``:
+    y as double or float
+
+Parameter ``z:``:
+    z as double or float
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_4 =
+R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``xyz:``:
+    x, y, z as Array<floattype, 3>
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_3 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_4 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
+R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
+pitch, yaw
+
+Parameter ``roll:``:
+    roll in degrees
+
+Parameter ``pitch:``:
+    pitch in degrees
+
+Parameter ``yaw:``:
+    yaw in degrees
+
+Parameter ``x:``:
+    x as double
+
+Parameter ``y:``:
+    y as double
+
+Parameter ``z:``:
+    z as double
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
+R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+parameters roll, pitch, yaw
+
+Parameter ``roll:``:
+    roll in degrees
+
+Parameter ``pitch:``:
+    pitch in degrees
+
+Parameter ``yaw:``:
+    yaw in degrees
+
+Parameter ``v:``:
+    x, y, z as Quaternion<floattype>
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_3 =
+R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+parameters roll, pitch, yaw
+
+Parameter ``rpy:``:
+    roll, pitch, yaw in degrees as Array<floattype>
+
+Parameter ``xyz:``:
+    x, y, z as as Array<floattype>
+
+Parameter ``w:``:
+    w in degree
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_4 =
+R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
+pitch, yaw
+
+Parameter ``roll:``:
+    roll in degrees
+
+Parameter ``pitch:``:
+    pitch in degrees
+
+Parameter ``yaw:``:
+    yaw in degrees
+
+Parameter ``x:``:
+    x as double
+
+Parameter ``y:``:
+    y as double
+
+Parameter ``z:``:
+    z as double
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_5 =
+R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+parameters roll, pitch, yaw
+
+Parameter ``roll:``:
+    roll in degrees
+
+Parameter ``pitch:``:
+    pitch in degrees
+
+Parameter ``yaw:``:
+    yaw in degrees
+
+Parameter ``v:``:
+    x, y, z as Quaternion<floattype>
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_6 =
+R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+parameters roll, pitch, yaw
+
+Parameter ``rpy:``:
+    roll, pitch, yaw in degrees as Array<floattype>
+
+Parameter ``xyz:``:
+    x, y, z as as Array<floattype>
+
+Parameter ``w:``:
+    w in degree
+
+Returns:
+    returns vector with rotated xyz)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_convention_to_string = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_string_to_rpy_convention = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_roll_pitch_yaw = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_yaw_pitch_roll = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
 R"doc(Converting between date strings and UnixTime stampes (ref 1970)
@@ -87,7 +377,9 @@ Parameter ``UnixTime:``:
 Returns:
     chrono::system_clock::time_point)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator = R"doc(Interpolator class to find nearest neighbors within vector data)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
+R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
+boost makima interpolator.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc()doc";
 
@@ -450,9 +742,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin_index = R"doc(< index of the smaller x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator =
-R"doc(Interpolator class to find linear interpolated values within vector
-data)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator = R"doc(Find linear interpolated values within vector data)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator = R"doc()doc";
 

@@ -4,11 +4,11 @@
 // SPDX-License-Identifier: MPL-2.0
 
 // -- module header
-#include "m_timeconv.h"
-#include "docstrings.h" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
+#include "m_timeconv.hpp"
+#include "docstrings.hpp" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
-#include "../tools/timeconv.h"
+#include "../tools/timeconv.hpp"
 
 // -- include system headers
 #include <sstream>

@@ -6,8 +6,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/iostream.h>
 
-#include "m_timeconv.h"
-#include "vectorinterpolators/module.h"
+#include "m_timeconv.hpp"
+#include "vectorinterpolators/module.hpp"
 
 
 

@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include "timeconv.h"
+#include "timeconv.hpp"
 
 #include <date/date.h>
 
