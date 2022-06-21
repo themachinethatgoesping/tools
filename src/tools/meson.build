@@ -13,6 +13,7 @@ sources = [
 
 headers = [
   'timeconv.hpp',
+  'rotationfunctions/quaternions.hpp',
   'vectorinterpolators.hpp',
   'vectorinterpolators/i_interpolator.hpp',
   'vectorinterpolators/linearinterpolator.hpp',

@@ -3,13 +3,13 @@ Language:        Cpp
 # BasedOnStyle:  Mozilla
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
-AlignArrayOfStructures: None
+AlignArrayOfStructures: Left
 AlignConsecutiveMacros: Consecutive
 AlignConsecutiveAssignments: true
 AlignConsecutiveBitFields: Consecutive
 AlignConsecutiveDeclarations: true
 AlignEscapedNewlines: Right
-AlignOperands:   Align
+AlignOperands:   AlignAfterOperator
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: false
