@@ -15,7 +15,7 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-TEST_CASE("VectorInterpolators: should throw expected exceptiosn", TESTTAG)
+TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {
     SECTION("single value interpolators")
     { // initialize test data (correct order)
