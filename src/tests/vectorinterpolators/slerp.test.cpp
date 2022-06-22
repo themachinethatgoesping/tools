@@ -95,7 +95,7 @@ TEST_CASE(
     std::vector<std::array<double, 3>> y_results, y_r_results;
 
     // compare interpolation results for random target xs (single function calls)
-    for (unsigned int j = 0; j < 1000; ++j)
+    for (unsigned int j = 0; j < 100; ++j)
     {
         auto x_target = dist2(gen);
 
