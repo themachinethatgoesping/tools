@@ -94,7 +94,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @return corresponding y value
      */
     std::vector<std::array<double, 3>> interpolate_to_ypr(const std::vector<double>& targetsX,
-                                                       bool output_in_degrees = true)
+                                                          bool output_in_degrees = true)
     {
         std::vector<std::array<double, 3>> y_values;
         y_values.reserve(targetsX.size());
@@ -104,6 +104,25 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         }
 
         return y_values;
+    }
+
+    // ------------------
+    // set data functions
+    // ------------------
+    void set_data_XY(const std::vector<double>& X,
+                     const std::vector<double>& yaw,
+                     const std::vector<double>& pitch,
+                     const std::vector<double>& roll,
+                     bool                       input_in_degrees = true)
+    {
+        I_PairInterpolator<t_quaternion>::set_data_XY(X,rotationfunctions::quaternion_from_ypr(yaw,pitch,roll,input_in_degrees));
+    }
+
+    void set_data_XY(const std::vector<double>& X,
+                     const std::vector<std::array<double, 3>>& ypr,
+                     bool                       input_in_degrees = true)
+    {
+        I_PairInterpolator<t_quaternion>::set_data_XY(X,rotationfunctions::quaternion_from_ypr(ypr,input_in_degrees));
     }
 
     // -----------------------
