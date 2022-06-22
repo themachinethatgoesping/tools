@@ -179,43 +179,49 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
 
     SECTION("vectorized calls should produce the same results as single calls")
     {
-        // random generator. Use fixed seed to ensure repeatable results
-        boost::random::mt19937 gen(1234567);
-
-        boost::random::uniform_real_distribution<double> yaw_dist(-1000., 1000);
-        boost::random::uniform_real_distribution<double> pitch_dist(-1000., 1000.);
-        boost::random::uniform_real_distribution<double> roll_dist(-1000., 1000);
-
-        std::vector<std::array<double, 3>> YPR;
-        std::vector<double>                Y, P, R;
-        for (unsigned int i = 0; i < 10000; ++i)
+        // degrees means: values are converted to/from degrees or not 
+        for (bool degrees : { true, false })
         {
-            auto yaw   = yaw_dist(gen);
-            auto pitch = pitch_dist(gen);
-            auto roll  = roll_dist(gen);
 
-            YPR.push_back({ yaw, pitch, roll });
-            Y.push_back(yaw);
-            P.push_back(pitch);
-            R.push_back(roll);
-        }
+            // random generator. Use fixed seed to ensure repeatable results
+            boost::random::mt19937 gen(1234567);
 
-        auto Q1          = rotationfunctions::quaternion_from_ypr(YPR);
-        auto Q2          = rotationfunctions::quaternion_from_ypr(Y, P, R);
-        auto YPR_result1 = rotationfunctions::ypr_from_quaternion(Q1);
-        auto YPR_result2 = rotationfunctions::ypr_from_quaternion(Q2);
+            boost::random::uniform_real_distribution<double> yaw_dist(-1000., 1000);
+            boost::random::uniform_real_distribution<double> pitch_dist(-1000., 1000.);
+            boost::random::uniform_real_distribution<double> roll_dist(-1000., 1000);
 
-        for (unsigned int c = 0; c < YPR.size(); ++c)
-        {
-            auto q   = rotationfunctions::quaternion_from_ypr(YPR[c]);
-            auto ypr = rotationfunctions::ypr_from_quaternion(q);
-
-            CHECK(Q1[c] == q);
-            CHECK(Q2[c] == q);
-            for (unsigned int i = 0; i < 3; ++i)
+            std::vector<std::array<double, 3>> YPR;
+            std::vector<double>                Y, P, R;
+            for (unsigned int i = 0; i < 10000; ++i)
             {
-                CHECK(YPR_result1[c][i] == Approx(ypr[i]));
-                CHECK(YPR_result2[c][i] == Approx(ypr[i]));
+                auto yaw   = yaw_dist(gen);
+                auto pitch = pitch_dist(gen);
+                auto roll  = roll_dist(gen);
+
+                YPR.push_back({ yaw, pitch, roll });
+                Y.push_back(yaw);
+                P.push_back(pitch);
+                R.push_back(roll);
+            }
+
+            auto Q1          = rotationfunctions::quaternion_from_ypr(YPR, degrees = degrees);
+            auto Q2          = rotationfunctions::quaternion_from_ypr(Y, P, R, degrees = degrees);
+            auto YPR_result1 = rotationfunctions::ypr_from_quaternion(Q1, degrees = degrees);
+            auto YPR_result2 = rotationfunctions::ypr_from_quaternion(Q2, degrees = degrees);
+
+            for (unsigned int c = 0; c < YPR.size(); ++c)
+            {
+                auto q   = rotationfunctions::quaternion_from_ypr(YPR[c], degrees = degrees);
+                auto ypr = rotationfunctions::ypr_from_quaternion(q, degrees = degrees);
+
+                CHECK(Q1[c] == q);
+                CHECK(Q2[c] == q);
+                for (unsigned int i = 0; i < 3; ++i)
+                {
+                    INFO('degrees = ' << degrees);
+                    CHECK(YPR_result1[c][i] == Approx(ypr[i]));
+                    CHECK(YPR_result2[c][i] == Approx(ypr[i]));
+                }
             }
         }
     }

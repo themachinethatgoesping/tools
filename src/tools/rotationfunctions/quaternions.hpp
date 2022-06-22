@@ -182,6 +182,14 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(floattype yaw,
     return quaternion_from_ypr(std::move(ypr), input_in_degrees);
 }
 
+/**
+ * @brief Convert quaternion to yaw, pitch and roll
+ *
+ * @tparam floattype
+ * @param q quaternion
+ * @param output_to_degrees  if true, yaw pitch and roll input values are in ° otherwise rad
+ * @return std::array<floattype, 3> yaw, pitch and roll
+ */
 template<typename floattype>
 std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
                                              bool                         output_to_degrees = true)
@@ -211,49 +219,82 @@ std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
 
 // --- vectorized calls ---
 
+/**
+ * @brief create eigen quaternions by rotating yaw (z axis), pitch (y axis) and roll (x axis) values
+ * (vectorized call)
+ *
+ * @tparam floattype floating point value
+ * @param YPR vector of yaw, pitch and roll rotation values [° or rad]
+ * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @return std::vector<Eigen::Quaternion<floattype>>
+ */
 template<typename floattype>
 std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(
-    const std::vector<std::array<floattype, 3>>& YPR)
+    const std::vector<std::array<floattype, 3>>& YPR,
+    bool                                         input_in_degrees = true)
 {
     std::vector<Eigen::Quaternion<floattype>> Q;
     Q.reserve(YPR.size());
     for (const auto ypr : YPR)
     {
-        Q.push_back(quaternion_from_ypr(ypr));
+        Q.push_back(quaternion_from_ypr(ypr, input_in_degrees));
     }
 
     return Q;
 }
 
+/**
+ * @brief create eigen quaternions by rotating yaw (z axis), pitch (y axis) and roll (x axis) values
+ * (vectorized call)
+ *
+ * @tparam floattype
+ * @tparam floattype floating point value
+ * @param yaw vector of rotation values arround the z axis [° or rad]
+ * @param pitchvector of rotation values the y axis [° or rad]
+ * @param roll of rotation values the x axis [° or rad]
+ * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @return std::vector<Eigen::Quaternion<floattype>>
+ */
 template<typename floattype>
 std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(const std::vector<floattype>& yaw,
                                                               const std::vector<floattype>& pitch,
-                                                              const std::vector<floattype>& roll)
+                                                              const std::vector<floattype>& roll,
+                                                              bool input_in_degrees = true)
 {
     if (yaw.size() != pitch.size() || yaw.size() != roll.size())
     {
-        throw std::invalid_argument("ERROR[quaternion_from_ypr]: input vectors must have the same size!");
+        throw std::invalid_argument(
+            "ERROR[quaternion_from_ypr]: input vectors must have the same size!");
     }
 
     std::vector<Eigen::Quaternion<floattype>> Q;
     Q.reserve(yaw.size());
     for (unsigned int i = 0; i < yaw.size(); ++i)
     {
-        Q.push_back(quaternion_from_ypr(yaw[i], pitch[i], roll[i]));
+        Q.push_back(quaternion_from_ypr(yaw[i], pitch[i], roll[i], input_in_degrees));
     }
 
     return Q;
-
 }
 
+/**
+ * @brief Convert quaternions to yaw, pitch and roll values (vectorized call)
+ *
+ * @tparam floattype
+ * @param Q vector of quaternions
+ * @param output_to_degrees  if true, yaw pitch and roll input values are in ° otherwise rad
+ * @return std::vector<std::array<floattype, 3>>
+ */
 template<typename floattype>
-std::vector<std::array<floattype, 3>> ypr_from_quaternion(const std::vector<Eigen::Quaternion<floattype>>& Q)
+std::vector<std::array<floattype, 3>> ypr_from_quaternion(
+    const std::vector<Eigen::Quaternion<floattype>>& Q,
+    bool                                             output_to_degrees = true)
 {
     std::vector<std::array<floattype, 3>> YPR;
     YPR.reserve(Q.size());
     for (const auto& q : Q)
     {
-        YPR.push_back(ypr_from_quaternion(q));
+        YPR.push_back(ypr_from_quaternion(q, output_to_degrees));
     }
 
     return YPR;
