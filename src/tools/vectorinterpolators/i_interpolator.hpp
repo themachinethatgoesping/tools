@@ -157,7 +157,7 @@ class I_Interpolator
     virtual void append(std::pair<double, YType> xy) = 0;
 
     /**
-     * @brief append x and y value lists to the interplator data
+     * @brief append x and y value lists to the interplator data (vectorized call)
      *
      * @param X list of x values. Must be sorted in ascending order. All x values must be larger
      * than the largest x value in the interpolator data.
@@ -166,7 +166,7 @@ class I_Interpolator
     virtual void extend(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
     /**
-     * @brief append a list of x and y value pairs to the interplator data
+     * @brief append a list of x and y value pairs to the interplator data (vectorized call)
      *
      * @param XY list of x,y value pairs. X Must be sorted in ascending order. All x values must be
      * larger than the largest x value in the interpolator data.

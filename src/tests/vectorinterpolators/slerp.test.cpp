@@ -99,24 +99,24 @@ TEST_CASE(
     {
         auto x_target = dist2(gen);
 
-        auto y1 = i1.interpolate_to_ypr(x_target);
-        auto y2 = i2.interpolate_to_ypr(x_target);
-        auto y3 = i3.interpolate_to_ypr(x_target);
-        auto y4 = i4.interpolate_to_ypr(x_target);
+        auto y1 = i1.interpolate_ypr(x_target);
+        auto y2 = i2.interpolate_ypr(x_target);
+        auto y3 = i3.interpolate_ypr(x_target);
+        auto y4 = i4.interpolate_ypr(x_target);
 
-        auto y1_e = ia1.interpolate_to_ypr(x_target);
-        auto y2_e = ia2.interpolate_to_ypr(x_target);
-        auto y3_e = ia3.interpolate_to_ypr(x_target);
-        auto y4_e = ia4.interpolate_to_ypr(x_target);
-        auto y5_e = ie1.interpolate_to_ypr(x_target);
-        auto y6_e = ie2.interpolate_to_ypr(x_target);
-        auto y7_e = ie3.interpolate_to_ypr(x_target);
-        auto y8_e = ie4.interpolate_to_ypr(x_target);
+        auto y1_e = ia1.interpolate_ypr(x_target);
+        auto y2_e = ia2.interpolate_ypr(x_target);
+        auto y3_e = ia3.interpolate_ypr(x_target);
+        auto y4_e = ia4.interpolate_ypr(x_target);
+        auto y5_e = ie1.interpolate_ypr(x_target);
+        auto y6_e = ie2.interpolate_ypr(x_target);
+        auto y7_e = ie3.interpolate_ypr(x_target);
+        auto y8_e = ie4.interpolate_ypr(x_target);
 
-        auto y1_r = i1.interpolate_to_ypr(x_target, false);
-        auto y2_r = i2.interpolate_to_ypr(x_target, false);
-        auto y3_r = i3.interpolate_to_ypr(x_target, false);
-        auto y4_r = i4.interpolate_to_ypr(x_target, false);
+        auto y1_r = i1.interpolate_ypr(x_target, false);
+        auto y2_r = i2.interpolate_ypr(x_target, false);
+        auto y3_r = i3.interpolate_ypr(x_target, false);
+        auto y4_r = i4.interpolate_ypr(x_target, false);
 
         // push results into vectors for next comparrison
         x_targets.push_back(x_target);
@@ -148,8 +148,8 @@ TEST_CASE(
     }
 
     // test if vectorized call produces the same results as single call
-    auto y1   = i1.interpolate_to_ypr(x_targets);
-    auto y1_r = i1.interpolate_to_ypr(x_targets, false);
+    auto y1   = i1.interpolate_ypr(x_targets);
+    auto y1_r = i1.interpolate_ypr(x_targets, false);
 
     for (unsigned int j = 0; j < x_targets.size(); ++j)
     {
@@ -180,14 +180,14 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
     {
         for (unsigned int i = 0; i < x.size(); ++i)
         {
-            auto ypr = interpolator.interpolate_to_ypr(x[i]);
+            auto ypr = interpolator.interpolate_ypr(x[i]);
             REQUIRE(ypr[0] == Approx(y[i]));
             REQUIRE(ypr[1] == Approx(p[i]));
             REQUIRE(ypr[2] == Approx(r[i]));
         }
 
         {
-            auto ypr = interpolator.interpolate_to_ypr(x_append);
+            auto ypr = interpolator.interpolate_ypr(x_append);
             CHECK(ypr[0] == Approx(ypr_append[0]));
             CHECK(ypr[1] == Approx(ypr_append[1]));
             CHECK(ypr[2] == Approx(ypr_append[2]));
@@ -196,8 +196,8 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
 
     SECTION("preset values should be interpolated correctly")
     {
-        auto ypr_1 = interpolator.interpolate_to_ypr(-3);
-        auto ypr_2 = interpolator.interpolate_to_ypr(9);
+        auto ypr_1 = interpolator.interpolate_ypr(-3);
+        auto ypr_2 = interpolator.interpolate_ypr(9);
 
         REQUIRE(ypr_1[0] == Approx(58.5679194066));
         REQUIRE(ypr_1[1] == Approx(5.0841237338));
@@ -227,8 +227,8 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearst when set")
                     {
-                        auto too_small_ypr = interpolator.interpolate_to_ypr(-11);
-                        auto too_large_ypr = interpolator.interpolate_to_ypr(13);
+                        auto too_small_ypr = interpolator.interpolate_ypr(-11);
+                        auto too_large_ypr = interpolator.interpolate_ypr(13);
 
                         REQUIRE(too_small_ypr[0] == Approx(y[0]));
                         REQUIRE(too_small_ypr[1] == Approx(p[0]));
@@ -243,8 +243,8 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                 default:
                     SECTION(" - extrapolation in all other cases")
                     {
-                        auto too_small_ypr = interpolator.interpolate_to_ypr(-11);
-                        auto too_large_ypr = interpolator.interpolate_to_ypr(13);
+                        auto too_small_ypr = interpolator.interpolate_ypr(-11);
+                        auto too_large_ypr = interpolator.interpolate_ypr(13);
 
                         REQUIRE(too_small_ypr[0] == Approx(347.01848882));
                         REQUIRE(too_small_ypr[1] == Approx(9.3296836006));
