@@ -8,4 +8,5 @@ SPDX-License-Identifier: CC0-1.0
 </a>
 
 # tools
-Shared functions (c++) and small tool functionality (python)
+Shared functions (c++) and small tool functionality (python) \n
+https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools.html
