@@ -51,8 +51,9 @@ class LinearInterpolator : public I_PairInterpolator<double>
 
     /**
      * @brief Interpolate: Interpolate interpolation between two values
-     * @param target: the target point [0.0 - 1.0]
-     * @param v     : An array of size 2 containing 2 values (to interpolate
+     * @param target_x: the target point [0.0 - 1.0]
+     * @param y1     : first y value (target_x = 0)
+     * @param y2     : second value (target_x = 01)
      * inbetween)
      * @return Interpolated value for target position
      */

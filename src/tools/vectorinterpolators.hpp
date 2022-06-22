@@ -5,3 +5,4 @@
 #include "vectorinterpolators/akimainterpolator.hpp"
 #include "vectorinterpolators/linearinterpolator.hpp"
 #include "vectorinterpolators/nearestinterpolator.hpp"
+#include "vectorinterpolators/slerpinterpolator.hpp"

@@ -147,14 +147,14 @@ class I_Interpolator
      * @param x value, must be > than all existing x values
      * @param y corresponding y value
      */
-    virtual void append(double x, double y) = 0;
+    virtual void append(double x, YType y) = 0;
 
     /**
      * @brief append a x and y value pair to the interpolator data
      *
      * @param xy x and y value pair. x must be > than all existing x values
      */
-    virtual void append(std::pair<double, double> xy) = 0;
+    virtual void append(std::pair<double, YType> xy) = 0;
 
     /**
      * @brief append x and y value lists to the interplator data
@@ -163,7 +163,7 @@ class I_Interpolator
      * than the largest x value in the interpolator data.
      * @param Y list of corresponding Y values. Must be same size as X
      */
-    virtual void extend(const std::vector<double>& X, const std::vector<double>& Y) = 0;
+    virtual void extend(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
     /**
      * @brief append a list of x and y value pairs to the interplator data
@@ -171,7 +171,7 @@ class I_Interpolator
      * @param XY list of x,y value pairs. X Must be sorted in ascending order. All x values must be
      * larger than the largest x value in the interpolator data.
      */
-    virtual void extend(const std::vector<std::pair<double, double>>& XY) = 0;
+    virtual void extend(const std::vector<std::pair<double, YType>>& XY) = 0;
 
   protected:
     /**

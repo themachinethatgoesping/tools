@@ -163,7 +163,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     // -----------------------
     // append/extend functions
     // -----------------------
-    void append(double x, double y) final
+    void append(double x, YType y) final
     {
         if (x <= std::get<0>(_XY.back()))
         {
@@ -174,7 +174,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         _XY.push_back(std::make_pair(x, y));
     }
 
-    void append(std::pair<double, double> xy) final
+    void append(std::pair<double, YType> xy) final
     {
         if (std::get<0>(xy) <= std::get<0>(_XY.back()))
         {
@@ -185,7 +185,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         _XY.push_back(xy);
     }
 
-    void extend(const std::vector<double>& X, const std::vector<double>& Y) final
+    void extend(const std::vector<double>& X, const std::vector<YType>& Y) final
     {
         if (X.size() != Y.size())
             throw(std::invalid_argument("ERROR[Interpolator::extend]: list sizes do not match"));
@@ -196,7 +196,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         }
     }
 
-    void extend(const std::vector<std::pair<double, double>>& XY) final
+    void extend(const std::vector<std::pair<double, YType>>& XY) final
     {
         for (const auto& xy : XY)
         {

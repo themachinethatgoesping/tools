@@ -18,7 +18,8 @@ headers = [
   'vectorinterpolators/i_interpolator.hpp',
   'vectorinterpolators/linearinterpolator.hpp',
   'vectorinterpolators/nearestinterpolator.hpp',
-  'vectorinterpolators/akimainterpolator.hpp'
+  'vectorinterpolators/akimainterpolator.hpp',
+  'vectorinterpolators/slerpinterpolator.hpp'
 ]
 
 # -- targets --

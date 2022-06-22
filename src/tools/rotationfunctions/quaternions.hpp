@@ -291,10 +291,11 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
     bool                                             output_to_degrees = true)
 {
     std::vector<std::array<floattype, 3>> YPR;
-    YPR.reserve(Q.size());
-    for (const auto& q : Q)
+    YPR.resize(Q.size());
+
+    for (unsigned int i = 0; i < Q.size(); ++i)
     {
-        YPR.push_back(ypr_from_quaternion(q, output_to_degrees));
+        YPR[i] = ypr_from_quaternion(Q[i], output_to_degrees);
     }
 
     return YPR;

@@ -64,14 +64,14 @@ class NearestInterpolator : public I_PairInterpolator<double>
     }
     ~NearestInterpolator() = default;
 
+
     /**
-     * @brief Nearest: Nearest neighbor interpolation between two values
-     * @param target: the x position of the target point
-     * @param p1    : An array of size 2 containing the x and y position of the
-     *first  point (x,y)
-     * @param p2    : An array of size 2 containing the x and y position of the
-     *second point (x,y)
-     * @return p1[1],p2[1]
+     * @brief Interpolate interpolation between two values
+     * @param target_x: the target point [0.0 - 1.0]
+     * @param y1     : first y value (target_x = 0)
+     * @param y2     : second value (target_x = 01)
+     * inbetween)
+     * @return Interpolated value for target position
      */
     double interpolate_pair(double target_x, const double& y1, const double& y2) const final
     {
