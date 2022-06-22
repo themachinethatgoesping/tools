@@ -82,7 +82,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     std::array<double, 3> interpolate_to_ypr(double target_x, bool output_in_degrees = true)
     {
         return rotationfunctions::ypr_from_quaternion(
-            I_Interpolator<t_quaternion>::interpolate(target_x), output_in_degrees);
+            I_PairInterpolator<t_quaternion>::interpolate(target_x), output_in_degrees);
     }
 
     /**
