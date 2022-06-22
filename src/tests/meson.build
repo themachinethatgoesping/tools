@@ -13,7 +13,8 @@ sources = [
     'vectorinterpolators/exceptions.test.cpp',
     'vectorinterpolators/nearest.test.cpp',
     'vectorinterpolators/linear.test.cpp',
-    'vectorinterpolators/akima.test.cpp'
+    'vectorinterpolators/akima.test.cpp',
+    'vectorinterpolators/slerp.test.cpp'
 ]
 
 foreach source : sources
