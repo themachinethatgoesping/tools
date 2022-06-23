@@ -12,7 +12,8 @@ sources = [
     'vectorinterpolators/module.cpp',
     'vectorinterpolators/subm_nearestinterpolator.cpp',
     'vectorinterpolators/subm_linearinterpolator.cpp',
-    'vectorinterpolators/subm_akimainterpolator.cpp'
+    'vectorinterpolators/subm_akimainterpolator.cpp',
+    'vectorinterpolators/subm_slerpinterpolator.cpp'
 ]
 
 # define python module

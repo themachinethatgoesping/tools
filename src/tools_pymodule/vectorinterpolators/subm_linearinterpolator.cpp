@@ -77,12 +77,12 @@ void init_subm_linearinterpolator(pybind11::module& m)
         .def("append",
              py::overload_cast<double, double>(&LinearInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
-             py::arg("X"),
-             py::arg("Y"))
+             py::arg("x"),
+             py::arg("y"))
         .def("append",
              py::overload_cast<std::pair<double, double>>(&LinearInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append_2),
-             py::arg("XY"))
+             py::arg("xy"))
         .def("extend",
              py::overload_cast<const std::vector<double>&, const std::vector<double>&>(
                  &LinearInterpolator::extend),

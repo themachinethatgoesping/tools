@@ -59,7 +59,7 @@ TEST_CASE(
     sort(x.begin(), x.end());
     sort(x2.begin(), x2.end());
 
-    // crteate interpolator clases using different methods
+    // create interpolator clases using different methods
     // input in degrees
     vectorinterpolators::SlerpInterpolator i1(x, y, p, r);
     vectorinterpolators::SlerpInterpolator i2(x, ypr);

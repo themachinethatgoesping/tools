@@ -70,14 +70,14 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * extrapolation mode
      */
     SlerpInterpolator(const std::vector<double>& X,
-                      const std::vector<double>& yaw,
-                      const std::vector<double>& pitch,
-                      const std::vector<double>& roll,
+                      const std::vector<double>& Yaw,
+                      const std::vector<double>& Pitch,
+                      const std::vector<double>& Roll,
                       bool                       input_in_degrees   = true,
                       t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<t_quaternion>(
               X,
-              rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees),
+              rotationfunctions::quaternion_from_ypr(Yaw, Pitch, Roll, input_in_degrees),
               extrapolation_mode)
     {
     }
@@ -86,19 +86,19 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @brief Construct a new Slerp Interpolator object using vectors of x, yaw, pitch and roll
      *
      * @param X vector; must be unique and sorted in ascending order
-     * @param ypr vector with yaw, pitch and roll data points. Must be same size as X!
+     * @param YPR vector with yaw, pitch and roll data points. Must be same size as X!
      * @param input_in_degrees if true (default) yaw,pitch and roll are in °, otherwise [rad]
      * @param extrapolation_mode :py:class:`t_extr_mode
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the
      * extrapolation mode
      */
     SlerpInterpolator(const std::vector<double>&                X,
-                      const std::vector<std::array<double, 3>>& ypr,
+                      const std::vector<std::array<double, 3>>& YPR,
                       bool                                      input_in_degrees = true,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<t_quaternion>(
               X,
-              rotationfunctions::quaternion_from_ypr(ypr, input_in_degrees),
+              rotationfunctions::quaternion_from_ypr(YPR, input_in_degrees),
               extrapolation_mode)
     {
     }
@@ -124,12 +124,12 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      * @return corresponding y value
      */
-    std::vector<std::array<double, 3>> interpolate_ypr(const std::vector<double>& targetsX,
+    std::vector<std::array<double, 3>> interpolate_ypr(const std::vector<double>& targets_x,
                                                        bool output_in_degrees = true)
     {
         std::vector<std::array<double, 3>> y_values;
-        y_values.reserve(targetsX.size());
-        for (const auto target_x : targetsX)
+        y_values.reserve(targets_x.size());
+        for (const auto target_x : targets_x)
         {
             y_values.push_back(interpolate_ypr(target_x, output_in_degrees));
         }
@@ -151,13 +151,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void set_data_XY(const std::vector<double>& X,
-                     const std::vector<double>& yaw,
-                     const std::vector<double>& pitch,
-                     const std::vector<double>& roll,
+                     const std::vector<double>& Yaw,
+                     const std::vector<double>& Pitch,
+                     const std::vector<double>& Roll,
                      bool                       input_in_degrees = true)
     {
         I_PairInterpolator<t_quaternion>::set_data_XY(
-            X, rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees));
+            X, rotationfunctions::quaternion_from_ypr(Yaw, Pitch, Roll, input_in_degrees));
     }
 
     /**
@@ -171,11 +171,11 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void set_data_XY(const std::vector<double>&                X,
-                     const std::vector<std::array<double, 3>>& ypr,
+                     const std::vector<std::array<double, 3>>& YPR,
                      bool                                      input_in_degrees = true)
     {
         I_PairInterpolator<t_quaternion>::set_data_XY(
-            X, rotationfunctions::quaternion_from_ypr(ypr, input_in_degrees));
+            X, rotationfunctions::quaternion_from_ypr(YPR, input_in_degrees));
     }
 
     // -----------------------

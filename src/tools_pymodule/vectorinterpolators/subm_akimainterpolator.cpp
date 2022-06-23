@@ -77,12 +77,12 @@ void init_subm_akimainterpolator(pybind11::module& m)
         .def("append",
              py::overload_cast<double, double>(&AkimaInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
-             py::arg("X"),
+             py::arg("x"),
              py::arg("Y"))
         .def("append",
              py::overload_cast<std::pair<double, double>>(&AkimaInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append_2),
-             py::arg("XY"))
+             py::arg("xy"))
         .def("extend",
              py::overload_cast<const std::vector<double>&, const std::vector<double>&>(
                  &AkimaInterpolator::extend),
