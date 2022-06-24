@@ -121,7 +121,7 @@ class I_Interpolator
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    virtual YType interpolate(double target_x) = 0;
+    virtual YType operator()(double target_x) = 0;
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)
@@ -129,13 +129,13 @@ class I_Interpolator
      * @param targets_x vector of x values. For each of these values find the corrspondig y value
      * @return corresponding y value
      */
-    std::vector<YType> interpolate(const std::vector<double>& targetsX)
+    std::vector<YType> operator()(const std::vector<double>& targetsX)
     {
         std::vector<YType> y_values;
         y_values.reserve(targetsX.size());
         for (const auto target_x : targetsX)
         {
-            y_values.push_back(interpolate(target_x));
+            y_values.push_back(operator()(target_x));
         }
 
         return y_values;

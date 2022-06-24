@@ -33,20 +33,20 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
-            REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
+            REQUIRE(interpolator(x[i]) == Approx(y[i]));
 
-        REQUIRE(interpolator.interpolate(x_append) == y_append);
+        REQUIRE(interpolator(x_append) == y_append);
     }
 
     SECTION("preset values should be interpolated correctly")
     {
-        CHECK(interpolator.interpolate(-7.5) == Approx(0.2684859155));
-        CHECK(interpolator.interpolate(-2.6) == Approx(0.5509550555));
-        CHECK(interpolator.interpolate(3.0) == Approx(0.5808823529));
+        CHECK(interpolator(-7.5) == Approx(0.2684859155));
+        CHECK(interpolator(-2.6) == Approx(0.5509550555));
+        CHECK(interpolator(3.0) == Approx(0.5808823529));
 
-        CHECK(interpolator.interpolate(8) == Approx(-1. / 3.));
-        CHECK(interpolator.interpolate(9.0) == Approx(-1. / 2.));
-        CHECK(interpolator.interpolate(10) == Approx(-2. / 3.));
+        CHECK(interpolator(8) == Approx(-1. / 3.));
+        CHECK(interpolator(9.0) == Approx(-1. / 2.));
+        CHECK(interpolator(10) == Approx(-2. / 3.));
     }
 
     SECTION("preset value vectors should be interpolated correctly")
@@ -55,7 +55,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         std::vector<double> expected_y = { 0.2684859155, 0.5509550555, 0.5808823529,
                                            -1. / 3.,     -1. / 2.,     -2. / 3. };
 
-        auto comp_y = interpolator.interpolate(targets_x);
+        auto comp_y = interpolator(targets_x);
         for (unsigned int i = 0; i < targets_x.size(); ++i)
             REQUIRE(comp_y[i] == Approx(expected_y[i]));
     }
@@ -71,9 +71,9 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        REQUIRE_THROWS_AS(interpolator.interpolate(-11) == Approx(1),
+                        REQUIRE_THROWS_AS(interpolator(-11) == Approx(1),
                                           std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.interpolate(13) == Approx(-1),
+                        REQUIRE_THROWS_AS(interpolator(13) == Approx(-1),
                                           std::out_of_range);
                     }
                     break;
@@ -81,15 +81,15 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearst when set")
                     {
-                        REQUIRE(interpolator.interpolate(-11) == Approx(1));
-                        REQUIRE(interpolator.interpolate(13) == Approx(-1));
+                        REQUIRE(interpolator(-11) == Approx(1));
+                        REQUIRE(interpolator(13) == Approx(-1));
                     }
                     break;
 
                 default:
                     SECTION(" - extrapolation in all other cases")
-                    CHECK(interpolator.interpolate(-100) == Approx(28.0618464789));
-                    CHECK(interpolator.interpolate(100) == Approx(-15 - 2 / 3.));
+                    CHECK(interpolator(-100) == Approx(28.0618464789));
+                    CHECK(interpolator(100) == Approx(-15 - 2 / 3.));
 
                     break;
             }

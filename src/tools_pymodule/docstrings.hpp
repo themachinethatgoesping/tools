@@ -23,42 +23,6 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_convert_rotations_coordinatesystem = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
-parameters x,y,z as a Vector
-
-Parameter ``x:``:
-    x as double or float
-
-Parameter ``y:``:
-    y as double or float
-
-Parameter ``z:``:
-    z as double or float
-
-Parameter ``w:``:
-    w as double or float with the default value 0.0
-
-Returns:
-    returns the Quaternion that holds a vector)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_getQuaterniondfromVector_2 =
-R"doc(getQuaterniondfromVector: creates a Quaternion that holds the passed
-parameters x,y,z as a Vector
-
-Parameter ``xyz:``:
-    x, y, z as Array<floattype, 3>
-
-Parameter ``w:``:
-    w as double or float with the default value 0.0
-
-Returns:
-    returns the Quaternion that holds a vector)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_degrees =
 R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
 [-90°, 90°], roll [-180¶, 179.99°]
@@ -86,10 +50,6 @@ Parameter ``ypr``:
 Returns:
     std::array<floattype, 3> (Matrix with yaw, pitch and roll value in
     rad))doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr =
 R"doc(create an eigen quaternion by rotating yaw (z axis), pitch (y axis)
@@ -127,82 +87,6 @@ Parameter ``input_in_degrees``:
 
 Returns:
     Eigen::Quaternion<floattype>)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
-R"doc(rotateXYZ: rotates a x,y,z vector with the passed parameters roll,
-pitch, yaw
-
-Parameter ``roll:``:
-    roll in degrees
-
-Parameter ``pitch:``:
-    pitch in degrees
-
-Parameter ``yaw:``:
-    yaw in degrees
-
-Parameter ``x:``:
-    x as double
-
-Parameter ``y:``:
-    y as double
-
-Parameter ``z:``:
-    z as double
-
-Returns:
-    returns vector with rotated xyz)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
-parameters roll, pitch, yaw
-
-Parameter ``roll:``:
-    roll in degrees
-
-Parameter ``pitch:``:
-    pitch in degrees
-
-Parameter ``yaw:``:
-    yaw in degrees
-
-Parameter ``v:``:
-    x, y, z as Quaternion<floattype>
-
-Returns:
-    returns vector with rotated xyz)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_3 =
-R"doc(OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
-parameters roll, pitch, yaw
-
-Parameter ``rpy:``:
-    roll, pitch, yaw in degrees as Array<floattype>
-
-Parameter ``xyz:``:
-    x, y, z as as Array<floattype>
-
-Parameter ``w:``:
-    w in degree
-
-Returns:
-    returns vector with rotated xyz)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_convention_to_string = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_string_to_rpy_convention = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_down = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_coordinate_system_right_handet_z_up = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_roll_pitch_yaw = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_t_rpy_convention_yaw_pitch_roll = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
 R"doc(Converting between date strings and UnixTime stampes (ref 1970)
@@ -270,8 +154,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
-kima.html usage: interpolated_y_value =
-interpolator.interpolate(x_value)
+kima.html usage: interpolated_y_value = interpolator(x_value)
 
 Parameter ``XY``:
     vector of x,y pairs. X must be unique and sorted in ascending
@@ -286,8 +169,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
-kima.html usage: interpolated_y_value =
-interpolator.interpolate(x_value)
+kima.html usage: interpolated_y_value = interpolator(x_value)
 
 Parameter ``X``:
     X vector; must be unique and sorted in ascending order. same size
@@ -317,25 +199,6 @@ R"doc(internal function to initialize the linear extrapolation objects
 _min_x, _min_x1, _max_x, _max_x_1, _min_y, _max_y and the
 _akima_spline must be set/initialized before calling this function)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate =
-R"doc(get the interolated y value for given x target
-
-Parameter ``target_x``:
-    find the corresponding y value for this x value
-
-Returns:
-    corresponding y value)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_interpolate_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
-
-Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
-    y value
-
-Returns:
-    corresponding y value)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x = R"doc(< min/max x and y values)doc";
@@ -351,6 +214,25 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x_1 = R"doc(< one value above min and max x)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_y = R"doc(< min/max x and y values)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call =
+R"doc(get the interolated y value for given x target
+
+Parameter ``target_x``:
+    find the corresponding y value for this x value
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call_2 =
+R"doc(get nearest y values for given x targets (vectorized call)
+
+Parameter ``targets_x``:
+    vector of x values. For each of these values find the corrspondig
+    y value
+
+Returns:
+    corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors
@@ -432,7 +314,7 @@ Returns:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call =
 R"doc(get the interolated y value for given x target
 
 Parameter ``target_x``:
@@ -441,7 +323,7 @@ Parameter ``target_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_interpolate_2 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call_2 =
 R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
@@ -548,25 +430,6 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_extrapolation_mode = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate =
-R"doc(get the interolated y value for given x target
-
-Parameter ``target_x``:
-    find the corresponding y value for this x value
-
-Returns:
-    corresponding y value)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
-
-Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
-    y value
-
-Returns:
-    corresponding y value)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
 R"doc(Interface for implementing an interpolation between two y values using
 a given interpolation factor
@@ -585,6 +448,25 @@ Returns:
     interpolated y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consequtive searches))doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
+R"doc(get the interolated y value for given x target
+
+Parameter ``target_x``:
+    find the corresponding y value for this x value
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call_2 =
+R"doc(get nearest y values for given x targets (vectorized call)
+
+Parameter ``targets_x``:
+    vector of x values. For each of these values find the corrspondig
+    y value
+
+Returns:
+    corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
 R"doc(change the input data to this vector of XY pairs
@@ -739,7 +621,7 @@ pitch and roll
 Parameter ``X``:
     vector; must be unique and sorted in ascending order
 
-Parameter ``ypr``:
+Parameter ``YPR``:
     vector with yaw, pitch and roll data points. Must be same size as
     X!
 
@@ -830,32 +712,6 @@ Parameter ``y2``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_interpolate_ypr =
-R"doc(get the interolated yaw, pitch and roll values for given x target
-
-Parameter ``target_x``:
-    find the corresponding y value for this x value
-
-Parameter ``output_in_degrees``:
-    if true, yaw pitch and roll input values are in ° otherwise rad
-
-Returns:
-    corresponding y value)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_interpolate_ypr_2 =
-R"doc(get the interolated yaw, pitch and roll values for given x target
-(vectorized call)
-
-Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
-    yaw, pitch and roll value
-
-Parameter ``output_in_degrees``:
-    if true, yaw pitch and roll input values are in ° otherwise rad
-
-Returns:
-    corresponding y value)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XY =
 R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
 converted to queternion)
@@ -899,6 +755,32 @@ Parameter ``roll``:
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr =
+R"doc(get the interolated yaw, pitch and roll values for given x target
+
+Parameter ``target_x``:
+    find the corresponding y value for this x value
+
+Parameter ``output_in_degrees``:
+    if true, yaw pitch and roll input values are in ° otherwise rad
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr_2 =
+R"doc(get the interolated yaw, pitch and roll values for given x target
+(vectorized call)
+
+Parameter ``targets_x``:
+    vector of x values. For each of these values find the corrspondig
+    yaw, pitch and roll value
+
+Parameter ``output_in_degrees``:
+    if true, yaw pitch and roll input values are in ° otherwise rad
+
+Returns:
+    corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode = R"doc(extrapolation mode type.)doc";
 

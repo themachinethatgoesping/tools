@@ -10,7 +10,7 @@ sources = [
     'tutorial.test.cpp',
     'timeconv.test.cpp',
     'rotationfunctions/quaternions.test.cpp',
-    'vectorinterpolators/exceptions.test.cpp',
+    'vectorinterpolators/common.test.cpp',
     'vectorinterpolators/nearest.test.cpp',
     'vectorinterpolators/linear.test.cpp',
     'vectorinterpolators/akima.test.cpp',

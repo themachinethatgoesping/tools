@@ -18,15 +18,15 @@ class Test_tools_vectorinterpolators_linear:
         interpolator.append((x_append,y_append))
 
         # existing values should be looked up correctly
-        assert interpolator.interpolate(X) == pytest.approx(Y)
+        assert interpolator(X) == pytest.approx(Y)
 
         # existing values should be looked up correctly for appendet values
-        assert interpolator.interpolate(x_append) == pytest.approx(y_append)
+        assert interpolator(x_append) == pytest.approx(y_append)
 
         # preset values should be interpolated correctly
         X_val = [-7.6, -7.5, -7.4, 8, 9, 10]
         Y_exp = [0.52, 0.5, 0.48, -1 / 3, -1 / 2, -2 / 3]
-        assert interpolator.interpolate(X_val) == pytest.approx(Y_exp)
+        assert interpolator(X_val) == pytest.approx(Y_exp)
 
         # extrapolation mode fail
         interpolator = vip.LinearInterpolator(
@@ -34,22 +34,22 @@ class Test_tools_vectorinterpolators_linear:
         )
         interpolator.append((x_append,y_append))
         with pytest.raises(IndexError):
-            interpolator.interpolate(-11)
+            interpolator(-11)
         with pytest.raises(IndexError):
-            interpolator.interpolate(13)
+            interpolator(13)
 
         # extrapolation mode nearest
         interpolator = vip.LinearInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.nearest
         )
         interpolator.append((x_append,y_append))
-        assert interpolator.interpolate(-11) == pytest.approx(Y[0])
-        assert interpolator.interpolate(13) == pytest.approx(y_append)
+        assert interpolator(-11) == pytest.approx(Y[0])
+        assert interpolator(13) == pytest.approx(y_append)
 
         # extrapolation mode extrapolate
         interpolator = vip.LinearInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.extrapolate
         )
         interpolator.append((x_append,y_append))
-        assert interpolator.interpolate(-11) == pytest.approx(1.2)
-        assert interpolator.interpolate(14) == pytest.approx(-4 / 3)
+        assert interpolator(-11) == pytest.approx(1.2)
+        assert interpolator(14) == pytest.approx(-4 / 3)

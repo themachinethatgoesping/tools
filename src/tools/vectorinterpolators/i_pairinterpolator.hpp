@@ -263,7 +263,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    YType interpolate(double target_x) final
+    YType operator()(double target_x) final
     {
         /* find correct xpair */
 
@@ -380,9 +380,9 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param targets_x vector of x values. For each of these values find the corrspondig y value
      * @return corresponding y value
      */
-    std::vector<YType> interpolate(const std::vector<double>& targetsX)
+    std::vector<YType> operator()(const std::vector<double>& targetsX)
     {
-        return I_Interpolator<YType>::interpolate(targetsX);
+        return I_Interpolator<YType>::operator()(targetsX);
     }
 
     //--------------------------------

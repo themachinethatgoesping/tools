@@ -66,24 +66,24 @@ class Test_tools_vectorinterpolators_slerp:
 
         for _ in range(100):
             x_target = np.random.uniform(-1500, 1500)
-            y1 = i1.interpolate(x_target)
-            y2 = i2.interpolate(x_target)
-            y3 = i3.interpolate(x_target)
-            y4 = i4.interpolate(x_target)
+            y1 = i1(x_target)
+            y2 = i2(x_target)
+            y3 = i3(x_target)
+            y4 = i4(x_target)
 
-            y1_e = ia1.interpolate(x_target)
-            y2_e = ia2.interpolate(x_target)
-            y3_e = ia3.interpolate(x_target)
-            y4_e = ia4.interpolate(x_target)
-            y5_e = ie1.interpolate(x_target)
-            y6_e = ie2.interpolate(x_target)
-            y7_e = ie3.interpolate(x_target)
-            y8_e = ie4.interpolate(x_target)
+            y1_e = ia1(x_target)
+            y2_e = ia2(x_target)
+            y3_e = ia3(x_target)
+            y4_e = ia4(x_target)
+            y5_e = ie1(x_target)
+            y6_e = ie2(x_target)
+            y7_e = ie3(x_target)
+            y8_e = ie4(x_target)
 
-            y1_r = i1.interpolate(x_target, False)
-            y2_r = i2.interpolate(x_target, False)
-            y3_r = i3.interpolate(x_target, False)
-            y4_r = i4.interpolate(x_target, False)
+            y1_r = i1(x_target, False)
+            y2_r = i2(x_target, False)
+            y3_r = i3(x_target, False)
+            y4_r = i4(x_target, False)
 
             x_targets.append(x_target)
             y1_results.append(y1)
@@ -110,8 +110,8 @@ class Test_tools_vectorinterpolators_slerp:
             assert y8_e == approx(y1_e)
 
         # test if vectorized call produces the same results as single call
-        y1_vec = i1.interpolate(x_targets)
-        y1_r_vec = i1.interpolate(x_targets, False)
+        y1_vec = i1(x_targets)
+        y1_r_vec = i1(x_targets, False)
 
         for y1, y1_r, y1_v, y1_r_v in zip(y1_results, y1_r_results, y1_vec, y1_r_vec):
             assert y1 == approx(y1_v)
@@ -133,16 +133,16 @@ class Test_tools_vectorinterpolators_slerp:
         interpolator.append(x_append, ypr_append)
 
         # -- existing values should be looked up correctly
-        YPR = interpolator.interpolate(X)
+        YPR = interpolator(X)
 
         for ypr, y, p, r in zip(YPR, Y, P, R):
             assert ypr == approx([y, p, r])
 
-        assert interpolator.interpolate(x_append) == approx(ypr_append)
+        assert interpolator(x_append) == approx(ypr_append)
 
         # -- preset values should be interpolated correctly --
-        ypr_1 = interpolator.interpolate(-3)
-        ypr_2 = interpolator.interpolate(9)
+        ypr_1 = interpolator(-3)
+        ypr_2 = interpolator(9)
 
         assert ypr_1[0] == approx(58.5679194066)
         assert ypr_1[1] == approx(5.0841237338)
@@ -155,20 +155,20 @@ class Test_tools_vectorinterpolators_slerp:
         # -- extrapolation mode fail --
         interpolator.set_extrapolation_mode(vip.t_extr_mode.fail)
         with pytest.raises(IndexError):
-            interpolator.interpolate(-11)
+            interpolator(-11)
         with pytest.raises(IndexError):
-            interpolator.interpolate(13)
+            interpolator(13)
 
         # -- extrapolation mode nearest --
         interpolator.set_extrapolation_mode(vip.t_extr_mode.nearest)
 
-        assert interpolator.interpolate(-11) == approx([Y[0],P[0],R[0]])
-        assert interpolator.interpolate(13) == approx(ypr_append)
+        assert interpolator(-11) == approx([Y[0],P[0],R[0]])
+        assert interpolator(13) == approx(ypr_append)
 
         # -- extrapolation mode extrapolate--
         interpolator.set_extrapolation_mode(vip.t_extr_mode.extrapolate)        
-        too_small_ypr = interpolator.interpolate(-11)
-        too_large_ypr = interpolator.interpolate(13)
+        too_small_ypr = interpolator(-11)
+        too_large_ypr = interpolator(13)
 
         assert too_small_ypr[0] == approx(347.01848882)
         assert too_small_ypr[1] == approx(9.3296836006)

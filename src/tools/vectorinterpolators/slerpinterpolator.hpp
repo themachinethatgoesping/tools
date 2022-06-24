@@ -110,10 +110,10 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      * @return corresponding y value
      */
-    std::array<double, 3> interpolate_ypr(double target_x, bool output_in_degrees = true)
+    std::array<double, 3> ypr(double target_x, bool output_in_degrees = true)
     {
         return rotationfunctions::ypr_from_quaternion(
-            I_PairInterpolator<t_quaternion>::interpolate(target_x), output_in_degrees);
+            I_PairInterpolator<t_quaternion>::operator()(target_x), output_in_degrees);
     }
 
     /**
@@ -124,14 +124,14 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      * @return corresponding y value
      */
-    std::vector<std::array<double, 3>> interpolate_ypr(const std::vector<double>& targets_x,
+    std::vector<std::array<double, 3>> ypr(const std::vector<double>& targets_x,
                                                        bool output_in_degrees = true)
     {
         std::vector<std::array<double, 3>> y_values;
         y_values.reserve(targets_x.size());
         for (const auto target_x : targets_x)
         {
-            y_values.push_back(interpolate_ypr(target_x, output_in_degrees));
+            y_values.push_back(ypr(target_x, output_in_degrees));
         }
 
         return y_values;

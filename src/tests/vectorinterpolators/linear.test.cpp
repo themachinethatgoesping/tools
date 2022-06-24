@@ -31,28 +31,28 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
-            REQUIRE(interpolator.interpolate(x[i]) == Approx(y[i]));
+            REQUIRE(interpolator(x[i]) == Approx(y[i]));
 
-        REQUIRE(interpolator.interpolate(x_append) == Approx(y_append));
+        REQUIRE(interpolator(x_append) == Approx(y_append));
     }
 
     SECTION("preset values should be interpolated correctly")
     {
-        CHECK(interpolator.interpolate(-7.6) == Approx(0.52));
-        CHECK(interpolator.interpolate(-7.5) == Approx(0.5));
-        CHECK(interpolator.interpolate(-7.4) == Approx(0.48));
+        CHECK(interpolator(-7.6) == Approx(0.52));
+        CHECK(interpolator(-7.5) == Approx(0.5));
+        CHECK(interpolator(-7.4) == Approx(0.48));
 
-        CHECK(interpolator.interpolate(-2.6) == Approx(0.48));
-        CHECK(interpolator.interpolate(-2.5) == Approx(0.5));
-        CHECK(interpolator.interpolate(-2.4) == Approx(0.52));
+        CHECK(interpolator(-2.6) == Approx(0.48));
+        CHECK(interpolator(-2.5) == Approx(0.5));
+        CHECK(interpolator(-2.4) == Approx(0.52));
 
-        CHECK(interpolator.interpolate(2) == Approx(2. / 3.));
-        CHECK(interpolator.interpolate(3.0) == Approx(1. / 2.));
-        CHECK(interpolator.interpolate(4) == Approx(1. / 3.));
+        CHECK(interpolator(2) == Approx(2. / 3.));
+        CHECK(interpolator(3.0) == Approx(1. / 2.));
+        CHECK(interpolator(4) == Approx(1. / 3.));
 
-        CHECK(interpolator.interpolate(8) == Approx(-1. / 3.));
-        CHECK(interpolator.interpolate(9.0) == Approx(-1. / 2.));
-        CHECK(interpolator.interpolate(10) == Approx(-2. / 3.));
+        CHECK(interpolator(8) == Approx(-1. / 3.));
+        CHECK(interpolator(9.0) == Approx(-1. / 2.));
+        CHECK(interpolator(10) == Approx(-2. / 3.));
     }
 
     SECTION("preset value vectors should be interpolated correctly")
@@ -60,7 +60,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         std::vector<double> targets_x  = { -2.6, -2.5, -2.4 };
         std::vector<double> expected_y = { 0.48, 0.5, 0.52 };
 
-        REQUIRE(interpolator.interpolate(targets_x) == expected_y);
+        REQUIRE(interpolator(targets_x) == expected_y);
     }
 
     SECTION("extrapolation mode should cause:")
@@ -74,23 +74,23 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        REQUIRE_THROWS_AS(interpolator.interpolate(-11), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.interpolate(13), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
                     }
                     break;
 
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearst when set")
                     {
-                        REQUIRE(interpolator.interpolate(-11) == Approx(1));
-                        REQUIRE(interpolator.interpolate(13) == Approx(y_append));
+                        REQUIRE(interpolator(-11) == Approx(1));
+                        REQUIRE(interpolator(13) == Approx(y_append));
                     }
                     break;
 
                 default:
                     SECTION(" - extrapolation in all other cases")
-                    REQUIRE(interpolator.interpolate(-11) == Approx(1.2));
-                    REQUIRE(interpolator.interpolate(14) == Approx(-4 / 3.));
+                    REQUIRE(interpolator(-11) == Approx(1.2));
+                    REQUIRE(interpolator(14) == Approx(-4 / 3.));
 
                     break;
             }

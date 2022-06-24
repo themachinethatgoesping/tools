@@ -15,6 +15,41 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
+/**
+ * @brief This test is more of a compile time check actually, it makes sure that the interpolators
+ * implement all virtual functions such that they can actually be copied (had problems with this)
+ *
+ */
+TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
+{
+    std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+
+    vectorinterpolators::LinearInterpolator  lip(x, y);
+    vectorinterpolators::NearestInterpolator nip(x, y);
+    vectorinterpolators::AkimaInterpolator   aip(x, y);
+    vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
+
+    // copy operator
+    auto tl = lip;
+    auto t2 = nip;
+    auto t3 = aip;
+    auto t4 = slerp;
+
+    // copy initialization
+    auto tlip = vectorinterpolators::LinearInterpolator(x, y);
+    auto tnip = vectorinterpolators::NearestInterpolator(x, y);
+    auto taip = vectorinterpolators::AkimaInterpolator(x, y);
+    auto tslerp = vectorinterpolators::SlerpInterpolator(x, yaw, pitch, roll);
+}
+
+/**
+ * @brief Test that the interpolators throw expected excetions
+ * 
+ */
 TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {
     SECTION("single value interpolators")

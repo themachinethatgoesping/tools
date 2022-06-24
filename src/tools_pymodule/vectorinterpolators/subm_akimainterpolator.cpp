@@ -40,13 +40,13 @@ void init_subm_akimainterpolator(pybind11::module& m)
              py::arg("X")                  = std::vector<double>({ 0, 1 }),
              py::arg("Y")                  = std::vector<double>({ 0, 1 }),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
-        .def("interpolate",
-             py::overload_cast<double>(&AkimaInterpolator::interpolate),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, interpolate),
+        .def("__call__",
+             py::overload_cast<double>(&AkimaInterpolator::operator()),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              py::arg("target_x"))
-        .def("interpolate",
-             py::overload_cast<const std::vector<double>&>(&AkimaInterpolator::interpolate),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, interpolate_2),
+        .def("__call__",
+             py::overload_cast<const std::vector<double>&>(&AkimaInterpolator::operator()),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call_2),
              py::arg("targets_x"))
         .def("set_extrapolation_mode",
              &AkimaInterpolator::set_extrapolation_mode,
