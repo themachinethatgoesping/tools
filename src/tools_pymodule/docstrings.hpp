@@ -252,8 +252,8 @@ Parameter ``XY:``:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
 by provding vectors for x and y (same size). X must be sorted and no
-duplicates are allowed. then call class.Interpolate(new x value) to
-get a corresponding y value at this x position.
+duplicates are allowed. then call interpolator(new x value) to get a
+corresponding y value at this x position.
 
 Template parameter ``YType:``:
     type of the y values (typically double, but will be a vector for
@@ -361,8 +361,8 @@ R"doc(Interface class for interpolator classes This template clas implements
 base functions interpolators that interpolate between two values
 (pairs). This interface implements the search for the x position
 within this vector (closest 2 x/y value pair) and computes an x
-interpolation value (target_x) Then it call the Interpolate functions
-of the implementation classes that use this interface to interpolate
+interpolation value (target_x) Then it call the __call__ functions of
+the implementation classes that use this interface to interpolate
 between these pairs.
 
 Template parameter ``YType:``:

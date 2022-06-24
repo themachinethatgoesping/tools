@@ -34,7 +34,7 @@ namespace vectorinterpolators {
  * @brief Interface class for interpolator classes
  * This template clas implements base functions interpolators that interpolate between two values
  * (pairs). This interface implements the search for the x position within this vector (closest 2
- * x/y value pair) and computes an x interpolation value (target_x) Then it call the Interpolate
+ * x/y value pair) and computes an x interpolation value (target_x) Then it call the __call__ 
  * functions of the implementation classes that use this interface to interpolate between these
  * pairs.
  *

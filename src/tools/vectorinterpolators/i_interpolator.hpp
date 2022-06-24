@@ -43,7 +43,7 @@ static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapo
 /**
  * @brief Interface class for interpolator classes
  * Create an interpolator object by provding vectors for x and y (same size). X
- * must be sorted and no duplicates are allowed. then call class.Interpolate(new
+ * must be sorted and no duplicates are allowed. then call interpolator(new
  * x value) to get a corresponding y value at this x position.
  *
  * @tparam YType: type of the y values (typically double, but will be a vector
