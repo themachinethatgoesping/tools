@@ -28,6 +28,7 @@ using t_quaternion = Eigen::Quaternion<double>;
  * @brief Class that implements a slerp interpolation for vectors.
  * Data is internaly represented in quaternions using libeigen.
  * Interfaces to represent the data in yaw, pitch, roll angles are provided.
+ * the __call__ equivalent to get interpolated yaw pitch roll is the ypr function
  *
  */
 class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
