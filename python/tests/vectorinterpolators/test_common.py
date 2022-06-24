@@ -1,10 +1,43 @@
 import pytest
+from copy import deepcopy,copy
 
 from themachinethatgoesping.tools import vectorinterpolators as vip
 
 
 # define class for grouping (test sections)
 class Test_tools_vectorinterpolators_all:
+    def test_VectorInterpolators_should_implement_common_functions(self):
+        X = [-10, -5, 0, 6, 12]
+        Y = [1, 0, 1, 0, -1]
+        yaw = [1, 0, 1, 0, -1]
+        pitch = [1, 0, 1, 0, -1]
+        roll = [1, 0, 1, 0, -1]
+
+        nip = vip.NearestInterpolator(X,Y)
+        lip = vip.LinearInterpolator(X,Y)
+        aip = vip.AkimaInterpolator(X,Y)
+        slerp = vip.SlerpInterpolator(X,yaw,pitch,roll)
+
+        for ip in [nip,lip,aip,slerp]:
+            ip2 = ip.copy()
+            ##ip3 = deepcopy(ip2) #deepcopy does not yet work
+            ip3 = copy(ip2)
+
+            #assert copies are the same
+            assert ip(100) == ip2(100)
+            assert ip2(100) == ip3(100)
+
+            #assert copies are not references
+            try:
+                ip2.append(30,40)
+            except Exception:
+                ip2.append(30,40,40,40)
+
+            assert ip(100) != ip2(100)
+            assert ip2(100) != ip3(100)
+            assert ip(100) == ip3(100)
+
+
     def test_VectorInterpolators_should_throw_expected_exceptions(self):
         X = [-10, -5, 0, 6, 12]
         Y = [1, 0, 1, 0, -1]

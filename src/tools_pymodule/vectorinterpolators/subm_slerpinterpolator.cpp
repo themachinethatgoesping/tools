@@ -9,6 +9,7 @@
 #include <tuple>
 #include <vector>
 
+#include "../../tools/pybind11/classhelpers.hpp"
 #include "../../tools/vectorinterpolators/slerpinterpolator.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
@@ -145,5 +146,9 @@ void init_subm_slerpinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, extend_2),
              py::arg("X"),
              py::arg("YPR"),
-             py::arg("input_in_degrees")=true);
+             py::arg("input_in_degrees")=true)
+        // default class functions
+        __PYCLASS_DEFAULT_COPY__(SlerpInterpolator)
+        // end LinearInterpolator
+        ;
 }

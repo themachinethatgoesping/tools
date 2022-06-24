@@ -9,6 +9,7 @@
 #include <tuple>
 #include <vector>
 
+#include "../../tools/pybind11/classhelpers.hpp"
 #include "../../tools/vectorinterpolators/nearestinterpolator.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
@@ -93,5 +94,9 @@ void init_subm_nearestinterpolator(pybind11::module& m)
              py::overload_cast<const std::vector<std::pair<double, double>>&>(
                  &NearestInterpolator::extend),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend_2),
-             py::arg("XY"));
+             py::arg("XY"))
+        // default class functions
+        __PYCLASS_DEFAULT_COPY__(NearestInterpolator)
+        // end LinearInterpolator
+        ;
 }

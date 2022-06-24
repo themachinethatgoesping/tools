@@ -9,6 +9,7 @@
 #include <tuple>
 #include <vector>
 
+#include "../../tools/pybind11/classhelpers.hpp"
 #include "../../tools/vectorinterpolators/akimainterpolator.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
@@ -93,5 +94,9 @@ void init_subm_akimainterpolator(pybind11::module& m)
              py::overload_cast<const std::vector<std::pair<double, double>>&>(
                  &AkimaInterpolator::extend),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend_2),
-             py::arg("XY"));
+             py::arg("XY"))
+        // default class functions
+        __PYCLASS_DEFAULT_COPY__(AkimaInterpolator)
+        // end LinearInterpolator
+        ;
 }

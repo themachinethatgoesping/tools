@@ -9,12 +9,15 @@
 #include <tuple>
 #include <vector>
 
+#include "../../tools/pybind11/classhelpers.hpp"
 #include "../../tools/vectorinterpolators/linearinterpolator.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
+
+
 
 void init_subm_linearinterpolator(pybind11::module& m)
 {
@@ -46,7 +49,11 @@ void init_subm_linearinterpolator(pybind11::module& m)
              py::arg("target_x"))
         .def("__call__",
              py::overload_cast<const std::vector<double>&>(&LinearInterpolator::operator()),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call_2),
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 I_Interpolator,
+                 operator_call_2),
              py::arg("targets_x"))
         .def("set_extrapolation_mode",
              &LinearInterpolator::set_extrapolation_mode,
@@ -93,5 +100,9 @@ void init_subm_linearinterpolator(pybind11::module& m)
              py::overload_cast<const std::vector<std::pair<double, double>>&>(
                  &LinearInterpolator::extend),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend_2),
-             py::arg("XY"));
+             py::arg("XY"))
+        // default class functions
+        __PYCLASS_DEFAULT_COPY__(LinearInterpolator)
+        // end LinearInterpolator
+        ;
 }

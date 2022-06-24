@@ -12,6 +12,7 @@ sources = [
 ]
 
 headers = [
+  'pybind11/classhelpers.hpp',
   'timeconv.hpp',
   'rotationfunctions/quaternions.hpp',
   'vectorinterpolators.hpp',
