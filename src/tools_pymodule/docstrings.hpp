@@ -148,24 +148,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_2 =
-R"doc(Construct a new Akima Spline Interpolator object from a vector of
-pairs This class uses the modified akima interpolation of boost c++ ht
-tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
-kima.html usage: interpolated_y_value = interpolator(x_value)
-
-Parameter ``XY``:
-    vector of x,y pairs. X must be unique and sorted in ascending
-    order
-
-Parameter ``extrapolation_mode``:
-    :py:class:`t_extr_mode
-    <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
-    object that describes the extrapolation mode)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_3 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator =
 R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
@@ -188,11 +171,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append_2 = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
 R"doc(internal function to initialize the linear extrapolation objects
@@ -243,12 +222,6 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY_2 =
-R"doc(change the input data to this vector of XY pairs
-
-Parameter ``XY:``:
-    input data vector given as vector<pair<X,Y>>)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
 by provding vectors for x and y (same size). X must be sorted and no
@@ -275,15 +248,7 @@ Parameter ``x``:
 Parameter ``y``:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append_2 =
-R"doc(append a x and y value pair to the interpolator data
-
-Parameter ``xy``:
-    x and y value pair. x must be > than all existing x values)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY_2 = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
 R"doc(append x and y value lists to the interplator data (vectorized call)
@@ -294,15 +259,6 @@ Parameter ``X``:
 
 Parameter ``Y``:
     list of corresponding Y values. Must be same size as X)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend_2 =
-R"doc(append a list of x and y value pairs to the interplator data
-(vectorized call)
-
-Parameter ``XY``:
-    list of x,y value pairs. X Must be sorted in ascending order. All
-    x values must be larger than the largest x value in the
-    interpolator data.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(extrapolation mode type.)doc";
 
@@ -342,12 +298,6 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY_2 =
-R"doc(change the input data to this vector of XY pairs
-
-Parameter ``XY:``:
-    input data vector given as vector<pair<X,Y>>)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_extrapolation_mode =
 R"doc(Set the extrapolation mode
 
@@ -373,18 +323,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 R"doc(Construct a new Interpolator object from a vector of pairs usage:
 interpolated_y_value = interpolator.interpolate(x_value)
 
-Parameter ``XY``:
-    vector of x,y pairs. X must be unique and sorted
-
-Parameter ``extrapolation_mode``:
-    :py:class:`t_extr_mode
-    <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
-    object that describes the extrapolation mode)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator_2 =
-R"doc(Construct a new Interpolator object from a vector of pairs usage:
-interpolated_y_value = interpolator.interpolate(x_value)
-
 Parameter ``X``:
     X vector; must be unique and sorted in ascending order. same size
     as Y!
@@ -398,29 +336,19 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_XY =
-R"doc(< main data vector containing pairs of corresponding x and y
-datapoitns)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_X = R"doc(< main data vector containing pairs of corresponding x datapoitns)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(< main data vector containing pairs of corresponding y datapoitns)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append_2 = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_X =
 R"doc(return the x component of the internal data vector
 
 Returns:
     std::vector<double>)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_XY =
-R"doc(return the internal data vector
-
-Returns:
-    const std::vector<std::pair<double,YType>>&)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
 R"doc(return the y component of the itnernal data vector
@@ -469,12 +397,6 @@ Returns:
     corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
-R"doc(change the input data to this vector of XY pairs
-
-Parameter ``XY:``:
-    input data vector given as vector<pair<X,Y>>)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY_2 =
 R"doc(change the input data to these X and Y vectors
 
 Parameter ``X:``:
@@ -512,10 +434,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_2 = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_3 = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_interpolate_pair =
 R"doc(Interpolate: Interpolate interpolation between two values
 
@@ -533,20 +451,7 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator = R"doc(Interpolator class to find nearest neighbors within vector data)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_2 =
-R"doc(Construct a new Nearest Interpolator object from a vector of pairs
-usage: interpolated_y_value = interpolator.interpolate(x_value)
-
-Parameter ``XY``:
-    vector of x,y pairs. X must be unique and sorted in ascending
-    order.
-
-Parameter ``extrapolation_mode``:
-    extrapolation mode (nearest or fail))doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_3 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator =
 R"doc(Construct a new Nearest Interpolator object from a vector of pairs
 usage: interpolated_y_value = interpolator.interpolate(x_value)
 
@@ -583,13 +488,9 @@ represent the data in yaw, pitch, roll angles are provided. the
 __call__ equivalent to get interpolated yaw pitch roll is the ypr
 function)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (neccessary?))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_2 = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_3 = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_4 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_2 =
 R"doc(Construct a new Slerp Interpolator object using vectors of x, yaw,
 pitch and roll
 
@@ -616,7 +517,7 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_5 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_3 =
 R"doc(Construct a new Slerp Interpolator object using vectors of x, yaw,
 pitch and roll
 
@@ -698,15 +599,6 @@ Parameter ``ypr``:
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_get_data_XYPR =
-R"doc(return the internal x and yrp data vector
-
-Parameter ``output_in_degrees``:
-    convert yaw, pitch and roll to degrees (default = True)
-
-Returns:
-    std::vector<std::array<4, double>> XYPR)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_get_data_YPR =
 R"doc(return the internal yrp data vector

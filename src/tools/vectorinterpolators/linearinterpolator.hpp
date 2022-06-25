@@ -32,16 +32,11 @@ class LinearInterpolator : public I_PairInterpolator<double>
 {
 
   public:
-    LinearInterpolator()
-        : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
-    {
-    }
+    // LinearInterpolator()
+    //     : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
+    // {
+    // }
 
-    LinearInterpolator(const std::vector<std::pair<double, double>>& XY,
-                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(XY, extrapolation_mode)
-    {
-    }
     LinearInterpolator(const std::vector<double>& X,
                        const std::vector<double>& Y,
                        t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
@@ -57,7 +52,7 @@ class LinearInterpolator : public I_PairInterpolator<double>
      * inbetween)
      * @return Interpolated value for target position
      */
-    double interpolate_pair(double target_x, const double& y1, const double& y2) const final
+    double interpolate_pair(double target_x, double y1, double y2) const final
     {
         return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
     }

@@ -31,23 +31,11 @@ namespace vectorinterpolators {
 class NearestInterpolator : public I_PairInterpolator<double>
 {
   public:
-    NearestInterpolator()
-        : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
-    {
-    }
+    // NearestInterpolator()
+    //     : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
+    // {
+    // }
 
-    /**
-     * @brief Construct a new Nearest Interpolator object from a vector of pairs
-     * usage: interpolated_y_value = interpolator.interpolate(x_value)
-     *
-     * @param XY vector of x,y pairs. X must be unique and sorted in ascending order.
-     * @param extrapolation_mode extrapolation mode (nearest or fail)
-     */
-    NearestInterpolator(const std::vector<std::pair<double, double>>& XY,
-                        t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(XY, extrapolation_mode)
-    {
-    }
     /**
      * @brief Construct a new Nearest Interpolator object from a vector of pairs
      * usage: interpolated_y_value = interpolator.interpolate(x_value)
@@ -64,7 +52,6 @@ class NearestInterpolator : public I_PairInterpolator<double>
     }
     ~NearestInterpolator() = default;
 
-
     /**
      * @brief Interpolate interpolation between two values
      * @param target_x: the target point [0.0 - 1.0]
@@ -73,7 +60,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
      * inbetween)
      * @return Interpolated value for target position
      */
-    double interpolate_pair(double target_x, const double& y1, const double& y2) const final
+    double interpolate_pair(double target_x, double y1, double y2) const final
     {
         if (target_x < 0.5)
             return y1;

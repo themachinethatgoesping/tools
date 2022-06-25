@@ -41,19 +41,6 @@ void init_subm_slerpinterpolator(pybind11::module& m)
              py::arg("Roll"),
              py::arg("input_in_degrees")   = true,
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
-        .def(py::init<const std::vector<double>&,
-                      const std::vector<std::array<double, 3>>&,
-                      bool,
-                      t_extr_mode>(),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 SlerpInterpolator,
-                 SlerpInterpolator_4),
-             py::arg("X"),
-             py::arg("YPR"),
-             py::arg("input_in_degrees")   = true,
-             py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
              py::overload_cast<double, bool>(&SlerpInterpolator::ypr),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr),
@@ -107,14 +94,6 @@ void init_subm_slerpinterpolator(pybind11::module& m)
              py::arg("X"),
              py::arg("YPR"),
              py::arg("input_in_degrees") = true)
-        .def("get_data_XYPR",
-             &SlerpInterpolator::get_data_XYPR,
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 SlerpInterpolator,
-                 get_data_XYPR),
-            py::arg("output_in_degrees") = true)
         .def(
             "get_data_X",
             &SlerpInterpolator::get_data_X,

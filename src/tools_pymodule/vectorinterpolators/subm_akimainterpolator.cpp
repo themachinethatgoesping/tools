@@ -24,20 +24,12 @@ void init_subm_akimainterpolator(pybind11::module& m)
         m,
         "AkimaInterpolator",
         DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator))
-        .def(py::init<const std::vector<std::pair<double, double>>&, t_extr_mode>(),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 AkimaInterpolator,
-                 AkimaInterpolator_2),
-             py::arg("XY"),
-             py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def(py::init<const std::vector<double>&, const std::vector<double>&, t_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,
-                 AkimaInterpolator,
-                 AkimaInterpolator_3),
+                 I_PairInterpolator,
+                 I_PairInterpolator),
              py::arg("X")                  = std::vector<double>({ 0, 1 }),
              py::arg("Y")                  = std::vector<double>({ 0, 1 }),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
@@ -47,7 +39,11 @@ void init_subm_akimainterpolator(pybind11::module& m)
              py::arg("target_x"))
         .def("__call__",
              py::overload_cast<const std::vector<double>&>(&AkimaInterpolator::operator()),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call_2),
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 I_Interpolator,
+                 operator_call_2),
              py::arg("targets_x"))
         .def("set_extrapolation_mode",
              &AkimaInterpolator::set_extrapolation_mode,
@@ -65,36 +61,28 @@ void init_subm_akimainterpolator(pybind11::module& m)
                  I_Interpolator,
                  get_extrapolation_mode))
         .def("set_data_XY",
-             py::overload_cast<const std::vector<std::pair<double, double>>&>(
-                 &AkimaInterpolator::set_data_XY),
+             &AkimaInterpolator::set_data_XY,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY),
-             py::arg("XY"))
-        .def("set_data_XY",
-             py::overload_cast<const std::vector<double>&, const std::vector<double>&>(
-                 &AkimaInterpolator::set_data_XY),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY_2),
              py::arg("X"),
              py::arg("Y"))
+     //    .def(
+     //        "get_data_X",
+     //        &AkimaInterpolator::get_data_X,
+     //        DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
+     //    .def(
+     //        "get_data_Y",
+     //        &AkimaInterpolator::get_data_Y,
+     //        DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_Y))
         .def("append",
-             py::overload_cast<double, double>(&AkimaInterpolator::append),
+             &AkimaInterpolator::append,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
              py::arg("x"),
-             py::arg("Y"))
-        .def("append",
-             py::overload_cast<std::pair<double, double>>(&AkimaInterpolator::append),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append_2),
-             py::arg("xy"))
+             py::arg("y"))
         .def("extend",
-             py::overload_cast<const std::vector<double>&, const std::vector<double>&>(
-                 &AkimaInterpolator::extend),
+             &AkimaInterpolator::extend,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend),
              py::arg("X"),
              py::arg("Y"))
-        .def("extend",
-             py::overload_cast<const std::vector<std::pair<double, double>>&>(
-                 &AkimaInterpolator::extend),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend_2),
-             py::arg("XY"))
         // default class functions
         __PYCLASS_DEFAULT_COPY__(AkimaInterpolator)
         // end LinearInterpolator

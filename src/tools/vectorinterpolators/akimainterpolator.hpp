@@ -36,35 +36,19 @@ class AkimaInterpolator : public I_Interpolator<double>
     double _min_x, _min_y, _max_x, _max_y; ///< min/max x and y values
     double _min_x_1, _max_x_1;             ///< one value above min and max x
 
-    LinearInterpolator _min_linearextrapolator, _max_linearextrapolator;
+    // initialize these interpolators with non-sense (will be initialized by calling set_data_XY)
+    LinearInterpolator _min_linearextrapolator = LinearInterpolator({0,1},{0,1});
+    LinearInterpolator _max_linearextrapolator = LinearInterpolator({0,1},{0,1});
     boost::math::interpolators::makima<std::vector<double>> _akima_spline =
         boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
 
   public:
-    AkimaInterpolator()
-        : I_Interpolator<double>()
-    {
-        set_data_XY({ 0, 1 }, { 0, 1 });
-    }
+    // AkimaInterpolator()
+    //     : I_Interpolator<double>()
+    // {
+    //     set_data_XY({ 0, 1 }, { 0, 1 });
+    // }
 
-    /**
-     * @brief Construct a new Akima Spline Interpolator object from a vector of
-     * pairs This class uses the modified akima interpolation of boost c++
-     * https://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/makima.html
-     * usage: interpolated_y_value = interpolator(x_value)
-     *
-     * @param XY vector of x,y pairs. X must be unique and sorted in ascending
-     * order
-     * @param extrapolation_mode :py:class:`t_extr_mode
-     * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object
-     * that describes the extrapolation mode
-     */
-    AkimaInterpolator(const std::vector<std::pair<double, double>>& XY,
-                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<double>(extrapolation_mode)
-    {
-        set_data_XY(XY);
-    }
     /**
      * @brief Construct a new Akima Spline Interpolator object from a vector of
      * pairs This class uses the modified akima interpolation of boost c++
@@ -136,7 +120,6 @@ class AkimaInterpolator : public I_Interpolator<double>
         return _akima_spline(target_x);
     }
 
-
     /**
      * @brief get nearest y values for given x targets (vectorized call)
      *
@@ -190,18 +173,6 @@ class AkimaInterpolator : public I_Interpolator<double>
         _init_linearextrapolators();
     }
 
-    void append(std::pair<double, double> xy) final
-    {
-        _akima_spline.push_back(std::get<0>(xy), std::get<1>(xy));
-
-        // _akime_spline push back only accepts x > max_x
-        _max_x_1 = _max_x;
-        _max_x   = std::get<0>(xy);
-        _max_y   = std::get<1>(xy);
-
-        _init_linearextrapolators();
-    }
-
     void extend(const std::vector<double>& X, const std::vector<double>& Y) final
     {
         if (X.size() != Y.size())
@@ -220,43 +191,6 @@ class AkimaInterpolator : public I_Interpolator<double>
         _init_linearextrapolators();
     }
 
-    void extend(const std::vector<std::pair<double, double>>& XY) final
-    {
-        for (const auto& xy : XY)
-        {
-            _akima_spline.push_back(std::get<0>(xy), std::get<1>(xy));
-        }
-
-        // initialize extrapolation
-        // no error checking necessary because _akime_spline push back only
-        // accepts x > max_x
-        _max_x_1 = _max_x;
-        _max_x   = std::get<0>(XY.back());
-        _max_y   = std::get<1>(XY.back());
-
-        _init_linearextrapolators();
-    }
-
-    /**
-     * @brief change the input data to this vector of XY pairs
-     *
-     * @param XY: input data vector given as vector<pair<X,Y>>
-     */
-    void set_data_XY(const std::vector<std::pair<double, double>>& XY) final
-    {
-        std::vector<double> X, Y;
-        X.reserve(XY.size());
-        Y.reserve(XY.size());
-        for (const auto& xy : XY)
-        {
-            X.push_back(xy.first);
-            X.push_back(xy.second);
-        }
-
-        set_data_XY(X, Y);
-    }
-
-
   private:
     /**
      * @brief internal function to initialize the linear extrapolation objects
@@ -269,14 +203,10 @@ class AkimaInterpolator : public I_Interpolator<double>
         double min_x_dx = _min_x + (_min_x_1 - _min_x) * 0.01;
         double max_x_dx = _max_x - (_max_x - _max_x_1) * 0.01;
 
-        std::vector<std::pair<double, double>> min_elements, max_elements;
-        min_elements.push_back(std::make_pair(_min_x, _min_y));
-        min_elements.push_back(std::make_pair(min_x_dx, _akima_spline(min_x_dx)));
-        max_elements.push_back(std::make_pair(max_x_dx, _akima_spline(max_x_dx)));
-        max_elements.push_back(std::make_pair(_max_x, _max_y));
-
-        _min_linearextrapolator = LinearInterpolator(min_elements);
-        _max_linearextrapolator = LinearInterpolator(max_elements);
+        _min_linearextrapolator =
+            LinearInterpolator({ _min_x, min_x_dx }, { _min_y, _akima_spline(min_x_dx) });
+        _max_linearextrapolator =
+            LinearInterpolator({ max_x_dx, _max_x }, { _akima_spline(max_x_dx), _max_y });
     }
 };
 

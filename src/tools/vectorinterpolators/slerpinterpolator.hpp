@@ -35,22 +35,18 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 {
 
   public:
-    /**
-     * @brief Constructor to make default initialization possible (neccessary?)
-     */
-    SlerpInterpolator()
-        : I_PairInterpolator<t_quaternion>({
-              {0,  rotationfunctions::quaternion_from_ypr<double>(0,   -180, -89.99)},
-              { 1, rotationfunctions::quaternion_from_ypr<double>(360, 180,  89.99) }
-    })
-    {
-    }
+    // /**
+    //  * @brief Constructor to make default initialization possible (neccessary?)
+    //  */
+    // SlerpInterpolator()
+    //     : I_PairInterpolator<t_quaternion>(
+    //           {0.,   1.    },
+    //           { rotationfunctions::quaternion_from_ypr<double>(0, -180, -89.99),
+    //            rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99)}
+    // )
+    // {
+    // }
 
-    SlerpInterpolator(const std::vector<std::pair<double, t_quaternion>>& XY,
-                      t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<t_quaternion>(XY, extrapolation_mode)
-    {
-    }
     SlerpInterpolator(const std::vector<double>&       X,
                       const std::vector<t_quaternion>& Y,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
@@ -193,29 +189,6 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         return rotationfunctions::ypr_from_quaternion(get_data_Y(), output_in_degrees);
     }
 
-    /**
-     * @brief return the internal x and yrp data vector
-     *
-     * @param output_in_degrees convert yaw, pitch and roll to degrees (default = True)
-     * @return std::vector<std::array<4, double>> XYPR
-     */
-    std::vector<std::array<double, 4>> get_data_XYPR(bool output_in_degrees = true) const
-    {
-        std::vector<std::array<double, 4>> XYRP;
-        XYRP.resize(_XY.size());
-
-        for (unsigned int i = 0; i < _XY.size(); ++i)
-        {
-            XYRP[i][0] = _XY[i].first;
-
-            // note sure if this actually moves or copies ...
-            auto yrp = rotationfunctions::ypr_from_quaternion(_XY[i].second, output_in_degrees);
-            std::move(yrp.begin(), yrp.end(), XYRP[i].begin() + 1);
-        }
-
-        return XYRP;
-    }
-
     // -----------------------
     // append/extend functions
     // -----------------------
@@ -290,9 +263,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * inbetween)
      * @return Interpolated value for target position
      */
-    t_quaternion interpolate_pair(double              target_x,
-                                  const t_quaternion& y1,
-                                  const t_quaternion& y2) const final
+    t_quaternion interpolate_pair(double target_x, t_quaternion y1, t_quaternion y2) const final
     {
         return y1.slerp(target_x, y2);
     }

@@ -95,36 +95,36 @@ class Test_tools_vectorinterpolators_all:
 
             # should not throw
             interpolator = interpolatorType(X, Y)
-            interpolator.append((13, -1))
+            interpolator.append(13, -1)
 
             # check of exceptions are raised for appending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.append((12, -1))
+                interpolator.append(12, -1)
 
             # check of exceptions are raised for appending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.append((11, -1))
+                interpolator.append(11, -1)
 
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([(11, -1), (12, -1)])
+                interpolator.extend([11, 12],[-1, -1])
 
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([(12, -1), (13, -1)])
+                interpolator.extend([12, 13],[-1, -1])
 
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([(14, -1), (13, -1)])
+                interpolator.extend([14, 13],[-1, -1])
 
             # should not throw
             interpolator = interpolatorType(X, Y)
-            interpolator.extend([(13, -1), (14, -1)])
+            interpolator.extend([13, 14],[-1, -1])
 
     def test_SlerpInterpolator_should_throw_expected_exceptions(self):
         """this interpolator uses different input data than the other interpolators"""

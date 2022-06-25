@@ -33,10 +33,8 @@ class Test_tools_vectorinterpolators_slerp:
         # create interpolator clases using different methods
         # input in degrees
         i1 = vip.SlerpInterpolator(x, y, p, r)
-        i2 = vip.SlerpInterpolator(x, ypr)
         # input in rad
         i3 = vip.SlerpInterpolator(x, y_r, p_r, r_r, False)
-        i4 = vip.SlerpInterpolator(x, ypr_r, False)
 
         # interpolator classes that will be appendet and extended
         ia1 = vip.SlerpInterpolator(x, y, p, r)
@@ -67,9 +65,7 @@ class Test_tools_vectorinterpolators_slerp:
         for _ in range(100):
             x_target = np.random.uniform(-1500, 1500)
             y1 = i1(x_target)
-            y2 = i2(x_target)
             y3 = i3(x_target)
-            y4 = i4(x_target)
 
             y1_e = ia1(x_target)
             y2_e = ia2(x_target)
@@ -81,9 +77,7 @@ class Test_tools_vectorinterpolators_slerp:
             y8_e = ie4(x_target)
 
             y1_r = i1(x_target, False)
-            y2_r = i2(x_target, False)
             y3_r = i3(x_target, False)
-            y4_r = i4(x_target, False)
 
             x_targets.append(x_target)
             y1_results.append(y1)
@@ -91,14 +85,10 @@ class Test_tools_vectorinterpolators_slerp:
 
             # tests
             # default interpolators [returned degrees]
-            assert y2 == approx(y1)
             assert y3 == approx(y1)
-            assert y4 == approx(y1)
 
             # default interpolators [returned rad]
-            assert y1_r == approx(y2_r)
-            assert y2_r == approx(y3_r)
-            assert y3_r == approx(y4_r)
+            assert y1_r == approx(y3_r)
 
             # appendet and extended interpolators
             assert y2_e == approx(y1_e)

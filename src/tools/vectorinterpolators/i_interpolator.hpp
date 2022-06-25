@@ -80,13 +80,6 @@ class I_Interpolator
      */
     virtual void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
-    /**
-     * @brief change the input data to this vector of XY pairs
-     *
-     * @param XY: input data vector given as vector<pair<X,Y>>
-     */
-    virtual void set_data_XY(const std::vector<std::pair<double, YType>>& XY) = 0;
-
     // -----------------------
     // getter setter functions
     // -----------------------
@@ -150,13 +143,6 @@ class I_Interpolator
     virtual void append(double x, YType y) = 0;
 
     /**
-     * @brief append a x and y value pair to the interpolator data
-     *
-     * @param xy x and y value pair. x must be > than all existing x values
-     */
-    virtual void append(std::pair<double, YType> xy) = 0;
-
-    /**
      * @brief append x and y value lists to the interplator data (vectorized call)
      *
      * @param X list of x values. Must be sorted in ascending order. All x values must be larger
@@ -165,35 +151,7 @@ class I_Interpolator
      */
     virtual void extend(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
-    /**
-     * @brief append a list of x and y value pairs to the interplator data (vectorized call)
-     *
-     * @param XY list of x,y value pairs. X Must be sorted in ascending order. All x values must be
-     * larger than the largest x value in the interpolator data.
-     */
-    virtual void extend(const std::vector<std::pair<double, YType>>& XY) = 0;
-
   protected:
-    /**
-     * @brief check if input data is valid (e.g. sorted, no duplicated x values)
-     *
-     */
-    static void _check_XY(const std::vector<std::pair<double, YType>>& XY)
-    {
-        if (XY.size() < 2)
-            throw(std::invalid_argument("ERROR[Interpolation::_check_XY]: list size is < 2!"));
-
-        for (size_t i = 0; i < XY.size() - 1; ++i)
-        {
-            if (std::get<0>(XY[i]) == std::get<0>(XY[i + 1]))
-                throw(std::invalid_argument("ERROR[Interpolation::_check_XY]: double x values!"));
-
-            if (std::get<0>(XY[i]) > std::get<0>(XY[i + 1]))
-                throw(std::invalid_argument("ERROR[Interpolation::_check_XY]: List is not "
-                                            "sorted in asscending order!"));
-        }
-    }
-
     /**
      * @brief check if input data is valid (e.g. sorted, no duplicated x values)
      *
@@ -201,18 +159,18 @@ class I_Interpolator
     static void _check_XY(const std::vector<double>& X, const std::vector<YType>& Y)
     {
         if (X.size() < 2)
-            throw(std::runtime_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
+            throw(std::domain_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
         if (X.size() != Y.size())
-            throw(std::runtime_error(
+            throw(std::domain_error(
                 "ERROR[Interpolation::_check_XY]: list X and Y list sizes do not match!"));
 
         for (size_t i = 0; i < X.size() - 1; ++i)
         {
             if (X[i] == X[i + 1])
-                throw(std::runtime_error("ERROR[Interpolation::_check_XY]: double x values!"));
+                throw(std::domain_error("ERROR[Interpolation::_check_XY]: double x values!"));
 
             if (X[i] > X[i + 1])
-                throw(std::runtime_error("ERROR[Interpolation::_check_XY]: List is not "
+                throw(std::domain_error("ERROR[Interpolation::_check_XY]: List is not "
                                          "sorted in asscending order!"));
         }
     }
