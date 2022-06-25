@@ -205,7 +205,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     }
 
     // -----------------------
-    // getter setter functions
+    // getter functions
     // -----------------------
     /**
      * @brief return the internal data vector

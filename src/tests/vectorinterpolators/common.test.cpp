@@ -124,9 +124,9 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 
         // interpolator should fail if double x elements are appended
         REQUIRE_THROWS(interpolator.append(12, { -1, -1, -1 }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         REQUIRE_THROWS(interpolator.append(11, { -1, -1, -1 }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         interpolator.append(13, { -1, -1, -1 });
 
         // same for extending lists
@@ -135,25 +135,25 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
                 12, 13
         },
             { { -1, -1, -1 }, { 1, 1, 1 } }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         REQUIRE_THROWS(interpolator.extend(
             {
                 11, 13
         },
             { { -1, -1, -1 }, { 1, 1, 1 } }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         REQUIRE_THROWS(interpolator.extend(
             {
                 14, 13
         },
             { { -1, -1, -1 }, { 1, 1, 1 } }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         REQUIRE_THROWS(interpolator.extend(
             {
                 14, 14
         },
             { { -1, -1, -1 }, { 1, 1, 1 } }));
-        interpolator.set_data_XY(x, yaw, pitch, roll);
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
         interpolator.extend(
             {
                 13, 14
@@ -165,13 +165,13 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 
         // throw because x is nort sorted
         REQUIRE_THROWS(vectorinterpolators::SlerpInterpolator(x_wrong_order, yaw, pitch, roll));
-        REQUIRE_THROWS(interpolator.set_data_XY(x_wrong_order, yaw, pitch, roll));
+        REQUIRE_THROWS(interpolator.set_data_XYPR(x_wrong_order, yaw, pitch, roll));
 
         // initialize test data (duplicates)
         std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
 
         // interpolator should fail if there is a double x element!
         REQUIRE_THROWS(vectorinterpolators::SlerpInterpolator(x_duplicates, yaw, pitch, roll));
-        REQUIRE_THROWS(interpolator.set_data_XY(x_duplicates, yaw, pitch, roll));
+        REQUIRE_THROWS(interpolator.set_data_XYPR(x_duplicates, yaw, pitch, roll));
     }
 }

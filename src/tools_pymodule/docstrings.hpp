@@ -579,7 +579,9 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator =
 R"doc(Class that implements a slerp interpolation for vectors. Data is
 internaly represented in quaternions using libeigen. Interfaces to
-represent the data in yaw, pitch, roll angles are provided.)doc";
+represent the data in yaw, pitch, roll angles are provided. the
+__call__ equivalent to get interpolated yaw pitch roll is the ypr
+function)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (neccessary?))doc";
 
@@ -697,6 +699,24 @@ Parameter ``ypr``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_get_data_XYPR =
+R"doc(return the internal x and yrp data vector
+
+Parameter ``output_in_degrees``:
+    convert yaw, pitch and roll to degrees (default = True)
+
+Returns:
+    std::vector<std::array<4, double>> XYPR)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_get_data_YPR =
+R"doc(return the internal yrp data vector
+
+Parameter ``output_in_degrees``:
+    convert yaw, pitch and roll to degrees (default = True)
+
+Returns:
+    std::vector<std::array<3, double>> YPR)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_interpolate_pair =
 R"doc(Interpolate: Slerp interpolation between two values
 
@@ -712,7 +732,7 @@ Parameter ``y2``:
 Returns:
     Interpolated value for target position)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XY =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
 R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
 converted to queternion)
 
@@ -734,7 +754,7 @@ Parameter ``roll``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XY_2 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR_2 =
 R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
 converted to queternion)
 

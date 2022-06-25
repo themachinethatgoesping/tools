@@ -17,8 +17,6 @@
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
 
-
-
 void init_subm_linearinterpolator(pybind11::module& m)
 {
 
@@ -81,6 +79,21 @@ void init_subm_linearinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY_2),
              py::arg("X"),
              py::arg("Y"))
+        .def("get_data_XY",
+             &LinearInterpolator::get_data_XY,
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 I_PairInterpolator,
+                 get_data_XY))
+        .def(
+            "get_data_X",
+            &LinearInterpolator::get_data_X,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
+        .def(
+            "get_data_Y",
+            &LinearInterpolator::get_data_Y,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_Y))
         .def("append",
              py::overload_cast<double, double>(&LinearInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),

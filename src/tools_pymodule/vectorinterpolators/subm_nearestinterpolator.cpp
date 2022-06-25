@@ -47,7 +47,11 @@ void init_subm_nearestinterpolator(pybind11::module& m)
              py::arg("target_x"))
         .def("__call__",
              py::overload_cast<const std::vector<double>&>(&NearestInterpolator::operator()),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call_2),
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 I_Interpolator,
+                 operator_call_2),
              py::arg("targets_x"))
         .def("set_extrapolation_mode",
              &NearestInterpolator::set_extrapolation_mode,
@@ -75,6 +79,21 @@ void init_subm_nearestinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY_2),
              py::arg("X"),
              py::arg("Y"))
+        .def("get_data_XY",
+             &NearestInterpolator::get_data_XY,
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 I_PairInterpolator,
+                 get_data_XY))
+        .def(
+            "get_data_X",
+            &NearestInterpolator::get_data_X,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
+        .def(
+            "get_data_Y",
+            &NearestInterpolator::get_data_Y,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_Y))
         .def("append",
              py::overload_cast<double, double>(&NearestInterpolator::append),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),

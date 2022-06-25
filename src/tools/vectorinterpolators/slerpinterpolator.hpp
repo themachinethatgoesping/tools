@@ -126,7 +126,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @return corresponding y value
      */
     std::vector<std::array<double, 3>> ypr(const std::vector<double>& targets_x,
-                                                       bool output_in_degrees = true)
+                                           bool                       output_in_degrees = true)
     {
         std::vector<std::array<double, 3>> y_values;
         y_values.reserve(targets_x.size());
@@ -151,11 +151,11 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
-    void set_data_XY(const std::vector<double>& X,
-                     const std::vector<double>& Yaw,
-                     const std::vector<double>& Pitch,
-                     const std::vector<double>& Roll,
-                     bool                       input_in_degrees = true)
+    void set_data_XYPR(const std::vector<double>& X,
+                       const std::vector<double>& Yaw,
+                       const std::vector<double>& Pitch,
+                       const std::vector<double>& Roll,
+                       bool                       input_in_degrees = true)
     {
         I_PairInterpolator<t_quaternion>::set_data_XY(
             X, rotationfunctions::quaternion_from_ypr(Yaw, Pitch, Roll, input_in_degrees));
@@ -171,18 +171,55 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
-    void set_data_XY(const std::vector<double>&                X,
-                     const std::vector<std::array<double, 3>>& YPR,
-                     bool                                      input_in_degrees = true)
+    void set_data_XYPR(const std::vector<double>&                X,
+                       const std::vector<std::array<double, 3>>& YPR,
+                       bool                                      input_in_degrees = true)
     {
         I_PairInterpolator<t_quaternion>::set_data_XY(
             X, rotationfunctions::quaternion_from_ypr(YPR, input_in_degrees));
     }
 
     // -----------------------
+    // getter functions
+    // -----------------------
+    /**
+     * @brief return the internal yrp data vector
+     *
+     * @param output_in_degrees convert yaw, pitch and roll to degrees (default = True)
+     * @return std::vector<std::array<3, double>> YPR
+     */
+    std::vector<std::array<double, 3>> get_data_YPR(bool output_in_degrees = true) const
+    {
+        return rotationfunctions::ypr_from_quaternion(get_data_Y(), output_in_degrees);
+    }
+
+    /**
+     * @brief return the internal x and yrp data vector
+     *
+     * @param output_in_degrees convert yaw, pitch and roll to degrees (default = True)
+     * @return std::vector<std::array<4, double>> XYPR
+     */
+    std::vector<std::array<double, 4>> get_data_XYPR(bool output_in_degrees = true) const
+    {
+        std::vector<std::array<double, 4>> XYRP;
+        XYRP.resize(_XY.size());
+
+        for (unsigned int i = 0; i < _XY.size(); ++i)
+        {
+            XYRP[i][0] = _XY[i].first;
+
+            // note sure if this actually moves or copies ...
+            auto yrp = rotationfunctions::ypr_from_quaternion(_XY[i].second, output_in_degrees);
+            std::move(yrp.begin(), yrp.end(), XYRP[i].begin() + 1);
+        }
+
+        return XYRP;
+    }
+
+    // -----------------------
     // append/extend functions
     // -----------------------
-    
+
     /**
      * @brief append an x, yaw, pitch, roll data point
      *
@@ -230,7 +267,6 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             x, rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees));
     }
 
-    
     /**
      * @brief append data with list of x, yaw, pitch, roll data (vectorized call)
      *
