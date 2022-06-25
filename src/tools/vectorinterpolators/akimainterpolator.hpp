@@ -33,12 +33,15 @@ namespace vectorinterpolators {
  */
 class AkimaInterpolator : public I_Interpolator<double>
 {
-    double _min_x, _min_y, _max_x, _max_y; ///< min/max x and y values
-    double _min_x_1, _max_x_1;             ///< one value above min and max x
+    // boost akima spline currently does not allow for accessing the internal data
+    // therefore we need to keep synchrpnized copies of the data here as well to allow get_X and
+    // get_Y functions
+    std::vector<double> _X;
+    std::vector<double> _Y;
 
     // initialize these interpolators with non-sense (will be initialized by calling set_data_XY)
-    LinearInterpolator _min_linearextrapolator = LinearInterpolator({0,1},{0,1});
-    LinearInterpolator _max_linearextrapolator = LinearInterpolator({0,1},{0,1});
+    LinearInterpolator _min_linearextrapolator = LinearInterpolator({ 0, 1 }, { 0, 1 });
+    LinearInterpolator _max_linearextrapolator = LinearInterpolator({ 0, 1 }, { 0, 1 });
     boost::math::interpolators::makima<std::vector<double>> _akima_spline =
         boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
 
@@ -80,12 +83,12 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     double operator()(double target_x) final
     {
-        if (target_x < _min_x)
+        if (target_x < _X[0])
         {
             switch (I_Interpolator::_extr_mode)
             {
                 case t_extr_mode::nearest:
-                    return _min_y;
+                    return _Y[0];
 
                 case t_extr_mode::extrapolate:
                     return _min_linearextrapolator(target_x);
@@ -93,17 +96,17 @@ class AkimaInterpolator : public I_Interpolator<double>
                 default: // fail
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
-                           "] is out of range (too small)(" + std::to_string(_min_x) + "/" +
-                           std::to_string(_max_x) + ")! (and fail on extrapolate was set)";
+                           "] is out of range (too small)(" + std::to_string(_X[0]) + "/" +
+                           std::to_string(_X.back()) + ")! (and fail on extrapolate was set)";
                     throw(std::out_of_range(msg));
             }
         }
-        else if (target_x > _max_x)
+        else if (target_x > _X.back())
         {
             switch (I_Interpolator::_extr_mode)
             {
                 case t_extr_mode::nearest:
-                    return _max_y;
+                    return _Y.back();
 
                 case t_extr_mode::extrapolate:
                     return _max_linearextrapolator(target_x);
@@ -111,8 +114,8 @@ class AkimaInterpolator : public I_Interpolator<double>
                 default: // fail
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
-                           "] is out of range  (too large)(" + std::to_string(_min_x) + "/" +
-                           std::to_string(_max_x) + ")! (and fail on extrapolate was set)";
+                           "] is out of range  (too large)(" + std::to_string(_X[0]) + "/" +
+                           std::to_string(_X.back()) + ")! (and fail on extrapolate was set)";
                     throw(std::out_of_range(msg));
             }
         }
@@ -144,17 +147,14 @@ class AkimaInterpolator : public I_Interpolator<double>
         if (X.size() != Y.size())
             throw(std::runtime_error("ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
+        // copy data to allow get_X and get_Y functions
+        _X = X;
+        _Y = Y;
+
+        // This should be easier: Move semantics of makima seem to be more in the way here than they
+        // help ...
         auto x = X;
         auto y = Y;
-
-        // save min/max xy for extrapolation
-        _min_x   = x[0];
-        _min_x_1 = x[1];
-        _max_x   = x[x.size() - 1];
-        _max_x_1 = x[x.size() - 2];
-        _min_y   = y[0];
-        _max_y   = y[y.size() - 1];
-
         _akima_spline =
             boost::math::interpolators::makima<std::vector<double>>(std::move(x), std::move(y));
 
@@ -165,10 +165,9 @@ class AkimaInterpolator : public I_Interpolator<double>
     {
         _akima_spline.push_back(x, y);
 
-        // _akime_spline push back only accepts x > max_x
-        _max_x_1 = _max_x;
-        _max_x   = x;
-        _max_y   = y;
+        // copy data to allow get_X and get_Y functions
+        _X.push_back(x);
+        _Y.push_back(y);
 
         _init_linearextrapolators();
     }
@@ -181,35 +180,54 @@ class AkimaInterpolator : public I_Interpolator<double>
         for (unsigned int i = 0; i < X.size(); ++i)
         {
             _akima_spline.push_back(X[i], Y[i]);
-        }
 
-        // _akime_spline push back only accepts x > max_x
-        _max_x_1 = _max_x;
-        _max_x   = X.back();
-        _max_y   = Y.back();
+            // copy data to allow get_X and get_Y functions
+            _X.push_back(X[i]);
+            _Y.push_back(Y[i]);
+        }
 
         _init_linearextrapolators();
     }
 
+    
+    // -----------------------
+    // getter functions
+    // -----------------------
+    /**
+     * @brief return the x component of the internal data vector
+     *
+     * @return std::vector<double>
+     */
+    const std::vector<double>& get_data_X() const final { return _X; }
+
+    /**
+     * @brief return the y component of the itnernal data vector
+     *
+     * @return std::vector<YType>
+     */
+    const std::vector<double>& get_data_Y() const final { return _Y; }
+
   private:
     /**
      * @brief internal function to initialize the linear extrapolation objects
-     * _min_x, _min_x1, _max_x, _max_x_1, _min_y, _max_y and the _akima_spline
+     * _X, _Y and the _akima_spline
      * must be set/initialized before calling this function
      *
      */
     void _init_linearextrapolators()
     {
-        double min_x_dx = _min_x + (_min_x_1 - _min_x) * 0.01;
-        double max_x_dx = _max_x - (_max_x - _max_x_1) * 0.01;
+        // interpolated elements just (1%) before the min/max xvalue 
+        double min_x_dx = _X[0] + (_X[1] - _X[0]) * 0.01;
+        double max_x_dx = _X.back() - (_X.back() - _X[_X.size() - 2]) * 0.01;
 
         _min_linearextrapolator =
-            LinearInterpolator({ _min_x, min_x_dx }, { _min_y, _akima_spline(min_x_dx) });
+            LinearInterpolator({ _X[0], min_x_dx }, { _Y[0], _akima_spline(min_x_dx) });
         _max_linearextrapolator =
-            LinearInterpolator({ max_x_dx, _max_x }, { _akima_spline(max_x_dx), _max_y });
+            LinearInterpolator({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
 };
 
 } // namespace vectorinterpolators
 } // namespace tools
 } // namespace themachinethatgoesping
+

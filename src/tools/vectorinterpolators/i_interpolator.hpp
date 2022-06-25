@@ -81,6 +81,23 @@ class I_Interpolator
     virtual void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
     // -----------------------
+    // getter functions
+    // -----------------------
+    /**
+     * @brief return the x component of the internal data vector
+     *
+     * @return std::vector<double>
+     */
+    virtual const std::vector<double>& get_data_X() const = 0;
+
+    /**
+     * @brief return the y component of the internal data vector
+     *
+     * @return std::vector<YType>
+     */
+    virtual const std::vector<YType>& get_data_Y() const = 0;
+
+    // -----------------------
     // getter setter functions
     // -----------------------
     /**
@@ -171,7 +188,7 @@ class I_Interpolator
 
             if (X[i] > X[i + 1])
                 throw(std::domain_error("ERROR[Interpolation::_check_XY]: List is not "
-                                         "sorted in asscending order!"));
+                                        "sorted in asscending order!"));
         }
     }
 };

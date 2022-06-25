@@ -167,32 +167,36 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_X = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_Y = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_akima_spline = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_X =
+R"doc(return the x component of the internal data vector
+
+Returns:
+    std::vector<double>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_Y =
+R"doc(return the y component of the itnernal data vector
+
+Returns:
+    std::vector<YType>)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
-R"doc(internal function to initialize the linear extrapolation objects
-_min_x, _min_x1, _max_x, _max_x_1, _min_y, _max_y and the
-_akima_spline must be set/initialized before calling this function)doc";
+R"doc(internal function to initialize the linear extrapolation objects _X,
+_Y and the _akima_spline must be set/initialized before calling this
+function)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x = R"doc(< min/max x and y values)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_x_1 = R"doc(< one value above min and max x)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_y = R"doc(< min/max x and y values)doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_linearextrapolator = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x = R"doc(< min/max x and y values)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_x_1 = R"doc(< one value above min and max x)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_y = R"doc(< min/max x and y values)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call =
 R"doc(get the interolated y value for given x target
@@ -261,6 +265,18 @@ Parameter ``Y``:
     list of corresponding Y values. Must be same size as X)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(extrapolation mode type.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_data_X =
+R"doc(return the x component of the internal data vector
+
+Returns:
+    std::vector<double>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_data_Y =
+R"doc(return the y component of the internal data vector
+
+Returns:
+    std::vector<YType>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_extrapolation_mode =
 R"doc(Get the currently set extrapolation mode
@@ -356,8 +372,6 @@ R"doc(return the y component of the itnernal data vector
 Returns:
     std::vector<YType>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_extrapolation_mode = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
 R"doc(Interface for implementing an interpolation between two y values using
 a given interpolation factor
@@ -404,8 +418,6 @@ Parameter ``X:``:
 
 Parameter ``Y:``:
     y vector (must be same size))doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_extrapolation_mode = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair = R"doc()doc";
 

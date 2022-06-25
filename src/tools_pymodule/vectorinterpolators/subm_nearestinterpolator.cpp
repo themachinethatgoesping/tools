@@ -68,11 +68,11 @@ void init_subm_nearestinterpolator(pybind11::module& m)
         .def(
             "get_data_X",
             &NearestInterpolator::get_data_X,
-            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_X))
         .def(
             "get_data_Y",
             &NearestInterpolator::get_data_Y,
-            DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_Y))
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
         .def("append",
              &NearestInterpolator::append,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),

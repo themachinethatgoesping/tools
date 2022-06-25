@@ -44,10 +44,6 @@ class Test_tools_vectorinterpolators_all:
             assert ip(100) == ip3(100)
 
             # -- get data functions --
-            #akima spline does not support getting
-            if isinstance(ip,vip.AkimaInterpolator):
-                continue
-
             assert ip.get_data_X() == approx(X)
             assert ip2.get_data_X() == approx(X+[30])
 

@@ -65,14 +65,14 @@ void init_subm_akimainterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY),
              py::arg("X"),
              py::arg("Y"))
-     //    .def(
-     //        "get_data_X",
-     //        &AkimaInterpolator::get_data_X,
-     //        DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
-     //    .def(
-     //        "get_data_Y",
-     //        &AkimaInterpolator::get_data_Y,
-     //        DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_Y))
+        .def(
+            "get_data_X",
+            &AkimaInterpolator::get_data_X,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_X))
+        .def(
+            "get_data_Y",
+            &AkimaInterpolator::get_data_Y,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
         .def("append",
              &AkimaInterpolator::append,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),

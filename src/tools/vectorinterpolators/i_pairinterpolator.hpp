@@ -155,21 +155,14 @@ class I_PairInterpolator : public I_Interpolator<YType>
      *
      * @return std::vector<double>
      */
-    const std::vector<double>& get_data_X() const { return _X; }
+    const std::vector<double>& get_data_X() const final { return _X; }
 
     /**
      * @brief return the y component of the itnernal data vector
      *
      * @return std::vector<YType>
      */
-    const std::vector<YType>& get_data_Y() const { return _Y; }
-
-    void set_extrapolation_mode(const t_extr_mode extrapolation_mode)
-    {
-        I_Interpolator<YType>::_extr_mode = extrapolation_mode;
-    }
-
-    t_extr_mode get_extrapolation_mode() const { return I_Interpolator<YType>::_extr_mode; }
+    const std::vector<YType>& get_data_Y() const final { return _Y; }
 
     //-------------------------
     // interpolation functions
