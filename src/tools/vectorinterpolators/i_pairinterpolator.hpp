@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include "../bitsery/helpers.hpp"
+
 #include "i_interpolator.hpp"
 
 namespace themachinethatgoesping {
@@ -70,6 +72,19 @@ class I_PairInterpolator : public I_Interpolator<YType>
          */
         double calc_target_x(double target_x) { return (target_x - _xmin) * _xfactor; }
 
+      private:
+        _t_x_pair() = default;
+        friend bitsery::Access;
+        template<typename S>
+        void serialize(S& s)
+        {
+            s.value8b(_xmin_index);
+            s.value8b(_xmax_index);
+            s.value8b(_xmin);
+            s.value8b(_xmax);
+            s.value8b(_xfactor);
+        }
+
     } _last_x_pair; ///< last pair (for faster consequtive searches)
 
     /**
@@ -110,10 +125,9 @@ class I_PairInterpolator : public I_Interpolator<YType>
     void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) final
     {
         if (X.size() != Y.size())
-            throw(std::domain_error(
-                "ERROR[Interpolation::set_data_XY]: list sizes do not match"));
+            throw(std::domain_error("ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
-        I_Interpolator<YType>::_check_XY(X,Y);
+        I_Interpolator<YType>::_check_XY(X, Y);
 
         _X = X;
         _Y = Y;
@@ -129,7 +143,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         if (x <= _X.back())
         {
             throw(std::domain_error("ERROR[Interpolation::append]: appendet x value is not "
-                                        "larger than existing x values in the interpolator."));
+                                    "larger than existing x values in the interpolator."));
         }
 
         _X.push_back(x);

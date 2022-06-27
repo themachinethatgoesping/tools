@@ -18,6 +18,9 @@
 #include <unordered_map>
 #include <vector>
 
+// bitsery
+#include "../bitsery/helpers.hpp"
+
 #include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
@@ -30,18 +33,46 @@ namespace vectorinterpolators {
  */
 class LinearInterpolator : public I_PairInterpolator<double>
 {
+  
+    friend bitsery::Access;
+    template <typename S>
+    void serialize(S& s)
+    {
+        s.value4b(_extr_mode);
+        s.object(_last_x_pair);
+        s.container8b(_X,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    }
 
   public:
-    // LinearInterpolator()
-    //     : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
-    // {
-    // }
+    LinearInterpolator()
+        : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
+    {
+    }
 
     LinearInterpolator(const std::vector<double>& X,
                        const std::vector<double>& Y,
                        t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<double>(X, Y, extrapolation_mode)
     {
+    }
+    
+    bool operator==(const LinearInterpolator& rhs) const
+    {
+        // compare extrapolation mode
+        if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
+
+        // compare data
+        if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
+            return false;
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        return true;
     }
 
     /**

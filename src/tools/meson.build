@@ -12,6 +12,7 @@ sources = [
 ]
 
 headers = [
+  'bitsery/helpers.hpp',
   'pybind11/classhelpers.hpp',
   'timeconv.hpp',
   'rotationfunctions/quaternions.hpp',
@@ -31,7 +32,8 @@ if build_machine.system() != 'linux'
                           boost_dep, 
                           eigen3_dep, 
                           omp_dep,
-                          hinnant_date_dep],
+                          hinnant_date_dep,
+                          bitsert_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -43,7 +45,8 @@ else
                           boost_dep, 
                           eigen3_dep, 
                           omp_dep,
-                          hinnant_date_dep],
+                          hinnant_date_dep,
+                          bitsert_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -58,7 +61,8 @@ tools_dep = declare_dependency(
     boost_dep,
     eigen3_dep,
     omp_dep,
-    hinnant_date_dep
+    hinnant_date_dep,
+    bitsert_dep
   ],
   link_with : [tools_lib],
   compile_args : ['-D_USE_MATH_DEFINES']

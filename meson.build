@@ -47,6 +47,11 @@ hinnant_date_dep = declare_dependency(
  include_directories : hinnant_date_incl
  )
 
+ #bitsery (for object serialization)
+bitsert_dep = declare_dependency(
+  include_directories : ['subprojects/bitsery/include/']
+)
+
 
 # add c++ src
 subdir('src')

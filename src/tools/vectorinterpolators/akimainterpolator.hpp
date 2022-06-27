@@ -74,7 +74,26 @@ class AkimaInterpolator : public I_Interpolator<double>
         set_data_XY(X, Y);
     }
     ~AkimaInterpolator() = default;
+    
+    // -- convinience functions --
+    bool operator==(const AkimaInterpolator& rhs) const
+    {
+        // compare extrapolation mode
+        if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
 
+        // compare data
+        if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
+            return false;
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        return true;
+    }
+    
     /**
      * @brief get the interolated y value for given x target
      *
@@ -189,7 +208,6 @@ class AkimaInterpolator : public I_Interpolator<double>
         _init_linearextrapolators();
     }
 
-    
     // -----------------------
     // getter functions
     // -----------------------
@@ -216,7 +234,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     void _init_linearextrapolators()
     {
-        // interpolated elements just (1%) before the min/max xvalue 
+        // interpolated elements just (1%) before the min/max xvalue
         double min_x_dx = _X[0] + (_X[1] - _X[0]) * 0.01;
         double max_x_dx = _X.back() - (_X.back() - _X[_X.size() - 2]) * 0.01;
 
@@ -230,4 +248,3 @@ class AkimaInterpolator : public I_Interpolator<double>
 } // namespace vectorinterpolators
 } // namespace tools
 } // namespace themachinethatgoesping
-

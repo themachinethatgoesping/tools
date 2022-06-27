@@ -99,6 +99,24 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
               extrapolation_mode)
     {
     }
+    
+    bool operator==(const SlerpInterpolator& rhs) const
+    {
+        // compare extrapolation mode
+        if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
+
+        // compare data
+        if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
+            return false;
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+            return false;
+
+        return true;
+    }
 
     /**
      * @brief get the interolated yaw, pitch and roll values for given x target
