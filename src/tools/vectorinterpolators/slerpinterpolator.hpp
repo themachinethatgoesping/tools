@@ -24,6 +24,15 @@ namespace vectorinterpolators {
 
 using t_quaternion = Eigen::Quaternion<double>;
 
+// //define how object should be serialized/deserialized
+// template <typename S>
+// void serialize(S& s, t_quaternion& o) {
+//     t_quaternion::
+//     s.value4b(o.i);//fundamental types (ints, floats, enums) of size 4b
+//     s.value2b(o.e);
+//     s.container4b(o.fs, 10);//resizable containers also requires maxSize, to make it safe from buffer-overflow attacks
+// }
+
 /**
  * @brief Class that implements a slerp interpolation for vectors.
  * Data is internaly represented in quaternions using libeigen.
@@ -99,7 +108,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
               extrapolation_mode)
     {
     }
-    
+
+    bool operator!=(const SlerpInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const SlerpInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -284,6 +294,17 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     t_quaternion interpolate_pair(double target_x, t_quaternion y1, t_quaternion y2) const final
     {
         return y1.slerp(target_x, y2);
+    }
+
+    // serialization support using bitsery
+    friend bitsery::Access;
+    template<typename S>
+    void serialize(S& s)
+    {
+        s.value4b(_extr_mode);
+        s.object(_last_x_pair);
+        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
     }
 };
 

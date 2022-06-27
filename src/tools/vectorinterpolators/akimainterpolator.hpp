@@ -74,8 +74,9 @@ class AkimaInterpolator : public I_Interpolator<double>
         set_data_XY(X, Y);
     }
     ~AkimaInterpolator() = default;
-    
+
     // -- convinience functions --
+    bool operator!=(const AkimaInterpolator& rhs) const {return !(rhs == *this);}
     bool operator==(const AkimaInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -93,7 +94,7 @@ class AkimaInterpolator : public I_Interpolator<double>
 
         return true;
     }
-    
+
     /**
      * @brief get the interolated y value for given x target
      *
@@ -243,6 +244,17 @@ class AkimaInterpolator : public I_Interpolator<double>
         _max_linearextrapolator =
             LinearInterpolator({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
+
+  private:
+    //     // serialization support using bitsery
+    //     friend bitsery::Access;
+    //     template<typename S>
+    //     void serialize(S& s)
+    //     {
+    //         s.value4b(_extr_mode);
+    //         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    //         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    //     }
 };
 
 } // namespace vectorinterpolators

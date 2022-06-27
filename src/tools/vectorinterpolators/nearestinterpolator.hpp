@@ -31,10 +31,10 @@ namespace vectorinterpolators {
 class NearestInterpolator : public I_PairInterpolator<double>
 {
   public:
-    // NearestInterpolator()
-    //     : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
-    // {
-    // }
+    NearestInterpolator()
+        : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
+    {
+    }
 
     /**
      * @brief Construct a new Nearest Interpolator object from a vector of pairs
@@ -51,7 +51,8 @@ class NearestInterpolator : public I_PairInterpolator<double>
     {
     }
     ~NearestInterpolator() = default;
-    
+
+    bool operator!=(const NearestInterpolator& rhs) const {return !(rhs == *this);}
     bool operator==(const NearestInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -84,6 +85,19 @@ class NearestInterpolator : public I_PairInterpolator<double>
             return y1;
 
         return y2;
+    }
+
+  private:
+  
+    // serialization support using bitsery
+    friend bitsery::Access;
+    template<typename S>
+    void serialize(S& s)
+    {
+        s.value4b(_extr_mode);
+        s.object(_last_x_pair);
+        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
     }
 };
 

@@ -15,24 +15,45 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-#include <bitsery/bitsery.h>
 #include <bitsery/adapter/buffer.h>
+#include <bitsery/bitsery.h>
 #include <bitsery/traits/vector.h>
+
+// use fixed-size buffer
+using Buffer        = std::vector<uint8_t>;
+using OutputAdapter = bitsery::OutputBufferAdapter<Buffer>;
+using InputAdapter  = bitsery::InputBufferAdapter<Buffer>;
+
+// -- teamplated functions to avoid code repetition for different interpolators --
 
 
 template<typename t_interpolator>
-void check_interpolators_are_equal(t_interpolator& lhs, t_interpolator& rhs)
+void test_interpolator_serialize(t_interpolator& ip)
 {
-    REQUIRE(lhs == rhs);
-    REQUIRE(lhs(0.5) == Approx(rhs(0.5)));
-    REQUIRE(lhs(-100) == Approx(rhs(-100)));
-    REQUIRE(lhs(100) == Approx(rhs(100)));
+    t_interpolator ip2;
+
+    // create buffer to store data
+    Buffer buffer;
+    // use quick serialization function,
+    // it will use default configuration to setup all the nesessary steps
+    // and serialize data to container
+    auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, ip);
+
+    // interpolators should not be the same before serialization
+    REQUIRE(ip != ip2);
+
+    // same as serialization, but returns deserialization state as a pair
+    // first = error code, second = is buffer was successfully read from begin to the end.
+    auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, ip2);
+    REQUIRE(state.first == bitsery::ReaderError::NoError);
+    REQUIRE(state.second);
+
+    REQUIRE(ip == ip2);
+    REQUIRE(ip(0.5) == Approx(ip2(0.5)));
+    REQUIRE(ip(-100) == Approx(ip2(-100)));
+    REQUIRE(ip(100) == Approx(ip2(100)));
 }
 
-//use fixed-size buffer
-using Buffer = std::vector<uint8_t>;
-using OutputAdapter = bitsery::OutputBufferAdapter<Buffer>;
-using InputAdapter = bitsery::InputBufferAdapter<Buffer>;
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)
 {
     std::vector<double> x     = { -10, -5, 0, 6, 12 };
@@ -41,22 +62,11 @@ TEST_CASE("VectorInterpolators should serializable", TESTTAG)
     std::vector<double> pitch = { 1, 0, 1, 0, -1 };
     std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-    vectorinterpolators::LinearInterpolator  lip(x, y), lip2;
+    vectorinterpolators::LinearInterpolator  lip(x, y);
+    vectorinterpolators::NearestInterpolator nip(x, y);
 
-    //create buffer to store data
-    Buffer buffer;
-    //use quick serialization function,
-    //it will use default configuration to setup all the nesessary steps
-    //and serialize data to container
-    auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, lip);
-
-    //same as serialization, but returns deserialization state as a pair
-    //first = error code, second = is buffer was successfully read from begin to the end.
-    auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, lip2);
-
-    REQUIRE(state.first == bitsery::ReaderError::NoError );
-    REQUIRE(state.second);
-    check_interpolators_are_equal(lip,lip2);
+    test_interpolator_serialize(lip);
+    test_interpolator_serialize(nip);
 }
 
 /**
@@ -84,15 +94,15 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
     auto t4 = slerp;
 
     // copy initialization
-    auto tlip = vectorinterpolators::LinearInterpolator(x, y);
-    auto tnip = vectorinterpolators::NearestInterpolator(x, y);
-    auto taip = vectorinterpolators::AkimaInterpolator(x, y);
+    auto tlip   = vectorinterpolators::LinearInterpolator(x, y);
+    auto tnip   = vectorinterpolators::NearestInterpolator(x, y);
+    auto taip   = vectorinterpolators::AkimaInterpolator(x, y);
     auto tslerp = vectorinterpolators::SlerpInterpolator(x, yaw, pitch, roll);
 }
 
 /**
  * @brief Test that the interpolators throw expected excetions
- * 
+ *
  */
 TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {

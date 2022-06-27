@@ -33,17 +33,6 @@ namespace vectorinterpolators {
  */
 class LinearInterpolator : public I_PairInterpolator<double>
 {
-  
-    friend bitsery::Access;
-    template <typename S>
-    void serialize(S& s)
-    {
-        s.value4b(_extr_mode);
-        s.object(_last_x_pair);
-        s.container8b(_X,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-    }
-
   public:
     LinearInterpolator()
         : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
@@ -57,6 +46,7 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
     }
     
+    bool operator!=(const LinearInterpolator& rhs) const {return !(rhs == *this);}
     bool operator==(const LinearInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -87,6 +77,20 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
     }
+
+    private:
+    
+    // serialization support using bitsery
+    friend bitsery::Access;
+    template <typename S>
+    void serialize(S& s)
+    {
+        s.value4b(_extr_mode);
+        s.object(_last_x_pair);
+        s.container8b(_X,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    }
+
 };
 
 } // namespace interpolation
