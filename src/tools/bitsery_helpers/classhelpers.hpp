@@ -53,10 +53,10 @@
                                                                                                     \
         if (state.first != bitsery::ReaderError::NoError)                                           \
             throw(std::runtime_error("ERROR[T_CLASS::from_binary]: readerror"));                    \
-        if (check_buffer_is_read_completely)                                                        \
-            if (!state.second)                                                                      \
-                throw(std::runtime_error(                                                           \
-                    "ERROR[T_CLASS::from_binary]: buffer was not read completely"));                \
+                                                                                                    \
+        if (!state.second)                                                                          \
+            throw(std::runtime_error(                                                               \
+                "ERROR[T_CLASS::from_binary]: buffer was not read completely"));                    \
                                                                                                     \
         return object;                                                                              \
     }
