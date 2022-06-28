@@ -24,6 +24,7 @@
 #include <utility>
 #include <vector>
 
+#include "../bitsery_helpers/classhelpers.hpp"
 #include "../bitsery_helpers/helpers.hpp"
 
 #include "i_interpolator.hpp"
@@ -95,6 +96,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     std::vector<YType>  _Y; ///< main data vector containing pairs of corresponding y datapoitns
 
   public:
+
     /**
      * @brief Construct a new Interpolator object from a vector of pairs
      * usage: interpolated_y_value = interpolator.interpolate(x_value)

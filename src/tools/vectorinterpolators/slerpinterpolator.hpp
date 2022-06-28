@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "../bitsery_helpers/eigen.hpp"
+#include "../bitsery_helpers/classhelpers.hpp"
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
@@ -51,10 +52,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      */
     SlerpInterpolator()
         : I_PairInterpolator<t_quaternion>(
-              {0.,   1.    },
+              { 0., 1. },
               { rotationfunctions::quaternion_from_ypr<double>(0, -180, -89.99),
-               rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99)}
-    )
+                rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99) })
     {
     }
 
@@ -298,6 +298,10 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         return y1.slerp(target_x, y2);
     }
 
+    // define to_binary and from_binary functions
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
+
+  private:
     // serialization support using bitsery
     friend bitsery::Access;
     template<typename S>
@@ -306,7 +310,10 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         s.value4b(_extr_mode);
         s.object(_last_x_pair);
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call needs the include of toos/bitsery/eigen.hpp
+        s.container(
+            _Y,
+            SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call
+                                                    //needs the include of toos/bitsery/eigen.hpp
     }
 };
 

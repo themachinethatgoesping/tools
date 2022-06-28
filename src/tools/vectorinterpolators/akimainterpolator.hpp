@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "../bitsery_helpers/helpers.hpp"
+#include "../bitsery_helpers/classhelpers.hpp"
 
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
@@ -48,10 +49,14 @@ class AkimaInterpolator : public I_Interpolator<double>
         boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
 
   public:
+    /**
+     * @brief Construct a new (uninitialized) Akima Interpolator object
+     *
+     */
     AkimaInterpolator()
         : I_Interpolator<double>()
     {
-        //set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
+        // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
     }
 
     /**
@@ -78,7 +83,7 @@ class AkimaInterpolator : public I_Interpolator<double>
     ~AkimaInterpolator() = default;
 
     // -- convinience functions --
-    bool operator!=(const AkimaInterpolator& rhs) const {return !(rhs == *this);}
+    bool operator!=(const AkimaInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const AkimaInterpolator& rhs) const
     {
         if (_X.size() != rhs.get_data_X().size())
@@ -231,6 +236,8 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     const std::vector<double>& get_data_Y() const final { return _Y; }
 
+      // define to_binary and from_binary functions
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
   private:
     /**
      * @brief internal function to initialize the linear extrapolation objects
@@ -250,24 +257,24 @@ class AkimaInterpolator : public I_Interpolator<double>
             LinearInterpolator({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
 
-  private:
-        // serialization support using bitsery
-        friend bitsery::Access;
-        template<typename S>
-        void serialize(S& s)
-        {
-            // serialize internal variables and extra _X and _Y
-            s.value4b(_extr_mode);
-            s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-            s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    // serialization support using bitsery
+    friend bitsery::Access;
+    template<typename S>
+    void serialize(S& s)
+    {
+        // serialize internal variables and extra _X and _Y
+        s.value4b(_extr_mode);
+        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
 
-            // initialize boost akime on read
-            // TODO: this is a hack, think about forking boost makima to get proper access to private X and Y data structures
-            if (bitsery_helpers::is_input(s))
-            {
-                this->set_data_XY(_X,_Y);
-            }
+        // initialize boost akime on read
+        // TODO: this is a hack, think about forking boost makima to get proper access to private X
+        // and Y data structures
+        if (bitsery_helpers::is_input(s))
+        {
+            this->set_data_XY(_X, _Y);
         }
+    }
 };
 
 } // namespace vectorinterpolators

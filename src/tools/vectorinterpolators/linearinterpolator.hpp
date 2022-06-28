@@ -20,6 +20,7 @@
 
 // bitsery
 #include "../bitsery_helpers/helpers.hpp"
+#include "../bitsery_helpers/classhelpers.hpp"
 
 #include "i_pairinterpolator.hpp"
 
@@ -45,8 +46,8 @@ class LinearInterpolator : public I_PairInterpolator<double>
         : I_PairInterpolator<double>(X, Y, extrapolation_mode)
     {
     }
-    
-    bool operator!=(const LinearInterpolator& rhs) const {return !(rhs == *this);}
+
+    bool operator!=(const LinearInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const LinearInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -78,19 +79,20 @@ class LinearInterpolator : public I_PairInterpolator<double>
         return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
     }
 
-    private:
-    
+    // define to_binary and from_binary functions
+   __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
+
+  private:
     // serialization support using bitsery
     friend bitsery::Access;
-    template <typename S>
+    template<typename S>
     void serialize(S& s)
     {
         s.value4b(_extr_mode);
         s.object(_last_x_pair);
-        s.container8b(_X,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y,SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
     }
-
 };
 
 } // namespace interpolation

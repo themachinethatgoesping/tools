@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "i_pairinterpolator.hpp"
+#include "../bitsery_helpers/classhelpers.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -52,7 +53,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
     }
     ~NearestInterpolator() = default;
 
-    bool operator!=(const NearestInterpolator& rhs) const {return !(rhs == *this);}
+    bool operator!=(const NearestInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const NearestInterpolator& rhs) const
     {
         // compare extrapolation mode
@@ -87,8 +88,10 @@ class NearestInterpolator : public I_PairInterpolator<double>
         return y2;
     }
 
+    // define to_binary and from_binary functions
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
+
   private:
-  
     // serialization support using bitsery
     friend bitsery::Access;
     template<typename S>

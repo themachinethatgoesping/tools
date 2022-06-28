@@ -26,7 +26,6 @@ using InputAdapter  = bitsery::InputBufferAdapter<Buffer>;
 
 // -- teamplated functions to avoid code repetition for different interpolators --
 
-
 template<typename t_interpolator>
 void test_interpolator_serialize(t_interpolator& ip)
 {
@@ -38,21 +37,43 @@ void test_interpolator_serialize(t_interpolator& ip)
     // it will use default configuration to setup all the nesessary steps
     // and serialize data to container
     auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, ip);
+    bitsery::quickSerialization<OutputAdapter>(buffer, ip);
+    for (unsigned int i = 0; i < 100; ++i)
+    {
+        buffer.push_back(0);
+        buffer.push_back(1);
+        buffer.push_back(1);
+        buffer.push_back(10);
+    }
+
 
     // interpolators should not be the same before serialization
     REQUIRE(ip != ip2);
 
     // same as serialization, but returns deserialization state as a pair
     // first = error code, second = is buffer was successfully read from begin to the end.
-    auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, ip2);
+    //#auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
+    //ip2);
+    //auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
+    auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), writtenSize},ip2);
     REQUIRE(state.first == bitsery::ReaderError::NoError);
     REQUIRE(state.second);
+
+
+    //internal functions
+    auto buffer2 = ip2.to_binary();
+    auto ip3 = t_interpolator::from_binary(buffer2);
 
     // this is a copy so no approx should be necessary
     REQUIRE(ip == ip2);
     REQUIRE(ip(0.5) == ip2(0.5));
     REQUIRE(ip(-100) == ip2(-100));
     REQUIRE(ip(100) == ip2(100));
+
+    REQUIRE(ip == ip3);
+    REQUIRE(ip(0.5) == ip3(0.5));
+    REQUIRE(ip(-100) == ip3(-100));
+    REQUIRE(ip(100) == ip3(100));
 }
 
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)
@@ -65,10 +86,9 @@ TEST_CASE("VectorInterpolators should serializable", TESTTAG)
 
     vectorinterpolators::LinearInterpolator  lip(x, y);
     vectorinterpolators::NearestInterpolator nip(x, y);
-    vectorinterpolators::AkimaInterpolator aip(x, y);
-    vectorinterpolators::SlerpInterpolator slerp(x, yaw, pitch, roll);
+    vectorinterpolators::AkimaInterpolator   aip(x, y);
+    vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
 
-    test_interpolator_serialize(lip);
     test_interpolator_serialize(nip);
     test_interpolator_serialize(aip);
     test_interpolator_serialize(slerp);
