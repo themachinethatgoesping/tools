@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "../bitsery_helpers/eigen.hpp"
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
@@ -30,7 +31,8 @@ using t_quaternion = Eigen::Quaternion<double>;
 //     t_quaternion::
 //     s.value4b(o.i);//fundamental types (ints, floats, enums) of size 4b
 //     s.value2b(o.e);
-//     s.container4b(o.fs, 10);//resizable containers also requires maxSize, to make it safe from buffer-overflow attacks
+//     s.container4b(o.fs, 10);//resizable containers also requires maxSize, to make it safe from
+//     buffer-overflow attacks
 // }
 
 /**
@@ -44,17 +46,17 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 {
 
   public:
-    // /**
-    //  * @brief Constructor to make default initialization possible (neccessary?)
-    //  */
-    // SlerpInterpolator()
-    //     : I_PairInterpolator<t_quaternion>(
-    //           {0.,   1.    },
-    //           { rotationfunctions::quaternion_from_ypr<double>(0, -180, -89.99),
-    //            rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99)}
-    // )
-    // {
-    // }
+    /**
+     * @brief Constructor to make default initialization possible (neccessary?)
+     */
+    SlerpInterpolator()
+        : I_PairInterpolator<t_quaternion>(
+              {0.,   1.    },
+              { rotationfunctions::quaternion_from_ypr<double>(0, -180, -89.99),
+               rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99)}
+    )
+    {
+    }
 
     SlerpInterpolator(const std::vector<double>&       X,
                       const std::vector<t_quaternion>& Y,
@@ -304,7 +306,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         s.value4b(_extr_mode);
         s.object(_last_x_pair);
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        s.container(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call needs the include of toos/bitsery/eigen.hpp
     }
 };
 

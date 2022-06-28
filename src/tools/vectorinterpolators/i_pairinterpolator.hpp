@@ -24,7 +24,7 @@
 #include <utility>
 #include <vector>
 
-#include "../bitsery/helpers.hpp"
+#include "../bitsery_helpers/helpers.hpp"
 
 #include "i_interpolator.hpp"
 

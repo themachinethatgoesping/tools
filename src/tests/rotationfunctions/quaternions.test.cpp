@@ -8,7 +8,7 @@
 #include <boost/random.hpp>
 #include <chrono>
 
-#include "../../src/tools/rotationfunctions/quaternions.hpp"
+#include "../../tools/rotationfunctions/quaternions.hpp"
 
 // using namespace testing;
 using namespace std;

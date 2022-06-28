@@ -19,6 +19,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "../bitsery_helpers/helpers.hpp"
+
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
 
@@ -46,11 +48,11 @@ class AkimaInterpolator : public I_Interpolator<double>
         boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
 
   public:
-    // AkimaInterpolator()
-    //     : I_Interpolator<double>()
-    // {
-    //     set_data_XY({ 0, 1 }, { 0, 1 });
-    // }
+    AkimaInterpolator()
+        : I_Interpolator<double>()
+    {
+        //set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
+    }
 
     /**
      * @brief Construct a new Akima Spline Interpolator object from a vector of
@@ -79,6 +81,9 @@ class AkimaInterpolator : public I_Interpolator<double>
     bool operator!=(const AkimaInterpolator& rhs) const {return !(rhs == *this);}
     bool operator==(const AkimaInterpolator& rhs) const
     {
+        if (_X.size() != rhs.get_data_X().size())
+            return false;
+
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
             return false;
@@ -246,15 +251,23 @@ class AkimaInterpolator : public I_Interpolator<double>
     }
 
   private:
-    //     // serialization support using bitsery
-    //     friend bitsery::Access;
-    //     template<typename S>
-    //     void serialize(S& s)
-    //     {
-    //         s.value4b(_extr_mode);
-    //         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-    //         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-    //     }
+        // serialization support using bitsery
+        friend bitsery::Access;
+        template<typename S>
+        void serialize(S& s)
+        {
+            // serialize internal variables and extra _X and _Y
+            s.value4b(_extr_mode);
+            s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+            s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+
+            // initialize boost akime on read
+            // TODO: this is a hack, think about forking boost makima to get proper access to private X and Y data structures
+            if (bitsery_helpers::is_input(s))
+            {
+                this->set_data_XY(_X,_Y);
+            }
+        }
 };
 
 } // namespace vectorinterpolators

@@ -19,7 +19,7 @@
 #include <vector>
 
 // bitsery
-#include "../bitsery/helpers.hpp"
+#include "../bitsery_helpers/helpers.hpp"
 
 #include "i_pairinterpolator.hpp"
 

@@ -7,7 +7,7 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 
-#include "../../src/tools/vectorinterpolators.hpp"
+#include "../../tools/vectorinterpolators.hpp"
 
 // using namespace testing;
 using namespace std;
@@ -48,10 +48,11 @@ void test_interpolator_serialize(t_interpolator& ip)
     REQUIRE(state.first == bitsery::ReaderError::NoError);
     REQUIRE(state.second);
 
+    // this is a copy so no approx should be necessary
     REQUIRE(ip == ip2);
-    REQUIRE(ip(0.5) == Approx(ip2(0.5)));
-    REQUIRE(ip(-100) == Approx(ip2(-100)));
-    REQUIRE(ip(100) == Approx(ip2(100)));
+    REQUIRE(ip(0.5) == ip2(0.5));
+    REQUIRE(ip(-100) == ip2(-100));
+    REQUIRE(ip(100) == ip2(100));
 }
 
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)
@@ -64,9 +65,13 @@ TEST_CASE("VectorInterpolators should serializable", TESTTAG)
 
     vectorinterpolators::LinearInterpolator  lip(x, y);
     vectorinterpolators::NearestInterpolator nip(x, y);
+    vectorinterpolators::AkimaInterpolator aip(x, y);
+    vectorinterpolators::SlerpInterpolator slerp(x, yaw, pitch, roll);
 
     test_interpolator_serialize(lip);
     test_interpolator_serialize(nip);
+    test_interpolator_serialize(aip);
+    test_interpolator_serialize(slerp);
 }
 
 /**

@@ -8,8 +8,8 @@
 #include <boost/random.hpp>
 #include <chrono>
 
-#include "../../src/tools/rotationfunctions/quaternions.hpp"
-#include "../../src/tools/vectorinterpolators.hpp"
+#include "../../tools/rotationfunctions/quaternions.hpp"
+#include "../../tools/vectorinterpolators.hpp"
 
 // using namespace testing;
 using namespace std;

@@ -12,10 +12,11 @@ sources = [
 ]
 
 headers = [
-  'bitsery/helpers.hpp',
-  'pybind11/classhelpers.hpp',
   'timeconv.hpp',
   'rotationfunctions/quaternions.hpp',
+  'bitsery_helpers/helpers.hpp',
+  'bitsery_helpers/eigen.hpp',
+  'pybind11_helpers/classhelpers.hpp',
   'vectorinterpolators.hpp',
   'vectorinterpolators/i_interpolator.hpp',
   'vectorinterpolators/linearinterpolator.hpp',
