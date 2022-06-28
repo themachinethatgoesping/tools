@@ -25,9 +25,11 @@
     std::vector<uint8_t> to_binary(bool resize_buffer = true) const                                \
     {                                                                                              \
         std::vector<uint8_t> buffer;                                                               \
-        auto                 writtensize =                                                         \
+                                                                                                   \
+        auto writtensize =                                                                         \
             bitsery::quickSerialization<bitsery::OutputBufferAdapter<std::vector<uint8_t>>>(       \
                 buffer, *this);                                                                    \
+                                                                                                   \
         if (resize_buffer)                                                                         \
             buffer.resize(writtensize);                                                            \
                                                                                                    \
@@ -48,6 +50,7 @@
         auto    state =                                                                             \
             bitsery::quickDeserialization<bitsery::InputBufferAdapter<std::vector<uint8_t>>>(       \
                 { buffer.begin(), buffer.end() }, object);                                          \
+                                                                                                    \
         if (state.first != bitsery::ReaderError::NoError)                                           \
             throw(std::runtime_error("ERROR[T_CLASS::from_binary]: readerror"));                    \
         if (check_buffer_is_read_completely)                                                        \
@@ -59,5 +62,5 @@
     }
 
 #define __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(T_CLASS)                                       \
-    __BITSERY_DEFAULT_TO_BINARY__ \
+    __BITSERY_DEFAULT_TO_BINARY__                                                                  \
     __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)
