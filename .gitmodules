@@ -1,6 +1,6 @@
-[submodule "subprojects/bitsery"]
-	path = subprojects/bitsery
+[submodule "extern/bitsery"]
+	path = extern/bitsery
 	url = https://github.com/fraillt/bitsery.git
-[submodule "subprojects/tabulate"]
-	path = subprojects/tabulate
+[submodule "extern/tabulate"]
+	path = extern/tabulate
 	url = https://github.com/p-ranav/tabulate.git

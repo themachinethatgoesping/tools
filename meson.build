@@ -49,7 +49,7 @@ hinnant_date_dep = declare_dependency(
 
  #bitsery (for object serialization)
 bitsert_dep = declare_dependency(
-  include_directories : ['subprojects/bitsery/include/']
+  include_directories : ['extern/bitsery/include/']
 )
 
 
