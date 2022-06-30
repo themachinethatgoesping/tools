@@ -28,7 +28,7 @@ foreach source : sources
             link_language : 'cpp',
             override_options: [
             ],
-            cpp_args : '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/testdata"'
+            cpp_args : test_data_path
             #install : true
             )
 

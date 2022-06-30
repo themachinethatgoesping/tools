@@ -124,6 +124,7 @@ TEST_CASE("VectorInterpolators should serializable", TESTTAG)
     vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
 
     test_interpolator_serialize(nip);
+    test_interpolator_serialize(lip);
     test_interpolator_serialize(aip);
     test_interpolator_serialize(slerp);
 }

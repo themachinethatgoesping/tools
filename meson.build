@@ -52,6 +52,8 @@ bitsert_dep = declare_dependency(
   include_directories : ['extern/bitsery/include/']
 )
 
+#setup test_data_path
+test_data_path = '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/test_data"'
 
 # add c++ src
 subdir('src')
