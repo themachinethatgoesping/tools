@@ -7,6 +7,7 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 #include <fstream>
+#include <filesystem>
 
 #include "../../tools/vectorinterpolators.hpp"
 
@@ -68,15 +69,21 @@ void test_interpolator_serialize(t_interpolator& ip)
     auto buffer2 = ip2.to_binary();
     auto ip3     = t_interpolator::from_binary(buffer2);
 
-    // this is a copy so no approx should be necessary
-
     // test internal to/from stream functions
     std::ofstream ofs(TESTDIR + "interpolator.tmp", std::ios::binary);
     ip3.to_stream(ofs);
     ofs.close();
-    if (__UPDATE_TEST_DATA__ || false)
+    //write file if it does not exist or is only an empty reference
+    auto test_file = TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary";
+
+    std::filesystem::create_directories(TESTDIR + "vectorinterpolators/");
+    bool recreate_test_file = false;
+    if (!std::filesystem::exists(test_file)) recreate_test_file = true;
+    else if (std::filesystem::file_size(test_file) < 100) recreate_test_file = true;
+
+    if (__UPDATE_TEST_DATA__ || recreate_test_file || false)
     {
-        ofs.open(TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary",
+        ofs.open(test_file,
                  std::ios::binary);
         ip3.to_stream(ofs);
         ofs.close();
@@ -88,7 +95,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     ifs.close();
 
     // read permanently created test data
-    ifs.open(TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary", std::ios::binary);
+    ifs.open(test_file);
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();

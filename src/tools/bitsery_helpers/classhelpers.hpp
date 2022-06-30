@@ -77,7 +77,7 @@
                                                                                                    \
         ser.adapter().flush();                                                                     \
     }
-
+// return pybind11::bytes(&buffer[0],buffer.size());
 #define __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)                                                   \
     /** @brief read object from input stream                                                       \
      *                                                                                             \
