@@ -44,15 +44,16 @@ jobs:
   linux:
     name: Build and install with meson on ${{matrix.container}}
     strategy:
+      fail-fast: false
       matrix:
         include:  
           - { container: 'ghcr.io/themachinethatgoesping/ubuntu-dep:latest'}
           - { container: 'ubuntu:22.04', 
-              pre-dep : 'apt update && apt-get install -y sudo git', 
+              pre-dep : 'apt update && apt-get install -y sudo git git-lfs', 
               dep : 'sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential ccache pkg-config cmake python3-pip libboost-all-dev libcurl4-openssl-dev', 
               pip : 'pip install meson ninja pytest' }
           - { container: 'archlinux', 
-              pre-dep : 'pacman -Syu --noconfirm; pacman -Syy sudo git --noconfirm', 
+              pre-dep : 'pacman -Syu --noconfirm; pacman -Syy sudo git git-lfs --noconfirm', 
               dep : 'sudo pacman -Syy --noconfirm base-devel ccache pkg-config cmake python-pip boost curl', 
               pip : 'pip install meson ninja pytest' }
     
@@ -135,6 +136,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: recursive
+        lfs: true
 
     - name: Cache Boost
       id: cache-boost
@@ -201,6 +203,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: recursive
+        lfs: true
         
     - run: brew install libomp boost
     
