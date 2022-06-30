@@ -81,7 +81,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     if (!std::filesystem::exists(test_file)) recreate_test_file = true;
     else if (std::filesystem::file_size(test_file) < 100) recreate_test_file = true;
 
-    if (__UPDATE_TEST_DATA__ || recreate_test_file || false)
+    if (__UPDATE_TEST_DATA__ || recreate_test_file || true)
     {
         ofs.open(test_file,
                  std::ios::binary);
@@ -100,7 +100,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();
 
-    for (auto ipx : { ip2, ip3, ip4 })
+    for (auto ipx : { ip2, ip3, ip4, ip5 })
     {
         // this is a copy so no approx should be necessar
         REQUIRE(ip == ipx);
