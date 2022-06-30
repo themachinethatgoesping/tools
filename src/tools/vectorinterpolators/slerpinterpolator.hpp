@@ -15,8 +15,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../bitsery_helpers/eigen.hpp"
 #include "../bitsery_helpers/classhelpers.hpp"
+#include "../bitsery_helpers/eigen.hpp"
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
@@ -110,6 +110,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
               extrapolation_mode)
     {
     }
+
+    static std::string type_to_string() { return "SlerpInterpolator"; }
 
     bool operator!=(const SlerpInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const SlerpInterpolator& rhs) const
@@ -313,7 +315,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         s.container(
             _Y,
             SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call
-                                                    //needs the include of toos/bitsery/eigen.hpp
+                                                    // needs the include of toos/bitsery/eigen.hpp
     }
 };
 

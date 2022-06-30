@@ -6,6 +6,7 @@
 
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
+#include <fstream>
 
 #include "../../tools/vectorinterpolators.hpp"
 
@@ -24,11 +25,16 @@ using Buffer        = std::vector<uint8_t>;
 using OutputAdapter = bitsery::OutputBufferAdapter<Buffer>;
 using InputAdapter  = bitsery::InputBufferAdapter<Buffer>;
 
-// -- teamplated functions to avoid code repetition for different interpolators --
+// update the written testdata
+#define __UPDATE_TEST_DATA__ false
+// __PROJECT_TESTDATADIR__ is set in meson build file of the test folder
+const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 
+// -- teamplated functions to avoid code repetition for different interpolators --
 template<typename t_interpolator>
 void test_interpolator_serialize(t_interpolator& ip)
 {
+    cerr << "test_interpolator_serialize: " << ip.type_to_string() << endl;
     t_interpolator ip2;
 
     // create buffer to store data
@@ -46,34 +52,55 @@ void test_interpolator_serialize(t_interpolator& ip)
         buffer.push_back(10);
     }
 
-
     // interpolators should not be the same before serialization
     REQUIRE(ip != ip2);
 
     // same as serialization, but returns deserialization state as a pair
     // first = error code, second = is buffer was successfully read from begin to the end.
     //#auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
-    //ip2);
-    //auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
-    auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), writtenSize},ip2);
+    // ip2);
+    // auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
+    auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, ip2);
     REQUIRE(state.first == bitsery::ReaderError::NoError);
     REQUIRE(state.second);
 
-
-    //internal functions
+    // test internal to/from binary functions
     auto buffer2 = ip2.to_binary();
-    auto ip3 = t_interpolator::from_binary(buffer2);
+    auto ip3     = t_interpolator::from_binary(buffer2);
 
     // this is a copy so no approx should be necessary
-    REQUIRE(ip == ip2);
-    REQUIRE(ip(0.5) == ip2(0.5));
-    REQUIRE(ip(-100) == ip2(-100));
-    REQUIRE(ip(100) == ip2(100));
 
-    REQUIRE(ip == ip3);
-    REQUIRE(ip(0.5) == ip3(0.5));
-    REQUIRE(ip(-100) == ip3(-100));
-    REQUIRE(ip(100) == ip3(100));
+    // test internal to/from stream functions
+    std::ofstream ofs(TESTDIR + "interpolator.tmp", std::ios::binary);
+    ip3.to_stream(ofs);
+    ofs.close();
+    if (__UPDATE_TEST_DATA__ || false)
+    {
+        ofs.open(TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary",
+                 std::ios::binary);
+        ip3.to_stream(ofs);
+        ofs.close();
+    }
+
+    // read test data created during this test
+    std::ifstream ifs(TESTDIR + "interpolator.tmp", std::ios::binary);
+    auto          ip4 = t_interpolator::from_stream(ifs);
+    ifs.close();
+
+    // read permanently created test data
+    ifs.open(TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary", std::ios::binary);
+    // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
+    auto ip5 = t_interpolator::from_stream(ifs);
+    ifs.close();
+
+    for (auto ipx : { ip2, ip3, ip4 })
+    {
+        // this is a copy so no approx should be necessar
+        REQUIRE(ip == ipx);
+        REQUIRE(ip(0.5) == ipx(0.5));
+        REQUIRE(ip(-100) == ipx(-100));
+        REQUIRE(ip(100) == ipx(100));
+    }
 }
 
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)

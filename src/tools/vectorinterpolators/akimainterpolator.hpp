@@ -82,6 +82,8 @@ class AkimaInterpolator : public I_Interpolator<double>
     }
     ~AkimaInterpolator() = default;
 
+    static std::string type_to_string() { return "AkimaInterpolator"; }
+
     // -- convinience functions --
     bool operator!=(const AkimaInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const AkimaInterpolator& rhs) const

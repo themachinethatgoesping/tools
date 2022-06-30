@@ -19,8 +19,8 @@
 #include <vector>
 
 // bitsery
-#include "../bitsery_helpers/helpers.hpp"
 #include "../bitsery_helpers/classhelpers.hpp"
+#include "../bitsery_helpers/helpers.hpp"
 
 #include "i_pairinterpolator.hpp"
 
@@ -46,6 +46,8 @@ class LinearInterpolator : public I_PairInterpolator<double>
         : I_PairInterpolator<double>(X, Y, extrapolation_mode)
     {
     }
+
+    static std::string type_to_string() { return "LinearInterpolator"; }
 
     bool operator!=(const LinearInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const LinearInterpolator& rhs) const
@@ -80,7 +82,7 @@ class LinearInterpolator : public I_PairInterpolator<double>
     }
 
     // define to_binary and from_binary functions
-   __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
 
   private:
     // serialization support using bitsery

@@ -18,8 +18,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_pairinterpolator.hpp"
 #include "../bitsery_helpers/classhelpers.hpp"
+#include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -52,6 +52,8 @@ class NearestInterpolator : public I_PairInterpolator<double>
     {
     }
     ~NearestInterpolator() = default;
+
+    static std::string type_to_string() { return "NearestInterpolator"; }
 
     bool operator!=(const NearestInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const NearestInterpolator& rhs) const

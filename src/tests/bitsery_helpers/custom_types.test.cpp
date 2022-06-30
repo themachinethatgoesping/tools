@@ -8,6 +8,8 @@
 #include <bitsery/bitsery.h>
 #include <bitsery/traits/vector.h>
 
+#include <fstream>
+
 // eigen quaternions
 #include "../../tools/bitsery_helpers/eigen.hpp"
 
