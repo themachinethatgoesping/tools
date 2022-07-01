@@ -1,13 +1,67 @@
 import pytest
 from pytest import approx
-from copy import deepcopy,copy
+from copy import deepcopy, copy
 import numpy as np
+import pickle
+import os
 
 from themachinethatgoesping.tools import vectorinterpolators as vip
 
+test_tmp = 'interpolator.tmp'
 
 # define class for grouping (test sections)
 class Test_tools_vectorinterpolators_all:
+    def test_VectorInterpolators_should_be_serializable(self):
+        X = [-10, -5, 0, 6, 12]
+        Y = [1, 0, 1, 0, -1]
+        yaw = [1, 0, 1, 0, 359]
+        pitch = [1, 0, 1, 0, -1]
+        roll = [1, 0, 1, 0, -1]
+
+        nip = vip.NearestInterpolator(X, Y)
+        lip = vip.LinearInterpolator(X, Y)
+        aip = vip.AkimaInterpolator(X, Y)
+        slerp = vip.SlerpInterpolator(X, yaw, pitch, roll)
+
+        for ip in [nip, lip, aip, slerp]:
+            binary = ip.to_binary()
+            ip2 = ip.from_binary(binary)
+
+            # write using binary
+            with open(test_tmp,'wb') as ofi:
+                ofi.write(binary)
+
+            with open(test_tmp, 'rb') as ifi:
+                ip3 = ip.from_binary(ifi.read())
+
+            # serialize using pickle
+            with open(test_tmp,'wb') as ofi:
+                pickle.dump(ip,ofi)
+
+            with open(test_tmp, 'rb') as ifi:
+                ip4 = pickle.load(ifi)
+
+            assert ip.get_data_X() == approx(ip2.get_data_X())
+            assert ip.get_data_X() == approx(ip3.get_data_X())
+            assert ip.get_data_X() == approx(ip4.get_data_X())
+
+            if isinstance(ip, vip.SlerpInterpolator):
+                y1 = np.array(ip.get_data_YPR())
+                y2 = np.array(ip2.get_data_YPR())
+                y3 = np.array(ip3.get_data_YPR())
+                y4 = np.array(ip4.get_data_YPR())
+
+                for i in range(3):
+                    assert y1[:, i] == approx(y2[:, i])
+                    assert y1[:, i] == approx(y3[:, i])
+                    assert y1[:, i] == approx(y4[:, i])
+            else:
+                assert ip.get_data_Y() == approx(ip2.get_data_Y())
+                assert ip.get_data_Y() == approx(ip3.get_data_Y())
+                assert ip.get_data_Y() == approx(ip4.get_data_Y())
+
+        os.remove(test_tmp)
+
     def test_VectorInterpolators_should_implement_common_functions(self):
         X = [-10, -5, 0, 6, 12]
         Y = [1, 0, 1, 0, -1]
@@ -15,48 +69,49 @@ class Test_tools_vectorinterpolators_all:
         pitch = [1, 0, 1, 0, -1]
         roll = [1, 0, 1, 0, -1]
 
+        nip = vip.NearestInterpolator(X, Y)
+        lip = vip.LinearInterpolator(X, Y)
+        aip = vip.AkimaInterpolator(X, Y)
+        slerp = vip.SlerpInterpolator(X, yaw, pitch, roll)
 
-        nip = vip.NearestInterpolator(X,Y)
-        lip = vip.LinearInterpolator(X,Y)
-        aip = vip.AkimaInterpolator(X,Y)
-        slerp = vip.SlerpInterpolator(X,yaw,pitch,roll)
-
-        for ip in [nip,lip,aip,slerp]:
-        #for ip in [nip,lip,aip]:
+        for ip in [nip, lip, aip, slerp]:
+            # for ip in [nip,lip,aip]:
             # -- copy functions --
 
             ip2 = ip.copy()
-            #ip3 = deepcopy(ip2) #deepcopy does not yet work
             ip3 = copy(ip2)
+            ip4 = deepcopy(ip2) #deepcopy does not yet work
 
-            #assert copies are the same
+            # assert copies are the same
             assert ip(100) == ip2(100)
             assert ip2(100) == ip3(100)
+            assert ip2(100) == ip4(100)
 
-            #assert copies are not references
-            if isinstance(ip,vip.SlerpInterpolator):
-                ip2.append(30,40,40,40)
+            # assert copies are not references
+            if isinstance(ip, vip.SlerpInterpolator):
+                ip2.append(30, 40, 40, 40)
             else:
-                ip2.append(30,40)
+                ip2.append(30, 40)
 
             assert ip(100) != ip2(100)
             assert ip2(100) != ip3(100)
+            assert ip2(100) != ip4(100)
             assert ip(100) == ip3(100)
 
             # -- get data functions --
             assert ip.get_data_X() == approx(X)
-            assert ip2.get_data_X() == approx(X+[30])
+            assert ip2.get_data_X() == approx(X + [30])
 
-            if isinstance(ip,vip.SlerpInterpolator):
+            if isinstance(ip, vip.SlerpInterpolator):
                 y1 = np.array(ip.get_data_YPR())
                 y2 = np.array(ip2.get_data_YPR())
 
-                assert y1[:,0] == approx(yaw)
-                assert y1[:,1] == approx(pitch)
-                assert y1[:,2] == approx(roll)
-                assert y2[:,0] == approx(yaw + [40])
-                assert y2[:,1] == approx(pitch + [40])
-                assert y2[:,2] == approx(roll + [40])
+                assert y1[:, 0] == approx(yaw)
+                assert y1[:, 1] == approx(pitch)
+                assert y1[:, 2] == approx(roll)
+                assert y2[:, 0] == approx(yaw + [40])
+                assert y2[:, 1] == approx(pitch + [40])
+                assert y2[:, 2] == approx(roll + [40])
             else:
                 y1 = ip.get_data_Y()
                 y2 = ip2.get_data_Y()
@@ -64,8 +119,6 @@ class Test_tools_vectorinterpolators_all:
                 y_exp2 = y_exp1 + [40]
                 assert y1 == approx(y_exp1)
                 assert y2 == approx(y_exp2)
-
-
 
     def test_VectorInterpolators_should_throw_expected_exceptions(self):
         X = [-10, -5, 0, 6, 12]
@@ -106,21 +159,21 @@ class Test_tools_vectorinterpolators_all:
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([11, 12],[-1, -1])
+                interpolator.extend([11, 12], [-1, -1])
 
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([12, 13],[-1, -1])
+                interpolator.extend([12, 13], [-1, -1])
 
             # check of exceptions are raised for extending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.extend([14, 13],[-1, -1])
+                interpolator.extend([14, 13], [-1, -1])
 
             # should not throw
             interpolator = interpolatorType(X, Y)
-            interpolator.extend([13, 14],[-1, -1])
+            interpolator.extend([13, 14], [-1, -1])
 
     def test_SlerpInterpolator_should_throw_expected_exceptions(self):
         """this interpolator uses different input data than the other interpolators"""

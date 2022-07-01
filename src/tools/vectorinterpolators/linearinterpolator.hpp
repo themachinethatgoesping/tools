@@ -18,11 +18,10 @@
 #include <unordered_map>
 #include <vector>
 
-// bitsery
+#include "i_pairinterpolator.hpp"
+
 #include "../bitsery_helpers/classhelpers.hpp"
 #include "../bitsery_helpers/helpers.hpp"
-
-#include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

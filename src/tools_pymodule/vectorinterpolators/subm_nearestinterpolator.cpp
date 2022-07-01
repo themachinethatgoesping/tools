@@ -65,14 +65,12 @@ void init_subm_nearestinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, set_data_XY),
              py::arg("X"),
              py::arg("Y"))
-        .def(
-            "get_data_X",
-            &NearestInterpolator::get_data_X,
-            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_X))
-        .def(
-            "get_data_Y",
-            &NearestInterpolator::get_data_Y,
-            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
+        .def("get_data_X",
+             &NearestInterpolator::get_data_X,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_X))
+        .def("get_data_Y",
+             &NearestInterpolator::get_data_Y,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
         .def("append",
              &NearestInterpolator::append,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
@@ -83,8 +81,10 @@ void init_subm_nearestinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend),
              py::arg("X"),
              py::arg("Y"))
-        // default class functions
+        // default copy functions
         __PYCLASS_DEFAULT_COPY__(NearestInterpolator)
-        // end LinearInterpolator
+        // default binary functions
+        __PYCLASS_DEFAULT_BINARY__(NearestInterpolator)
+        // end NearestInterpolator
         ;
 }

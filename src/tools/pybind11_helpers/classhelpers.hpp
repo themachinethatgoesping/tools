@@ -16,11 +16,47 @@
  *
  */
 #define __PYCLASS_DEFAULT_COPY__(T_CLASS)                                                          \
-    .def("copy", [](const T_CLASS& self) { return T_CLASS(self); })                                \
-        .def("__copy__", [](const T_CLASS& self) { return T_CLASS(self); })                        
-        // TODO: deepcopy example does not work
-        // https://pybind11.readthedocs.io/en/stable/advanced/classes.html?highlight=deepcopy#deepcopy-support
-        // .def(                                                                                      
-        //     "__deepcopy__",                                                                        
-        //     [](const T_CLASS& self, py::dict) { return T_CLASS(self); },                           
-        //     "memo"_a);
+    .def(                                                                                          \
+        "copy",                                                                                    \
+        [](const T_CLASS& self) { return T_CLASS(self); },                                         \
+        "return a copy using the c++ default copy constructor")                                    \
+        .def("__copy__", [](const T_CLASS& self) { return T_CLASS(self); })
+
+// TODO: deepcopy example does not work
+// https://pybind11.readthedocs.io/en/stable/advanced/classes.html?highlight=deepcopy#deepcopy-support
+// .def(
+//     "__deepcopy__",
+//     [](const T_CLASS& self, py::dict) { return T_CLASS(self); },
+//     "memo"_a);
+
+// --- pickle and binary support --
+// this requires to_binary and from_binary functions implemented in
+// bitsery_helpers/classfunctions.hpp
+
+#define __PYCLASS_DEFAULT_BINARY__(T_CLASS)                                                        \
+    __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                         \
+    __PYCLASS_DEFAULT_BINARY__2__(T_CLASS)                                                         \
+    __PYCLASS_DEFAULT_PICKLE__(T_CLASS)
+
+#define __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                     \
+    .def(                                                                                          \
+        "to_binary", /*&T_CLASS::to_binary,  */                                                    \
+        [](const T_CLASS& self, bool resize_buffer) {                                              \
+            return py::bytes(self.to_binary(resize_buffer));                                       \
+        },                                                                                         \
+        "convert object to bytearray",                                                             \
+        py::arg("resize_buffer") = true)
+
+#define __PYCLASS_DEFAULT_BINARY__2__(T_CLASS)                                                     \
+    .def_static(                                                                                   \
+        "from_binary",                                                                             \
+        [](const py::bytes& buffer, bool check_buffer_is_read_completely) {                        \
+            return T_CLASS::from_binary(buffer, check_buffer_is_read_completely);                  \
+        },                                                                                         \
+        "create T_CLASS object from bytearray",                                                    \
+        py::arg("buffer"),                                                                         \
+        py::arg("check_buffer_is_read_completely") = true)
+
+#define __PYCLASS_DEFAULT_PICKLE__(T_CLASS)                                                        \
+    .def(py::pickle([](const T_CLASS& self) { return py::bytes(self.to_binary()); },               \
+                    [](const py::bytes& b) { return T_CLASS::from_binary(b); }))

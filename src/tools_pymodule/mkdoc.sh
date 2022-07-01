@@ -4,12 +4,16 @@ import os
 
 #does not work because pybind11_mkdoc only provides a module script
 #from pybind11_mkdoc import mkdoc
+ignore_files = [
+    #'classhelpers.hpp'
+]
 
 headers = []
 for r,d,f in os.walk('../tools'):
     for file in f:
         if file.endswith('.hpp'):
-            headers.append(r + '/' + file)
+            if file not in ignore_files:
+                headers.append(r + '/' + file)
 headers.sort()
 
 #this only works using the xonsh shell which can call bash commands from python

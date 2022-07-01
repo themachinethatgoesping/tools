@@ -23,6 +23,14 @@
 #endif
 
 
+static const char *__doc_Eigen_serialize = R"doc()doc";
+
+static const char *__doc_Eigen_serialize_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input_2 = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_degrees =
 R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
 [-90°, 90°], roll [-180¶, 179.99°]
@@ -148,7 +156,9 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc(Construct a new (uninitialized) Akima Interpolator object)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_2 =
 R"doc(Construct a new Akima Spline Interpolator object from a vector of
 pairs This class uses the modified akima interpolation of boost c++ ht
 tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
@@ -176,6 +186,10 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_X =
 R"doc(return the x component of the internal data vector
@@ -217,6 +231,12 @@ Parameter ``targets_x``:
 Returns:
     corresponding y value)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_eq = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_serialize = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors
 
@@ -225,6 +245,12 @@ Parameter ``X:``:
 
 Parameter ``Y:``:
     y vector (must be same size))doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_type_to_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -430,7 +456,11 @@ Parameter ``target_x``:
 Returns:
     interpolation factor)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_serialize = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor = R"doc(< 1/(xmax-xmin))doc";
 
@@ -445,6 +475,12 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator = R"doc(Find linear interpolated values within vector data)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_interpolate_pair =
 R"doc(Interpolate: Interpolate interpolation between two values
@@ -461,9 +497,23 @@ Parameter ``y2``:
 Returns:
     Interpolated value for target position)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_operator_eq = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_serialize = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_to_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_type_to_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator = R"doc(Interpolator class to find nearest neighbors within vector data)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator_2 =
 R"doc(Construct a new Nearest Interpolator object from a vector of pairs
 usage: interpolated_y_value = interpolator.interpolate(x_value)
 
@@ -477,6 +527,10 @@ Parameter ``Y``:
 
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_interpolate_pair =
 R"doc(Interpolate interpolation between two values
@@ -493,6 +547,18 @@ Parameter ``y2``:
 Returns:
     Interpolated value for target position)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_operator_eq = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_serialize = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_type_to_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator =
 R"doc(Class that implements a slerp interpolation for vectors. Data is
 internaly represented in quaternions using libeigen. Interfaces to
@@ -500,9 +566,11 @@ represent the data in yaw, pitch, roll angles are provided. the
 __call__ equivalent to get interpolated yaw pitch roll is the ypr
 function)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (neccessary?))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_2 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_3 =
 R"doc(Construct a new Slerp Interpolator object using vectors of x, yaw,
 pitch and roll
 
@@ -529,7 +597,7 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_3 =
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_4 =
 R"doc(Construct a new Slerp Interpolator object using vectors of x, yaw,
 pitch and roll
 
@@ -612,6 +680,10 @@ Parameter ``ypr``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_stream = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_get_data_YPR =
 R"doc(return the internal yrp data vector
 
@@ -635,6 +707,12 @@ Parameter ``y2``:
 
 Returns:
     Interpolated value for target position)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_eq = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
 R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
@@ -679,6 +757,12 @@ Parameter ``roll``:
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_type_to_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr =
 R"doc(get the interolated yaw, pitch and roll values for given x target

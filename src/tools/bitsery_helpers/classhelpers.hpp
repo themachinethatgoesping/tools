@@ -15,6 +15,7 @@
 #include <bitsery/adapter/buffer.h>
 #include <bitsery/adapter/stream.h>
 #include <bitsery/bitsery.h>
+#include <bitsery/traits/string.h>
 #include <bitsery/traits/vector.h>
 #include <iostream>
 
@@ -24,13 +25,13 @@
      * @param resize_buffer resize vector to written bytes after read                              \
      * @return vector of bytes                                                                     \
      * */                                                                                          \
-    std::vector<uint8_t> to_binary(bool resize_buffer = true) const                                \
+    /*std::vector<uint8_t> to_binary(bool resize_buffer = true) const */                           \
+    std::string to_binary(bool resize_buffer = true) const                                         \
     {                                                                                              \
-        std::vector<uint8_t> buffer;                                                               \
+        std::string buffer;                                                                        \
                                                                                                    \
         auto writtensize =                                                                         \
-            bitsery::quickSerialization<bitsery::OutputBufferAdapter<std::vector<uint8_t>>>(       \
-                buffer, *this);                                                                    \
+            bitsery::quickSerialization<bitsery::OutputBufferAdapter<std::string>>(buffer, *this); \
                                                                                                    \
         if (resize_buffer)                                                                         \
             buffer.resize(writtensize);                                                            \
@@ -38,30 +39,29 @@
         return buffer;                                                                             \
     };
 
-#define __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)                                                    \
-    /** @brief read object from vector of bytes                                                     \
-     *                                                                                              \
-     * @param buffer vector of bytes                                                                \
-     * @param check_buffer_is_read_completely fail if buffer is not read completely                 \
-     * @return T_CLASS object                                                                       \
-     * */                                                                                           \
-    static T_CLASS from_binary(const std::vector<uint8_t>& buffer,                                  \
-                               bool                        check_buffer_is_read_completely = false) \
-    {                                                                                               \
-        T_CLASS object;                                                                             \
-        auto    state =                                                                             \
-            bitsery::quickDeserialization<bitsery::InputBufferAdapter<std::vector<uint8_t>>>(       \
-                { buffer.begin(), buffer.end() }, object);                                          \
-                                                                                                    \
-        if (state.first != bitsery::ReaderError::NoError)                                           \
-            throw(std::runtime_error("ERROR[T_CLASS::from_binary]: readerror"));                    \
-                                                                                                    \
-        if (check_buffer_is_read_completely)                                                        \
-            if (!state.second)                                                                      \
-                throw(std::runtime_error(                                                           \
-                    "ERROR[T_CLASS::from_binary]: buffer was not read completely"));                \
-                                                                                                    \
-        return object;                                                                              \
+#define __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)                                                   \
+    /** @brief read object from vector of bytes                                                    \
+     *                                                                                             \
+     * @param buffer vector of bytes                                                               \
+     * @param check_buffer_is_read_completely fail if buffer is not read completely                \
+     * @return T_CLASS object                                                                      \
+     * */                                                                                          \
+    static T_CLASS from_binary(const std::string& buffer,                                          \
+                               bool               check_buffer_is_read_completely = false)         \
+    {                                                                                              \
+        T_CLASS object;                                                                            \
+        auto    state = bitsery::quickDeserialization<bitsery::InputBufferAdapter<std::string>>(   \
+            { buffer.begin(), buffer.end() }, object);                                          \
+                                                                                                   \
+        if (state.first != bitsery::ReaderError::NoError)                                          \
+            throw(std::runtime_error("ERROR[T_CLASS::from_binary]: readerror"));                   \
+                                                                                                   \
+        if (check_buffer_is_read_completely)                                                       \
+            if (!state.second)                                                                     \
+                throw(std::runtime_error(                                                          \
+                    "ERROR[T_CLASS::from_binary]: buffer was not read completely"));               \
+                                                                                                   \
+        return object;                                                                             \
     }
 
 #define __BITSERY_DEFAULT_TO_STREAM__                                                              \
@@ -73,7 +73,7 @@
     {                                                                                              \
         bitsery::Serializer<bitsery::OutputBufferedStreamAdapter> ser{ os };                       \
                                                                                                    \
-        ser.object(*this);                                               \
+        ser.object(*this);                                                                         \
                                                                                                    \
         ser.adapter().flush();                                                                     \
     }
@@ -96,8 +96,9 @@
         return object;                                                                             \
     }
 
+
 #define __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(T_CLASS)                                       \
     __BITSERY_DEFAULT_TO_BINARY__                                                                  \
     __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)                                                       \
     __BITSERY_DEFAULT_TO_STREAM__                                                                  \
-    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)
+    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)                                                       

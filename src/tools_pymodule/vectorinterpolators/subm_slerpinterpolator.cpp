@@ -140,8 +140,10 @@ void init_subm_slerpinterpolator(pybind11::module& m)
              py::arg("X"),
              py::arg("YPR"),
              py::arg("input_in_degrees") = true)
-        // default class functions
+        // default copy functions
         __PYCLASS_DEFAULT_COPY__(SlerpInterpolator)
-        // end LinearInterpolator
+        // default binary functions
+        __PYCLASS_DEFAULT_BINARY__(SlerpInterpolator)
+        // end SlerpInterpolator
         ;
 }
