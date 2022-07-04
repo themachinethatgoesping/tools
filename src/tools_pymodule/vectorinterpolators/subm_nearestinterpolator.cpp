@@ -85,6 +85,8 @@ void init_subm_nearestinterpolator(pybind11::module& m)
         __PYCLASS_DEFAULT_COPY__(NearestInterpolator)
         // default binary functions
         __PYCLASS_DEFAULT_BINARY__(NearestInterpolator)
+        // default printing functions
+        __PYCLASS_DEFAULT_PRINTING__(NearestInterpolator)
         // end NearestInterpolator
         ;
 }

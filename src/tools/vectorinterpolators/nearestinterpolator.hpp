@@ -21,6 +21,7 @@
 #include "i_pairinterpolator.hpp"
 
 #include "../bitsery_helpers/classhelpers.hpp"
+#include "../classhelpers/objectprinter.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -104,6 +105,18 @@ class NearestInterpolator : public I_PairInterpolator<double>
         s.object(_last_x_pair);
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    }
+    
+  public:
+    classhelpers::ObjectPrinter __printer__() const
+    {
+        classhelpers::ObjectPrinter printer("NearestInterpolator");
+
+        printer.value("_extr_mode", _extr_mode);
+        printer.container("_X", _X);
+        printer.container("_Y", _Y);
+
+        return printer;
     }
 };
 

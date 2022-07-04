@@ -4,3 +4,9 @@
 [submodule "extern/tabulate"]
 	path = extern/tabulate
 	url = https://github.com/p-ranav/tabulate.git
+[submodule "extern/refl-cpp"]
+	path = extern/refl-cpp
+	url = https://github.com/veselink1/refl-cpp.git
+[submodule "extern/magic_enum"]
+	path = extern/magic_enum
+	url = https://github.com/Neargye/magic_enum.git

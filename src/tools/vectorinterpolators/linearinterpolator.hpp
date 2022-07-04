@@ -22,6 +22,7 @@
 
 #include "../bitsery_helpers/classhelpers.hpp"
 #include "../bitsery_helpers/helpers.hpp"
+#include "../classhelpers/objectprinter.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -45,8 +46,6 @@ class LinearInterpolator : public I_PairInterpolator<double>
         : I_PairInterpolator<double>(X, Y, extrapolation_mode)
     {
     }
-
-    static std::string type_to_string() { return "LinearInterpolator"; }
 
     bool operator!=(const LinearInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const LinearInterpolator& rhs) const
@@ -80,6 +79,8 @@ class LinearInterpolator : public I_PairInterpolator<double>
         return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
     }
 
+    static std::string type_to_string() { return "LinearInterpolator"; }
+
     // define to_binary and from_binary functions
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
 
@@ -93,6 +94,18 @@ class LinearInterpolator : public I_PairInterpolator<double>
         s.object(_last_x_pair);
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+    }
+
+  public:
+    classhelpers::ObjectPrinter __printer__() const
+    {
+        classhelpers::ObjectPrinter printer("LinearInterpolator");
+
+        printer.value("_extr_mode", _extr_mode);
+        printer.container("_X", _X);
+        printer.container("_Y", _Y);
+
+        return printer;
     }
 };
 

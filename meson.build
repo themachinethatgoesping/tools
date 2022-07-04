@@ -35,8 +35,14 @@ boost_dep     = dependency('boost', version: boost_version)
 eigen3_dep = dependency('eigen3', required: false)
 
 if not eigen3_dep.found()
-    eigen3_project = subproject('eigen')
-    eigen3_dep = eigen3_project.get_variable('eigen_dep')
+    eigen3_dep = subproject('eigen').get_variable('eigen_dep')
+endif
+
+# fmt for pretty printing
+fmt_dep = dependency('fmt', required: false)
+
+if not fmt_dep.found()
+    fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
 endif
 
 #date (to be replaced with c++20 features)
@@ -47,9 +53,14 @@ hinnant_date_dep = declare_dependency(
  include_directories : hinnant_date_incl
  )
 
- #bitsery (for object serialization)
+#bitsery (for object serialization)
 bitsert_dep = declare_dependency(
   include_directories : ['extern/bitsery/include/']
+)
+
+#magic_enum (for enum reflection)
+magic_enum_dep = declare_dependency(
+  include_directories : ['extern/magic_enum/include/']
 )
 
 #setup test_data_path

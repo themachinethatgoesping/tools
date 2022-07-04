@@ -13,10 +13,11 @@ sources = [
 
 headers = [
   'timeconv.hpp',
-  'rotationfunctions/quaternions.hpp',
+  'classhelpers/objectprinter.hpp',
   'bitsery_helpers/helpers.hpp',
   'bitsery_helpers/eigen.hpp',
   'pybind11_helpers/classhelpers.hpp',
+  'rotationfunctions/quaternions.hpp',
   'vectorinterpolators.hpp',
   'vectorinterpolators/i_interpolator.hpp',
   'vectorinterpolators/linearinterpolator.hpp',
@@ -34,7 +35,9 @@ if build_machine.system() != 'linux'
                           eigen3_dep, 
                           omp_dep,
                           hinnant_date_dep,
-                          bitsert_dep],
+                          bitsert_dep,
+                          fmt_dep,
+                          magic_enum_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -47,7 +50,9 @@ else
                           eigen3_dep, 
                           omp_dep,
                           hinnant_date_dep,
-                          bitsert_dep],
+                          bitsert_dep,
+                          fmt_dep,
+                          magic_enum_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -63,7 +68,9 @@ tools_dep = declare_dependency(
     eigen3_dep,
     omp_dep,
     hinnant_date_dep,
-    bitsert_dep
+    bitsert_dep,
+    fmt_dep,
+    magic_enum_dep
   ],
   link_with : [tools_lib],
   compile_args : ['-D_USE_MATH_DEFINES']

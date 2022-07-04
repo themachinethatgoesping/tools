@@ -85,6 +85,8 @@ void init_subm_akimainterpolator(pybind11::module& m)
         __PYCLASS_DEFAULT_COPY__(AkimaInterpolator)
         // default binary functions
         __PYCLASS_DEFAULT_BINARY__(AkimaInterpolator)
+        // default printing functions
+        __PYCLASS_DEFAULT_PRINTING__(AkimaInterpolator)
         // end AkimaInterpolator
         ;
 }

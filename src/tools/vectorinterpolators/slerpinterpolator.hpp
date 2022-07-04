@@ -18,6 +18,7 @@
 #include "../bitsery_helpers/classhelpers.hpp"
 #include "../bitsery_helpers/eigen.hpp"
 #include "../rotationfunctions/quaternions.hpp"
+#include "../classhelpers/objectprinter.hpp"
 #include "i_pairinterpolator.hpp"
 
 namespace themachinethatgoesping {
@@ -316,6 +317,29 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             _Y,
             SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call
                                                     // needs the include of toos/bitsery/eigen.hpp
+    }
+
+  public:
+    classhelpers::ObjectPrinter __printer__() const
+    {
+        classhelpers::ObjectPrinter printer("NearestInterpolator");
+
+        printer.value("_extr_mode", _extr_mode);
+        printer.container("_X", _X);
+
+        auto                YPR = get_data_YPR();
+        std::vector<double> y, p, r;
+        for (const auto& ypr : YPR)
+        {
+            y.push_back(ypr[0]);
+            p.push_back(ypr[1]);
+            r.push_back(ypr[2]);
+        }
+        printer.container("_Yaw", y);
+        printer.container("_Pitch", p);
+        printer.container("_Roll", r);
+
+        return printer;
     }
 };
 

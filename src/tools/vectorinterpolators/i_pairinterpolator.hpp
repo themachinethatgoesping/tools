@@ -317,6 +317,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @return interpolated y value
      */
     virtual YType interpolate_pair(double target_x, YType y1, YType y2) const = 0;
+
 };
 
 } // namespace interpolation

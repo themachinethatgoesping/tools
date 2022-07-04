@@ -144,6 +144,8 @@ void init_subm_slerpinterpolator(pybind11::module& m)
         __PYCLASS_DEFAULT_COPY__(SlerpInterpolator)
         // default binary functions
         __PYCLASS_DEFAULT_BINARY__(SlerpInterpolator)
+        // default printing functions
+        __PYCLASS_DEFAULT_PRINTING__(SlerpInterpolator)
         // end SlerpInterpolator
         ;
 }

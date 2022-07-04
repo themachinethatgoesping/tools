@@ -85,6 +85,8 @@ void init_subm_linearinterpolator(pybind11::module& m)
         __PYCLASS_DEFAULT_COPY__(LinearInterpolator)
         // default binary functions
         __PYCLASS_DEFAULT_BINARY__(LinearInterpolator)
+        // default printing functions
+        __PYCLASS_DEFAULT_PRINTING__(LinearInterpolator)
         // end LinearInterpolator
         ;
 }

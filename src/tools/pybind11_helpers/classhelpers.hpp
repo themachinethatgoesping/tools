@@ -60,3 +60,10 @@
 #define __PYCLASS_DEFAULT_PICKLE__(T_CLASS)                                                        \
     .def(py::pickle([](const T_CLASS& self) { return py::bytes(self.to_binary()); },               \
                     [](const py::bytes& b) { return T_CLASS::from_binary(b); }))
+
+// --- print functions (need objectprinter __printer__ function) ---
+#define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
+    .def("__str__", [](const T_CLASS& self) { return self.__printer__().str(); })                  \
+        .def("__repr__", [](const T_CLASS& self) { return self.__printer__().str(); })              \
+        .def("to_string", [](const T_CLASS& self) { return self.__printer__().str(); })            \
+        .def("print", [](const T_CLASS& self) { py::print(self.__printer__().str()); })
