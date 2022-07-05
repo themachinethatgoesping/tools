@@ -101,9 +101,9 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         classhelpers::ObjectPrinter printer("LinearInterpolator");
 
-        printer.value("_extr_mode", _extr_mode);
-        printer.container("_X", _X);
-        printer.container("_Y", _Y);
+        printer.reg_enum("_extr_mode", _extr_mode);
+        printer.reg_container("_X", _X);
+        printer.reg_container("_Y", _Y);
 
         return printer;
     }

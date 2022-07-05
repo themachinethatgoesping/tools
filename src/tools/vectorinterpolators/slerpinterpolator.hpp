@@ -322,10 +322,12 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
   public:
     classhelpers::ObjectPrinter __printer__() const
     {
-        classhelpers::ObjectPrinter printer("NearestInterpolator");
+        classhelpers::ObjectPrinter printer("SlerpInterpolator");
 
-        printer.value("_extr_mode", _extr_mode);
-        printer.container("_X", _X);
+        printer.reg_enum("_extr_mode", _extr_mode);
+        printer.reg_value("A", 10.43524367, "s");
+        printer.reg_section("data lists");
+        printer.reg_container("_X", _X);
 
         auto                YPR = get_data_YPR();
         std::vector<double> y, p, r;
@@ -335,9 +337,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             p.push_back(ypr[1]);
             r.push_back(ypr[2]);
         }
-        printer.container("_Yaw", y);
-        printer.container("_Pitch", p);
-        printer.container("_Roll", r);
+        printer.reg_container("_Yaw", y);
+        printer.reg_container("_Pitch", p);
+        printer.reg_container("_Roll", r);
 
         return printer;
     }
