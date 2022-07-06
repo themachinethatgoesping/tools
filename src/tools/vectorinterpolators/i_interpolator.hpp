@@ -184,11 +184,21 @@ class I_Interpolator
         for (size_t i = 0; i < X.size() - 1; ++i)
         {
             if (X[i] == X[i + 1])
-                throw(std::domain_error("ERROR[Interpolation::_check_XY]: double x values!"));
+                throw(std::domain_error(
+                    "ERROR[Interpolation::_check_XY]: X list contains double x values!"));
 
             if (X[i] > X[i + 1])
-                throw(std::domain_error("ERROR[Interpolation::_check_XY]: List is not "
+                throw(std::domain_error("ERROR[Interpolation::_check_XY]: X list is not "
                                         "sorted in asscending order!"));
+
+            if (!std::isfinite(X[i]))
+                throw(std::domain_error(
+                    "ERROR[Interpolation::_check_XY]: X List contains NAN or INFINITE values!"));
+
+            if constexpr (std::is_floating_point<YType>())
+                if (!std::isfinite(Y[i]))
+                    throw(std::domain_error("ERROR[Interpolation::_check_XY]: Y List contains NAN "
+                                            "or INFINITE values!"));
         }
     }
 };

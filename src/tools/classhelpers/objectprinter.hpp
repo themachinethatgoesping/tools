@@ -9,8 +9,11 @@
 
 #pragma once
 
+#include <algorithm>
 #include <fmt/core.h>
+#include <limits>
 #include <magic_enum.hpp>
+#include <numeric>
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -49,7 +52,7 @@ class ObjectPrinter
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void reg_enum(const std::string& name, t_value value, std::string value_info = "")
+    void add_enum(const std::string& name, t_value value, std::string value_info = "")
     {
         std::string str;
 
@@ -83,7 +86,7 @@ class ObjectPrinter
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void reg_value(const std::string& name, t_value value, std::string value_info = "")
+    void add_value(const std::string& name, t_value value, std::string value_info = "")
     {
         std::string str;
 
@@ -111,12 +114,17 @@ class ObjectPrinter
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void reg_container(const std::string&   name,
-                       std::vector<t_value> values,
-                       std::string          value_info           = "",
-                       size_t               max_visible_elements = 9)
+    void add_container(const std::string&          name,
+                       const std::vector<t_value>& values,
+                       std::string                 value_info           = "",
+                       size_t                      max_visible_elements = 9)
     {
-        std::string str;
+        std::string str, format;
+
+        if constexpr (std::is_floating_point<t_value>())
+            format = "{:.6g}";
+        else
+            format = "{}";
 
         str = "{";
         for (unsigned int i = 0; i < values.size(); ++i)
@@ -131,11 +139,7 @@ class ObjectPrinter
                     i = values.size() - size_t(max_visible_elements / 2);
                     continue;
                 }
-
-            if constexpr (std::is_floating_point<t_value>())
-                str += fmt::format("{:.2f}", values[i]);
-            else
-                str += fmt::format("{}", values[i]);
+            str += fmt::format(format, values[i]);
         }
         str += "}";
 
@@ -147,6 +151,101 @@ class ObjectPrinter
         _fields.push_back(name);
         _lines.push_back({ str });
         _field_types.push_back(t_field::tcontainer);
+
+        // add vector information if not all elements are displayed
+        if (values.size() > max_visible_elements)
+        {
+            // copy vector once to modify it
+            std::vector<t_value> v;
+            size_t               cnt_nan   = 0;
+            size_t               cnt_inf   = 0;
+            size_t               cnt_inf_n = 0;
+
+            // count nans and infs and copy normal values to v
+
+            if constexpr (std::is_floating_point<t_value>())
+            {
+                for (const auto& value : values)
+                {
+                    if (std::isnan(value))
+                    {
+                        ++cnt_nan;
+                        continue;
+                    }
+
+                    if (std::isinf(value))
+                    {
+                        if (value < 0)
+                            ++cnt_inf_n;
+                        else
+                            ++cnt_inf;
+                        continue;
+                    }
+
+                    v.push_back(value);
+                }
+            }
+            else
+                v = values;
+
+            auto minmax = std::minmax_element(std::begin(v), std::end(v));
+            auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
+
+            size_t n_2 = v.size() / 2;
+            std::nth_element(v.begin(), v.begin() + n_2, v.end());
+
+            // std::string line_format = fmt::format("Min:  {} | Max: {}", format, format);
+            // _lines.back().push_back(
+            //     fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
+
+            // _lines.back().push_back(fmt::format("Mean: " + format, mean));
+
+            std::string line_format =
+                fmt::format("# Min:  {} | Max: {} | Mean: {}", format, format, format);
+            _lines.back().push_back(
+                fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
+
+            // special case for even numbers
+            if (v.size() % 2)
+            {
+                std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
+                _lines.back().back() +=
+                    fmt::format("| Median: " + format, (v[n_2] + v[n_2 + 1]) / 2);
+            }
+            else
+            {
+                _lines.back().back() += fmt::format(" | Median: " + format, v[n_2]);
+            }
+
+            // value count
+            _lines.back().push_back(fmt::format("# {} elements", values.size()));
+
+            // special signs for floating point lists and value count
+            if constexpr (std::is_floating_point<t_value>())
+            {
+                if (cnt_nan || cnt_inf || cnt_inf_n)
+                {
+                    _lines.back().back() += fmt::format(" ! NAN elements: ");
+
+                    if (cnt_nan)
+                    {
+                        _lines.back().back() += fmt::format("nan({})", cnt_nan);
+                        if (cnt_inf || cnt_inf_n)
+                            _lines.back().back() += ", ";
+                    }
+                    if (cnt_inf_n)
+                    {
+                        _lines.back().back() += fmt::format("-inf({})", cnt_inf_n);
+                        if (cnt_inf)
+                            _lines.back().back() += ", ";
+                    }
+                    if (cnt_inf)
+                    {
+                        _lines.back().back() += fmt::format("+inf({})", cnt_inf);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -154,7 +253,7 @@ class ObjectPrinter
      *
      * @param name name of the section
      */
-    void reg_section(const std::string& name)
+    void add_section(const std::string& name)
     {
         _fields.push_back(name);
         _lines.push_back({ "" });
@@ -162,7 +261,7 @@ class ObjectPrinter
         _field_types.push_back(t_field::tsection);
     }
 
-    std::string str() const
+    std::string create_str() const
     {
         std::vector<std::string> str_lines;
 
@@ -188,8 +287,17 @@ class ObjectPrinter
         auto section_nr = 0;
         for (unsigned int i = 0; i < _fields.size(); ++i)
         {
+            std::string prefix = "";
+            if (i > 0)
+            {
+                // add \n if previous element had multiple str_lines
+                if (_field_types[i - 1] != t_field::tsection)
+                    if (_lines[i - 1].size() > 1)
+                        prefix = "\n";
+            }
             switch (_field_types[i])
             {
+
                 case t_field::tsection:
                     section_nr += 1;
 
@@ -199,16 +307,22 @@ class ObjectPrinter
 
                     continue;
                 case t_field::tvalue:
-                    str_lines.push_back(fmt::format(
-                        "- {:<{}} {}", _fields[i] + ':', max_len_field[section_nr], _lines[i][0]));
+                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
+                                                    _fields[i] + ':',
+                                                    max_len_field[section_nr],
+                                                    _lines[i][0]));
                     break;
                 case t_field::tenum:
-                    str_lines.push_back(fmt::format(
-                        "- {:<{}} {}", _fields[i] + ':', max_len_field[section_nr], _lines[i][0]));
+                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
+                                                    _fields[i] + ':',
+                                                    max_len_field[section_nr],
+                                                    _lines[i][0]));
                     break;
                 case t_field::tcontainer:
-                    str_lines.push_back(fmt::format(
-                        "- {:<{}} {}", _fields[i] + ':', max_len_field[section_nr], _lines[i][0]));
+                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
+                                                    _fields[i] + ':',
+                                                    max_len_field[section_nr],
+                                                    _lines[i][0]));
                     break;
 
                 default:
@@ -224,14 +338,16 @@ class ObjectPrinter
         for (size_t i = 0; i < str_lines.size(); ++i)
         {
             if (_field_types[i] == t_field::tsection)
+            {
                 section_nr += 1;
+            }
 
             str += fmt::format(
                 "\n{:<{}}  {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);
 
-            
-            for (size_t j =1; j < _lines[i].size(); ++j)
-                str += fmt::format("\n    - {}",_lines[i][j]);
+            for (size_t j = 1; j < _lines[i].size(); ++j)
+                // str += fmt::format("\n  {}", _lines[i][j]);
+                str += fmt::format("\n{:<{}}   {}", "", max_len_field[section_nr], _lines[i][j]);
         }
 
         return str;
@@ -251,6 +367,34 @@ class ObjectPrinter
         return str;
     }
 };
+
+// --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
+#define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
+    /**                                                                                            \
+     * @brief return an info string using the class __printer__ object                             \
+     *                                                                                             \
+     * @return std::string                                                                         \
+     */                                                                                            \
+    std::string info_string() const                                                                \
+    {                                                                                              \
+        return this->__printer__().create_str();                                                   \
+    }
+
+#define __CLASSHELPERS_PRINTER_PRINT__                                                             \
+    /**                                                                                            \
+     * @brief print the object information to the given outpustream                                \
+     *                                                                                             \
+     * @param os output stream, e.g. file stream or std::out or std::cerr                          \
+     */                                                                                            \
+    void print(std::ostream& os) const                                                             \
+    {                                                                                              \
+        os << this->__printer__().create_str() << std::flush;                                      \
+    }
+
+#define __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__                                                \
+    __CLASSHELPERS_PRINTER_INFO_STRING__                                                           \
+    __CLASSHELPERS_PRINTER_PRINT__
+
 }
 }
 }

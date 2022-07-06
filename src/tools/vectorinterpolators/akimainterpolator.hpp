@@ -176,9 +176,8 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     void set_data_XY(const std::vector<double>& X, const std::vector<double>& Y) final
     {
-        // check if vectors are same size
-        if (X.size() != Y.size())
-            throw(std::runtime_error("ERROR[Interpolation::set_data_XY]: list sizes do not match"));
+        // check if X and Y are valid
+        I_Interpolator<double>::_check_XY(X, Y);
 
         // copy data to allow get_X and get_Y functions
         _X = X;
@@ -196,6 +195,13 @@ class AkimaInterpolator : public I_Interpolator<double>
 
     void append(double x, double y) final
     {
+        if (!std::isfinite(x))
+            throw(std::domain_error(
+                "ERROR[Interpolator::append]: X contains NAN or INFINITE values!"));
+        if (!std::isfinite(y))
+            throw(std::domain_error(
+                "ERROR[Interpolator::append]: Y contains NAN or INFINITE values!"));
+
         _akima_spline.push_back(x, y);
 
         // copy data to allow get_X and get_Y functions
@@ -239,8 +245,6 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     const std::vector<double>& get_data_Y() const final { return _Y; }
 
-      // define to_binary and from_binary functions
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
   private:
     /**
      * @brief internal function to initialize the linear extrapolation objects
@@ -285,13 +289,20 @@ class AkimaInterpolator : public I_Interpolator<double>
     {
         classhelpers::ObjectPrinter printer("AkimaInterpolator");
 
-        printer.reg_enum("_extr_mode", _extr_mode);
-        printer.reg_section("data lists");
-        printer.reg_container("_X", _X);
-        printer.reg_container("_Y", _Y);
+        printer.add_enum("extr_mode", _extr_mode);
+        printer.add_section("data lists");
+        printer.add_container("X", _X);
+        printer.add_container("Y", _Y);
 
         return printer;
     }
+
+    public:
+    // -- class helper function macros --
+    // define to_binary and from_binary functions (needs the serialize function)
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
+    // define info_string and print functions (needs the __printer__ function)
+    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
 };
 
 } // namespace vectorinterpolators

@@ -81,9 +81,6 @@ class LinearInterpolator : public I_PairInterpolator<double>
 
     static std::string type_to_string() { return "LinearInterpolator"; }
 
-    // define to_binary and from_binary functions
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
-
   private:
     // serialization support using bitsery
     friend bitsery::Access;
@@ -101,13 +98,20 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         classhelpers::ObjectPrinter printer("LinearInterpolator");
 
-        printer.reg_enum("_extr_mode", _extr_mode);
-        printer.reg_section("data lists");
-        printer.reg_container("_X", _X);
-        printer.reg_container("_Y", _Y);
+        printer.add_enum("extr_mode", _extr_mode);
+        printer.add_section("data lists");
+        printer.add_container("X", _X);
+        printer.add_container("Y", _Y);
 
         return printer;
     }
+
+  public:
+    // -- class helper function macros --
+    // define to_binary and from_binary functions (needs the serialize function)
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
+    // define info_string and print functions (needs the __printer__ function)
+    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
 };
 
 } // namespace interpolation

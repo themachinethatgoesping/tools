@@ -92,9 +92,6 @@ class NearestInterpolator : public I_PairInterpolator<double>
         return y2;
     }
 
-    // define to_binary and from_binary functions
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
-
   private:
     // serialization support using bitsery
     friend bitsery::Access;
@@ -106,19 +103,26 @@ class NearestInterpolator : public I_PairInterpolator<double>
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
     }
-    
+
   public:
     classhelpers::ObjectPrinter __printer__() const
     {
         classhelpers::ObjectPrinter printer("NearestInterpolator");
 
-        printer.reg_enum("_extr_mode", _extr_mode);
-        printer.reg_section("data lists");
-        printer.reg_container("_X", _X);
-        printer.reg_container("_Y", _Y);
+        printer.add_enum("extr_mode", _extr_mode);
+        printer.add_section("data lists");
+        printer.add_container("X", _X);
+        printer.add_container("Y", _Y);
 
         return printer;
     }
+
+  public:
+    // -- class helper function macros --
+    // define to_binary and from_binary functions (needs the serialize function)
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
+    // define info_string and print functions (needs the __printer__ function)
+    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
 };
 
 } // namespace interpolation

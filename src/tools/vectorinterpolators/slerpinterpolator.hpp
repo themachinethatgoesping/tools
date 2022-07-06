@@ -301,9 +301,6 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         return y1.slerp(target_x, y2);
     }
 
-    // define to_binary and from_binary functions
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
-
   private:
     // serialization support using bitsery
     friend bitsery::Access;
@@ -324,9 +321,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     {
         classhelpers::ObjectPrinter printer("SlerpInterpolator");
 
-        printer.reg_enum("_extr_mode", _extr_mode);
-        printer.reg_section("data lists");
-        printer.reg_container("_X", _X, "");
+        printer.add_enum("extr_mode", _extr_mode);
+        printer.add_section("data lists");
+        printer.add_container("X", _X, "");
 
         auto                YPR = get_data_YPR();
         std::vector<double> y, p, r;
@@ -336,12 +333,19 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             p.push_back(ypr[1]);
             r.push_back(ypr[2]);
         }
-        printer.reg_container("_Yaw", y, "");
-        printer.reg_container("_Pitch", p, "");
-        printer.reg_container("_Roll", r, "");
+        printer.add_container("Yaw", y, "");
+        printer.add_container("Pitch", p, "");
+        printer.add_container("Roll", r, "");
 
         return printer;
     }
+    
+  public:
+    // -- class helper function macros --
+    // define to_binary and from_binary functions (needs the serialize function)
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
+    // define info_string and print functions (needs the __printer__ function)
+    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
 };
 
 } // namespace vectorinterpolators

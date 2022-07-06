@@ -141,6 +141,13 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
 {
     static const floattype _quaternion_from_ypr_to_rad = M_PI / 180.;
 
+    //check if values are valid    
+    if (!std::isfinite( ypr[0]) || !std::isfinite( ypr[1]) || !std::isfinite( ypr[2]))
+    {
+        throw std::invalid_argument(
+            "ERROR[quaternion_from_ypr]: NAN or INFINITY yaw, pitch or roll value!");
+    }
+
     // convert to rad
     if (input_in_degrees)
     {

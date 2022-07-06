@@ -96,7 +96,6 @@ class I_PairInterpolator : public I_Interpolator<YType>
     std::vector<YType>  _Y; ///< main data vector containing pairs of corresponding y datapoitns
 
   public:
-
     /**
      * @brief Construct a new Interpolator object from a vector of pairs
      * usage: interpolated_y_value = interpolator.interpolate(x_value)
@@ -147,6 +146,14 @@ class I_PairInterpolator : public I_Interpolator<YType>
             throw(std::domain_error("ERROR[Interpolation::append]: appendet x value is not "
                                     "larger than existing x values in the interpolator."));
         }
+
+        if (!std::isfinite(x))
+            throw(std::domain_error(
+                "ERROR[Interpolator::append]: X contains NAN or INFINITE values!"));
+        if constexpr (std::is_floating_point<YType>())
+            if (!std::isfinite(y))
+                throw(std::domain_error(
+                    "ERROR[Interpolator::append]: Y contains NAN or INFINITE values!"));
 
         _X.push_back(x);
         _Y.push_back(y);
@@ -317,7 +324,6 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @return interpolated y value
      */
     virtual YType interpolate_pair(double target_x, YType y1, YType y2) const = 0;
-
 };
 
 } // namespace interpolation
