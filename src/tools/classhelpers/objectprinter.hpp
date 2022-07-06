@@ -201,7 +201,7 @@ class ObjectPrinter
             // _lines.back().push_back(fmt::format("Mean: " + format, mean));
 
             std::string line_format =
-                fmt::format("# Min:  {} | Max: {} | Mean: {}", format, format, format);
+                fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
             _lines.back().push_back(
                 fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
 
@@ -218,7 +218,7 @@ class ObjectPrinter
             }
 
             // value count
-            _lines.back().push_back(fmt::format("# {} elements", values.size()));
+            _lines.back().push_back(fmt::format("... {} elements", values.size()));
 
             // special signs for floating point lists and value count
             if constexpr (std::is_floating_point<t_value>())
@@ -343,11 +343,11 @@ class ObjectPrinter
             }
 
             str += fmt::format(
-                "\n{:<{}}  {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);
+                "\n{:<{}} {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);
 
             for (size_t j = 1; j < _lines[i].size(); ++j)
                 // str += fmt::format("\n  {}", _lines[i][j]);
-                str += fmt::format("\n{:<{}}   {}", "", max_len_field[section_nr], _lines[i][j]);
+                str += fmt::format("\n{:<{}}  {}", "", max_len_field[section_nr], _lines[i][j]);
         }
 
         return str;

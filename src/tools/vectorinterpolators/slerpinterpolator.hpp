@@ -323,7 +323,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 
         printer.add_enum("extr_mode", _extr_mode);
         printer.add_section("data lists");
-        printer.add_container("X", _X, "");
+        printer.add_container("X", _X);
 
         auto                YPR = get_data_YPR();
         std::vector<double> y, p, r;
@@ -333,9 +333,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             p.push_back(ypr[1]);
             r.push_back(ypr[2]);
         }
-        printer.add_container("Yaw", y, "");
-        printer.add_container("Pitch", p, "");
-        printer.add_container("Roll", r, "");
+        printer.add_container("Yaw [°]", y, "");
+        printer.add_container("Pitch [°]", p, "");
+        printer.add_container("Roll [°]", r, "");
 
         return printer;
     }
