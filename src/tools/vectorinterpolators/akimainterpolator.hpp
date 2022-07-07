@@ -289,10 +289,10 @@ class AkimaInterpolator : public I_Interpolator<double>
     {
         classhelpers::ObjectPrinter printer("AkimaInterpolator");
 
-        printer.add_enum("extr_mode", _extr_mode);
-        printer.add_section("data lists");
-        printer.add_container("X", _X);
-        printer.add_container("Y", _Y);
+        printer.register_enum("extr_mode", _extr_mode);
+        printer.register_section("data lists");
+        printer.register_container("X", _X);
+        printer.register_container("Y", _Y);
 
         return printer;
     }

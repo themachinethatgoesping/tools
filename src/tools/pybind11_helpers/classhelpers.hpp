@@ -63,12 +63,18 @@
 
 // --- print functions (need objectprinter __printer__ function) ---
 #define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
-    .def("__str__", [](const T_CLASS& self) { return self.__printer__().create_str(); })           \
-        .def("__repr__", [](const T_CLASS& self) { return self.__printer__().create_str(); })      \
+    .def(                                                                                          \
+        "__str__",                                                                                 \
+        [](const T_CLASS& self) { return self.__printer__().create_str(); },                       \
+        "Return object information as string")                                                     \
+        .def(                                                                                      \
+            "__repr__",                                                                            \
+            [](const T_CLASS& self) { return self.__printer__().create_str(); },                   \
+            "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
             [](const T_CLASS& self) { return self.__printer__().create_str(); },                   \
-            "Object information as string")                                                        \
+            "Return object information as string")                                                 \
         .def(                                                                                      \
             "print",                                                                               \
             [](const T_CLASS& self) { py::print(self.__printer__().create_str()); },               \

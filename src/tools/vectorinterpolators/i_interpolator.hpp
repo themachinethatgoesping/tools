@@ -181,15 +181,18 @@ class I_Interpolator
             throw(std::domain_error(
                 "ERROR[Interpolation::_check_XY]: list X and Y list sizes do not match!"));
 
-        for (size_t i = 0; i < X.size() - 1; ++i)
+        for (size_t i = 0; i < X.size(); ++i)
         {
-            if (X[i] == X[i + 1])
-                throw(std::domain_error(
-                    "ERROR[Interpolation::_check_XY]: X list contains double x values!"));
+            if (i + 1 < X.size())
+            {
+                if (X[i] == X[i + 1])
+                    throw(std::domain_error(
+                        "ERROR[Interpolation::_check_XY]: X list contains double x values!"));
 
-            if (X[i] > X[i + 1])
-                throw(std::domain_error("ERROR[Interpolation::_check_XY]: X list is not "
-                                        "sorted in asscending order!"));
+                if (X[i] > X[i + 1])
+                    throw(std::domain_error("ERROR[Interpolation::_check_XY]: X list is not "
+                                            "sorted in asscending order!"));
+            }
 
             if (!std::isfinite(X[i]))
                 throw(std::domain_error(

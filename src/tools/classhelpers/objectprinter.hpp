@@ -3,7 +3,15 @@
 // SPDX-License-Identifier: MPL-2.0
 
 /**
- * @brief an object that allows for easy pretty printing of class members
+ * @brief An object that allows for easy pretty printing of class members
+ * usage:
+ *  1. Implement a __printer__ function as public class member this function should return a
+ *     ObjectPrinter object. Register all, values, containers, objects that are to be printerd.
+ *  2. Add the __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__ macro to the public fucntions.
+ *     This macro implements std::string info_string() and print(std::ostream) functions using the
+ * object printer
+ *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
+ *     __str__(), __repr__(), info_string() and print() as python functions
  *
  */
 
@@ -19,23 +27,44 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace classhelpers {
 
+/**
+ * @brief Class that allows for easy pretty printing of class members
+ * usage:
+ *  1. Implement a __printer__ function as public class member this function should return a
+ *     ObjectPrinter object. Register all, values, containers, objects that are to be printerd.
+ *  2. Add the __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__ macro to the public fucntions.
+ *     This macro implements std::string info_string() and print(std::ostream) functions using the
+ * object printer
+ *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
+ *     __str__(), __repr__(), info_string() and print() as python functions
+ *
+ */
 class ObjectPrinter
 {
+    /**
+     * @brief internal, describe the value type for implementing different printing strategies
+     *
+     */
     enum class t_field
     {
-        tvalue,
-        tenum,
-        tcontainer,
-        tsection
+        tvalue,     /// < double or integer
+        tenum,      /// < enumerator
+        tcontainer, /// < 1D container (double or integer)
+        tsection    /// < section break
     };
 
-    const std::string                     _name;
-    std::vector<std::string>              _fields;
-    std::vector<t_field>                  _field_types;
-    std::vector<std::vector<std::string>> _lines;
-    std::vector<std::string>              _value_infos;
+    const std::string                     _name;   /// < name of the class that is to be printed
+    std::vector<std::string>              _fields; /// < variable names
+    std::vector<t_field>                  _field_types; /// < variable types
+    std::vector<std::vector<std::string>> _lines;       /// frst line is typically the field value
+    std::vector<std::string>              _value_infos; /// additional info (printed in [])
 
   public:
+    /**
+     * @brief Construct a new Object Printer object
+     *
+     * @param name name of the class that is to be printed
+     */
     ObjectPrinter(const std::string& name)
         : _name(name)
     {
@@ -46,18 +75,20 @@ class ObjectPrinter
     /**
      * @brief register an enumeration for printing
      *
-     * @tparam t_value
+     * @tparam t_value enumerator
      * @param name name of the variable
      * @param value value of the variable
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void add_enum(const std::string& name, t_value value, std::string value_info = "")
+    void register_enum(const std::string& name, t_value value, std::string value_info = "")
     {
         std::string str;
 
+        // convert enum value to string using magic_enum library
         str = magic_enum::enum_name(value);
 
+        // create string of all possible enum values
         constexpr auto enum_values = magic_enum::enum_names<t_value>();
         for (unsigned int i = 0; i < enum_values.size(); ++i)
         {
@@ -67,34 +98,37 @@ class ObjectPrinter
             value_info += enum_values[i];
         }
 
+        // attach all possible enum values as value_info
         if (value_info.size() > 0)
             _value_infos.push_back(fmt::format("[{}]", value_info));
         else
             _value_infos.push_back("");
 
         _fields.push_back(name);
-        _lines.push_back({ str });
+        _lines.push_back({ str }); // only one line (value)
         _field_types.push_back(t_field::tenum);
     }
 
     /**
      * @brief register a single integer of floating point value for printing
      *
-     * @tparam t_value
+     * @tparam t_value double or floating point
      * @param name name of the variable
      * @param value value of the variable
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void add_value(const std::string& name, t_value value, std::string value_info = "")
+    void register_value(const std::string& name, t_value value, std::string value_info = "")
     {
         std::string str;
 
+        // convert value to string
         if constexpr (std::is_floating_point<t_value>())
             str = fmt::format("{:.2f}", value);
         else
             str = fmt::format("{}", value);
 
+        // add value information
         if (value_info.size() > 0)
             _value_infos.push_back(fmt::format("[{}]", value_info));
         else
@@ -108,30 +142,33 @@ class ObjectPrinter
     /**
      * @brief register a 1D container for printing
      *
-     * @tparam t_value
+     * @tparam t_value integer or floating point
      * @param name name of the container
      * @param value container values
      * @param value_info additional info (is printed in [] behind the variable)
      */
     template<typename t_value>
-    void add_container(const std::string&          name,
+    void register_container(const std::string&          name,
                        const std::vector<t_value>& values,
                        std::string                 value_info           = "",
                        size_t                      max_visible_elements = 9)
     {
         std::string str, format;
 
+        // define value to string format
         if constexpr (std::is_floating_point<t_value>())
-            format = "{:.6g}";
+            format = "{:.6g}"; // 6 characters, automatic scientific noation depending on magnitude
         else
             format = "{}";
 
+        // add values to {} list
         str = "{";
         for (unsigned int i = 0; i < values.size(); ++i)
         {
             if (i != 0)
                 str += ", ";
 
+            // don't print entire list of > max_visible_elements in vector
             if (values.size() > max_visible_elements)
                 if (i == size_t(max_visible_elements / 2) - 1)
                 {
@@ -143,6 +180,7 @@ class ObjectPrinter
         }
         str += "}";
 
+        // add value info
         if (value_info.size() > 0)
             _value_infos.push_back(fmt::format("[{}]", value_info));
         else
@@ -152,17 +190,16 @@ class ObjectPrinter
         _lines.push_back({ str });
         _field_types.push_back(t_field::tcontainer);
 
-        // add vector information if not all elements are displayed
+        // add vector statistics if not all elements are displayed
         if (values.size() > max_visible_elements)
         {
             // copy vector once to modify it
             std::vector<t_value> v;
-            size_t               cnt_nan   = 0;
-            size_t               cnt_inf   = 0;
-            size_t               cnt_inf_n = 0;
+            size_t               cnt_nan   = 0; ///< number of nan values
+            size_t               cnt_inf   = 0; ///< number of positive infinity values
+            size_t               cnt_inf_n = 0; ///< number of negative infinity values
 
             // count nans and infs and copy normal values to v
-
             if constexpr (std::is_floating_point<t_value>())
             {
                 for (const auto& value : values)
@@ -188,24 +225,21 @@ class ObjectPrinter
             else
                 v = values;
 
+            // get statistics from nan/inf cleaned lists
             auto minmax = std::minmax_element(std::begin(v), std::end(v));
             auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
 
+            // compute median
             size_t n_2 = v.size() / 2;
             std::nth_element(v.begin(), v.begin() + n_2, v.end());
 
-            // std::string line_format = fmt::format("Min:  {} | Max: {}", format, format);
-            // _lines.back().push_back(
-            //     fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
-
-            // _lines.back().push_back(fmt::format("Mean: " + format, mean));
-
+            // -- print statistics 1 --
             std::string line_format =
                 fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
             _lines.back().push_back(
                 fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
 
-            // special case for even numbers
+            // print meadian (special case for even numbers)
             if (v.size() % 2)
             {
                 std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
@@ -217,10 +251,11 @@ class ObjectPrinter
                 _lines.back().back() += fmt::format(" | Median: " + format, v[n_2]);
             }
 
+            // -- print statistics 2 --
             // value count
             _lines.back().push_back(fmt::format("... {} elements", values.size()));
 
-            // special signs for floating point lists and value count
+            // for floating point vectors, add number of nan/inf elements to info
             if constexpr (std::is_floating_point<t_value>())
             {
                 if (cnt_nan || cnt_inf || cnt_inf_n)
@@ -251,9 +286,9 @@ class ObjectPrinter
     /**
      * @brief register a section break for printing
      *
-     * @param name name of the section
+     * @param name name of the following section
      */
-    void add_section(const std::string& name)
+    void register_section(const std::string& name)
     {
         _fields.push_back(name);
         _lines.push_back({ "" });
@@ -261,14 +296,20 @@ class ObjectPrinter
         _field_types.push_back(t_field::tsection);
     }
 
+    /**
+     * @brief Create an info_string from the registered values/sections
+     * 
+     * @return std::string 
+     */
     std::string create_str() const
     {
-        std::vector<std::string> str_lines;
+        std::vector<std::string> str_lines; // individual lines
 
         std::vector<size_t> max_len_field = { 0 }; // max string len of field name
         std::vector<size_t> max_len_value = { 0 }; // max string len of field + value
 
         // get max_len_field for each section
+        // this is used for alligning the values for each section
         for (size_t i = 0; i < _fields.size(); ++i)
         {
             if (_field_types[i] == t_field::tsection)
@@ -302,7 +343,6 @@ class ObjectPrinter
                     section_nr += 1;
 
                     max_len_value.push_back(0);
-                    // str += '\n' + underline(_fields[i], '-');
                     str_lines.push_back("\n" + underline(" " + _fields[i] + " ", '-'));
 
                     continue;
@@ -353,6 +393,13 @@ class ObjectPrinter
         return str;
     }
 
+    /**
+     * @brief add a line under a given line string
+     * 
+     * @param line input string
+     * @param underliner line character
+     * @return std::string 
+     */
     static std::string underline(const std::string& line, char underliner = '-')
     {
         std::string str = line;
@@ -388,7 +435,7 @@ class ObjectPrinter
      */                                                                                            \
     void print(std::ostream& os) const                                                             \
     {                                                                                              \
-        os << this->__printer__().create_str() << std::flush;                                      \
+        os << this->__printer__().create_str() << std::endl;                                       \
     }
 
 #define __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__                                                \

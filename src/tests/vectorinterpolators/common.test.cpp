@@ -148,16 +148,38 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
     vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
 
     // copy operator
-    auto tl = lip;
+    auto t1 = lip;
     auto t2 = nip;
     auto t3 = aip;
     auto t4 = slerp;
 
     // copy initialization
-    auto tlip   = vectorinterpolators::LinearInterpolator(x, y);
-    auto tnip   = vectorinterpolators::NearestInterpolator(x, y);
-    auto taip   = vectorinterpolators::AkimaInterpolator(x, y);
-    auto tslerp = vectorinterpolators::SlerpInterpolator(x, yaw, pitch, roll);
+    auto tlip   = vectorinterpolators::LinearInterpolator(t1);
+    auto tnip   = vectorinterpolators::NearestInterpolator(t2);
+    auto taip   = vectorinterpolators::AkimaInterpolator(t3);
+    auto tslerp = vectorinterpolators::SlerpInterpolator(t4);
+
+    // check if copies are correct
+    REQUIRE(t1 == lip);
+    REQUIRE(t2 == nip);
+    REQUIRE(t3 == aip);
+    REQUIRE(t4 == slerp);
+    REQUIRE(t1 == tlip);
+    REQUIRE(t2 == tnip);
+    REQUIRE(t3 == taip);
+    REQUIRE(t4 == tslerp);
+
+    //check that common printing operations do not crash or produce empty strings
+    REQUIRE(lip.info_string().size() > 1);
+    REQUIRE(nip.info_string().size() > 1);
+    REQUIRE(aip.info_string().size() > 1);
+    REQUIRE(slerp.info_string().size() > 1);
+
+    //check that printing to stream does not crash
+    lip.print(std::cerr);
+    nip.print(std::cerr);
+    aip.print(std::cerr);
+    slerp.print(std::cerr);
 }
 
 /**

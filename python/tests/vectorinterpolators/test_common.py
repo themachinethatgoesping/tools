@@ -120,6 +120,12 @@ class Test_tools_vectorinterpolators_all:
                 assert y1 == approx(y_exp1)
                 assert y2 == approx(y_exp2)
 
+            #test that infor string conversion does not crash or produce empty strings
+            print(ip)
+            ip.print()
+            assert (len(str(ip)) > 0)
+            assert (len(ip.info_string()) > 0)
+
     def test_VectorInterpolators_should_throw_expected_exceptions(self):
         X = [-10, -5, 0, 6, 12]
         Y = [1, 0, 1, 0, -1]
@@ -127,6 +133,8 @@ class Test_tools_vectorinterpolators_all:
         Y_wrong_order = [0, 1, 1, 0, -1]
         X_duplicates = [-10, -5, -5, 0, 6, 12]
         Y_duplicates = [1, 0, 1, 1, 0, -1]
+        X_nan = [np.nan, -5, 0, 6, 12]
+        Y_nan = [1, 0, 1, np.inf, -1]
 
         for interpolatorType in [
             vip.NearestInterpolator,
@@ -141,6 +149,14 @@ class Test_tools_vectorinterpolators_all:
             # check of exception is raised on duplicates
             with pytest.raises(ValueError):
                 interpolatorType(X_duplicates, Y_duplicates)
+
+            # check of exception is raised on x nan
+            with pytest.raises(ValueError):
+                interpolatorType(X_nan, Y)
+
+            # check of exception is raised on x nan
+            with pytest.raises(ValueError):
+                interpolatorType(Y, Y_nan)
 
             # should not throw
             interpolator = interpolatorType(X, Y)
@@ -170,6 +186,26 @@ class Test_tools_vectorinterpolators_all:
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([14, 13], [-1, -1])
+
+            # check of exceptions are raised for extending nan x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.extend([13, np.nan], [-1, -1])
+
+            # check of exceptions are raised for extending nan x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.extend([13, 14], [-1, np.nan])
+
+            # check of exceptions are raised for extending inf x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.extend([13, np.inf], [-1, -1])
+
+            # check of exceptions are raised for extending inf x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.extend([13, 14], [np.inf, -1])
 
             # should not throw
             interpolator = interpolatorType(X, Y)
@@ -212,6 +248,25 @@ class Test_tools_vectorinterpolators_all:
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([14, 14], [[-1, -1, -1], [1, 1, 1]])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.extend([np.nan, 14], [[-1, -1, -1], [1, 1, 1]])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.extend([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
+
+
+        #should not raise here
+        vip.SlerpInterpolator(x + [100], yaw + [1], pitch + [2], roll + [3])
+        # interpolator should fail if double nan x elements
+        with pytest.raises(ValueError):
+            print (x + [np.nan])
+            vip.SlerpInterpolator(x + [np.nan], yaw + [1], pitch + [2], roll + [3])
+        # interpolator should fail if double nan x elements
+        with pytest.raises(ValueError):
+            vip.SlerpInterpolator(x + [100], yaw + [1], pitch + [np.inf], roll + [3])
 
         # should not fail here
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
