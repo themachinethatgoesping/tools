@@ -23,6 +23,37 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
+#include "../bitsery_helpers/classhelpers.hpp"
+#include "../bitsery_helpers/helpers.hpp"
+#include <bitsery/traits/string.h>
+
+// --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
+#define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
+    /**                                                                                            \
+     * @brief return an info string using the class __printer__ object                             \
+     *                                                                                             \
+     * @return std::string                                                                         \
+     */                                                                                            \
+    std::string info_string() const                                                                \
+    {                                                                                              \
+        return this->__printer__().create_str();                                                   \
+    }
+
+#define __CLASSHELPERS_PRINTER_PRINT__                                                             \
+    /**                                                                                            \
+     * @brief print the object information to the given outpustream                                \
+     *                                                                                             \
+     * @param os output stream, e.g. file stream or std::out or std::cerr                          \
+     */                                                                                            \
+    void print(std::ostream& os) const                                                             \
+    {                                                                                              \
+        os << this->__printer__().create_str() << std::endl;                                       \
+    }
+
+#define __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__                                                \
+    __CLASSHELPERS_PRINTER_INFO_STRING__                                                           \
+    __CLASSHELPERS_PRINTER_PRINT__
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace classhelpers {
@@ -39,6 +70,8 @@ namespace classhelpers {
  *     __str__(), __repr__(), info_string() and print() as python functions
  *
  */
+
+
 class ObjectPrinter
 {
     /**
@@ -49,15 +82,65 @@ class ObjectPrinter
     {
         tvalue,     /// < double or integer
         tenum,      /// < enumerator
-        tcontainer, /// < 1D container (double or integer)
+        tcontainer, /// < 1D container (floating point or integer)
         tsection    /// < section break
     };
 
-    const std::string                     _name;   /// < name of the class that is to be printed
+    std::string                           _name;   /// < name of the class that is to be printed
     std::vector<std::string>              _fields; /// < variable names
     std::vector<t_field>                  _field_types; /// < variable types
     std::vector<std::vector<std::string>> _lines;       /// frst line is typically the field value
     std::vector<std::string>              _value_infos; /// additional info (printed in [])
+
+    // serialization support using bitsery
+    ObjectPrinter() = default;
+    friend bitsery::Access;
+
+    template<typename S>
+    void serialize(S& s)
+    {
+        s.text1b(_name, 100);
+        s.container(_fields, 1000, [](S& s_, std::string& str) { s_.text1b(str,100); });
+        s.container4b(_field_types, 1000);
+        s.container(_lines, 1000, [](S& s_, std::vector<std::string>& str_vec) 
+        { 
+            s_.container(str_vec, 1000, [](S& s__, std::string& str) { s__.text1b(str,100); }); 
+            });
+        s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str,100); });
+        //s.container(_value_infos, 1000, &ser_txt);
+    }
+
+  public:
+    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
+    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
+
+    ObjectPrinter __printer__() const
+    {
+        ObjectPrinter printer("ObjectPrinter");
+
+        printer.register_value("name", _name);
+        printer.register_container("fields", _fields);
+        printer.register_container("field_types", _field_types);
+
+        // convert lines to string
+        std::vector<std::string> lines;
+        for (const auto& strl : _lines)
+        {
+            std::string str;
+            for (const auto& s : strl)
+            {
+                if (str.size() != 0)
+                    str += "; ";
+                str += s;
+            }
+            lines.push_back(str);
+        }
+        printer.register_value("lines", fmt::format("... {} elements", _lines.size()));
+
+        printer.register_container("value_infos", _value_infos);
+
+        return printer;
+    }
 
   public:
     /**
@@ -136,6 +219,7 @@ class ObjectPrinter
 
         _fields.push_back(name);
         _lines.push_back({ str });
+
         _field_types.push_back(t_field::tvalue);
     }
 
@@ -149,15 +233,17 @@ class ObjectPrinter
      */
     template<typename t_value>
     void register_container(const std::string&          name,
-                       const std::vector<t_value>& values,
-                       std::string                 value_info           = "",
-                       size_t                      max_visible_elements = 9)
+                            const std::vector<t_value>& values,
+                            std::string                 value_info = "")
     {
-        std::string str, format;
+        static const size_t max_visible_elements = 9; // maximum values to display for a vector
+        std::string         str, format;
 
         // define value to string format
         if constexpr (std::is_floating_point<t_value>())
             format = "{:.6g}"; // 6 characters, automatic scientific noation depending on magnitude
+        else if constexpr (std::is_base_of<t_value, std::string>())
+            format = "\"{}\"";
         else
             format = "{}";
 
@@ -176,7 +262,10 @@ class ObjectPrinter
                     i = values.size() - size_t(max_visible_elements / 2);
                     continue;
                 }
-            str += fmt::format(format, values[i]);
+            if constexpr (std::is_enum<t_value>())
+                str += magic_enum::enum_name(values[i]);
+            else
+                str += fmt::format(format, values[i]);
         }
         str += "}";
 
@@ -193,92 +282,104 @@ class ObjectPrinter
         // add vector statistics if not all elements are displayed
         if (values.size() > max_visible_elements)
         {
-            // copy vector once to modify it
-            std::vector<t_value> v;
-            size_t               cnt_nan   = 0; ///< number of nan values
-            size_t               cnt_inf   = 0; ///< number of positive infinity values
-            size_t               cnt_inf_n = 0; ///< number of negative infinity values
-
-            // count nans and infs and copy normal values to v
-            if constexpr (std::is_floating_point<t_value>())
+            // begin statistics for numbers
+            if constexpr (std::is_floating_point<t_value>() || std::is_integral<t_value>())
             {
-                for (const auto& value : values)
+
                 {
-                    if (std::isnan(value))
+                    // copy vector once to modify it
+                    std::vector<t_value> v;
+                    size_t               cnt_nan   = 0; ///< number of nan values
+                    size_t               cnt_inf   = 0; ///< number of positive infinity values
+                    size_t               cnt_inf_n = 0; ///< number of negative infinity values
+
+                    // count nans and infs and copy normal values to v
+                    if constexpr (std::is_floating_point<t_value>())
                     {
-                        ++cnt_nan;
-                        continue;
+                        for (const auto& value : values)
+                        {
+                            if (std::isnan(value))
+                            {
+                                ++cnt_nan;
+                                continue;
+                            }
+
+                            if (std::isinf(value))
+                            {
+                                if (value < 0)
+                                    ++cnt_inf_n;
+                                else
+                                    ++cnt_inf;
+                                continue;
+                            }
+
+                            v.push_back(value);
+                        }
+                    }
+                    else
+                        v = values;
+
+                    // get statistics from nan/inf cleaned lists
+                    auto minmax = std::minmax_element(std::begin(v), std::end(v));
+                    auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
+
+                    // compute median
+                    size_t n_2 = v.size() / 2;
+                    std::nth_element(v.begin(), v.begin() + n_2, v.end());
+
+                    // -- print statistics 1 --
+                    std::string line_format =
+                        fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
+                    _lines.back().push_back(
+                        fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
+
+                    // print meadian (special case for even numbers)
+                    if (v.size() % 2)
+                    {
+                        std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
+                        _lines.back().back() +=
+                            fmt::format("| Median: " + format, (v[n_2] + v[n_2 + 1]) / 2);
+                    }
+                    else
+                    {
+                        _lines.back().back() += fmt::format(" | Median: " + format, v[n_2]);
                     }
 
-                    if (std::isinf(value))
-                    {
-                        if (value < 0)
-                            ++cnt_inf_n;
-                        else
-                            ++cnt_inf;
-                        continue;
-                    }
+                    // -- print statistics 2 --
+                    // value count
+                    _lines.back().push_back(fmt::format("... {} elements", values.size()));
 
-                    v.push_back(value);
+                    // for floating point vectors, add number of nan/inf elements to info
+                    if constexpr (std::is_floating_point<t_value>())
+                    {
+                        if (cnt_nan || cnt_inf || cnt_inf_n)
+                        {
+                            _lines.back().back() += fmt::format(" ! NAN elements: ");
+
+                            if (cnt_nan)
+                            {
+                                _lines.back().back() += fmt::format("nan({})", cnt_nan);
+                                if (cnt_inf || cnt_inf_n)
+                                    _lines.back().back() += ", ";
+                            }
+                            if (cnt_inf_n)
+                            {
+                                _lines.back().back() += fmt::format("-inf({})", cnt_inf_n);
+                                if (cnt_inf)
+                                    _lines.back().back() += ", ";
+                            }
+                            if (cnt_inf)
+                            {
+                                _lines.back().back() += fmt::format("+inf({})", cnt_inf);
+                            }
+                        }
+                    }
                 }
             }
-            else
-                v = values;
-
-            // get statistics from nan/inf cleaned lists
-            auto minmax = std::minmax_element(std::begin(v), std::end(v));
-            auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
-
-            // compute median
-            size_t n_2 = v.size() / 2;
-            std::nth_element(v.begin(), v.begin() + n_2, v.end());
-
-            // -- print statistics 1 --
-            std::string line_format =
-                fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
-            _lines.back().push_back(
-                fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
-
-            // print meadian (special case for even numbers)
-            if (v.size() % 2)
+            else // end number statistics
             {
-                std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
-                _lines.back().back() +=
-                    fmt::format("| Median: " + format, (v[n_2] + v[n_2 + 1]) / 2);
-            }
-            else
-            {
-                _lines.back().back() += fmt::format(" | Median: " + format, v[n_2]);
-            }
-
-            // -- print statistics 2 --
-            // value count
-            _lines.back().push_back(fmt::format("... {} elements", values.size()));
-
-            // for floating point vectors, add number of nan/inf elements to info
-            if constexpr (std::is_floating_point<t_value>())
-            {
-                if (cnt_nan || cnt_inf || cnt_inf_n)
-                {
-                    _lines.back().back() += fmt::format(" ! NAN elements: ");
-
-                    if (cnt_nan)
-                    {
-                        _lines.back().back() += fmt::format("nan({})", cnt_nan);
-                        if (cnt_inf || cnt_inf_n)
-                            _lines.back().back() += ", ";
-                    }
-                    if (cnt_inf_n)
-                    {
-                        _lines.back().back() += fmt::format("-inf({})", cnt_inf_n);
-                        if (cnt_inf)
-                            _lines.back().back() += ", ";
-                    }
-                    if (cnt_inf)
-                    {
-                        _lines.back().back() += fmt::format("+inf({})", cnt_inf);
-                    }
-                }
+                // statistics also for not number containers
+                _lines.back().push_back(fmt::format("... {} elements", values.size()));
             }
         }
     }
@@ -298,8 +399,8 @@ class ObjectPrinter
 
     /**
      * @brief Create an info_string from the registered values/sections
-     * 
-     * @return std::string 
+     *
+     * @return std::string
      */
     std::string create_str() const
     {
@@ -395,10 +496,10 @@ class ObjectPrinter
 
     /**
      * @brief add a line under a given line string
-     * 
+     *
      * @param line input string
      * @param underliner line character
-     * @return std::string 
+     * @return std::string
      */
     static std::string underline(const std::string& line, char underliner = '-')
     {
@@ -414,33 +515,6 @@ class ObjectPrinter
         return str;
     }
 };
-
-// --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
-#define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
-    /**                                                                                            \
-     * @brief return an info string using the class __printer__ object                             \
-     *                                                                                             \
-     * @return std::string                                                                         \
-     */                                                                                            \
-    std::string info_string() const                                                                \
-    {                                                                                              \
-        return this->__printer__().create_str();                                                   \
-    }
-
-#define __CLASSHELPERS_PRINTER_PRINT__                                                             \
-    /**                                                                                            \
-     * @brief print the object information to the given outpustream                                \
-     *                                                                                             \
-     * @param os output stream, e.g. file stream or std::out or std::cerr                          \
-     */                                                                                            \
-    void print(std::ostream& os) const                                                             \
-    {                                                                                              \
-        os << this->__printer__().create_str() << std::endl;                                       \
-    }
-
-#define __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__                                                \
-    __CLASSHELPERS_PRINTER_INFO_STRING__                                                           \
-    __CLASSHELPERS_PRINTER_PRINT__
 
 }
 }

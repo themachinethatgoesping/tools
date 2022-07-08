@@ -31,6 +31,113 @@ static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input =
 
 static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input_2 = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter =
+R"doc(Class that allows for easy pretty printing of class members usage: 1.
+Implement a __printer__ function as public class member this function
+should return a ObjectPrinter object. Register all, values,
+containers, objects that are to be printerd. 2. Add the
+__CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__ macro to the public
+fucntions. This macro implements std::string info_string() and
+print(std::ostream) functions using the object printer 3. Add the
+__PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
+macro implements __str__(), __repr__(), info_string() and print() as
+python functions)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter =
+R"doc(Construct a new Object Printer object
+
+Parameter ``name``:
+    name of the class that is to be printed)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_create_str =
+R"doc(Create an info_string from the registered values/sections
+
+Returns:
+    std::string)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_field_types = R"doc(< variable names)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields = R"doc(< name of the class that is to be printed)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_name = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_container =
+R"doc(register a 1D container for printing
+
+Template parameter ``t_value``:
+    integer or floating point
+
+Parameter ``name``:
+    name of the container
+
+Parameter ``value``:
+    container values
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_enum =
+R"doc(register an enumeration for printing
+
+Template parameter ``t_value``:
+    enumerator
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_section =
+R"doc(register a section break for printing
+
+Parameter ``name``:
+    name of the following section)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_value =
+R"doc(register a single integer of floating point value for printing
+
+Template parameter ``t_value``:
+    double or floating point
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field =
+R"doc(internal, describe the value type for implementing different printing
+strategies)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tcontainer = R"doc(< enumerator)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(< double or integer)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< 1D container (double or integer))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tvalue = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_underline =
+R"doc(add a line under a given line string
+
+Parameter ``line``:
+    input string
+
+Parameter ``underliner``:
+    line character
+
+Returns:
+    std::string)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(frst line is typically the field value)doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_degrees =
 R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
 [-90°, 90°], roll [-180¶, 179.99°]
@@ -203,6 +310,8 @@ R"doc(return the y component of the itnernal data vector
 Returns:
     std::vector<YType>)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
 R"doc(internal function to initialize the linear extrapolation objects _X,
 _Y and the _akima_spline must be set/initialized before calling this
@@ -234,6 +343,10 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_eq = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_printer = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_serialize = R"doc()doc";
 
@@ -482,6 +595,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_interpolate_pair =
 R"doc(Interpolate: Interpolate interpolation between two values
 
@@ -500,6 +615,10 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_operator_eq = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_printer = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_serialize = R"doc()doc";
 
@@ -532,6 +651,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Neares
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_interpolate_pair =
 R"doc(Interpolate interpolation between two values
 
@@ -550,6 +671,10 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_operator_eq = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_printer = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_serialize = R"doc()doc";
 
@@ -693,6 +818,8 @@ Parameter ``output_in_degrees``:
 Returns:
     std::vector<std::array<3, double>> YPR)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_interpolate_pair =
 R"doc(Interpolate: Slerp interpolation between two values
 
@@ -711,6 +838,10 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_eq = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_ne = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_serialize = R"doc()doc";
 
