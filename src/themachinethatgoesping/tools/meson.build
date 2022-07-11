@@ -74,8 +74,8 @@ tools_dep = declare_dependency(
     magic_enum_dep
   ],
   link_with : [tools_lib],
-  compile_args : ['-D_USE_MATH_DEFINES']
-  #include_directories : ['../']
+  compile_args : ['-D_USE_MATH_DEFINES'],
+  include_directories : ['../../']
   )
 
 

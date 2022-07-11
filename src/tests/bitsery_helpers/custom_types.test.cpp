@@ -11,7 +11,7 @@
 #include <fstream>
 
 // eigen quaternions
-#include "../../tools/classhelpers/bitsery_helpers/eigen.hpp"
+#include "../../themachinethatgoesping/tools/classhelpers/bitsery_helpers/eigen.hpp"
 
 #define TESTTAG "[bitsery]"
 
