@@ -46,12 +46,7 @@ if not fmt_dep.found()
 endif
 
 #date (to be replaced with c++20 features)
-hinnant_date_project = subproject('hinnant-date', default_options: 'use_manual_tzdb=true')
-hinnant_date_incl = hinnant_date_project.get_variable('i')
-
-hinnant_date_dep = declare_dependency(
- include_directories : hinnant_date_incl
- )
+hinnant_date_dep = subproject('hinnant-date').get_variable('date_dep')
 
 #bitsery (for object serialization)
 bitsert_dep = declare_dependency(
@@ -59,9 +54,11 @@ bitsert_dep = declare_dependency(
 )
 
 #magic_enum (for enum reflection)
-magic_enum_dep = declare_dependency(
-  include_directories : ['extern/magic_enum/include/']
-)
+magic_enum_dep = dependency('magic_enum', required: false)
+
+if not magic_enum_dep.found()
+  magic_enum_dep = subproject('magic_enum').get_variable('magic_enum_dep')
+endif
 
 #setup test_data_path
 test_data_path = '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/test_data"'
