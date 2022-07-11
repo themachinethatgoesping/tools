@@ -22,9 +22,8 @@
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
 
-#include "../bitsery_helpers/helpers.hpp"
-#include "../bitsery_helpers/classhelpers.hpp"
 #include "../classhelpers/objectprinter.hpp"
+#include "../classhelpers/bitsery.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

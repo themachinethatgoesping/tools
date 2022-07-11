@@ -23,9 +23,8 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
-#include "../bitsery_helpers/classhelpers.hpp"
-#include "../bitsery_helpers/helpers.hpp"
 #include <bitsery/traits/string.h>
+#include "../classhelpers/bitsery.hpp"
 
 // --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
 #define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \

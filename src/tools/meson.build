@@ -14,8 +14,9 @@ sources = [
 headers = [
   'timeconv.hpp',
   'classhelpers/objectprinter.hpp',
-  'bitsery_helpers/helpers.hpp',
-  'bitsery_helpers/eigen.hpp',
+  'classhelpers/bitsery.hpp',
+  'classhelpers/bitsery_helpers/helpers.hpp',
+  'classhelpers/bitsery_helpers/eigen.hpp',
   'pybind11_helpers/classhelpers.hpp',
   'rotationfunctions/quaternions.hpp',
   'vectorinterpolators.hpp',

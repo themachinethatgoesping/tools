@@ -15,12 +15,11 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../bitsery_helpers/classhelpers.hpp"
-#include "../bitsery_helpers/eigen.hpp"
-#include "../rotationfunctions/quaternions.hpp"
-#include "../classhelpers/objectprinter.hpp"
 #include "i_pairinterpolator.hpp"
+#include "../rotationfunctions/quaternions.hpp"
 
+#include "../classhelpers/bitsery.hpp"
+#include "../classhelpers/objectprinter.hpp"
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {

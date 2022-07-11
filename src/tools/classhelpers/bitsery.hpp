@@ -11,13 +11,16 @@
 
 #pragma once
 
-#include "helpers.hpp"
+#include <iostream>
+
 #include <bitsery/adapter/buffer.h>
 #include <bitsery/adapter/stream.h>
 #include <bitsery/bitsery.h>
 #include <bitsery/traits/string.h>
 #include <bitsery/traits/vector.h>
-#include <iostream>
+
+#include "bitsery_helpers/helpers.hpp"
+#include "bitsery_helpers/eigen.hpp"
 
 #define __BITSERY_DEFAULT_TO_BINARY__                                                              \
     /** @brief convert object to vector of bytes                                                   \

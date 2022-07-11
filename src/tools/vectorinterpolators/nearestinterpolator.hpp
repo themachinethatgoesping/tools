@@ -20,7 +20,7 @@
 
 #include "i_pairinterpolator.hpp"
 
-#include "../bitsery_helpers/classhelpers.hpp"
+#include "../classhelpers/bitsery.hpp"
 #include "../classhelpers/objectprinter.hpp"
 
 namespace themachinethatgoesping {
