@@ -9,7 +9,7 @@ ignore_files = [
 ]
 
 headers = []
-for r,d,f in os.walk('../tools'):
+for r,d,f in os.walk('../themachinethatgoesping'):
     for file in f:
         if file.endswith('.hpp'):
             if file not in ignore_files:

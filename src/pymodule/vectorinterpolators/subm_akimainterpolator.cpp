@@ -9,8 +9,8 @@
 #include <tuple>
 #include <vector>
 
-#include "../../tools/pybind11_helpers/classhelpers.hpp"
-#include "../../tools/vectorinterpolators/akimainterpolator.hpp"
+#include "../../themachinethatgoesping/tools/pybind11_helpers/classhelpers.hpp"
+#include "../../themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 

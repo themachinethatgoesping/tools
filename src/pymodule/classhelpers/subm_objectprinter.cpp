@@ -9,8 +9,8 @@
 #include <tuple>
 #include <vector>
 
-#include "../../tools/pybind11_helpers/classhelpers.hpp"
-#include "../../tools/classhelpers/objectprinter.hpp"
+#include "../../themachinethatgoesping/tools/pybind11_helpers/classhelpers.hpp"
+#include "../../themachinethatgoesping/tools/classhelpers/objectprinter.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 

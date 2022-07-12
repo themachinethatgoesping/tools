@@ -8,7 +8,7 @@
 #include "docstrings.hpp" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
-#include "../tools/timeconv.hpp"
+#include "../themachinethatgoesping/tools/timeconv.hpp"
 
 // -- include system headers
 #include <sstream>
