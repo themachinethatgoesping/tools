@@ -43,7 +43,9 @@ __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
 macro implements __str__(), __repr__(), info_string() and print() as
 python functions)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter =
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter = R"doc(additional info (printed in []))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter_2 =
 R"doc(Construct a new Object Printer object
 
 Parameter ``name``:
@@ -59,7 +61,17 @@ static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields = R"doc(< name of the class that is to be printed)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_name = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_printer = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_container =
 R"doc(register a 1D container for printing
@@ -112,6 +124,8 @@ Parameter ``value``:
 Parameter ``value_info``:
     additional info (is printed in [] behind the variable))doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_serialize = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
@@ -120,9 +134,13 @@ static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(< double or integer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< 1D container (double or integer))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< 1D container (floating point or integer))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tvalue = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_to_binary = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_to_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_underline =
 R"doc(add a line under a given line string
@@ -137,6 +155,27 @@ Returns:
     std::string)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(frst line is typically the field value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_helpers_approx =
+R"doc(compare to floats using a relative difference factor src: Drew Dormann
+https://stackoverflow.com/questions/67842444/modern-practice-to-
+compare-double-float-for-equality-in-modern-c
+
+Template parameter ``t_float``:
+    floating point type
+
+Parameter ``f1``:
+    float/double 1
+
+Parameter ``f2``:
+    float/double 1
+
+Parameter ``relative_difference_factor``:
+    relative factor by which the 2 numbers must be comparable (default
+    0.01%)
+
+Returns:
+    true/false)doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_degrees =
 R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
