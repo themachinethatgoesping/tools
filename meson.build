@@ -46,12 +46,18 @@ if not fmt_dep.found()
 endif
 
 #date (to be replaced with c++20 features)
-hinnant_date_dep = subproject('hinnant-date').get_variable('date_dep')
+hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #bitsery (for object serialization)
-bitsert_dep = declare_dependency(
-  include_directories : ['extern/bitsery/include/']
-)
+bitsery_dep = dependency('bitsery', required: false)
+
+if not bitsery_dep.found()
+  bitsery_dep = subproject('bitsery').get_variable('bitsery_dep')
+endif
+
+# bitsery_dep = declare_dependency(
+#   include_directories : ['extern/bitsery/include/']
+# )
 
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum', required: false)
