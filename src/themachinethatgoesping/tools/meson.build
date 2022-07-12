@@ -36,7 +36,7 @@ if build_machine.system() != 'linux'
                           eigen3_dep, 
                           omp_dep,
                           hinnant_date_dep,
-                          bitsert_dep,
+                          bitsery_dep,
                           fmt_dep,
                           magic_enum_dep],
                         override_options: [
@@ -51,7 +51,7 @@ else
                           eigen3_dep, 
                           omp_dep,
                           hinnant_date_dep,
-                          bitsert_dep,
+                          bitsery_dep,
                           fmt_dep,
                           magic_enum_dep],
                         override_options: [
@@ -69,7 +69,7 @@ tools_dep = declare_dependency(
     eigen3_dep,
     omp_dep,
     hinnant_date_dep,
-    bitsert_dep,
+    bitsery_dep,
     fmt_dep,
     magic_enum_dep
   ],
