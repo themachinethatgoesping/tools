@@ -65,4 +65,4 @@ headers = [
     'bitsery/traits/vector.h',
 ]
 
-install_headers(headers, preserve_path: true)
+#install_headers(headers, preserve_path: true)

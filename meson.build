@@ -55,10 +55,6 @@ if not bitsery_dep.found()
   bitsery_dep = subproject('bitsery').get_variable('bitsery_dep')
 endif
 
-# bitsery_dep = declare_dependency(
-#   include_directories : ['extern/bitsery/include/']
-# )
-
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum', required: false)
 

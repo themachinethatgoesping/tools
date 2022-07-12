@@ -72,4 +72,4 @@ date_dep = declare_dependency(
   include_directories: i
 )
 
-install_headers(header_files, subdir: 'date', preserve_path: false)
+#install_headers(header_files, subdir: 'date', preserve_path: false)

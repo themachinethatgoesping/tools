@@ -21,4 +21,4 @@ headers = [
     'include/magic_enum_fuse.hpp',
 ]
 
-install_headers(headers, preserve_path: false)
+#install_headers(headers, preserve_path: false)
