@@ -13,6 +13,7 @@ sources = [
 
 headers = [
   'timeconv.hpp',
+  'helpers.hpp',
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
   'classhelpers/bitsery_helpers/helpers.hpp',
