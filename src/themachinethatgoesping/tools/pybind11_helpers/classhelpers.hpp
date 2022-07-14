@@ -61,7 +61,6 @@
     .def(py::pickle([](const T_CLASS& self) { return py::bytes(self.to_binary()); },               \
                     [](const py::bytes& b) { return T_CLASS::from_binary(b); }))
 
-
 // --- print functions (need objectprinter __printer__ function) ---
 #define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
     .def(                                                                                          \
