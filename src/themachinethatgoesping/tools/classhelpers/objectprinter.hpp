@@ -23,8 +23,8 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
-#include <bitsery/traits/string.h>
 #include "../classhelpers/bitsery.hpp"
+#include <bitsery/traits/string.h>
 
 // --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
 #define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
@@ -70,7 +70,6 @@ namespace classhelpers {
  *
  */
 
-
 class ObjectPrinter
 {
     /**
@@ -82,6 +81,7 @@ class ObjectPrinter
         tvalue,     /// < double or integer
         tenum,      /// < enumerator
         tcontainer, /// < 1D container (floating point or integer)
+        tstring,    /// < formated string field
         tsection    /// < section break
     };
 
@@ -99,14 +99,13 @@ class ObjectPrinter
     void serialize(S& s)
     {
         s.text1b(_name, 100);
-        s.container(_fields, 1000, [](S& s_, std::string& str) { s_.text1b(str,100); });
+        s.container(_fields, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
         s.container4b(_field_types, 1000);
-        s.container(_lines, 1000, [](S& s_, std::vector<std::string>& str_vec) 
-        { 
-            s_.container(str_vec, 1000, [](S& s__, std::string& str) { s__.text1b(str,100); }); 
-            });
-        s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str,100); });
-        //s.container(_value_infos, 1000, &ser_txt);
+        s.container(_lines, 1000, [](S& s_, std::vector<std::string>& str_vec) {
+            s_.container(str_vec, 1000, [](S& s__, std::string& str) { s__.text1b(str, 100); });
+        });
+        s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
+        // s.container(_value_infos, 1000, &ser_txt);
     }
 
   public:
@@ -384,6 +383,23 @@ class ObjectPrinter
     }
 
     /**
+     * @brief register a formated string field for printing
+     *
+     * @param name name of the variable
+     * @param value value of the variable
+     * @param value_info additional info (is printed in [] behind the variable)
+     */
+    void register_string(const std::string& name,
+                         const std::string& value,
+                         const std::string& value_info = "")
+    {
+        _fields.push_back(name);
+        _lines.push_back({ value });
+        _value_infos.push_back({ fmt::format("[{}]",value_info) });
+        _field_types.push_back(t_field::tstring);
+    }
+
+    /**
      * @brief register a section break for printing
      *
      * @param name name of the following section
@@ -447,6 +463,12 @@ class ObjectPrinter
 
                     continue;
                 case t_field::tvalue:
+                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
+                                                    _fields[i] + ':',
+                                                    max_len_field[section_nr],
+                                                    _lines[i][0]));
+                    break;
+                case t_field::tstring:
                     str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
                                                     _fields[i] + ':',
                                                     max_len_field[section_nr],
