@@ -308,47 +308,92 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
     return YPR;
 }
 
-// /**
-//  * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
-//  * parameters x,y,z as a Vector
-//  * @param x: x as double or float
-//  * @param y: y as double or float
-//  * @param z: z as double or float
-//  * @param w: w as double or float with the default value 0.0
-//  * @return returns the Quaternion that holds a vector
-//  */
-// template<typename floattype>
-// Eigen::Quaternion<floattype> getQuaterniondfromVector(const floattype x,
-//                                                       const floattype y,
-//                                                       const floattype z,
-//                                                       const floattype w = 0.0)
-// {
-//     Eigen::Vector3d              vec_to_rotate(x, y, z);
-//     Eigen::Quaternion<floattype> vec_to_rotate_as_quat;
-//     vec_to_rotate_as_quat.w()   = w;
-//     vec_to_rotate_as_quat.vec() = vec_to_rotate;
-//     return vec_to_rotate_as_quat;
-// }
 
-// /**
-//  * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
-//  * parameters x,y,z as a Vector
-//  * @param xyz: x, y, z as Array<floattype, 3>
-//  * @param w: w as double or float with the default value 0.0
-//  * @return returns the Quaternion that holds a vector
-//  */
-// template<typename floattype>
-// Eigen::Quaternion<floattype> getQuaterniondfromVector(const std::array<floattype, 3>& xyz,
-//                                                       const floattype                 w = 0.0)
-// {
-//     return getQuaterniondfromVector(xyz[0], xyz[1], xyz[2], w);
-// }
+/// ---- untestesd ////
+/**
+ * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
+ * parameters x,y,z as a Vector
+ * @param x: x as double or float
+ * @param y: y as double or float
+ * @param z: z as double or float
+ * @param w: w as double or float with the default value 0.0
+ * @return returns the Quaternion that holds a vector
+ */
+template<typename floattype>
+Eigen::Quaternion<floattype> getQuaterniondfromVector(const floattype x,
+                                                      const floattype y,
+                                                      const floattype z,
+                                                      const floattype w = 0.0)
+{
+    Eigen::Vector3d              vec_to_rotate(x, y, z);
+    Eigen::Quaternion<floattype> vec_to_rotate_as_quat;
+    vec_to_rotate_as_quat.w()   = w;
+    vec_to_rotate_as_quat.vec() = vec_to_rotate;
+    return vec_to_rotate_as_quat;
+}
 
-// template<typename floattype>
-// std::vector<floattype> get_quaternion_wxyz(const Eigen::Quaternion<floattype>& q)
-// {
-//     return { q.w(), q.x(), q.y(), q.z() };
-// }
+/**
+ * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
+ * parameters x,y,z as a Vector
+ * @param xyz: x, y, z as Array<floattype, 3>
+ * @param w: w as double or float with the default value 0.0
+ * @return returns the Quaternion that holds a vector
+ */
+template<typename floattype>
+Eigen::Quaternion<floattype> getQuaterniondfromVector(const std::array<floattype, 3>& xyz,
+                                                      const floattype                 w = 0.0)
+{
+    return getQuaterniondfromVector(xyz[0], xyz[1], xyz[2], w);
+}
+
+template<typename floattype>
+std::vector<floattype> get_quaternion_wxyz(const Eigen::Quaternion<floattype>& q)
+{
+    return { q.w(), q.x(), q.y(), q.z() };
+}
+
+
+/**
+ * @brief OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
+ * parameters roll, pitch, yaw as a Quaternion
+ * @param q: roll, pitch, yaw as Quaternion<floattype>
+ * @param x: x as double
+ * @param y: y as double
+ * @param z: z as double
+ * @return returns vector with rotated xyz
+ */
+template<typename floattype>
+Eigen::Vector3d rotateXYZ(Eigen::Quaternion<floattype> q, floattype x, floattype y, floattype z)
+{
+    q.normalize();
+
+    Eigen::Quaternion<floattype> vec_to_rotate_as_quat = getQuaterniondfromVector(x, y, z);
+
+    Eigen::Quaternion<floattype> rotatedquat = q * vec_to_rotate_as_quat * q.inverse();
+
+    Eigen::Vector3d rotatedV = rotatedquat.vec();
+
+    return rotatedV;
+}
+
+/**
+ * @brief OVERLOADED rotateXYZ: rotates a x,y,z vector as a Quaternion with the
+ * passed parameters roll, pitch, yaw as a Quaternion
+ * @param q: roll, pitch, yaw as Quaternion<floattype>
+ * @param v: x, y, z as Quaternion<floattype>
+ * @return returns vector with rotated xyz
+ */
+template<typename floattype>
+Eigen::Vector3d rotateXYZ(Eigen::Quaternion<floattype> q, Eigen::Quaternion<floattype> v)
+{
+    q.normalize();
+
+    Eigen::Quaternion<floattype> rotatedquat = q * v * q.inverse();
+
+    Eigen::Vector3d rotatedV = rotatedquat.vec();
+
+    return rotatedV;
+}
 
 } // namespace rotationfunctions
 } // namespace tools
