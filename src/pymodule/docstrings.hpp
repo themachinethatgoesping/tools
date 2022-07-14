@@ -109,6 +109,18 @@ R"doc(register a section break for printing
 Parameter ``name``:
     name of the following section)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_string =
+R"doc(register a formated string field for printing
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable))doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_value =
 R"doc(register a single integer of floating point value for printing
 
@@ -134,7 +146,9 @@ static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(< double or integer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< 1D container (floating point or integer))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< formated string field)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tstring = R"doc(< 1D container (floating point or integer))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tvalue = R"doc()doc";
 
