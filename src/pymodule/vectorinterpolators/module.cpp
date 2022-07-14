@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include "../../themachinethatgoesping/tools/pybind11_helpers/enumhelpers.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 
@@ -38,7 +39,13 @@ void init_m_vectorinterpolators(pybind11::module& m)
         .value("extrapolate", t_extr_mode::extrapolate)
         .value("nearest", t_extr_mode::nearest)
         .value("fail", t_extr_mode::fail)
-        .export_values();
+        .export_values()
+        //pybind enum helpers
+        __PYENUM_FROM_STRING__(t_extr_mode)
+        //end
+        ;
+
+    py::implicitly_convertible<std::string, t_extr_mode>();
 
     // interpolator classes
     init_subm_nearestinterpolator(m_vectorinterpolators);
