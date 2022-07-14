@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2021 The Meson development team
+# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: MIT
+
 [wrap-file]
 source_url = https://github.com/HowardHinnant/date/archive/v3.0.1.tar.gz
 source_filename = date-3.0.1.tar.gz

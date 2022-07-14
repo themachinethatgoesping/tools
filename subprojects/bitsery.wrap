@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+
 [wrap-git]
 url = https://github.com/fraillt/bitsery.git
 revision = v5.2.2

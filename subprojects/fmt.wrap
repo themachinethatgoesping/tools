@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 The Meson development team
+#
+# SPDX-License-Identifier: MIT
+
 [wrap-file]
 directory = fmt-8.1.1
 source_url = https://github.com/fmtlib/fmt/archive/8.1.1.tar.gz

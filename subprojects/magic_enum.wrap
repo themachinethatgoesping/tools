@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+
 [wrap-file]
 source_url = https://github.com/Neargye/magic_enum/archive/refs/tags/v0.8.0.tar.gz
 source_filename = magic_enum-0.8.0.tar.gz
