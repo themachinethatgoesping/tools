@@ -18,8 +18,6 @@ namespace helpers {
 
 /**
  * @brief compare to floats using a relative difference factor
- * src: Drew Dormann
- * https://stackoverflow.com/questions/67842444/modern-practice-to-compare-double-float-for-equality-in-modern-c
  *
  * @tparam t_float floating point type
  * @param f1 float/double 1
@@ -29,14 +27,10 @@ namespace helpers {
  * @return true/false
  */
 template<typename t_float>
-bool approx(t_float f1,
-            t_float f2,
-            t_float relative_difference_factor = 0.0001 // 0.01%
+bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 // 0.01%
 )
 {
-    const auto greater_magnitude = std::max(std::abs(f1), std::abs(f2));
-
-    return (std::abs(f1 - f2) < relative_difference_factor * greater_magnitude);
+    return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
 }
 
 } // namespace helpers
