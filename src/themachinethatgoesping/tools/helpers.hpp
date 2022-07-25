@@ -30,6 +30,29 @@ template<typename t_float>
 bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 // 0.01%
 )
 {
+    // if both are NAN return true
+    if (std ::isnan(f1))
+        if (std::isnan(f2))
+            return true;
+
+    // if both are inf (and same sign) return true
+    if (std::isinf(f1))
+        if (std::isinf(f2))
+        {
+            if (f1 < 0)
+            {
+                if (f2 < 0)
+                    return true;
+            }
+            else
+            {
+                if (f2 > 0)
+                    return true;
+            }
+        }
+
+    // if the difference between both is smaller than the relative difference factor (compared to
+    // the larger float) return true
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
 }
 
