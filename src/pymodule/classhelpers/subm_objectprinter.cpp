@@ -39,7 +39,7 @@ void init_subm_objectprinter(pybind11::module& m)
                  ObjectPrinter,
                  create_str))
         .def("register_value",
-             py::overload_cast<const std::string&, double, std::string>(&ObjectPrinter::register_value<double>),
+             py::overload_cast<const std::string&, double, std::string, int>(&ObjectPrinter::register_value<double>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -47,9 +47,10 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_value),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_value",
-             py::overload_cast<const std::string&, int, std::string>(&ObjectPrinter::register_value<int>),
+             py::overload_cast<const std::string&, int, std::string, int>(&ObjectPrinter::register_value<int>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -57,9 +58,10 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_value),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_value",
-             py::overload_cast<const std::string&, std::string, std::string>(&ObjectPrinter::register_value<std::string>),
+             py::overload_cast<const std::string&, std::string, std::string, int>(&ObjectPrinter::register_value<std::string>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -67,9 +69,10 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_value),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_container",
-             py::overload_cast<const std::string&, const std::vector<double>&, std::string>(&ObjectPrinter::register_container<double>),
+             py::overload_cast<const std::string&, const std::vector<double>&, std::string, int>(&ObjectPrinter::register_container<double>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -77,9 +80,10 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_container),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_container",
-             py::overload_cast<const std::string&, const std::vector<int>&, std::string>(&ObjectPrinter::register_container<int>),
+             py::overload_cast<const std::string&, const std::vector<int>&, std::string, int>(&ObjectPrinter::register_container<int>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -87,9 +91,10 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_container),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_container",
-             py::overload_cast<const std::string&, const std::vector<std::string>&, std::string>(&ObjectPrinter::register_container<std::string>),
+             py::overload_cast<const std::string&, const std::vector<std::string>&, std::string, int>(&ObjectPrinter::register_container<std::string>),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
@@ -97,7 +102,8 @@ void init_subm_objectprinter(pybind11::module& m)
                  register_container),
              py::arg("name"),
              py::arg("value"),
-             py::arg("value_info") = "")
+             py::arg("value_info") = "",
+             py::arg("pos") = -1)
         .def("register_section",
              &ObjectPrinter::register_section,
              DOC(themachinethatgoesping,
@@ -105,7 +111,8 @@ void init_subm_objectprinter(pybind11::module& m)
                  classhelpers,
                  ObjectPrinter,
                  register_section),
-             py::arg("name"))
+             py::arg("name"),
+             py::arg("pos") = -1)
         
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(ObjectPrinter)
