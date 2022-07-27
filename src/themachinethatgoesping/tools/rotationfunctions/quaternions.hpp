@@ -46,8 +46,8 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
 {
     static const floattype _quaternion_from_ypr_to_rad = M_PI / 180.;
 
-    //check if values are valid    
-    if (!std::isfinite( ypr[0]) || !std::isfinite( ypr[1]) || !std::isfinite( ypr[2]))
+    // check if values are valid
+    if (!std::isfinite(ypr[0]) || !std::isfinite(ypr[1]) || !std::isfinite(ypr[2]))
     {
         throw std::invalid_argument(
             "ERROR[quaternion_from_ypr]: NAN or INFINITY yaw, pitch or roll value!");
@@ -213,7 +213,6 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
     return YPR;
 }
 
-
 /// ---- untestesd ////
 /**
  * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
@@ -225,12 +224,12 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
  * @return returns the Quaternion that holds a vector
  */
 template<typename floattype>
-Eigen::Quaternion<floattype> getQuaterniondfromVector(const floattype x,
-                                                      const floattype y,
-                                                      const floattype z,
-                                                      const floattype w = 0.0)
+Eigen::Quaternion<floattype> getQuaterniondfromVector(floattype x,
+                                                      floattype y,
+                                                      floattype z,
+                                                      floattype w = 0.0)
 {
-    Eigen::Vector3d              vec_to_rotate(x, y, z);
+    Eigen::Vector3<floattype>    vec_to_rotate(x, y, z);
     Eigen::Quaternion<floattype> vec_to_rotate_as_quat;
     vec_to_rotate_as_quat.w()   = w;
     vec_to_rotate_as_quat.vec() = vec_to_rotate;
@@ -256,7 +255,6 @@ std::vector<floattype> get_quaternion_wxyz(const Eigen::Quaternion<floattype>& q
 {
     return { q.w(), q.x(), q.y(), q.z() };
 }
-
 
 /**
  * @brief OVERLOADED rotateXYZ: rotates a x,y,z vector with the passed
