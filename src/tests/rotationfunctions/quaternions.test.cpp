@@ -20,7 +20,6 @@ using namespace themachinethatgoesping::tools;
 static const double to_rad     = M_PI / 180;
 static const double to_degrees = 1 / to_rad;
 
-
 TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
 {
     SECTION("quaternion / ypr conversion should be reversible when within specified ranges")
@@ -104,7 +103,7 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
 
     SECTION("vectorized calls should produce the same results as single calls")
     {
-        // degrees means: values are converted to/from degrees or not 
+        // degrees means: values are converted to/from degrees or not
         for (bool degrees : { true, false })
         {
 
