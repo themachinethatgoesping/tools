@@ -127,6 +127,27 @@ std::array<floattype, 3> normalize_angles_degrees(std::array<floattype, 3> ypr)
     return ypr;
 }
 
+/**
+ * @brief compute heading from northing and easting
+ * north 0°/360°, east 90°, south 180°, west 270
+ * 
+ * @param northing northing in m
+ * @param easting easting in m
+ * @param radians return as rad, otherwise as degrees
+ * @return heading in rad or degrees 
+ */
+inline double compute_heading(double northing, double easting, bool radians = false)
+{
+    double heading = atan2(easting, northing);
+    if (heading < 0)
+        heading += 2 * M_PI;
+
+    if(!radians)
+        heading *= 180. / M_PI;
+
+    return heading;
+}
+
 } // namespace rotationfunctions
 } // namespace tools
 } // namespace themachinethatgoesping

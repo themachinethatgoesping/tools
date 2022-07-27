@@ -10,6 +10,7 @@ sources = [
     'tutorial.test.cpp',
     'timeconv.test.cpp',
     'bitsery_helpers/custom_types.test.cpp',
+    'rotationfunctions/helper.test.cpp',
     'rotationfunctions/quaternions.test.cpp',
     'vectorinterpolators/common.test.cpp',
     'vectorinterpolators/nearest.test.cpp',
