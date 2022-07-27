@@ -13,13 +13,14 @@ sources = [
 
 headers = [
   'timeconv.hpp',
-  'helpers.hpp',
+  'helper.hpp',
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
   'classhelpers/bitsery_helpers/helpers.hpp',
   'classhelpers/bitsery_helpers/eigen.hpp',
   'pybind11_helpers/classhelpers.hpp',
   'rotationfunctions/quaternions.hpp',
+  'rotationfunctions/helper.hpp',
   'vectorinterpolators.hpp',
   'vectorinterpolators/i_interpolator.hpp',
   'vectorinterpolators/linearinterpolator.hpp',

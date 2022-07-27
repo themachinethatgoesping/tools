@@ -14,7 +14,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace helpers {
+namespace helper {
 
 /**
  * @brief compare to floats using a relative difference factor
