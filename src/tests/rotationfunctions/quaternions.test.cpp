@@ -18,7 +18,7 @@ using namespace themachinethatgoesping::tools;
 
 // conversions
 static const double to_rad     = M_PI / 180;
-static const double to_degrees = 1 / to_rad;
+// static const double to_degrees = 1 / to_rad;
 
 TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
 {
