@@ -128,15 +128,15 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
                 R.push_back(roll);
             }
 
-            auto Q1          = rotationfunctions::quaternion_from_ypr(YPR, degrees = degrees);
-            auto Q2          = rotationfunctions::quaternion_from_ypr(Y, P, R, degrees = degrees);
-            auto YPR_result1 = rotationfunctions::ypr_from_quaternion(Q1, degrees = degrees);
-            auto YPR_result2 = rotationfunctions::ypr_from_quaternion(Q2, degrees = degrees);
+            auto Q1          = rotationfunctions::quaternion_from_ypr(YPR, degrees);
+            auto Q2          = rotationfunctions::quaternion_from_ypr(Y, P, R, degrees);
+            auto YPR_result1 = rotationfunctions::ypr_from_quaternion(Q1, degrees);
+            auto YPR_result2 = rotationfunctions::ypr_from_quaternion(Q2, degrees);
 
             for (unsigned int c = 0; c < YPR.size(); ++c)
             {
-                auto q   = rotationfunctions::quaternion_from_ypr(YPR[c], degrees = degrees);
-                auto ypr = rotationfunctions::ypr_from_quaternion(q, degrees = degrees);
+                auto q   = rotationfunctions::quaternion_from_ypr(YPR[c], degrees);
+                auto ypr = rotationfunctions::ypr_from_quaternion(q, degrees);
 
                 CHECK(Q1[c] == q);
                 CHECK(Q2[c] == q);
