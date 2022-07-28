@@ -7,7 +7,7 @@
  * usage:
  *  1. Implement a __printer__ function as public class member this function should return a
  *     ObjectPrinter object. Register all, values, containers, objects that are to be printerd.
- *  2. Add the __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__ macro to the public fucntions.
+ *  2. Add the __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public fucntions.
  *     This macro implements std::string info_string() and print(std::ostream) functions using the
  * object printer
  *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
@@ -49,7 +49,7 @@
         os << this->__printer__().create_str() << std::endl;                                       \
     }
 
-#define __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__                                                \
+#define __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__                                                \
     __CLASSHELPERS_PRINTER_INFO_STRING__                                                           \
     __CLASSHELPERS_PRINTER_PRINT__
 
@@ -62,7 +62,7 @@ namespace classhelpers {
  * usage:
  *  1. Implement a __printer__ function as public class member this function should return a
  *     ObjectPrinter object. Register all, values, containers, objects that are to be printerd.
- *  2. Add the __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__ macro to the public fucntions.
+ *  2. Add the __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public fucntions.
  *     This macro implements std::string info_string() and print(std::ostream) functions using the
  * object printer
  *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
@@ -110,7 +110,7 @@ class ObjectPrinter
 
   public:
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
-    __CLASSHELPERS_DEFUALT_PRINTING_FUNCTIONS__
+    __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
 
     ObjectPrinter __printer__() const
     {
