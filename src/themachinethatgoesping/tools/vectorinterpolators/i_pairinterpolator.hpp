@@ -48,11 +48,11 @@ class I_PairInterpolator : public I_Interpolator<YType>
   protected:
     struct _t_x_pair
     {
-        size_t _xmin_index; ///< index of the smaller x value (in the internal vector)
-        size_t _xmax_index; ///< index of the larger x value (in the internal vector)
-        double _xmin;       ///< smaller xvalue
-        double _xmax;       ///< larger xvalue
-        double _xfactor;    ///< 1/(xmax-xmin)
+        size_t _xmin_index; /// index of the smaller x value (in the internal vector)
+        size_t _xmax_index; /// index of the larger x value (in the internal vector)
+        double _xmin;       /// smaller xvalue
+        double _xmax;       /// larger xvalue
+        double _xfactor;    /// 1/(xmax-xmin)
 
         _t_x_pair(size_t xmin_index, size_t xmax_index, double xmin, double xmax)
             : _xmin_index(xmin_index)
@@ -84,14 +84,14 @@ class I_PairInterpolator : public I_Interpolator<YType>
             s.value8b(_xfactor);
         }
 
-    } _last_x_pair; ///< last pair (for faster consequtive searches)
+    } _last_x_pair; /// last pair (for faster consequtive searches)
 
     /**
      * @brief extrapolation mode type.
      *
      */
-    std::vector<double> _X; ///< main data vector containing pairs of corresponding x datapoitns
-    std::vector<YType>  _Y; ///< main data vector containing pairs of corresponding y datapoitns
+    std::vector<double> _X; /// main data vector containing pairs of corresponding x datapoitns
+    std::vector<YType>  _Y; /// main data vector containing pairs of corresponding y datapoitns
 
   public:
     /**

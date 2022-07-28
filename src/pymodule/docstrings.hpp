@@ -51,6 +51,12 @@ R"doc(Construct a new Object Printer object
 Parameter ``name``:
     name of the class that is to be printed)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_append =
+R"doc(Append the fields of an existing object printer
+
+Parameter ``printer``:
+    printer to be appended)doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_create_str =
 R"doc(Create an info_string from the registered values/sections
 
@@ -86,7 +92,11 @@ Parameter ``value``:
     container values
 
 Parameter ``value_info``:
-    additional info (is printed in [] behind the variable))doc";
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_enum =
 R"doc(register an enumeration for printing
@@ -101,13 +111,21 @@ Parameter ``value``:
     value of the variable
 
 Parameter ``value_info``:
-    additional info (is printed in [] behind the variable))doc";
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_section =
 R"doc(register a section break for printing
 
 Parameter ``name``:
-    name of the following section)doc";
+    name of the following section
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_string =
 R"doc(register a formated string field for printing
@@ -119,7 +137,11 @@ Parameter ``value``:
     value of the variable
 
 Parameter ``value_info``:
-    additional info (is printed in [] behind the variable))doc";
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_value =
 R"doc(register a single integer of floating point value for printing
@@ -134,7 +156,13 @@ Parameter ``value``:
     value of the variable
 
 Parameter ``value_info``:
-    additional info (is printed in [] behind the variable))doc";
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_remove_sections = R"doc(Remove all existing sections)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_serialize = R"doc()doc";
 
@@ -170,10 +198,8 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(frst line is typically the field value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_helpers_approx =
-R"doc(compare to floats using a relative difference factor src: Drew Dormann
-https://stackoverflow.com/questions/67842444/modern-practice-to-
-compare-double-float-for-equality-in-modern-c
+static const char *__doc_themachinethatgoesping_tools_helper_approx =
+R"doc(compare to floats using a relative difference factor
 
 Template parameter ``t_float``:
     floating point type
@@ -190,6 +216,22 @@ Parameter ``relative_difference_factor``:
 
 Returns:
     true/false)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =
+R"doc(compute heading from northing and easting north 0°/360°, east 90°,
+south 180°, west 270
+
+Parameter ``northing``:
+    northing in m
+
+Parameter ``easting``:
+    easting in m
+
+Parameter ``radians``:
+    return as rad, otherwise as degrees
+
+Returns:
+    heading in rad or degrees)doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_degrees =
 R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
@@ -544,9 +586,9 @@ Parameter ``extrapolation_mode``:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_X = R"doc(< main data vector containing pairs of corresponding x datapoitns)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_X = R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(< main data vector containing pairs of corresponding y datapoitns)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(main data vector containing pairs of corresponding x datapoitns)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
 
@@ -581,7 +623,7 @@ Parameter ``y1``:
 Returns:
     interpolated y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consequtive searches))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
 R"doc(get the interolated y value for given x target
@@ -624,19 +666,19 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_serialize = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc(1/(xmax-xmin))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor = R"doc(< 1/(xmax-xmin))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor = R"doc(larger xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax = R"doc(< larger xvalue)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax = R"doc(smaller xvalue)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax_index = R"doc(< index of the larger x value (in the internal vector))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmax_index = R"doc(index of the smaller x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin = R"doc(< smaller xvalue)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin = R"doc(index of the larger x value (in the internal vector))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin_index = R"doc(< index of the smaller x value (in the internal vector))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xmin_index = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator = R"doc(Find linear interpolated values within vector data)doc";
 
@@ -976,13 +1018,13 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode = R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_extrapolate = R"doc(< interpolate using the closest value pair in the internal x vector)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_extrapolate = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_fail =
-R"doc(< throw out_of_range exception if x value exceeds boundaries of
-internal vector)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_fail = R"doc(interpolate using the closest value pair in the internal x vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nearest = R"doc(< return nearest value in the vector.)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nearest =
+R"doc(throw out_of_range exception if x value exceeds boundaries of internal
+vector)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

@@ -352,9 +352,9 @@ class ObjectPrinter
                 {
                     // copy vector once to modify it
                     std::vector<t_value> v;
-                    size_t               cnt_nan   = 0; ///< number of nan values
-                    size_t               cnt_inf   = 0; ///< number of positive infinity values
-                    size_t               cnt_inf_n = 0; ///< number of negative infinity values
+                    size_t               cnt_nan   = 0; /// number of nan values
+                    size_t               cnt_inf   = 0; /// number of positive infinity values
+                    size_t               cnt_inf_n = 0; /// number of negative infinity values
 
                     // count nans and infs and copy normal values to v
                     if constexpr (std::is_floating_point<t_value>())

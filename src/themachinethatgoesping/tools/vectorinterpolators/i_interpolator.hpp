@@ -31,9 +31,9 @@ namespace vectorinterpolators {
  */
 enum class t_extr_mode
 {
-    extrapolate = 0, ///< interpolate using the closest value pair in the internal x vector
-    fail    = 1, ///< throw out_of_range exception if x value exceeds boundaries of internal vector
-    nearest = 2, ///< return nearest value in the vector.
+    extrapolate = 0, /// interpolate using the closest value pair in the internal x vector
+    fail    = 1, /// throw out_of_range exception if x value exceeds boundaries of internal vector
+    nearest = 2, /// return nearest value in the vector.
 };
 
 static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapolate,
