@@ -4,9 +4,6 @@
 
 #pragma once
 
-// this header only works if libeigen was found
-//#ifdef USE_LIBEIGEN
-
 #include <Eigen/Eigen>
 #include <Eigen/Geometry>
 #include <array>
@@ -15,8 +12,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "i_pairinterpolator.hpp"
 #include "../rotationfunctions/quaternions.hpp"
+#include "i_pairinterpolator.hpp"
 
 #include "../classhelpers/bitsery.hpp"
 #include "../classhelpers/objectprinter.hpp"
@@ -26,29 +23,23 @@ namespace vectorinterpolators {
 
 using t_quaternion = Eigen::Quaternion<double>;
 
-// //define how object should be serialized/deserialized
-// template <typename S>
-// void serialize(S& s, t_quaternion& o) {
-//     t_quaternion::
-//     s.value4b(o.i);//fundamental types (ints, floats, enums) of size 4b
-//     s.value2b(o.e);
-//     s.container4b(o.fs, 10);//resizable containers also requires maxSize, to make it safe from
-//     buffer-overflow attacks
-// }
-
 /**
  * @brief Class that implements a slerp interpolation for vectors.
- * Data is internaly represented in quaternions using libeigen.
+ * Data is internally represented in quaternions using lib eigen.
  * Interfaces to represent the data in yaw, pitch, roll angles are provided.
  * the __call__ equivalent to get interpolated yaw pitch roll is the ypr function
  *
  */
 class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 {
+  public:
+    // explicitly ignore hidden overloaded virtual warning (clang)
+    using I_PairInterpolator<t_quaternion>::append;
+    using I_PairInterpolator<t_quaternion>::extend;
 
   public:
     /**
-     * @brief Constructor to make default initialization possible (neccessary?)
+     * @brief Constructor to make default initialization possible (necessary?)
      */
     SlerpInterpolator()
         : I_PairInterpolator<t_quaternion>(
@@ -69,9 +60,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @brief Construct a new Slerp Interpolator object using vectors of x, yaw, pitch and roll
      *
      * @param X vector; must be unique and sorted in ascending order
-     * @param yaw vector with yaw data (rotation arround z axis). Must be same size as X!
-     * @param pitch vector with pitch data (rotation arround y axis). Must be same size as X!
-     * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
+     * @param yaw vector with yaw data (rotation around z axis). Must be same size as X!
+     * @param pitch vector with pitch data (rotation around y axis). Must be same size as X!
+     * @param roll vector with roll data (rotation around x axis). Must be same size as X!
      * @param input_in_degrees if true (default) yaw,pitch and roll are in °, otherwise [rad]
      * @param extrapolation_mode :py:class:`t_extr_mode
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the
@@ -133,7 +124,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     }
 
     /**
-     * @brief get the interolated yaw, pitch and roll values for given x target
+     * @brief get the interpolated yaw, pitch and roll values for given x target
      *
      * @param target_x find the corresponding y value for this x value
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
@@ -146,10 +137,10 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     }
 
     /**
-     * @brief get the interolated yaw, pitch and roll values for given x target (vectorized call)
+     * @brief get the interpolated yaw, pitch and roll values for given x target (vectorized call)
      *
-     * @param targets_x vector of x values. For each of these values find the corrspondig yaw, pitch
-     * and roll value
+     * @param targets_x vector of x values. For each of these values find the corrsponding yaw,
+     * pitch and roll value
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      * @return corresponding y value
      */
@@ -170,13 +161,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     // set data functions
     // ------------------
     /**
-     * @brief change the input data to thes X, yaw, pitch, roll vectors (will be converted to
-     * queternion)
+     * @brief change the input data to these X, yaw, pitch, roll vectors (will be converted to
+     * quaternion)
      *
      * @param X vector; must be unique and sorted in ascending order
-     * @param yaw vector with yaw data (rotation arround z axis). Must be same size as X!
-     * @param pitch vector with pitch data (rotation arround y axis). Must be same size as X!
-     * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
+     * @param yaw vector with yaw data (rotation around z axis). Must be same size as X!
+     * @param pitch vector with pitch data (rotation around y axis). Must be same size as X!
+     * @param roll vector with roll data (rotation around x axis). Must be same size as X!
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void set_data_XYPR(const std::vector<double>& X,
@@ -190,13 +181,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     }
 
     /**
-     * @brief change the input data to thes X, yaw, pitch, roll vectors (will be converted to
-     * queternion)
+     * @brief change the input data to these X, yaw, pitch, roll vectors (will be converted to
+     * quaternion)
      *
      * @param X vector; must be unique and sorted in ascending order
-     * @param yaw vector with yaw data (rotation arround z axis). Must be same size as X!
-     * @param pitch vector with pitch data (rotation arround y axis). Must be same size as X!
-     * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
+     * @param yaw vector with yaw data (rotation around z axis). Must be same size as X!
+     * @param pitch vector with pitch data (rotation around y axis). Must be same size as X!
+     * @param roll vector with roll data (rotation around x axis). Must be same size as X!
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void set_data_XYPR(const std::vector<double>&                X,
@@ -224,14 +215,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     // -----------------------
     // append/extend functions
     // -----------------------
-
     /**
      * @brief append an x, yaw, pitch, roll data point
      *
      * @param X must be larger than all internal data points
-     * @param yaw rotation arround z axis
-     * @param pitch rotation arround y axis
-     * @param roll rotation arround x axis
+     * @param yaw rotation around z axis
+     * @param pitch rotation around y axis
+     * @param roll rotation around x axis
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void append(double x, double yaw, double pitch, double roll, bool input_in_degrees = true)
@@ -257,9 +247,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @brief append data with lists of x, yaw, pitch, roll data (vectorized call)
      *
      * @param X vector; must be unique and sorted in ascending order
-     * @param yaw vector with yaw data (rotation arround z axis). Must be same size as X!
-     * @param pitch vector with pitch data (rotation arround y axis). Must be same size as X!
-     * @param roll vector with roll data (rotation arround x axis). Must be same size as X!
+     * @param yaw vector with yaw data (rotation around z axis). Must be same size as X!
+     * @param pitch vector with pitch data (rotation around y axis). Must be same size as X!
+     * @param roll vector with roll data (rotation around x axis). Must be same size as X!
      * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      */
     void extend(const std::vector<double>& x,
@@ -292,7 +282,6 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @param target_x: the target point [0.0 - 1.0]
      * @param y1     : first quaternion (target_x = 0)
      * @param y2     : second quaternion (target_x = 01)
-     * inbetween)
      * @return Interpolated value for target position
      */
     t_quaternion interpolate_pair(double target_x, t_quaternion y1, t_quaternion y2) const final
@@ -311,8 +300,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
         s.container(
             _Y,
-            SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigenquaternions, therefore this call
-                                                    // needs the include of toos/bitsery/eigen.hpp
+            SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigen quaternion, therefore this call
+                                                    // needs the include of tools/classhelpers/bitsery_helpers/eigen.hpp
     }
 
   public:
@@ -338,7 +327,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 
         return printer;
     }
-    
+
   public:
     // -- class helper function macros --
     // define to_binary and from_binary functions (needs the serialize function)
