@@ -108,7 +108,7 @@ class AkimaInterpolator : public I_Interpolator<double>
     }
 
     /**
-     * @brief get the interolated y value for given x target
+     * @brief get the interpolated y value for given x target
      *
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
@@ -159,7 +159,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      * @brief get nearest y values for given x targets (vectorized call)
      *
      * @param targets_x vector of x values. For each of these values find the
-     * corrspondig y value
+     * corrsponding y value
      * @return corresponding y value
      */
     std::vector<double> operator()(const std::vector<double>& targetsX)

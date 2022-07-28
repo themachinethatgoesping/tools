@@ -42,7 +42,7 @@ static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapo
 
 /**
  * @brief Interface class for interpolator classes
- * Create an interpolator object by provding vectors for x and y (same size). X
+ * Create an interpolator object by providing vectors for x and y (same size). X
  * must be sorted and no duplicates are allowed. then call interpolator(new
  * x value) to get a corresponding y value at this x position.
  *
@@ -126,7 +126,7 @@ class I_Interpolator
     //-------------------------
 
     /**
-     * @brief get the interolated y value for given x target
+     * @brief get the interpolated y value for given x target
      *
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
@@ -136,7 +136,7 @@ class I_Interpolator
     /**
      * @brief get nearest y values for given x targets (vectorized call)
      *
-     * @param targets_x vector of x values. For each of these values find the corrspondig y value
+     * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
     std::vector<YType> operator()(const std::vector<double>& targetsX)
@@ -160,7 +160,7 @@ class I_Interpolator
     virtual void append(double x, YType y) = 0;
 
     /**
-     * @brief append x and y value lists to the interplator data (vectorized call)
+     * @brief append x and y value lists to the interpolator data (vectorized call)
      *
      * @param X list of x values. Must be sorted in ascending order. All x values must be larger
      * than the largest x value in the interpolator data.
@@ -191,7 +191,7 @@ class I_Interpolator
 
                 if (X[i] > X[i + 1])
                     throw(std::domain_error("ERROR[Interpolation::_check_XY]: X list is not "
-                                            "sorted in asscending order!"));
+                                            "sorted in ascending order!"));
             }
 
             if (!std::isfinite(X[i]))

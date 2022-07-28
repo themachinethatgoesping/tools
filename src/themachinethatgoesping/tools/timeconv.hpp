@@ -43,7 +43,7 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
 //------------------------------------- time conversions
 //------------------------------------------
 /**
- * @brief Converting between date strings and UnixTime stampes (ref 1970)
+ * @brief Converting between date strings and UnixTime stamps (ref 1970)
  *
  * @param  DateString: DateString to be converted. Must fit format string.
  * @param  format: Format string to convert Date string.
@@ -56,12 +56,12 @@ double datestring_to_unixtime(const std::string& DateString,
                               const std::string& format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
 
 /**
- * @brief Converting between date strings and UnixTime stampes (ref 1970)
+ * @brief Converting between date strings and UnixTime stamps (ref 1970)
  *
  * @param UnixTime: seconds since 01.01.1970 as double
  * @param fractionalSecondsDigits: How many digits to use for the split seconds.
  *          Minimum is 0 (second resolution)
- *          Maximum is 6 (microsecond resolutiuon)
+ *          Maximum is 6 (microsecond resolution)
  * @param format: Format string to convert Date string.
  *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
  *      see: https://m.cplusplus.com/reference/ctime/strftime/ *

@@ -190,7 +190,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     //-------------------------
 
     /**
-     * @brief get the interolated y value for given x target
+     * @brief get the interpolated y value for given x target
      *
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
@@ -299,7 +299,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     /**
      * @brief get nearest y values for given x targets (vectorized call)
      *
-     * @param targets_x vector of x values. For each of these values find the corrspondig y value
+     * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
     std::vector<YType> operator()(const std::vector<double>& targetsX)

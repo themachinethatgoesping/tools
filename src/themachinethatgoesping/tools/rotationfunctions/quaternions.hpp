@@ -61,7 +61,7 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
         ypr[2] *= _quaternion_from_ypr_to_rad;
     }
 
-    // creaste quaternion by rotating arround axes first, yaw, then pitch, then roll
+    // creaste quaternion by rotating around axes first, yaw, then pitch, then roll
     Eigen::Quaternion<floattype> q =
         Eigen::AngleAxis<floattype>(ypr[0], Eigen::Matrix<floattype, 1, 3>::UnitZ()) *
         Eigen::AngleAxis<floattype>(ypr[1], Eigen::Matrix<floattype, 1, 3>::UnitY()) *
@@ -77,9 +77,9 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
  * @brief create an eigen quaternion by rotating yaw (z axis), pitch (y axis) and roll (x axis)
  *
  * @tparam floattype floating point value
- * @param yaw rotation arround z axis [° or rad]
- * @param pitch rotation arround y axis [° or rad]
- * @param roll rotation arround x axis [° or rad]
+ * @param yaw rotation around z axis [° or rad]
+ * @param pitch rotation around y axis [° or rad]
+ * @param roll rotation around x axis [° or rad]
  * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
  * @return Eigen::Quaternion<floattype>
  */
@@ -161,7 +161,7 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(
  *
  * @tparam floattype
  * @tparam floattype floating point value
- * @param yaw vector of rotation values arround the z axis [° or rad]
+ * @param yaw vector of rotation values around the z axis [° or rad]
  * @param pitchvector of rotation values the y axis [° or rad]
  * @param roll of rotation values the x axis [° or rad]
  * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad

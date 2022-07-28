@@ -35,9 +35,9 @@ static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter
 R"doc(Class that allows for easy pretty printing of class members usage: 1.
 Implement a __printer__ function as public class member this function
 should return a ObjectPrinter object. Register all, values,
-containers, objects that are to be printerd. 2. Add the
+containers, objects that are to be printed. 2. Add the
 __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public
-fucntions. This macro implements std::string info_string() and
+functions. This macro implements std::string info_string() and
 print(std::ostream) functions using the object printer 3. Add the
 __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
 macro implements __str__(), __repr__(), info_string() and print() as
@@ -128,7 +128,7 @@ Parameter ``pos``:
     appended))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_string =
-R"doc(register a formated string field for printing
+R"doc(register a formatted string field for printing
 
 Parameter ``name``:
     name of the variable
@@ -174,7 +174,7 @@ static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(< double or integer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< formated string field)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< formatted string field)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tstring = R"doc(< 1D container (floating point or integer))doc";
 
@@ -196,7 +196,7 @@ Parameter ``underliner``:
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(frst line is typically the field value)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(first line is typically the field value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_approx =
 R"doc(compare to floats using a relative difference factor
@@ -284,13 +284,13 @@ Template parameter ``floattype``:
     floating point value
 
 Parameter ``yaw``:
-    rotation arround z axis [° or rad]
+    rotation around z axis [° or rad]
 
 Parameter ``pitch``:
-    rotation arround y axis [° or rad]
+    rotation around y axis [° or rad]
 
 Parameter ``roll``:
-    rotation arround x axis [° or rad]
+    rotation around x axis [° or rad]
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad
@@ -299,7 +299,7 @@ Returns:
     Eigen::Quaternion<floattype>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
-R"doc(Converting between date strings and UnixTime stampes (ref 1970)
+R"doc(Converting between date strings and UnixTime stamps (ref 1970)
 
 Parameter ``DateString:``:
     DateString to be converted. Must fit format string.
@@ -325,14 +325,14 @@ Returns:
     Unix time stamp (seconds since 01.01.1970) as double)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
-R"doc(Converting between date strings and UnixTime stampes (ref 1970)
+R"doc(Converting between date strings and UnixTime stamps (ref 1970)
 
 Parameter ``UnixTime:``:
     seconds since 01.01.1970 as double
 
 Parameter ``fractionalSecondsDigits:``:
     How many digits to use for the split seconds. Minimum is 0 (second
-    resolution) Maximum is 6 (microsecond resolutiuon)
+    resolution) Maximum is 6 (microsecond resolution)
 
 Parameter ``format:``:
     Format string to convert Date string. Default Format:
@@ -417,7 +417,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_min_linearextrapolator = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call =
-R"doc(get the interolated y value for given x target
+R"doc(get the interpolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -429,7 +429,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
+    vector of x values. For each of these values find the corrsponding
     y value
 
 Returns:
@@ -462,7 +462,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
-by provding vectors for x and y (same size). X must be sorted and no
+by providing vectors for x and y (same size). X must be sorted and no
 duplicates are allowed. then call interpolator(new x value) to get a
 corresponding y value at this x position.
 
@@ -489,7 +489,7 @@ Parameter ``y``:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
-R"doc(append x and y value lists to the interplator data (vectorized call)
+R"doc(append x and y value lists to the interpolator data (vectorized call)
 
 Parameter ``X``:
     list of x values. Must be sorted in ascending order. All x values
@@ -521,7 +521,7 @@ Returns:
     object (enumerator) that describes the extrapolation mode)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call =
-R"doc(get the interolated y value for given x target
+R"doc(get the interpolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -533,7 +533,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Inte
 R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
+    vector of x values. For each of these values find the corrsponding
     y value
 
 Returns:
@@ -626,7 +626,7 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
-R"doc(get the interolated y value for given x target
+R"doc(get the interpolated y value for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -638,7 +638,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 R"doc(get nearest y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
+    vector of x values. For each of these values find the corrsponding
     y value
 
 Returns:
@@ -781,12 +781,12 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Neares
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator =
 R"doc(Class that implements a slerp interpolation for vectors. Data is
-internaly represented in quaternions using libeigen. Interfaces to
+internally represented in quaternions using lib eigen. Interfaces to
 represent the data in yaw, pitch, roll angles are provided. the
 __call__ equivalent to get interpolated yaw pitch roll is the ypr
 function)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (neccessary?))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (necessary?))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_2 = R"doc()doc";
 
@@ -798,15 +798,15 @@ Parameter ``X``:
     vector; must be unique and sorted in ascending order
 
 Parameter ``yaw``:
-    vector with yaw data (rotation arround z axis). Must be same size
+    vector with yaw data (rotation around z axis). Must be same size
     as X!
 
 Parameter ``pitch``:
-    vector with pitch data (rotation arround y axis). Must be same
-    size as X!
+    vector with pitch data (rotation around y axis). Must be same size
+    as X!
 
 Parameter ``roll``:
-    vector with roll data (rotation arround x axis). Must be same size
+    vector with roll data (rotation around x axis). Must be same size
     as X!
 
 Parameter ``input_in_degrees``:
@@ -843,13 +843,13 @@ Parameter ``X``:
     must be larger than all internal data points
 
 Parameter ``yaw``:
-    rotation arround z axis
+    rotation around z axis
 
 Parameter ``pitch``:
-    rotation arround y axis
+    rotation around y axis
 
 Parameter ``roll``:
-    rotation arround x axis
+    rotation around x axis
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
@@ -873,15 +873,15 @@ Parameter ``X``:
     vector; must be unique and sorted in ascending order
 
 Parameter ``yaw``:
-    vector with yaw data (rotation arround z axis). Must be same size
+    vector with yaw data (rotation around z axis). Must be same size
     as X!
 
 Parameter ``pitch``:
-    vector with pitch data (rotation arround y axis). Must be same
-    size as X!
+    vector with pitch data (rotation around y axis). Must be same size
+    as X!
 
 Parameter ``roll``:
-    vector with roll data (rotation arround x axis). Must be same size
+    vector with roll data (rotation around x axis). Must be same size
     as X!
 
 Parameter ``input_in_degrees``:
@@ -925,7 +925,7 @@ Parameter ``y1``:
     : first quaternion (target_x = 0)
 
 Parameter ``y2``:
-    : second quaternion (target_x = 01) inbetween)
+    : second quaternion (target_x = 01)
 
 Returns:
     Interpolated value for target position)doc";
@@ -941,44 +941,44 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
-R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
-converted to queternion)
+R"doc(change the input data to these X, yaw, pitch, roll vectors (will be
+converted to quaternion)
 
 Parameter ``X``:
     vector; must be unique and sorted in ascending order
 
 Parameter ``yaw``:
-    vector with yaw data (rotation arround z axis). Must be same size
+    vector with yaw data (rotation around z axis). Must be same size
     as X!
 
 Parameter ``pitch``:
-    vector with pitch data (rotation arround y axis). Must be same
-    size as X!
+    vector with pitch data (rotation around y axis). Must be same size
+    as X!
 
 Parameter ``roll``:
-    vector with roll data (rotation arround x axis). Must be same size
+    vector with roll data (rotation around x axis). Must be same size
     as X!
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR_2 =
-R"doc(change the input data to thes X, yaw, pitch, roll vectors (will be
-converted to queternion)
+R"doc(change the input data to these X, yaw, pitch, roll vectors (will be
+converted to quaternion)
 
 Parameter ``X``:
     vector; must be unique and sorted in ascending order
 
 Parameter ``yaw``:
-    vector with yaw data (rotation arround z axis). Must be same size
+    vector with yaw data (rotation around z axis). Must be same size
     as X!
 
 Parameter ``pitch``:
-    vector with pitch data (rotation arround y axis). Must be same
-    size as X!
+    vector with pitch data (rotation around y axis). Must be same size
+    as X!
 
 Parameter ``roll``:
-    vector with roll data (rotation arround x axis). Must be same size
+    vector with roll data (rotation around x axis). Must be same size
     as X!
 
 Parameter ``input_in_degrees``:
@@ -991,7 +991,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_type_to_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr =
-R"doc(get the interolated yaw, pitch and roll values for given x target
+R"doc(get the interpolated yaw, pitch and roll values for given x target
 
 Parameter ``target_x``:
     find the corresponding y value for this x value
@@ -1003,11 +1003,11 @@ Returns:
     corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr_2 =
-R"doc(get the interolated yaw, pitch and roll values for given x target
+R"doc(get the interpolated yaw, pitch and roll values for given x target
 (vectorized call)
 
 Parameter ``targets_x``:
-    vector of x values. For each of these values find the corrspondig
+    vector of x values. For each of these values find the corrsponding
     yaw, pitch and roll value
 
 Parameter ``output_in_degrees``:

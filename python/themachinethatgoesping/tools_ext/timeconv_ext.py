@@ -25,7 +25,7 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
     fractionalSecondsDigits : int, optional
         How many digits to use for the split seconds.
         Minimum is 0 (second resolution)
-        Maximum is 6 (microsecond resolutiuon), by default 0
+        Maximum is 6 (microsecond resolution), by default 0
     format : _type_, optional
         %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
