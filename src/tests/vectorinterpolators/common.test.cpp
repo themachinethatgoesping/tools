@@ -222,7 +222,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             // initialize test data (wrong order)
             std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
 
-            // throw because x is nort sorted
+            // throw because x is not sorted
             REQUIRE_THROWS(interpolator->set_data_XY(x_wrong_order_, y));
 
             // initialize test data (duplicates)
@@ -235,7 +235,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         // initialize test data (wrong order)
         std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
 
-        // throw because x is nort sorted
+        // throw because x is not sorted
         REQUIRE_THROWS(vectorinterpolators::LinearInterpolator(x_wrong_order, y));
         REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_wrong_order, y));
         REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_wrong_order, y));
@@ -299,7 +299,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         // initialize test data (wrong order)
         std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
 
-        // throw because x is nort sorted
+        // throw because x is not sorted
         REQUIRE_THROWS(vectorinterpolators::SlerpInterpolator(x_wrong_order, yaw, pitch, roll));
         REQUIRE_THROWS(interpolator.set_data_XYPR(x_wrong_order, yaw, pitch, roll));
 

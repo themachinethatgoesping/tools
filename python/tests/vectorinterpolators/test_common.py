@@ -15,7 +15,7 @@ test_tmp = 'interpolator.tmp'
 
 # define class for grouping (test sections)
 class Test_tools_vectorinterpolators_all:
-    def test_VectorInterpolators_should_be_serializable(self):
+    def test_vectorinterpolators_should_be_serializable(self):
         X = [-10, -5, 0, 6, 12]
         Y = [1, 0, 1, 0, -1]
         yaw = [1, 0, 1, 0, 359]
@@ -66,7 +66,7 @@ class Test_tools_vectorinterpolators_all:
 
         os.remove(test_tmp)
 
-    def test_VectorInterpolators_should_implement_common_functions(self):
+    def test_vectorinterpolators_should_implement_common_functions(self):
         X = [-10, -5, 0, 6, 12]
         Y = [1, 0, 1, 0, -1]
         yaw = [1, 0, 1, 0, 359]
@@ -124,7 +124,7 @@ class Test_tools_vectorinterpolators_all:
                 assert y1 == approx(y_exp1)
                 assert y2 == approx(y_exp2)
 
-            #test that infor string conversion does not crash or produce empty strings
+            #test that info string conversion does not crash or produce empty strings
             print(ip)
             ip.print()
             assert (len(str(ip)) > 0)
@@ -279,7 +279,7 @@ class Test_tools_vectorinterpolators_all:
         # initialize test data (wrong order)
         x_wrong_order = [-5, -10, 0, 6, 12]
 
-        # // throw because x is nort sorted
+        # // throw because x is not sorted
         with pytest.raises(ValueError):
             vip.SlerpInterpolator(x_wrong_order, yaw, pitch, roll)
         with pytest.raises(ValueError):
