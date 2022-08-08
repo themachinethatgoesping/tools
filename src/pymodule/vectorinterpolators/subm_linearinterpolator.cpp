@@ -45,6 +45,9 @@ void init_subm_linearinterpolator(pybind11::module& m)
                  I_Interpolator,
                  operator_call_2),
              py::arg("targets_x"))
+        .def("empty",
+             &LinearInterpolator::empty,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
         .def("set_extrapolation_mode",
              &LinearInterpolator::set_extrapolation_mode,
              DOC(themachinethatgoesping,

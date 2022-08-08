@@ -81,6 +81,11 @@ class AkimaInterpolator : public I_Interpolator<double>
     }
     ~AkimaInterpolator() = default;
 
+    /**
+     * @brief check if the interpolator contains data
+     */
+    bool empty() const { return _X.empty(); }
+
     static std::string type_to_string() { return "AkimaInterpolator"; }
 
     // -- convinience functions --

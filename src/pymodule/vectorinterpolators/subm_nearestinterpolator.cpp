@@ -45,6 +45,9 @@ void init_subm_nearestinterpolator(pybind11::module& m)
                  I_Interpolator,
                  operator_call_2),
              py::arg("targets_x"))
+        .def("empty",
+             &NearestInterpolator::empty,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
         .def("set_extrapolation_mode",
              &NearestInterpolator::set_extrapolation_mode,
              DOC(themachinethatgoesping,

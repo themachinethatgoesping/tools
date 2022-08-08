@@ -338,11 +338,23 @@ TEST_CASE("VectorInterpolators should react correctly to beeing underinitialized
     REQUIRE_THROWS_AS(aip(0), std::domain_error);
     REQUIRE_THROWS_AS(slerp(0), std::domain_error);
 
+    // interpolators should indicate that they are not initialized
+    REQUIRE(lip.empty());
+    REQUIRE(nip.empty());
+    REQUIRE(aip.empty());
+    REQUIRE(slerp.empty());
+
     // interpolators should return single value if they are initialized with a single value
     lip.append(10, 20);
     nip.append(10, 20);
     aip.append(10, 20);
     slerp.append(10, 20, 30, 40);
+
+    // interpolators should indicate that they are initialized
+    REQUIRE(!lip.empty());
+    REQUIRE(!nip.empty());
+    REQUIRE(!aip.empty());
+    REQUIRE(!slerp.empty());
 
     REQUIRE(lip(-10) == 20);
     REQUIRE(nip(100) == 20);

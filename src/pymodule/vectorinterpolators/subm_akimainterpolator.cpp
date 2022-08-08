@@ -45,6 +45,9 @@ void init_subm_akimainterpolator(pybind11::module& m)
                  I_Interpolator,
                  operator_call_2),
              py::arg("targets_x"))
+        .def("empty",
+             &AkimaInterpolator::empty,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, empty))
         .def("set_extrapolation_mode",
              &AkimaInterpolator::set_extrapolation_mode,
              DOC(themachinethatgoesping,

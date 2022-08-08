@@ -122,6 +122,11 @@ class I_PairInterpolator : public I_Interpolator<YType>
     virtual ~I_PairInterpolator() = default;
 
     /**
+     * @brief check if the interpolator contains data
+     */
+    bool empty() const { return _X.empty(); }
+
+    /**
      * @brief change the input data to these X and Y vectors
      *
      * @param X: x vector (must be same size, must be sorted in ascending order)

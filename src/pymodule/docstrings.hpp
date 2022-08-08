@@ -388,6 +388,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary = R"doc()doc";
@@ -594,6 +596,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(main data vector containing pairs of corresponding x datapoitns)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
 

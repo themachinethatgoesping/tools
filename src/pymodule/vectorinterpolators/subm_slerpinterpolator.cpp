@@ -41,6 +41,9 @@ void init_subm_slerpinterpolator(pybind11::module& m)
              py::arg("Roll")               = std::vector<double>({}),
              py::arg("input_in_degrees")   = true,
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
+        .def("empty",
+             &SlerpInterpolator::empty,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
         .def("__call__",
              py::overload_cast<double, bool>(&SlerpInterpolator::ypr),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr),
