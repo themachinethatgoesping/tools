@@ -63,9 +63,9 @@ R"doc(Create an info_string from the registered values/sections
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_field_types = R"doc(< variable names)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_field_types = R"doc(variable names)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields = R"doc(< name of the class that is to be printed)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields = R"doc(name of the class that is to be printed)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_binary = R"doc()doc";
 
@@ -123,6 +123,9 @@ R"doc(register a section break for printing
 Parameter ``name``:
     name of the following section
 
+Parameter ``underliner``:
+    character used to underline the section name
+
 Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
@@ -164,19 +167,21 @@ Parameter ``pos``:
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_remove_sections = R"doc(Remove all existing sections)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_section_underliner = R"doc(additional info (printed in []))doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tcontainer = R"doc(< enumerator)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tcontainer = R"doc(enumerator)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(< double or integer)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum = R"doc(double or integer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(< formatted string field)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection = R"doc(formatted string field)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tstring = R"doc(< 1D container (floating point or integer))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tstring = R"doc(1D container (floating point or integer))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tvalue = R"doc()doc";
 
@@ -189,9 +194,6 @@ R"doc(add a line under a given line string
 
 Parameter ``line``:
     input string
-
-Parameter ``underliner``:
-    line character
 
 Returns:
     std::string)doc";
@@ -403,7 +405,7 @@ Returns:
     std::vector<double>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_Y =
-R"doc(return the y component of the itnernal data vector
+R"doc(return the y component of the internal data vector
 
 Returns:
     std::vector<YType>)doc";
@@ -560,7 +562,7 @@ Parameter ``extrapolation_mode``:
     object (enumerator) that describes the extrapolation mode)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator =
-R"doc(Interface class for interpolator classes This template clas implements
+R"doc(Interface class for interpolator classes This template class implements
 base functions interpolators that interpolate between two values
 (pairs). This interface implements the search for the x position
 within this vector (closest 2 x/y value pair) and computes an x
@@ -593,7 +595,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_X = R"doc(extrapolation mode type.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(main data vector containing pairs of corresponding x datapoitns)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(main data vector containing pairs of corresponding x datapoints)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
 
@@ -608,7 +610,7 @@ Returns:
     std::vector<double>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
-R"doc(return the y component of the itnernal data vector
+R"doc(return the y component of the internal data vector
 
 Returns:
     std::vector<YType>)doc";
@@ -709,7 +711,7 @@ Parameter ``y1``:
     : first y value (target_x = 0)
 
 Parameter ``y2``:
-    : second value (target_x = 01) inbetween)
+    : second value (target_x = 01) between)
 
 Returns:
     Interpolated value for target position)doc";
@@ -765,7 +767,7 @@ Parameter ``y1``:
     : first y value (target_x = 0)
 
 Parameter ``y2``:
-    : second value (target_x = 01) inbetween)
+    : second value (target_x = 01) between)
 
 Returns:
     Interpolated value for target position)doc";

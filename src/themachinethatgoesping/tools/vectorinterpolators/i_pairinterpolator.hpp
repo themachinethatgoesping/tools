@@ -33,7 +33,7 @@ namespace vectorinterpolators {
 
 /**
  * @brief Interface class for interpolator classes
- * This template clas implements base functions interpolators that interpolate between two values
+ * This template class implements base functions interpolators that interpolate between two values
  * (pairs). This interface implements the search for the x position within this vector (closest 2
  * x/y value pair) and computes an x interpolation value (target_x) Then it call the __call__
  * functions of the implementation classes that use this interface to interpolate between these
@@ -90,8 +90,8 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @brief extrapolation mode type.
      *
      */
-    std::vector<double> _X; /// main data vector containing pairs of corresponding x datapoitns
-    std::vector<YType>  _Y; /// main data vector containing pairs of corresponding y datapoitns
+    std::vector<double> _X; /// main data vector containing pairs of corresponding x datapoints
+    std::vector<YType>  _Y; /// main data vector containing pairs of corresponding y datapoints
 
   public:
     /**
@@ -205,7 +205,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     const std::vector<double>& get_data_X() const final { return _X; }
 
     /**
-     * @brief return the y component of the itnernal data vector
+     * @brief return the y component of the internal data vector
      *
      * @return std::vector<YType>
      */

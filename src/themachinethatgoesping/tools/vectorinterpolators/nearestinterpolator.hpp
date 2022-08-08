@@ -87,7 +87,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
      * @param target_x: the target point [0.0 - 1.0]
      * @param y1     : first y value (target_x = 0)
      * @param y2     : second value (target_x = 01)
-     * inbetween)
+     * between)
      * @return Interpolated value for target position
      */
     double interpolate_pair(double target_x, double y1, double y2) const final
@@ -111,9 +111,9 @@ class NearestInterpolator : public I_PairInterpolator<double>
     }
 
   public:
-    classhelpers::ObjectPrinter __printer__() const
+    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("NearestInterpolator");
+        classhelpers::ObjectPrinter printer("NearestInterpolator", float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

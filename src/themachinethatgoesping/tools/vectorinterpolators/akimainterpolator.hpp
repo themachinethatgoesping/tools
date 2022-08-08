@@ -37,7 +37,7 @@ namespace vectorinterpolators {
 class AkimaInterpolator : public I_Interpolator<double>
 {
     // boost akima spline currently does not allow for accessing the internal data
-    // therefore we need to keep synchrpnized copies of the data here as well to allow get_X and
+    // therefore we need to keep synchronized copies of the data here as well to allow get_X and
     // get_Y functions
     std::vector<double> _X;
     std::vector<double> _Y;
@@ -88,7 +88,7 @@ class AkimaInterpolator : public I_Interpolator<double>
 
     static std::string type_to_string() { return "AkimaInterpolator"; }
 
-    // -- convinience functions --
+    // -- convenience functions --
     bool operator!=(const AkimaInterpolator& rhs) const { return !(rhs == *this); }
     bool operator==(const AkimaInterpolator& rhs) const
     {
@@ -284,7 +284,7 @@ class AkimaInterpolator : public I_Interpolator<double>
     const std::vector<double>& get_data_X() const final { return _X; }
 
     /**
-     * @brief return the y component of the itnernal data vector
+     * @brief return the y component of the internal data vector
      *
      * @return std::vector<YType>
      */
@@ -319,7 +319,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
         s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
 
-        // initialize boost akime on read
+        // initialize boost akima on read
         // TODO: this is a hack, think about forking boost makima to get proper access to private X
         // and Y data structures
         if (bitsery_helpers::is_input(s))
@@ -329,9 +329,9 @@ class AkimaInterpolator : public I_Interpolator<double>
     }
 
   public:
-    classhelpers::ObjectPrinter __printer__() const
+    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("AkimaInterpolator");
+        classhelpers::ObjectPrinter printer("AkimaInterpolator", float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

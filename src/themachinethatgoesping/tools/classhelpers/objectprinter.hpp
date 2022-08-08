@@ -30,12 +30,12 @@
 #define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
     /**                                                                                            \
      * @brief return an info string using the class __printer__ object                             \
-     *                                                                                             \
+     * @param float_precision number of digits for floating point values                          \
      * @return std::string                                                                         \
      */                                                                                            \
-    std::string info_string() const                                                                \
+    std::string info_string(unsigned int float_precision = 2) const                               \
     {                                                                                              \
-        return this->__printer__().create_str();                                                   \
+        return this->__printer__(float_precision).create_str();                                                   \
     }
 
 #define __CLASSHELPERS_PRINTER_PRINT__                                                             \
@@ -43,10 +43,11 @@
      * @brief print the object information to the given outpustream                                \
      *                                                                                             \
      * @param os output stream, e.g. file stream or std::out or std::cerr                          \
+     * @param float_precision number of digits for floating point values                          \
      */                                                                                            \
-    void print(std::ostream& os) const                                                             \
+    void print(std::ostream& os,unsigned int float_precision = 2) const                                                             \
     {                                                                                              \
-        os << this->__printer__().create_str() << std::endl;                                       \
+        os << this->__printer__(float_precision).create_str() << std::endl;                                       \
     }
 
 #define __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__                                                \
@@ -92,8 +93,16 @@ class ObjectPrinter
     std::vector<std::string>              _value_infos; /// additional info (printed in [])
     std::vector<char>                     _section_underliner; /// additional info (printed in [])
 
+    unsigned int _float_precision = 2;
+
     // serialization support using bitsery
+    /**
+     * @brief Construct a new Object Printer object
+     *
+     * @param float_precision default 2, set number of digits for floating point values
+     */
     ObjectPrinter() = default;
+
     friend bitsery::Access;
 
     template<typename S>
@@ -107,15 +116,16 @@ class ObjectPrinter
         });
         s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
         s.container1b(_section_underliner, 1000);
+        s.value4b(_float_precision);
     }
 
   public:
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
     __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
 
-    ObjectPrinter __printer__() const
+    ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        ObjectPrinter printer("ObjectPrinter");
+        ObjectPrinter printer("ObjectPrinter", float_precision);
 
         printer.register_value("name", _name);
         printer.register_container("fields", _fields);
@@ -138,6 +148,7 @@ class ObjectPrinter
 
         printer.register_container("value_infos", _value_infos);
         printer.register_container("section_underliner", _section_underliner);
+        printer.register_value("float_precision", _float_precision);
 
         return printer;
     }
@@ -148,8 +159,9 @@ class ObjectPrinter
      *
      * @param name name of the class that is to be printed
      */
-    ObjectPrinter(const std::string& name)
+    ObjectPrinter(const std::string& name, unsigned int float_precision)
         : _name(name)
+        , _float_precision(float_precision)
     {
     }
 
@@ -268,7 +280,7 @@ class ObjectPrinter
 
         // convert value to string
         if constexpr (std::is_floating_point<t_value>())
-            str = fmt::format("{:.2f}", value);
+            str = fmt::format("{:.{}f}", value, _float_precision);
         else
             str = fmt::format("{}", value);
 
@@ -315,7 +327,7 @@ class ObjectPrinter
 
         // define value to string format
         if constexpr (std::is_floating_point<t_value>())
-            format = "{:.6g}"; // 6 characters, automatic scientific noation depending on magnitude
+            format = "{:.6g}"; // 6 characters, automatic scientific notation depending on magnitude
         else if constexpr (std::is_base_of<t_value, std::string>())
             format = "\"{}\"";
         else
@@ -423,7 +435,7 @@ class ObjectPrinter
                     line_ref.push_back(
                         fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
 
-                    // print meadian (special case for even numbers)
+                    // print median (special case for even numbers)
                     if (v.size() % 2)
                     {
                         std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
@@ -545,7 +557,7 @@ class ObjectPrinter
         std::vector<size_t> max_len_value = { 0 }; // max string len of field + value
 
         // get max_len_field for each section
-        // this is used for alligning the values for each section
+        // this is used for aligning the values for each section
         for (size_t i = 0; i < _fields.size(); ++i)
         {
             if (_field_types[i] == t_field::tsection)

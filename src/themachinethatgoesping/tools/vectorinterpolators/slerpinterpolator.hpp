@@ -308,9 +308,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     }
 
   public:
-    classhelpers::ObjectPrinter __printer__() const
+    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("SlerpInterpolator");
+        classhelpers::ObjectPrinter printer("SlerpInterpolator", float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");
