@@ -112,6 +112,7 @@ void init_subm_objectprinter(pybind11::module& m)
                  ObjectPrinter,
                  register_section),
              py::arg("name"),
+             py::arg("underliner") = '-',
              py::arg("pos") = -1)
         
         // default copy functions

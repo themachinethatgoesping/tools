@@ -78,18 +78,19 @@ class ObjectPrinter
      */
     enum class t_field
     {
-        tvalue,     /// < double or integer
-        tenum,      /// < enumerator
-        tcontainer, /// < 1D container (floating point or integer)
-        tstring,    /// < formatted string field
-        tsection    /// < section break
+        tvalue,     /// double or integer
+        tenum,      /// enumerator
+        tcontainer, /// 1D container (floating point or integer)
+        tstring,    /// formatted string field
+        tsection    /// section break
     };
 
-    std::string                           _name;   /// < name of the class that is to be printed
-    std::vector<std::string>              _fields; /// < variable names
-    std::vector<t_field>                  _field_types; /// < variable types
+    std::string                           _name;        /// name of the class that is to be printed
+    std::vector<std::string>              _fields;      /// variable names
+    std::vector<t_field>                  _field_types; /// variable types
     std::vector<std::vector<std::string>> _lines;       /// first line is typically the field value
     std::vector<std::string>              _value_infos; /// additional info (printed in [])
+    std::vector<char>                     _section_underliner; /// additional info (printed in [])
 
     // serialization support using bitsery
     ObjectPrinter() = default;
@@ -105,7 +106,7 @@ class ObjectPrinter
             s_.container(str_vec, 1000, [](S& s__, std::string& str) { s__.text1b(str, 100); });
         });
         s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
-        // s.container(_value_infos, 1000, &ser_txt);
+        s.container1b(_section_underliner, 1000);
     }
 
   public:
@@ -136,6 +137,7 @@ class ObjectPrinter
         printer.register_value("lines", fmt::format("... {} elements", _lines.size()));
 
         printer.register_container("value_infos", _value_infos);
+        printer.register_container("section_underliner", _section_underliner);
 
         return printer;
     }
@@ -153,7 +155,7 @@ class ObjectPrinter
 
     /**
      * @brief Remove all existing sections
-     * 
+     *
      */
     void remove_sections()
     {
@@ -165,6 +167,7 @@ class ObjectPrinter
                 _field_types.erase(_field_types.begin() + i);
                 _lines.erase(_lines.begin() + i);
                 _value_infos.erase(_value_infos.begin() + i);
+                _section_underliner.erase(_section_underliner.begin() + i);
                 i--;
             }
         }
@@ -172,15 +175,23 @@ class ObjectPrinter
 
     /**
      * @brief Append the fields of an existing object printer
-     * 
+     *
      * @param printer printer to be appended
      */
-    void append(const ObjectPrinter& printer)
-    {    
+    void append(ObjectPrinter printer, char remove_sections = false)
+    {
+        if (remove_sections)
+            printer.remove_sections();
+
         _fields.insert(_fields.end(), printer._fields.begin(), printer._fields.end());
-        _field_types.insert(_field_types.end(), printer._field_types.begin(), printer._field_types.end());
+        _field_types.insert(
+            _field_types.end(), printer._field_types.begin(), printer._field_types.end());
         _lines.insert(_lines.end(), printer._lines.begin(), printer._lines.end());
-        _value_infos.insert(_value_infos.end(), printer._value_infos.begin(), printer._value_infos.end());
+        _value_infos.insert(
+            _value_infos.end(), printer._value_infos.begin(), printer._value_infos.end());
+        _section_underliner.insert(_section_underliner.end(),
+                                   printer._section_underliner.begin(),
+                                   printer._section_underliner.end());
     }
 
     // --- functions to register values for printing ----
@@ -195,7 +206,10 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     template<typename t_value>
-    void register_enum(const std::string& name, t_value value, std::string value_info = "", int pos = -1)
+    void register_enum(const std::string& name,
+                       t_value            value,
+                       std::string        value_info = "",
+                       int                pos        = -1)
     {
         std::string str;
 
@@ -217,17 +231,21 @@ class ObjectPrinter
         if (value_info.size() > 0)
             value_info_str = fmt::format("[{}]", value_info);
 
-        if (pos < 0|| pos >= int(_fields.size())){
+        if (pos < 0 || pos >= int(_fields.size()))
+        {
             _fields.push_back(name);
             _lines.push_back({ str }); // only one line (value)
             _field_types.push_back(t_field::tenum);
-            _value_infos.push_back(value_info_str);            
+            _value_infos.push_back(value_info_str);
+            _section_underliner.push_back(' ');
         }
-        else{
+        else
+        {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { str }); // only one line (value)
             _field_types.insert(_field_types.begin() + pos, t_field::tenum);
             _value_infos.insert(_value_infos.begin() + pos, value_info_str);
+            _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }
     }
 
@@ -241,7 +259,10 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     template<typename t_value>
-    void register_value(const std::string& name, t_value value, std::string value_info = "", int pos = -1)
+    void register_value(const std::string& name,
+                        t_value            value,
+                        std::string        value_info = "",
+                        int                pos        = -1)
     {
         std::string str;
 
@@ -256,18 +277,21 @@ class ObjectPrinter
         if (value_info.size() > 0)
             value_info_str = fmt::format("[{}]", value_info);
 
-
-        if (pos < 0 || pos >= int(_fields.size())){
+        if (pos < 0 || pos >= int(_fields.size()))
+        {
             _fields.push_back(name);
             _lines.push_back({ str });
             _field_types.push_back(t_field::tvalue);
             _value_infos.push_back(value_info_str);
+            _section_underliner.push_back(' ');
         }
-        else{
+        else
+        {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { str });
             _field_types.insert(_field_types.begin() + pos, t_field::tvalue);
             _value_infos.insert(_value_infos.begin() + pos, value_info_str);
+            _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }
     }
 
@@ -284,7 +308,7 @@ class ObjectPrinter
     void register_container(const std::string&          name,
                             const std::vector<t_value>& values,
                             std::string                 value_info = "",
-                            int pos = -1)
+                            int                         pos        = -1)
     {
         static const size_t max_visible_elements = 9; // maximum values to display for a vector
         std::string         str, format;
@@ -319,23 +343,26 @@ class ObjectPrinter
         }
         str += "}";
 
-
         // add value information
         std::string value_info_str = "";
         if (value_info.size() > 0)
             value_info_str = fmt::format("[{}]", value_info);
 
-        if (pos < 0 || pos >= int(_fields.size())){
-        _fields.push_back(name);
-        _lines.push_back({ str });
-        _field_types.push_back(t_field::tcontainer);
-        _value_infos.push_back(value_info_str);
+        if (pos < 0 || pos >= int(_fields.size()))
+        {
+            _fields.push_back(name);
+            _lines.push_back({ str });
+            _field_types.push_back(t_field::tcontainer);
+            _value_infos.push_back(value_info_str);
+            _section_underliner.push_back(' ');
         }
-        else{
+        else
+        {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { str });
             _field_types.insert(_field_types.begin() + pos, t_field::tcontainer);
             _value_infos.insert(_value_infos.begin() + pos, value_info_str);
+            _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }
 
         auto& line_ref = _lines.back();
@@ -457,19 +484,24 @@ class ObjectPrinter
      */
     void register_string(const std::string& name,
                          const std::string& value,
-                         const std::string& value_info = "", int pos = -1)
+                         const std::string& value_info = "",
+                         int                pos        = -1)
     {
-        if (pos < 0 || pos >= int(_fields.size())){
-        _fields.push_back(name);
-        _lines.push_back({ value });
-        _value_infos.push_back({ fmt::format("[{}]",value_info) });
-        _field_types.push_back(t_field::tstring);
+        if (pos < 0 || pos >= int(_fields.size()))
+        {
+            _fields.push_back(name);
+            _lines.push_back({ value });
+            _value_infos.push_back({ fmt::format("[{}]", value_info) });
+            _field_types.push_back(t_field::tstring);
+            _section_underliner.push_back(' ');
         }
-        else{
+        else
+        {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { value });
-            _value_infos.insert(_value_infos.begin() + pos, { fmt::format("[{}]",value_info) });
+            _value_infos.insert(_value_infos.begin() + pos, { fmt::format("[{}]", value_info) });
             _field_types.insert(_field_types.begin() + pos, t_field::tstring);
+            _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }
     }
 
@@ -477,21 +509,26 @@ class ObjectPrinter
      * @brief register a section break for printing
      *
      * @param name name of the following section
+     * @param underliner character used to underline the section name
      * @param pos position where the value is registers (if negative, the value is appended)
      */
-    void register_section(const std::string& name, int pos = -1)
+    void register_section(const std::string& name, char underliner = '-', int pos = -1)
     {
-        if (pos < 0 || pos >= int(_fields.size())){
-        _fields.push_back(name);
-        _lines.push_back({ "" });
-        _value_infos.push_back({ "" });
-        _field_types.push_back(t_field::tsection);
+        if (pos < 0 || pos >= int(_fields.size()))
+        {
+            _fields.push_back(name);
+            _lines.push_back({ "" });
+            _value_infos.push_back({ "" });
+            _field_types.push_back(t_field::tsection);
+            _section_underliner.push_back(underliner);
         }
-        else{
+        else
+        {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { "" });
             _value_infos.insert(_value_infos.begin() + pos, { "" });
             _field_types.insert(_field_types.begin() + pos, t_field::tsection);
+            _section_underliner.insert(_section_underliner.begin() + pos, underliner);
         }
     }
 
@@ -542,10 +579,12 @@ class ObjectPrinter
                     section_nr += 1;
 
                     max_len_value.push_back(0);
-                    if (i==0)
-                    str_lines.push_back(underline("-\n" + _fields[i] + " ", '-'));
+                    if (i == 0)
+                        str_lines.push_back(
+                            underline("-\n" + _fields[i] + " ", _section_underliner[i]));
                     else
-                    str_lines.push_back("\n" + underline(" " + _fields[i] + " ", '-'));
+                        str_lines.push_back(
+                            "\n" + underline(" " + _fields[i] + " ", _section_underliner[i]));
 
                     continue;
                 case t_field::tvalue:
@@ -581,7 +620,7 @@ class ObjectPrinter
                 max_len_value.back() = str_lines.back().size();
         }
 
-        std::string str = underline(_name, '*');
+        std::string str = underline(_name, '#');
         section_nr      = 0;
         for (size_t i = 0; i < str_lines.size(); ++i)
         {
@@ -605,10 +644,9 @@ class ObjectPrinter
      * @brief add a line under a given line string
      *
      * @param line input string
-     * @param underliner line character
      * @return std::string
      */
-    static std::string underline(const std::string& line, char underliner = '-')
+    static std::string underline(const std::string& line, char underliner)
     {
         std::string str = line;
         for (unsigned int i = 0; i < line.size(); ++i)
