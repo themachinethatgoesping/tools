@@ -62,22 +62,24 @@
                     [](const py::bytes& b) { return T_CLASS::from_binary(b); }))
 
 // --- print functions (need objectprinter __printer__ function) ---
-#define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                                                   \
+#define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
     .def(                                                                                          \
         "__str__",                                                                                 \
-        [](const T_CLASS& self) { return self.__printer__(2).create_str(); },                       \
+        [](const T_CLASS& self) { return self.__printer__(2).create_str(); },                      \
         "Return object information as string")                                                     \
         .def(                                                                                      \
             "__repr__",                                                                            \
-            [](const T_CLASS& self) { return self.__printer__(2).create_str(); },                   \
+            [](const T_CLASS& self) { return self.__printer__(2).create_str(); },                  \
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
-            [](const T_CLASS& self, unsigned int float_precision) { return self.__printer__(float_precision).create_str(); },                   \
-            "Return object information as string"), \     
-            py::arg("float_precision") = 2)                                            \
+            [](const T_CLASS& self, unsigned int float_precision)                                  \
+            { return self.__printer__(float_precision).create_str(); },                            \
+            "Return object information as string",                                                 \
+            py::arg("float_precision") = 2)                                                        \
         .def(                                                                                      \
             "print",                                                                               \
-            [](const T_CLASS& self, unsigned int float_precision) { return self.__printer__(float_precision).create_str(); },                   \
-            "Print object information", \
+            [](const T_CLASS& self, unsigned int float_precision)                                  \
+            { py::print(self.__printer__(float_precision).create_str()); },                        \
+            "Print object information",                                                            \
             py::arg("float_precision") = 2)

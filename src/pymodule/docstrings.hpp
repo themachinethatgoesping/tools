@@ -43,7 +43,11 @@ __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
 macro implements __str__(), __repr__(), info_string() and print() as
 python functions)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter = R"doc(additional info (printed in []))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter =
+R"doc(Construct a new Object Printer object
+
+Parameter ``float_precision``:
+    default 2, set number of digits for floating point values)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter_2 =
 R"doc(Construct a new Object Printer object
@@ -66,6 +70,8 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_field_types = R"doc(variable names)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields = R"doc(name of the class that is to be printed)doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_float_precision = R"doc(additional info (printed in []))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_binary = R"doc()doc";
 
@@ -562,12 +568,12 @@ Parameter ``extrapolation_mode``:
     object (enumerator) that describes the extrapolation mode)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator =
-R"doc(Interface class for interpolator classes This template class implements
-base functions interpolators that interpolate between two values
-(pairs). This interface implements the search for the x position
-within this vector (closest 2 x/y value pair) and computes an x
-interpolation value (target_x) Then it call the __call__ functions of
-the implementation classes that use this interface to interpolate
+R"doc(Interface class for interpolator classes This template class
+implements base functions interpolators that interpolate between two
+values (pairs). This interface implements the search for the x
+position within this vector (closest 2 x/y value pair) and computes an
+x interpolation value (target_x) Then it call the __call__ functions
+of the implementation classes that use this interface to interpolate
 between these pairs.
 
 Template parameter ``YType:``:

@@ -24,13 +24,14 @@ void init_subm_objectprinter(pybind11::module& m)
         m,
         "ObjectPrinter",
         DOC(themachinethatgoesping, tools, classhelpers, ObjectPrinter))
-        .def(py::init<const std::string&>(),
+        .def(py::init<const std::string&, unsigned int>(),
              DOC(themachinethatgoesping,
                  tools,
                  classhelpers,
                  ObjectPrinter,
                  ObjectPrinter),
-             py::arg("name"))
+             py::arg("name"),
+             py::arg("float_precission"))
         .def("create_str",
              &ObjectPrinter::create_str,
              DOC(themachinethatgoesping,
