@@ -203,6 +203,14 @@ class I_PairInterpolator : public I_Interpolator<YType>
      */
     YType operator()(double target_x) final
     {
+        // check if _X and _Y are initialized
+        if (_X.size() == 0 || _Y.size() == 0)
+            throw(std::domain_error("ERROR[Interpolator::operator()]: data vectors are not initialized!"));
+
+        // if size of _X is 1, return _Y[0]
+        if (_X.size() == 1)
+            return _Y[0];
+
         /* find correct xpair */
 
         // if target value is smaller than the min value of the last, decrement
