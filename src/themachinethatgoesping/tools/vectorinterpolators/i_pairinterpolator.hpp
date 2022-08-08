@@ -145,11 +145,12 @@ class I_PairInterpolator : public I_Interpolator<YType>
     // -----------------------
     void append(double x, YType y) final
     {
-        if (x <= _X.back())
-        {
-            throw(std::domain_error("ERROR[Interpolation::append]: appendet x value is not "
-                                    "larger than existing x values in the interpolator."));
-        }
+        if (_X.size() >0)
+            if (x <= _X.back())
+            {
+                throw(std::domain_error("ERROR[Interpolation::append]: appendet x value is not "
+                                        "larger than existing x values in the interpolator."));
+            }
 
         if (!std::isfinite(x))
             throw(std::domain_error(
@@ -159,6 +160,13 @@ class I_PairInterpolator : public I_Interpolator<YType>
                 throw(std::domain_error(
                     "ERROR[Interpolator::append]: Y contains NAN or INFINITE values!"));
 
+        // if the internal data is one element, call set data to initialize _last_x_pair
+        if (_X.size() == 1)
+        {
+            set_data_XY(std::vector<double>{_X[0],x}, std::vector<YType>{_Y[0],y});
+            return;
+        }
+
         _X.push_back(x);
         _Y.push_back(y);
     }
@@ -167,6 +175,13 @@ class I_PairInterpolator : public I_Interpolator<YType>
     {
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::extend]: list sizes do not match"));
+
+        // if no internal dat ayet, just set the data
+        if (_X.size() == 0)
+        {
+            set_data_XY(X, Y);
+            return;
+        }
 
         for (unsigned int i = 0; i < X.size(); ++i)
         {
@@ -203,8 +218,8 @@ class I_PairInterpolator : public I_Interpolator<YType>
      */
     YType operator()(double target_x) final
     {
-        // check if _X and _Y are initialized
-        if (_X.size() == 0 || _Y.size() == 0)
+        // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
+        if (_X.size() == 0)
             throw(std::domain_error("ERROR[Interpolator::operator()]: data vectors are not initialized!"));
 
         // if size of _X is 1, return _Y[0]

@@ -175,8 +175,8 @@ class I_Interpolator
      */
     static void _check_XY(const std::vector<double>& X, const std::vector<YType>& Y)
     {
-        if (X.size() < 2)
-            throw(std::domain_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
+        // if (X.size() < 2)
+        //     throw(std::domain_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
         if (X.size() != Y.size())
             throw(std::domain_error(
                 "ERROR[Interpolation::_check_XY]: list X and Y list sizes do not match!"));

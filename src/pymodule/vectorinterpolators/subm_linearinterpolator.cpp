@@ -30,8 +30,8 @@ void init_subm_linearinterpolator(pybind11::module& m)
                  vectorinterpolators,
                  I_PairInterpolator,
                  I_PairInterpolator),
-             py::arg("X")                  = std::vector<double>({ 0, 1 }),
-             py::arg("Y")                  = std::vector<double>({ 0, 1 }),
+             py::arg("X")                  = std::vector<double>({}),
+             py::arg("Y")                  = std::vector<double>({}),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
              py::overload_cast<double>(&LinearInterpolator::operator()),

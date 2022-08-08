@@ -356,7 +356,8 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
-boost makima interpolator.)doc";
+boost makima interpolator. Note: this interpolator acts as linear
+interpolator if less than 4 values are stored.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc(Construct a new (uninitialized) Akima Interpolator object)doc";
 
@@ -585,6 +586,8 @@ Parameter ``extrapolation_mode``:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_X = R"doc(extrapolation mode type.)doc";
 

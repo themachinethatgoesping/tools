@@ -22,8 +22,8 @@
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
 
-#include "../classhelpers/objectprinter.hpp"
 #include "../classhelpers/bitsery.hpp"
+#include "../classhelpers/objectprinter.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -31,7 +31,7 @@ namespace vectorinterpolators {
 
 /**
  * @brief Interpolator class to perform a (modified) akima interpolation. Uses
- * boost makima interpolator.
+ * boost makima interpolator. Note: this interpolator acts as linear interpolator if less than 4 values are stored.
  *
  */
 class AkimaInterpolator : public I_Interpolator<double>
@@ -43,17 +43,16 @@ class AkimaInterpolator : public I_Interpolator<double>
     std::vector<double> _Y;
 
     // initialize these interpolators with non-sense (will be initialized by calling set_data_XY)
-    LinearInterpolator _min_linearextrapolator = LinearInterpolator({ 0, 1 }, { 0, 1 });
-    LinearInterpolator _max_linearextrapolator = LinearInterpolator({ 0, 1 }, { 0, 1 });
+    LinearInterpolator _min_linearextrapolator = LinearInterpolator();
+    LinearInterpolator _max_linearextrapolator = LinearInterpolator();
     boost::math::interpolators::makima<std::vector<double>> _akima_spline =
-        boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
-
+        boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 0, 0, 0 });
   public:
     /**
      * @brief Construct a new (uninitialized) Akima Interpolator object
      *
      */
-    AkimaInterpolator(t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
+    AkimaInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_Interpolator<double>(extrapolation_mode)
     {
         // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
@@ -94,7 +93,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
             return false;
-        
+
         // compare size of vectors
         if (_X.size() != rhs._X.size())
             return false;
@@ -121,6 +120,19 @@ class AkimaInterpolator : public I_Interpolator<double>
      */
     double operator()(double target_x) final
     {
+        // if less than 4 values are present, act as linear interpolator
+        if (_X.size() < 4)
+            return _min_linearextrapolator(target_x);
+
+        // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
+        if (_X.size() == 0)
+            throw(std::domain_error(
+                "ERROR[Interpolator::operator()]: data vectors are not initialized!"));
+
+        // if size of _X is 1, return _Y[0]
+        if (_X.size() == 1)
+            return _Y[0];
+
         if (target_x < _X[0])
         {
             switch (I_Interpolator::_extr_mode)
@@ -188,14 +200,21 @@ class AkimaInterpolator : public I_Interpolator<double>
         _X = X;
         _Y = Y;
 
-        // This should be easier: Move semantics of makima seem to be more in the way here than they
-        // help ...
-        auto x = X;
-        auto y = Y;
-        _akima_spline =
-            boost::math::interpolators::makima<std::vector<double>>(std::move(x), std::move(y));
+        if (_X.size() >= 4) // default case
+        {
+            // This should be easier: Move semantics of makima seem to be more in the way here than
+            // they help ...
+            auto x = X;
+            auto y = Y;
+            _akima_spline =
+                boost::math::interpolators::makima<std::vector<double>>(std::move(x), std::move(y));
 
-        _init_linearextrapolators();
+            _init_linearextrapolators();
+        }
+        else // if < 4 values, act as linear interpolator
+        {
+            _min_linearextrapolator.set_data_XY(X, Y);
+        }
     }
 
     void append(double x, double y) final
@@ -207,19 +226,35 @@ class AkimaInterpolator : public I_Interpolator<double>
             throw(std::domain_error(
                 "ERROR[Interpolator::append]: Y contains NAN or INFINITE values!"));
 
-        _akima_spline.push_back(x, y);
-
         // copy data to allow get_X and get_Y functions
         _X.push_back(x);
         _Y.push_back(y);
 
-        _init_linearextrapolators();
+        if (_X.size() > 4) // default case
+        {
+            _akima_spline.push_back(x, y);
+            _init_linearextrapolators();
+        }
+        else // initialize interpolator if less than 4 values where present before
+        {
+            set_data_XY(_X, _Y);
+        }
     }
 
     void extend(const std::vector<double>& X, const std::vector<double>& Y) final
     {
         if (X.size() != Y.size())
             throw(std::invalid_argument("ERROR[Interpolator::extend]: list sizes do not match"));
+
+        // initialize interpolator if less than 4 values where present before
+        if (_X.size() < 4)
+        {
+            std::copy(X.begin(), X.end(), std::back_inserter(_X));
+            std::copy(Y.begin(), Y.end(), std::back_inserter(_Y));
+
+            set_data_XY(_X, _Y);
+            return;
+        }
 
         for (unsigned int i = 0; i < X.size(); ++i)
         {
@@ -288,7 +323,6 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
     }
 
-    
   public:
     classhelpers::ObjectPrinter __printer__() const
     {
@@ -302,7 +336,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         return printer;
     }
 
-    public:
+  public:
     // -- class helper function macros --
     // define to_binary and from_binary functions (needs the serialize function)
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
