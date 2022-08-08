@@ -34,8 +34,8 @@ namespace vectorinterpolators {
 class LinearInterpolator : public I_PairInterpolator<double>
 {
   public:
-    LinearInterpolator()
-        : I_PairInterpolator<double>({ 0, 1 }, { 0, 1 })
+    LinearInterpolator(t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
+        : I_PairInterpolator<double>(extrapolation_mode)
     {
     }
 
@@ -51,6 +51,12 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
+
+        // compare size of vectors
+        if (_X.size() != rhs._X.size())
+            return false;
+        if (_Y.size() != rhs._Y.size())
             return false;
 
         // compare data

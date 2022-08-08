@@ -24,8 +24,8 @@
 #include <utility>
 #include <vector>
 
-#include "i_interpolator.hpp"
 #include "../classhelpers/bitsery.hpp"
+#include "i_interpolator.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -111,6 +111,12 @@ class I_PairInterpolator : public I_Interpolator<YType>
         , _last_x_pair(0, 1, 0, 1)
     {
         set_data_XY(X, Y);
+    }
+
+    I_PairInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+        : I_Interpolator<YType>(extrapolation_mode)
+        , _last_x_pair(0, 1, 0, 1)
+    {
     }
 
     virtual ~I_PairInterpolator() = default;

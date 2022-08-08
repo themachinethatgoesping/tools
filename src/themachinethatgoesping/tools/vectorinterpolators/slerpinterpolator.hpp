@@ -41,11 +41,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     /**
      * @brief Constructor to make default initialization possible (necessary?)
      */
-    SlerpInterpolator()
-        : I_PairInterpolator<t_quaternion>(
-              { 0., 1. },
-              { rotationfunctions::quaternion_from_ypr<double>(0, -180, -89.99),
-                rotationfunctions::quaternion_from_ypr<double>(360, 180, 89.99) })
+    SlerpInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+        : I_PairInterpolator<t_quaternion>(extrapolation_mode)
     {
     }
 
@@ -109,6 +106,12 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     {
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
+        
+        // compare size of vectors
+        if (_X.size() != rhs._X.size())
+            return false;
+        if (_Y.size() != rhs._Y.size())
             return false;
 
         // compare data

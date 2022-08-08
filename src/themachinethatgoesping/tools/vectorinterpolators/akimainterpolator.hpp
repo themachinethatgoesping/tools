@@ -53,8 +53,8 @@ class AkimaInterpolator : public I_Interpolator<double>
      * @brief Construct a new (uninitialized) Akima Interpolator object
      *
      */
-    AkimaInterpolator()
-        : I_Interpolator<double>()
+    AkimaInterpolator(t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
+        : I_Interpolator<double>(extrapolation_mode)
     {
         // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
     }
@@ -93,6 +93,12 @@ class AkimaInterpolator : public I_Interpolator<double>
 
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
+            return false;
+        
+        // compare size of vectors
+        if (_X.size() != rhs._X.size())
+            return false;
+        if (_Y.size() != rhs._Y.size())
             return false;
 
         // compare data
