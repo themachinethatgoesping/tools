@@ -79,19 +79,19 @@ class ObjectPrinter
      */
     enum class t_field
     {
-        tvalue,     /// double or integer
-        tenum,      /// enumerator
-        tcontainer, /// 1D container (floating point or integer)
-        tstring,    /// formatted string field
-        tsection    /// section break
+        tvalue,     ///< double or integer
+        tenum,      ///< enumerator
+        tcontainer, ///< 1D container (floating point or integer)
+        tstring,    ///< formatted string field
+        tsection    ///< section break
     };
 
-    std::string                           _name;        /// name of the class that is to be printed
-    std::vector<std::string>              _fields;      /// variable names
-    std::vector<t_field>                  _field_types; /// variable types
-    std::vector<std::vector<std::string>> _lines;       /// first line is typically the field value
-    std::vector<std::string>              _value_infos; /// additional info (printed in [])
-    std::vector<char>                     _section_underliner; /// additional info (printed in [])
+    std::string                           _name;        ///< name of the class that is to be printed
+    std::vector<std::string>              _fields;      ///< variable names
+    std::vector<t_field>                  _field_types; ///< variable types
+    std::vector<std::vector<std::string>> _lines;       ///< first line is typically the field value
+    std::vector<std::string>              _value_infos; ///< additional info (printed in [])
+    std::vector<char>                     _section_underliner; ///< additional info (printed in [])
 
     unsigned int _float_precision = 2;
 
@@ -391,9 +391,9 @@ class ObjectPrinter
                 {
                     // copy vector once to modify it
                     std::vector<t_value> v;
-                    size_t               cnt_nan   = 0; /// number of nan values
-                    size_t               cnt_inf   = 0; /// number of positive infinity values
-                    size_t               cnt_inf_n = 0; /// number of negative infinity values
+                    size_t               cnt_nan   = 0; ///< number of nan values
+                    size_t               cnt_inf   = 0; ///< number of positive infinity values
+                    size_t               cnt_inf_n = 0; ///< number of negative infinity values
 
                     // count nans and infs and copy normal values to v
                     if constexpr (std::is_floating_point<t_value>())
