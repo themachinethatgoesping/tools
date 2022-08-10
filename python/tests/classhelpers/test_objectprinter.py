@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-"""The object printer python interface is not yet ready for anything usefull
+"""The object printer python interface is not yet ready for anything useful
 """
 
 import pytest
