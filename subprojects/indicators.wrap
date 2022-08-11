@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[wrap-git]
+url = https://github.com/p-ranav/indicators.git
+revision = v2.2
+directory = indicators-2.2
+patch_directory = indicators
+
+[provide]
+indicators = indicators_dep
+
