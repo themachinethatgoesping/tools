@@ -7,3 +7,11 @@ date*/*
 eigen*/*
 pybind11*/*
 Catch2*/*
+indicators-2.2/*
+magic_enum-*
+fmt*/*
+bitsery-*
+
+indicators-*
+tools-main*
+meta-main*

@@ -5,7 +5,7 @@
 # list and install headers
 headers = [
     'indicators/details/stream_helper.hpp',
-    'indicators/block_progress_bar.hpp'.
+    'indicators/block_progress_bar.hpp',
     'indicators/cursor_control.hpp',
     'indicators/dynamic_progress.hpp',
     'indicators/indeterminate_progress_bar.hpp',
