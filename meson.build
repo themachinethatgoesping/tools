@@ -34,16 +34,20 @@ boost_dep     = dependency('boost', version: boost_version)
 
 # eigen 3
 eigen3_dep = dependency('eigen3', required: false)
-
 if not eigen3_dep.found()
     eigen3_dep = subproject('eigen').get_variable('eigen_dep')
 endif
 
 # fmt for pretty printing
 fmt_dep = dependency('fmt', required: false)
-
 if not fmt_dep.found()
     fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
+endif
+
+# indicators for pretty progress bars
+indicators_dep = dependency('indicators', required: false)
+if not indicators_dep.found()
+    indicators_dep = subproject('indicators').get_variable('indicators_dep')
 endif
 
 #date (to be replaced with c++20 features)
@@ -51,7 +55,6 @@ hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true
 
 #bitsery (for object serialization)
 bitsery_dep = dependency('bitsery', required: false)
-
 if not bitsery_dep.found()
   bitsery_dep = subproject('bitsery').get_variable('bitsery_dep')
 endif
