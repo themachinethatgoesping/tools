@@ -6,7 +6,7 @@
 project(
     'magic_enum', ['cpp'],
     default_options: ['cpp_std=c++17'],
-    version: '0.8.0',
+    version: '0.8.1',
 )
 
 magic_enum_include = include_directories('include')
@@ -18,6 +18,7 @@ magic_enum_dep = declare_dependency(
 # list and install headers
 headers = [
     'include/magic_enum.hpp',
+    'include/magic_enum_format.hpp',
     'include/magic_enum_fuse.hpp',
 ]
 
