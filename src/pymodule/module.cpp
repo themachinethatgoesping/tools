@@ -7,6 +7,7 @@
 #include <pybind11/pybind11.h>
 
 #include "m_timeconv.hpp"
+#include "m_progressbars.hpp"
 #include "vectorinterpolators/module.hpp"
 #include "classhelpers/module.hpp"
 
@@ -17,6 +18,7 @@ PYBIND11_MODULE(PYTHON_LIB, m)
     m.doc() = "Small python tool functions for themachinethatgoesping";
 
     init_m_timeconv(m);
+    init_m_progressbars(m);
     init_m_vectorinterpolators(m);
     init_m_classhelpers(m);
 }

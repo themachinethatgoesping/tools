@@ -26,7 +26,12 @@ headers = [
   'vectorinterpolators/linearinterpolator.hpp',
   'vectorinterpolators/nearestinterpolator.hpp',
   'vectorinterpolators/akimainterpolator.hpp',
-  'vectorinterpolators/slerpinterpolator.hpp'
+  'vectorinterpolators/slerpinterpolator.hpp',
+  'progressbars.hpp',
+  'progressbars/i_progressbar.hpp',
+  'progressbars/noindicator.hpp',
+  'progressbars/progressindicator.hpp',
+  'progressbars/consoleprogressbar.hpp'
 ]
 
 # -- targets --

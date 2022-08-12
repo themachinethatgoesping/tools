@@ -23,7 +23,7 @@ namespace pingtools = themachinethatgoesping::tools;
 void init_m_timeconv(py::module& m)
 {
     auto m_timeconv =
-        m.def_submodule("timeconv", "Convinient functions for converting time strings.");
+        m.def_submodule("timeconv", "Convenient functions for converting time strings.");
 
     // this does not yet work the way I want it
     // maybe when c++20 chrono is finally avaliable to all compilers (utc_time instead of system

@@ -225,6 +225,86 @@ Parameter ``relative_difference_factor``:
 Returns:
     true/false)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_ConsoleProgressBar = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_close = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_current = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_currentStep = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_first = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_get_current_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_last = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_numOf_steps = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_os = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_set_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_started = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_tick = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_I_ProgressBar = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_close = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_get_current_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_tick = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_NoIndicator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_close = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_get_current_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_tick = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_ProgressIndicator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_close = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_get_current_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_set_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_spinner = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_tick = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =
 R"doc(compute heading from northing and easting north 0°/360°, east 90°,
 south 180°, west 270

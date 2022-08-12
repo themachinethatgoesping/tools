@@ -9,6 +9,7 @@ module_name = 'tools'
 sources = [
     'module.cpp',
     'm_timeconv.cpp',
+    'm_progressbars.cpp',
     'vectorinterpolators/module.cpp',
     'vectorinterpolators/subm_nearestinterpolator.cpp',
     'vectorinterpolators/subm_linearinterpolator.cpp',
