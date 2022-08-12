@@ -4,10 +4,11 @@
 
 #pragma once
 
-#include "i_progressbar.hpp"
+#include "i_progressbartimed.hpp"
 
 #include <iostream>
 #include <memory>
+#include <thread>
 
 #include <indicators/block_progress_bar.hpp>
 #include <indicators/progress_spinner.hpp>
@@ -18,7 +19,7 @@ namespace progressbars {
 
 /* terminalPrint observer
  * (uses first, update, last to print status to terminal (as a status bar */
-class ProgressIndicator : public I_ProgressBar
+class ProgressIndicator : public I_ProgressBarTimed
 {
     std::string _name;
     double      _first = 0.0;
@@ -28,11 +29,11 @@ class ProgressIndicator : public I_ProgressBar
     // std::unique_ptr<indicators::BlockProgressBar> _indicator;
 
   public:
-    ProgressIndicator() {}
+    ProgressIndicator()  = default;
+    ~ProgressIndicator() = default;
 
-    void init(double first,
-              double last,
-              const std::string&      name = "process") override
+  private:
+    void callback_init(double first, double last, const std::string& name = "process") override
     {
         _name  = name;
         _first = _first;
@@ -60,24 +61,27 @@ class ProgressIndicator : public I_ProgressBar
         _indicator->set_option(indicators::option::MaxProgress{ last - first });
     }
 
-    void close(const std::string& msg = "done") override
+    void callback_close(const std::string& msg = "done") override
     {
         _indicator->set_option(indicators::option::PostfixText{ "[" + msg + "]" });
         _indicator->mark_as_completed();
     }
 
-    void set_progress(double new_progress) override
+    void callback_set_progress(double new_progress) override
     {
         _indicator->set_progress(new_progress - _first);
     }
-    void set_postfix(const std::string& postfix) override
+    void callback_set_postfix(const std::string& postfix) override
     {
         _indicator->set_option(indicators::option::PostfixText{ "[" + postfix + "]" });
     }
 
-    void tick(double increment = 1) override { set_progress(_indicator->current() + increment); }
+    void callback_tick(double increment = 1) override
+    {
+        callback_set_progress(_indicator->current() + increment);
+    }
 
-    double current() const override { return _indicator->current(); }
+    double callback_current() const override { return _indicator->current(); }
 };
 
 }

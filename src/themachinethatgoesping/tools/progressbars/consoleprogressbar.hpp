@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "i_progressbar.hpp"
+#include "i_progressbartimed.hpp"
 #include <iostream>
 
 namespace themachinethatgoesping {
@@ -14,12 +14,12 @@ namespace progressbars {
 
 /* terminalPrint observer
  * (uses first, update, last to print status to terminal (as a status bar */
-class ConsoleProgressBar : public I_ProgressBar
+class ConsoleProgressBar : public I_ProgressBarTimed
 {
     std::ostream& _os;
 
     double       _first;       // starting value
-    double       _last;         // ending value
+    double       _last;        // ending value
     double       _current;     // current value
     unsigned int _currentStep; // step (step "/" of _numOf_steps)
 
@@ -33,22 +33,23 @@ class ConsoleProgressBar : public I_ProgressBar
     {
     }
 
-    void init(double first, double last, const std::string& name = "process") override
+  private:
+    void callback_init(double first, double last, const std::string& name = "process") override
     {
         /* check if _started already */
         if (_started)
-            throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar is already _started!"));
+            throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar "
+                                     "is already _started!"));
 
         /* check conditions */
         if (first > last)
-            throw(std::runtime_error(
-                "ERROR[ConsoleProgressBar]: last !> first! [" +
-                std::to_string(last) + " !> " + std::to_string(first) + "]"));
+            throw(std::runtime_error("ERROR[ConsoleProgressBar]: last !> first! [" +
+                                     std::to_string(last) + " !> " + std::to_string(first) + "]"));
 
         _first       = first;
-        _last         = last;
+        _last        = last;
         _current     = first;
-        _started      = true;
+        _started     = true;
         _currentStep = 0;
 
         std::string out;
@@ -64,12 +65,13 @@ class ConsoleProgressBar : public I_ProgressBar
         _os << out << "\n" << std::flush;
     }
 
-    void close(const std::string& msg = "done") override
+    void callback_close(const std::string& msg = "done") override
     {
         /* check if _started already */
         if (!_started)
-            throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::last))]: Can't "
-                                     "stop StatusBar! StatusBar is not _started yet!"));
+            throw(
+                std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::last))]: Can't "
+                                   "stop StatusBar! StatusBar is not _started yet!"));
 
         for (unsigned int i = 1; i < _numOf_steps - _currentStep; i++)
             _os << "\\" << std::flush;
@@ -79,36 +81,39 @@ class ConsoleProgressBar : public I_ProgressBar
         _started = false;
     }
 
-    void set_progress(double new_progress) override
+    void callback_set_progress(double new_progress) override
     {
         /* check if _started already */
         if (!_started)
-            throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update))]: Not "
-                                     "possible to call update! StatusBar is not _started yet!"));
+            throw(
+                std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update))]: Not "
+                                   "possible to call update! StatusBar is not _started yet!"));
 
         if (new_progress < _current)
             // throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]: new
             // status is less than old status! [" + std::to_string(new_progress) + " < " +
             // std::to_string(_current) + "]"));
-            std::cerr << "WARNING[DSMToolsLib::Status::ConsoleProgressBar::update]: new status is less "
-                    "than old status! [" +
-                        std::to_string(new_progress) + " < " + std::to_string(_current) + "]"
-                 << std::endl;
+            std::cerr
+                << "WARNING[DSMToolsLib::Status::ConsoleProgressBar::update]: new status is less "
+                   "than old status! [" +
+                       std::to_string(new_progress) + " < " + std::to_string(_current) + "]"
+                << std::endl;
 
         if (new_progress > _last)
             // throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]:
             // statusOverflow! \n\t- current status :" + std::to_string(new_progress) + "\n\t- last
             // status: " + std::to_string(_last) + "]"));
-            std::cerr << "ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]: statusOverflow! \n\t- "
-                    "current status :" +
-                        std::to_string(new_progress) + "\n\t- last status: " + std::to_string(_last) +
-                        "]"
-                 << std::endl;
+            std::cerr
+                << "ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]: statusOverflow! \n\t- "
+                   "current status :" +
+                       std::to_string(new_progress) +
+                       "\n\t- last status: " + std::to_string(_last) + "]"
+                << std::endl;
 
         _current = new_progress;
 
-        unsigned int status_steps = (unsigned int)std::round(((double)_numOf_steps - 1) *
-                                                             (_current - _first) / (_last - _first));
+        unsigned int status_steps = (unsigned int)std::round(
+            ((double)_numOf_steps - 1) * (_current - _first) / (_last - _first));
 
         while (_currentStep < status_steps)
         {
@@ -116,11 +121,11 @@ class ConsoleProgressBar : public I_ProgressBar
             _os << "/" << std::flush;
         }
     }
-    void set_postfix([[maybe_unused]] const std::string& postfix) override {};
+    void callback_set_postfix([[maybe_unused]] const std::string& postfix) override{};
 
-    void tick(double increment = 1) override { set_progress(_current + increment); }
+    void callback_tick(double increment = 1) override { set_progress(_current + increment); }
 
-    double current() const override { return _current; }
+    double callback_current() const override { return _current; }
 };
 
 }
