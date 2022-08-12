@@ -120,7 +120,7 @@ class ConsoleProgressBar : public I_ProgressBar
 
     void tick(double increment = 1) override { set_progress(_current + increment); }
 
-    double get_current_progress() const override { return _current; }
+    double current() const override { return _current; }
 };
 
 }

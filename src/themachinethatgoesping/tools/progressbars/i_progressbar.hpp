@@ -40,7 +40,7 @@ class I_ProgressBar
     virtual void set_progress(double new_progress) = 0;
     virtual void set_postfix(const std::string& postfix) = 0;
 
-    virtual double get_current_progress() const = 0;
+    virtual double current() const = 0;
 };
 
 }

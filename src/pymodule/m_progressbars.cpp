@@ -71,12 +71,12 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
         );
     }
 
-    double get_current_progress() const override
+    double current() const override
     {
         PYBIND11_OVERRIDE_PURE(
             double,               /* Return type */
             I_ProgressBar,        /* Parent class */
-            get_current_progress, /* Name of function in C++ (must match Python name) */
+            current, /* Name of function in C++ (must match Python name) */
         );
     }
 };
@@ -121,9 +121,9 @@ void init_m_progressbars(py::module& m)
              py::call_guard<py::scoped_ostream_redirect>(),
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_postfix),
              py::arg("postfix"))
-        .def("get_current_progress",
-             &I_ProgressBar::get_current_progress,
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, get_current_progress))
+        .def("current",
+             &I_ProgressBar::current,
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, current))
         // end I_ProgressBar
         ;
 

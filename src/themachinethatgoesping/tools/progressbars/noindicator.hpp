@@ -31,7 +31,7 @@ class NoIndicator : public I_ProgressBar
 
     void tick([[maybe_unused]] double increment = 1) override {}
 
-    double get_current_progress() const override { return 0; }
+    double current() const override { return 0; }
 };
 
 }

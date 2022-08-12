@@ -8,7 +8,9 @@
 #include "i_progressbar.hpp"
 
 #include <iostream>
+#include <memory>
 
+#include <indicators/block_progress_bar.hpp>
 #include <indicators/progress_spinner.hpp>
 
 namespace themachinethatgoesping {
@@ -19,36 +21,64 @@ namespace progressbars {
  * (uses first, update, last to print status to terminal (as a status bar */
 class ProgressIndicator : public I_ProgressBar
 {
-    indicators::ProgressSpinner _spinner{ indicators::option::PostfixText{ "peter" },
-              indicators::option::ForegroundColor{ indicators::Color::yellow },
-              indicators::option::SpinnerStates{
-                  std::vector<std::string>{ "⠈", "⠐", "⠠", "⢀", "⡀", "⠄", "⠂", "⠁" } },
-              indicators::option::FontStyles{ std::vector<indicators::FontStyle>{ indicators::FontStyle::bold } } };
+    std::string _name;
+    double      _first = 0.0;
+    double      _last  = 0.0;
+
+    std::unique_ptr<indicators::ProgressSpinner> _indicator;
+    // std::unique_ptr<indicators::BlockProgressBar> _indicator;
 
   public:
     ProgressIndicator() {}
 
-    void init([[maybe_unused]] double first, [[maybe_unused]] double last, const std::string& name = "process") override
+    void init([[maybe_unused]] double first,
+              [[maybe_unused]] double last,
+              const std::string&      name = "process") override
     {
-        // _spinner = indicators::ProgressSpinner(
-        //     { indicators::option::PostfixText{ name },
-        //       indicators::option::ForegroundColor{ indicators::Color::yellow },
-        //       indicators::option::SpinnerStates{
-        //           std::vector<std::string>{ "⠈", "⠐", "⠠", "⢀", "⡀", "⠄", "⠂", "⠁" } },
-        //       indicators::option::FontStyles{ std::vector<indicators::FontStyle>{ indicators::FontStyle::bold } } };
+        _name  = name;
+        _first = _first;
+        _last  = _last;
+
+        _indicator = std::make_unique<indicators::ProgressSpinner>();
+        //_indicator = std::make_unique<indicators::BlockProgressBar>();
+
+        //_indicator->set_option(indicators::option::BarWidth{ 20 });
+        _indicator->set_option(indicators::option::SpinnerStates{
+            std::vector<std::string>{"⠈", "⠐", "⠠", "⢀", "⡀", "⠄", "⠂", "⠁"}
+        });
+
+        _indicator->set_option(indicators::option::ForegroundColor{ indicators::Color::yellow });
+
+        _indicator->set_option(indicators::option::FontStyles{
+            std::vector<indicators::FontStyle>{ indicators::FontStyle::bold } });
+
+        _indicator->set_option(indicators::option::ShowPercentage{ true });
+        _indicator->set_option(indicators::option::ShowElapsedTime{ true });
+        _indicator->set_option(indicators::option::ShowRemainingTime{ true });
+
+        _indicator->set_option(indicators::option::PrefixText{ name + " " });
+        //_indicator->set_option(indicators::option::PostfixText{ name });
+        _indicator->set_option(indicators::option::MaxProgress{ last - first });
     }
 
-    void close([[maybe_unused]] const std::string& msg = "done") override { _spinner.mark_as_completed(); }
+    void close(const std::string& msg = "done") override
+    {
+        _indicator->set_option(indicators::option::PostfixText{ "[" + msg + "]" });
+        _indicator->mark_as_completed();
+    }
 
-    void set_progress(double new_progress) override { _spinner.set_progress(new_progress); }
+    void set_progress(double new_progress) override
+    {
+        _indicator->set_progress(new_progress - _first);
+    }
     void set_postfix(const std::string& postfix) override
     {
-        _spinner.set_option(indicators::option::PostfixText{postfix});
+        _indicator->set_option(indicators::option::PostfixText{ "[" + postfix + "]" });
     }
 
-    void tick([[maybe_unused]] double increment = 1) override { _spinner.tick(); }
+    void tick(double increment = 1) override { set_progress(_indicator->current() + increment); }
 
-    double get_current_progress() const override { return 0; }
+    double current() const override { return _indicator->current(); }
 };
 
 }

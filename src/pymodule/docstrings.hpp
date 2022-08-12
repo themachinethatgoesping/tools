@@ -233,11 +233,11 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgre
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_current = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_current_2 = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_currentStep = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_first = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_get_current_progress = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_init = R"doc()doc";
 
@@ -261,7 +261,7 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_close = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_get_current_progress = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_current = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_init = R"doc()doc";
 
@@ -277,7 +277,7 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_N
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_close = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_get_current_progress = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_current = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_init = R"doc()doc";
 
@@ -293,15 +293,21 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndic
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_close = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_get_current_progress = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_current = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_first = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_last = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_set_postfix = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_set_progress = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_spinner = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_tick = R"doc()doc";
 
