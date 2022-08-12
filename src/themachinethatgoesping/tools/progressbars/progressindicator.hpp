@@ -1,4 +1,3 @@
-// SPDX-FileCopyrightText: Peter Urban, 2022 GEOMAR Helmholtz Centre for Ocean Research Kiel
 // SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
 //
 // SPDX-License-Identifier: MPL-2.0
@@ -31,8 +30,8 @@ class ProgressIndicator : public I_ProgressBar
   public:
     ProgressIndicator() {}
 
-    void init([[maybe_unused]] double first,
-              [[maybe_unused]] double last,
+    void init(double first,
+              double last,
               const std::string&      name = "process") override
     {
         _name  = name;
