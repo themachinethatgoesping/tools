@@ -18,17 +18,14 @@ namespace progressbars {
 
 /* terminalPrint observer
  * (uses first, update, last to print status to terminal (as a status bar */
-class ProgressTqdm : public I_ProgressBarTimed
+class ProgressTqdm : public I_ProgressBarTimed, public pybind11::object
 {
-    pybind11::module_ m = pybind11::module_::import("tqdm.auto");  // like 'import os.path as path'
-    pybind11::object  _tqdm;
-
     double _first = 0;
 
   public:
-    ProgressTqdm()
+    ProgressTqdm(pybind11::object& tqdm)
+    : pybind11::object(tqdm)
     {
-        _tqdm = m.attr("tqdm")(pybind11::arg("leave") = false);
     }
     ~ProgressTqdm() = default;
 
@@ -36,27 +33,32 @@ class ProgressTqdm : public I_ProgressBarTimed
     void callback_init(double first, double last, const std::string& name = "process") override
     {
         _first = first;
-        _tqdm.attr("set_description")(name);
-        _tqdm.attr("set_total")(last-first);
+        attr("set_description")(name);
+        attr("reset")(last-first);
     }
 
     void callback_close(const std::string& msg = "done") override
     {
-        _tqdm.attr("close")();
+        attr("set_postfix_str")("[" + msg + "]");
+        attr("close")();
     }
 
     void callback_set_progress(double new_progress) override
     {
+        double increment = new_progress - _first - pybind11::cast<double>(attr("n")());
+        attr("update")(increment);
     }
     void callback_set_postfix(const std::string& postfix) override
     {
+        attr("set_postfix_str")("[" + postfix + "]");
     }
 
     void callback_tick(double increment = 1) override
     {
+        attr("update")(increment);
     }
 
-    double callback_current() const override { return 0; }
+    double callback_current() const override { return pybind11::cast<double>(attr("n")()); }
 };
 
 }

@@ -367,10 +367,6 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_first = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_m = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_tqdm = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_progressbars_lock_mutex_for_x_ms = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =

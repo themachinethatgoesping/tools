@@ -74,10 +74,9 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
 
     double current() const override
     {
-        PYBIND11_OVERRIDE_PURE(
-            double,               /* Return type */
-            I_ProgressBar,        /* Parent class */
-            current, /* Name of function in C++ (must match Python name) */
+        PYBIND11_OVERRIDE_PURE(double,        /* Return type */
+                               I_ProgressBar, /* Parent class */
+                               current,       /* Name of function in C++ (must match Python name) */
         );
     }
 };
@@ -151,7 +150,11 @@ void init_m_progressbars(py::module& m)
         "ConsoleProgressBar",
         DOC(themachinethatgoesping, tools, progressbars, ConsoleProgressBar))
         .def(py::init<>(),
-             DOC(themachinethatgoesping, tools, progressbars, ConsoleProgressBar, ConsoleProgressBar))
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 ConsoleProgressBar,
+                 ConsoleProgressBar))
         // end ProgressIndicator
         ;
 
@@ -159,8 +162,34 @@ void init_m_progressbars(py::module& m)
         m_progressbars,
         "ProgressTqdm",
         DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm))
-        .def(py::init<>(),
-             DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm, ProgressTqdm))
+        .def(py::init<py::object&>(),
+             DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm, ProgressTqdm),
+             py::arg("tqdm"))
         // end ProgressIndicator
         ;
+
+    //py::implicitly_convertible<ProgressTqdm,I_ProgressBar>();
+    py::implicitly_convertible<py::object,ProgressTqdm>();
+    //py::implicitly_convertible<ProgressTqdm,py::object&>();
+
+    m_progressbars.def(
+        "test_loop",
+        [](I_ProgressBar& progress, size_t loops, size_t sleep_us, bool show_progress) 
+        {
+        if (show_progress)
+            progress.init(0, loops, "test loop");
+        for (unsigned int i = 0; i < loops; ++i)
+        {
+            std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
+            if (show_progress)
+                progress.tick();
+        }
+        if (show_progress)
+            progress.close();
+        },
+        py::call_guard<py::scoped_ostream_redirect>(),
+        py::arg("ProgressBar"),
+        py::arg("loops")    = 1000,
+        py::arg("sleep_us") = 10,
+        py::arg("show_progress") = true);
 }
