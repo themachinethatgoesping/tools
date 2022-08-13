@@ -261,6 +261,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_I_ProgressBarTimed = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_skipped = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current = R"doc()doc";
@@ -281,15 +283,21 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_lock_timer = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_mutex = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skipped_increment = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skipped_postfix = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_timer_mutex = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_x_ms = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_I_ProgressBar = R"doc()doc";
 
@@ -341,9 +349,29 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndic
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_last = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_name = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_ProgressTqdm = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_close = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_current = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_set_progress = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_tick = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_first = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_m = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_tqdm = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_lock_mutex_for_x_ms = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =
 R"doc(compute heading from northing and easting north 0°/360°, east 90°,

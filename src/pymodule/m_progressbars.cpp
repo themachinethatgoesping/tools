@@ -11,6 +11,7 @@
 
 // -- module header
 #include "../themachinethatgoesping/tools/progressbars.hpp"
+#include "../themachinethatgoesping/tools/progressbars/progresstqdm.hpp"
 #include "docstrings.hpp" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 namespace py = pybind11;
@@ -132,7 +133,7 @@ void init_m_progressbars(py::module& m)
         "NoIndicator",
         DOC(themachinethatgoesping, tools, progressbars, NoIndicator))
         .def(py::init<>(),
-             DOC(themachinethatgoesping, tools, progressbars, ProgressIndicator, ProgressIndicator))
+             DOC(themachinethatgoesping, tools, progressbars, NoIndicator, NoIndicator))
         // end ProgressIndicator
         ;
 
@@ -150,7 +151,16 @@ void init_m_progressbars(py::module& m)
         "ConsoleProgressBar",
         DOC(themachinethatgoesping, tools, progressbars, ConsoleProgressBar))
         .def(py::init<>(),
-             DOC(themachinethatgoesping, tools, progressbars, ProgressIndicator, ProgressIndicator))
+             DOC(themachinethatgoesping, tools, progressbars, ConsoleProgressBar, ConsoleProgressBar))
+        // end ProgressIndicator
+        ;
+
+    py::class_<ProgressTqdm, I_ProgressBar>(
+        m_progressbars,
+        "ProgressTqdm",
+        DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm))
+        .def(py::init<>(),
+             DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm, ProgressTqdm))
         // end ProgressIndicator
         ;
 }

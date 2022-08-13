@@ -21,9 +21,7 @@ namespace progressbars {
  * (uses first, update, last to print status to terminal (as a status bar */
 class ProgressIndicator : public I_ProgressBarTimed
 {
-    std::string _name;
     double      _first = 0.0;
-    double      _last  = 0.0;
 
     std::unique_ptr<indicators::ProgressSpinner> _indicator;
     // std::unique_ptr<indicators::BlockProgressBar> _indicator;
@@ -35,9 +33,7 @@ class ProgressIndicator : public I_ProgressBarTimed
   private:
     void callback_init(double first, double last, const std::string& name = "process") override
     {
-        _name  = name;
         _first = _first;
-        _last  = _last;
 
         _indicator = std::make_unique<indicators::ProgressSpinner>();
         //_indicator = std::make_unique<indicators::BlockProgressBar>();

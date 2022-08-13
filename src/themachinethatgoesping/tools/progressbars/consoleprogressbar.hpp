@@ -123,7 +123,7 @@ class ConsoleProgressBar : public I_ProgressBarTimed
     }
     void callback_set_postfix([[maybe_unused]] const std::string& postfix) override{};
 
-    void callback_tick(double increment = 1) override { set_progress(_current + increment); }
+    void callback_tick(double increment = 1) override { callback_set_progress(_current + increment); }
 
     double callback_current() const override { return _current; }
 };

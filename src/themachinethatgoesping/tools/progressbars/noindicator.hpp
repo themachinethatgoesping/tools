@@ -26,7 +26,7 @@ class NoIndicator : public I_ProgressBar
 
     void close([[maybe_unused]] const std::string& msg = "done") override {}
 
-    void set_progress([[maybe_unused]] double new_progress) override { (void)new_progress; }
+    void set_progress([[maybe_unused]] double new_progress) override { }
     void set_postfix([[maybe_unused]] const std::string& postfix) override{};
 
     void tick([[maybe_unused]] double increment = 1) override {}
