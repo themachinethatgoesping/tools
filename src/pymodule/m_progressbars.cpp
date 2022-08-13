@@ -81,6 +81,70 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
     }
 };
 
+// pybind trampoline class for virtual I_ProgressBar class
+class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
+{
+  public:
+    /* Inherit the constructors */
+    using I_ProgressBarTimed::I_ProgressBarTimed;
+
+    /* Override the virtual functions */
+    void callback_init(double first, double last, const std::string& process_name = "process") override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_init,          /* Name of function in C++ (must match Python name) */
+                               first,
+                               last,
+                               process_name /* Argument(s) */
+        );
+    }
+
+    void callback_close(const std::string& msg = "done") override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_close,         /* Name of function in C++ (must match Python name) */
+                               msg            /* Argument(s) */
+        );
+    }
+
+    void callback_tick(double increment = 1) override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_tick,          /* Name of function in C++ (must match Python name) */
+                               increment      /* Argument(s) */
+        );
+    }
+
+    void callback_set_progress(double new_progress) override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_set_progress,  /* Name of function in C++ (must match Python name) */
+                               new_progress   /* Argument(s) */
+        );
+    }
+
+    void callback_set_postfix(const std::string& postfix) override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_set_postfix,   /* Name of function in C++ (must match Python name) */
+                               postfix        /* Argument(s) */
+        );
+    }
+
+    double callback_current() const override
+    {
+        PYBIND11_OVERRIDE_PURE(double,        /* Return type */
+                               I_ProgressBarTimed, /* Parent class */
+                               callback_current,       /* Name of function in C++ (must match Python name) */
+        );
+    }
+};
+
 void init_m_progressbars(py::module& m)
 {
     auto m_progressbars = m.def_submodule("progressbars",
@@ -124,6 +188,46 @@ void init_m_progressbars(py::module& m)
         .def("current",
              &I_ProgressBar::current,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, current))
+        // end I_ProgressBar
+        ;
+
+    // interface class
+    py::class_<I_ProgressBarTimed, I_ProgressBarTimed_PybindTrampoline, I_ProgressBar>(
+        m_progressbars,
+        "I_ProgressBarTimed",
+        DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed))
+        .def(py::init<>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, I_ProgressBarTimed))
+        .def("callback_init",
+             &I_ProgressBarTimed::init,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_init),
+             py::arg("first"),
+             py::arg("last"),
+             py::arg("process_name") = "process")
+        .def("callback_close",
+             &I_ProgressBarTimed::callback_close,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_close),
+             py::arg("msg") = "done")
+        .def("callback_tick",
+             &I_ProgressBarTimed::callback_tick,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_tick),
+             py::arg("increment") = 1)
+        .def("callback_set_progress",
+             &I_ProgressBarTimed::callback_set_progress,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_set_progress),
+             py::arg("progress"))
+        .def("callback_set_postfix",
+             &I_ProgressBarTimed::callback_set_postfix,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_set_postfix),
+             py::arg("postfix"))
+        .def("callback_current",
+             &I_ProgressBarTimed::callback_current,
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_current))
         // end I_ProgressBar
         ;
 

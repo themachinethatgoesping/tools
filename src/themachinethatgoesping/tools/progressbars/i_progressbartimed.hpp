@@ -40,7 +40,7 @@ class I_ProgressBarTimed : public I_ProgressBar
     double      _skipped_increment = 0.0;
     std::string _skipped_postfix   = "";
 
-  protected:
+  public:
     virtual void callback_init(double             first,
                                double             last,
                                const std::string& process_name = "process") = 0;
