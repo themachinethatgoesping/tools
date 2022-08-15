@@ -284,7 +284,7 @@ void init_m_progressbars(py::module& m)
         m_progressbars,
         "ProgressTqdm",
         DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm))
-        .def(py::init<py::object&>(),
+        .def(py::init<py::object>(),
              DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm, ProgressTqdm),
              py::arg("tqdm"))
         // end ProgressIndicator

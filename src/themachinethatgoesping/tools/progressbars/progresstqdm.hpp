@@ -36,7 +36,7 @@ class ProgressTqdm
    * 
    * @param tqdm A python tqdm class object
    */
-    ProgressTqdm(pybind11::object& tqdm)
+    ProgressTqdm(pybind11::object tqdm)
         : pybind11::object(tqdm)
     {
     }
