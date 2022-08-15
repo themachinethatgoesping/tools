@@ -107,7 +107,7 @@ class Test_tools_progressbars:
 
     #     assert relative_time_diff(time_tqdm_wrapper, time_no_progress) < 50
     
-    # def test_progressbar_tqdm_should_not_cause_a_crash(self):
-    #     a=0
-    #     for i in tqdm(range(100000)):
-    #         a += i**2
+    def test_progressbar_tqdm_should_not_cause_a_crash(self):
+        a=0
+        for i in tqdm(range(100000)):
+            a += i**2
