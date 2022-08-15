@@ -45,7 +45,7 @@ import tqdm
 
 
 # define class for grouping (test sections)
-# class Test_tools_progressbars:
+class Test_tools_progressbars:
 #     def test_progressbars_should_not_add_large_overhead_in_test_loops(self):
 #         N = 1000000  # number of iterations in test loop
 #         t = 15       # time between iterations in test loop (in iterations of complicated operation)
@@ -107,7 +107,7 @@ import tqdm
 
     #     assert relative_time_diff(time_tqdm_wrapper, time_no_progress) < 50
     
-    # def test_progressbar_tqdm_should_not_cause_a_crash(self):
-    #     a=0
-    #     for i in tqdm.tqdm(range(100000)):
-    #         a += i**2
+    def test_progressbar_tqdm_should_not_cause_a_crash(self):
+        a=0
+        for i in tqdm.tqdm(range(100000)):
+            a += i**2
