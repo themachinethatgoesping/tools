@@ -57,7 +57,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     REQUIRE(ip != ip2);
 
     // same as serialization, but returns deserialization state as a pair
-    // first = error code, second = is buffer was successfully read from begin to the end.
+    // first = error code, second = is buffer was successfuly read from begin to the end.
     //#auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
     // ip2);
     // auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);

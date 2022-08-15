@@ -35,7 +35,7 @@ void test_serialize(custom_bitsery_type& iq)
     REQUIRE(iq != iq2);
 
     // same as serialization, but returns deserialization state as a pair
-    // first = error code, second = is buffer was successfully read from begin to the end.
+    // first = error code, second = is buffer was successfuly read from begin to the end.
     auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, iq2);
     REQUIRE(state.first == bitsery::ReaderError::NoError);
     REQUIRE(state.second);

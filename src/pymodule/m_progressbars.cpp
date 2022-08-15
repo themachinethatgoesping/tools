@@ -89,11 +89,13 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
     using I_ProgressBarTimed::I_ProgressBarTimed;
 
     /* Override the virtual functions */
-    void callback_init(double first, double last, const std::string& process_name = "process") override
+    void callback_init(double             first,
+                       double             last,
+                       const std::string& process_name = "process") override
     {
-        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+        PYBIND11_OVERRIDE_PURE(void,               /* Return type */
                                I_ProgressBarTimed, /* Parent class */
-                               callback_init,          /* Name of function in C++ (must match Python name) */
+                               callback_init, /* Name of function in C++ (must match Python name) */
                                first,
                                last,
                                process_name /* Argument(s) */
@@ -102,45 +104,49 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
 
     void callback_close(const std::string& msg = "done") override
     {
-        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
-                               I_ProgressBarTimed, /* Parent class */
-                               callback_close,         /* Name of function in C++ (must match Python name) */
-                               msg            /* Argument(s) */
+        PYBIND11_OVERRIDE_PURE(
+            void,               /* Return type */
+            I_ProgressBarTimed, /* Parent class */
+            callback_close,     /* Name of function in C++ (must match Python name) */
+            msg                 /* Argument(s) */
         );
     }
 
     void callback_tick(double increment = 1) override
     {
-        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+        PYBIND11_OVERRIDE_PURE(void,               /* Return type */
                                I_ProgressBarTimed, /* Parent class */
-                               callback_tick,          /* Name of function in C++ (must match Python name) */
+                               callback_tick, /* Name of function in C++ (must match Python name) */
                                increment      /* Argument(s) */
         );
     }
 
     void callback_set_progress(double new_progress) override
     {
-        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
-                               I_ProgressBarTimed, /* Parent class */
-                               callback_set_progress,  /* Name of function in C++ (must match Python name) */
-                               new_progress   /* Argument(s) */
+        PYBIND11_OVERRIDE_PURE(
+            void,                  /* Return type */
+            I_ProgressBarTimed,    /* Parent class */
+            callback_set_progress, /* Name of function in C++ (must match Python name) */
+            new_progress           /* Argument(s) */
         );
     }
 
     void callback_set_postfix(const std::string& postfix) override
     {
-        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
-                               I_ProgressBarTimed, /* Parent class */
-                               callback_set_postfix,   /* Name of function in C++ (must match Python name) */
-                               postfix        /* Argument(s) */
+        PYBIND11_OVERRIDE_PURE(
+            void,                 /* Return type */
+            I_ProgressBarTimed,   /* Parent class */
+            callback_set_postfix, /* Name of function in C++ (must match Python name) */
+            postfix               /* Argument(s) */
         );
     }
 
     double callback_current() const override
     {
-        PYBIND11_OVERRIDE_PURE(double,        /* Return type */
-                               I_ProgressBarTimed, /* Parent class */
-                               callback_current,       /* Name of function in C++ (must match Python name) */
+        PYBIND11_OVERRIDE_PURE(
+            double,             /* Return type */
+            I_ProgressBarTimed, /* Parent class */
+            callback_current,   /* Name of function in C++ (must match Python name) */
         );
     }
 };
@@ -197,7 +203,11 @@ void init_m_progressbars(py::module& m)
         "I_ProgressBarTimed",
         DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed))
         .def(py::init<>(),
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, I_ProgressBarTimed))
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 I_ProgressBarTimed,
+                 I_ProgressBarTimed))
         .def("callback_init",
              &I_ProgressBarTimed::init,
              py::call_guard<py::scoped_ostream_redirect>(),
@@ -218,12 +228,20 @@ void init_m_progressbars(py::module& m)
         .def("callback_set_progress",
              &I_ProgressBarTimed::callback_set_progress,
              py::call_guard<py::scoped_ostream_redirect>(),
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_set_progress),
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 I_ProgressBarTimed,
+                 callback_set_progress),
              py::arg("progress"))
         .def("callback_set_postfix",
              &I_ProgressBarTimed::callback_set_postfix,
              py::call_guard<py::scoped_ostream_redirect>(),
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_set_postfix),
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 I_ProgressBarTimed,
+                 callback_set_postfix),
              py::arg("postfix"))
         .def("callback_current",
              &I_ProgressBarTimed::callback_current,
@@ -272,28 +290,35 @@ void init_m_progressbars(py::module& m)
         // end ProgressIndicator
         ;
 
-    //py::implicitly_convertible<ProgressTqdm,I_ProgressBar>();
-    py::implicitly_convertible<py::object,ProgressTqdm>();
-    //py::implicitly_convertible<ProgressTqdm,py::object&>();
+    // py::implicitly_convertible<ProgressTqdm,I_ProgressBar>();
+    py::implicitly_convertible<py::object, ProgressTqdm>();
+    // py::implicitly_convertible<ProgressTqdm,py::object&>();
 
     m_progressbars.def(
         "test_loop",
-        [](I_ProgressBar& progress, size_t loops, size_t sleep_us, bool show_progress) 
-        {
-        if (show_progress)
-            progress.init(0, loops, "test loop");
-        for (unsigned int i = 0; i < loops; ++i)
-        {
-            std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
+        [](I_ProgressBar& progress, size_t loops, size_t sleep_us, bool show_progress) {
+            // get current time
+            auto start = std::chrono::high_resolution_clock::now();
+
             if (show_progress)
-                progress.tick();
-        }
-        if (show_progress)
-            progress.close();
+                progress.init(0, loops, "test loop");
+            for (unsigned int i = 0; i < loops; ++i)
+            {
+                std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
+
+                if (show_progress)
+                    progress.tick();
+            }
+            if (show_progress)
+                progress.close();
+
+            // return elapsed time as double in milliseconds
+            auto end = std::chrono::high_resolution_clock::now();
+            return std::chrono::duration<double, std::milli>(end - start).count();
         },
         py::call_guard<py::scoped_ostream_redirect>(),
         py::arg("ProgressBar"),
-        py::arg("loops")    = 1000,
-        py::arg("sleep_us") = 10,
+        py::arg("loops")         = 1000,
+        py::arg("sleep_us")      = 10,
         py::arg("show_progress") = true);
 }

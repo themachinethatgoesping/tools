@@ -12,20 +12,25 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace progressbars {
 
-/* terminalPrint observer
- * (uses first, update, last to print status to terminal (as a status bar */
+/**
+ * @brief Old-school progress bar that prints to terminal. For reference only, might be removed in
+ * the future.
+ *
+ * This class is based in I_ProgressBarTimed such that the callbacks are guarded by a timer.
+ */
 class ConsoleProgressBar : public I_ProgressBarTimed
 {
-    std::ostream& _os;
+    std::ostream& _os; ///< output stream
 
-    double       _first;       // starting value
-    double       _last;        // ending value
-    double       _current;     // current value
-    unsigned int _currentStep; // step (step "/" of _numOf_steps)
+    // internal state
+    double       _first;       ///< starting value
+    double       _last;        ///< ending value
+    double       _current;     ///< current value
+    unsigned int _currentStep; ///< step (step "/" of _numOf_steps)
 
-    const unsigned int _numOf_steps = 50; // steps till 100% (equals linesize)
+    const unsigned int _numOf_steps = 50; ///< steps till 100% (equals linesize)
 
-    bool _started = false; // is status actively running or not flag
+    bool _initialized = false; ///< flag to control if the progressbar is initialized
 
   public:
     ConsoleProgressBar(std::ostream& os = std::cout)
@@ -34,12 +39,13 @@ class ConsoleProgressBar : public I_ProgressBarTimed
     }
 
   private:
+    // ----- I_ProgressBarTimed interface -----
     void callback_init(double first, double last, const std::string& name = "process") override
     {
-        /* check if _started already */
-        if (_started)
+        /* check if _initialized already */
+        if (_initialized)
             throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar "
-                                     "is already _started!"));
+                                     "is already _initialized!"));
 
         /* check conditions */
         if (first > last)
@@ -49,7 +55,7 @@ class ConsoleProgressBar : public I_ProgressBarTimed
         _first       = first;
         _last        = last;
         _current     = first;
-        _started     = true;
+        _initialized = true;
         _currentStep = 0;
 
         std::string out;
@@ -67,27 +73,27 @@ class ConsoleProgressBar : public I_ProgressBarTimed
 
     void callback_close(const std::string& msg = "done") override
     {
-        /* check if _started already */
-        if (!_started)
+        /* check if _initialized already */
+        if (!_initialized)
             throw(
                 std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::last))]: Can't "
-                                   "stop StatusBar! StatusBar is not _started yet!"));
+                                   "stop StatusBar! StatusBar is not _initialized yet!"));
 
         for (unsigned int i = 1; i < _numOf_steps - _currentStep; i++)
             _os << "\\" << std::flush;
 
         _os << "| [ " << msg << " ]" << std::endl;
 
-        _started = false;
+        _initialized = false;
     }
 
     void callback_set_progress(double new_progress) override
     {
-        /* check if _started already */
-        if (!_started)
+        /* check if _initialized already */
+        if (!_initialized)
             throw(
                 std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update))]: Not "
-                                   "possible to call update! StatusBar is not _started yet!"));
+                                   "possible to call update! StatusBar is not _initialized yet!"));
 
         if (new_progress < _current)
             // throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]: new
@@ -123,7 +129,10 @@ class ConsoleProgressBar : public I_ProgressBarTimed
     }
     void callback_set_postfix([[maybe_unused]] const std::string& postfix) override{};
 
-    void callback_tick(double increment = 1) override { callback_set_progress(_current + increment); }
+    void callback_tick(double increment = 1) override
+    {
+        callback_set_progress(_current + increment);
+    }
 
     double callback_current() const override { return _current; }
 };

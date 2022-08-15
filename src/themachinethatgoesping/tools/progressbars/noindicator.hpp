@@ -11,16 +11,21 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace progressbars {
 
-/* noIndicator observer
- * (uses start, update, end to print status to terminal (as a status bar */
+/**
+ * @brief A progress bar that does not show any progress and has nearly no overhead.
+ * 
+ */
 class NoIndicator : public I_ProgressBar
 {
   public:
     NoIndicator() = default;
 
+    // ----- I_ProgressBar interface -----    
+    // (all functions simply do nothing)
+    
     void init([[maybe_unused]] double             first,
               [[maybe_unused]] double             last,
-              [[maybe_unused]] const std::string& name = "process") override
+              [[maybe_unused]] const std::string& name = "process") override 
     {
     }
 

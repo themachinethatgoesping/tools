@@ -225,7 +225,12 @@ Parameter ``relative_difference_factor``:
 Returns:
     true/false)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar =
+R"doc(Old-school progress bar that prints to terminal. For reference only,
+might be removed in the future.
+
+This class is based in I_ProgressBarTimed such that the callbacks are
+guarded by a timer.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_ConsoleProgressBar = R"doc()doc";
 
@@ -241,79 +246,234 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgre
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_callback_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_current = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_current = R"doc(< current value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_currentStep = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_currentStep = R"doc(< step (step "/" of _numOf_steps))doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_first = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_first = R"doc(< starting value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_last = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_initialized = R"doc(< flag to control if the progressbar is initialized)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_numOf_steps = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_last = R"doc(< ending value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_os = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_numOf_steps = R"doc(< steps till 100% (equals linesize))doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_started = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_os = R"doc(< output stream)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar =
+R"doc(This is a generic (abstract) class for progress bars. Usage: call
+init() and close() to initialize and finalize the progress bar. Then
+call set_progress() or tick() to update the progress bar.
+set_postfix() can be used to set a postfix message.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed = R"doc()doc";
+Note: Functions the set_progress and tick functions can significantly
+slow down processes that use the progressbar. Consider using the
+ProgressBarTimed interface instead.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed =
+R"doc(This is a generic (abstract) class for progress bars. Usage: call
+init() and close() to initialize and finalize the progress bar. Then
+call set_progress() or tick() to update the progress bar.
+set_postfix() can be used to set a postfix message. *
+
+The above name functions are guarded by a timer (100ms). The timer is
+started when calling set_progress() or tick(). Repetitively calling of
+these functions (in a loop) will update the internal state but not
+update the progress bar until the timer (100ms) expires.
+
+This ensures a low overhead even for slow progressbar implementations.
+
+All functions are thread-safe.
+
+To implement this interface the abstract callback_ functions must be
+implemented.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_I_ProgressBarTimed = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_skipped = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_state =
+R"doc(Apply (call appropriate callback) and reset the internal states to the
+progress bar
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close = R"doc()doc";
+Note: this internal function assumes a lock on the _mutex!)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close =
+R"doc(Finalize the progressbar This callback is guarded by a mutex.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_init = R"doc()doc";
+Parameter ``msg``:
+    A message that can be appended as postfix)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_postfix = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current =
+R"doc(Get the current progress state
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_progress = R"doc()doc";
+This callback is guarded by a mutex
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_tick = R"doc()doc";
+Returns:
+    progress state)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_init =
+R"doc(Initialize a new progressbar within the given range This callback is
+guarded by a mutex.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_current = R"doc()doc";
+Parameter ``first``:
+    lowest number in the range (typically 0.0)
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_first = R"doc()doc";
+Parameter ``last``:
+    highest number in the range (typically 100.0)
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init = R"doc()doc";
+Parameter ``process_name``:
+    Name of the progress)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_mutex = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_postfix =
+R"doc(Append a postfix message to the progressbar
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix = R"doc()doc";
+This callback is guarded by a mutex and a timer (100ms). If skipped,
+the postfix is stored to the internal state and will be applied with
+the next successful call to set_progress(), tick() or set_postfix().
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress = R"doc()doc";
+Parameter ``postfix``:
+    postfix message)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_progress =
+R"doc(Set the progress state to the given value. Note some implementations
+may require the new_progress to be higher than the current progress!
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skipped_increment = R"doc()doc";
+This callback is guarded by a mutex and a timer (100ms). If skipped,
+the progress is stored to the internal state and will be applied with
+the next successful call to set_progress(), tick() or set_postfix().
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skipped_postfix = R"doc()doc";
+Parameter ``new_progress``:
+    New progress state (within the given first/last range))doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_tick =
+R"doc(Increment the progress state by the given amount This callback is
+guarded by a mutex and a timer (100ms).
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_x_ms = R"doc()doc";
+If skipped, the increment is added to the internal counter and will be
+applied with the next unskipped call to tick().
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_I_ProgressBar = R"doc()doc";
+Parameter ``increment``:
+    Number of steps to increment the progress by)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_close = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close =
+R"doc(Finalize the progressbar This function is thread safe.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_current = R"doc()doc";
+Parameter ``msg``:
+    A message that can be appended as postfix)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_init = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_current =
+R"doc(Get the current progress state
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_postfix = R"doc()doc";
+This function is threadsafe.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_progress = R"doc()doc";
+Returns:
+    progress state)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_tick = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_first = R"doc(< lowest number in the range (typically 0.0))doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init =
+R"doc(Initialize a new progressbar within the given range This function is
+thread safe.
+
+Parameter ``first``:
+    lowest number in the range (typically 0.0)
+
+Parameter ``last``:
+    highest number in the range (typically 100.0)
+
+Parameter ``process_name``:
+    Name of the progress)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_mutex = R"doc(< mutex for the progressbar)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix =
+R"doc(Append a postfix message to the progressbar
+
+This function is guarded by a mutex (threadsafe) and a timer. Calls
+that happen more frequent than 100ms are added to the internal state,
+but not to the progressbar.
+
+Parameter ``postfix``:
+    postfix message)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress =
+R"doc(Set the progress state to the given value. Note some implementations
+may require the new_progress to be higher than the current progress!
+
+This function is guarded by a mutex (threadsafe) and a timer. Calls
+that happen more frequent than 100ms are added to the internal state,
+but not to the progressbar.
+
+Parameter ``new_progress``:
+    New progress state (within the given first/last range))doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc(< atomic (thread safe) boolean to skip the progressbar update)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc(< internal counter for the skipped increments)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_postfix = R"doc(< internal state for the skipped postfix)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_progress = R"doc(< internal state for the skipped progress)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick =
+R"doc(Increment the progress state by the given amount
+
+This function is guarded by a mutex (threadsafe) and a timer. Calls
+that happen more frequent than 100ms are added to the internal state,
+but not to the progressbar.
+
+Parameter ``increment``:
+    Number of steps to increment the progress by)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_x_ms = R"doc(< time to wait for a new progress update (100ms))doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_I_ProgressBar = R"doc(Construct a new i progressbar object)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_close =
+R"doc(Finalize the progressbar
+
+Parameter ``msg``:
+    A message that can be appended as postfix)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_current =
+R"doc(Get the current progress state
+
+Returns:
+    progress state)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_init =
+R"doc(Initialize a new progressbar within the given range
+
+Parameter ``first``:
+    lowest number in the range (typically 0.0)
+
+Parameter ``last``:
+    highest number in the range (typically 100.0)
+
+Parameter ``process_name``:
+    Name of the progress)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_postfix =
+R"doc(Append a postfix message to the progressbar
+
+Parameter ``postfix``:
+    postfix message)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_progress =
+R"doc(Set the progress state to the given value. Note some implementations
+may require the new_progress to be higher than the current progress!
+
+Parameter ``new_progress``:
+    New progress state (within the given first/last range))doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_tick =
+R"doc(Increment the progress state by the given amount
+
+Parameter ``increment``:
+    Number of steps to increment the progress by)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator =
+R"doc(A progress bar that does not show any progress and has nearly no
+overhead.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_NoIndicator = R"doc()doc";
 
@@ -329,7 +489,12 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_s
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator =
+R"doc(Text based ProgressBar that uses the indicators library.
+(https://github.com/p-ranav/indicators)
+
+This class is based in I_ProgressBarTimed such that the callbacks are
+guarded by a timer.)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_ProgressIndicator = R"doc()doc";
 
@@ -345,13 +510,25 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndic
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_first = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_first = R"doc(< first value of the progressbar range)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc(< indicator progressbar implementation)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm =
+R"doc(Python ProgressBar that uses the tqdm. This is a test implementation
+for reference only. Do not use in production! Including this header
+will result in a compilation error if the project is not linked
+against pybind11 (not default for themachinethatgoesping_tools).
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_ProgressTqdm = R"doc()doc";
+This class is based in I_ProgressBarTimed such that the callbacks are
+guarded by a timer.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_ProgressTqdm =
+R"doc(Construct a new Progress Tqdm object To initialize a tqdm object call:
+from tqdm import tqdm, and use tqdm()
+
+Parameter ``tqdm``:
+    A python tqdm class object)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_close = R"doc()doc";
 
