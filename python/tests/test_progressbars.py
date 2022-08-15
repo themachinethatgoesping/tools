@@ -9,39 +9,39 @@ import pytest
 import tqdm
 
 
-# class tqdm_wrapper(prg.I_ProgressBarTimed):
-#     """This is a progressbar wrapper for tqdm for testing purposes.
-#     It is for testing purposes only and should not be used in production code.
-#     The main problem is that it does not not play well with tqdm.auto (notebooks).
-#     """
+class tqdm_wrapper(prg.I_ProgressBarTimed):
+    """This is a progressbar wrapper for tqdm for testing purposes.
+    It is for testing purposes only and should not be used in production code.
+    The main problem is that it does not not play well with tqdm.auto (notebooks).
+    """
 
-#     def __init__(self):
-#         # initialize prg.I_ProgressBarTimed base class
-#         super().__init__()
+    def __init__(self):
+        # initialize prg.I_ProgressBarTimed base class
+        super().__init__()
 
-#     # ----- I_ProgressBarTimed callback interface -----
-#     # These are virtual methods that are called by the I_ProgressBarTimed interface
-#     # to update the progressbar. The callbacks are protected by a 100ms timer to avoid
-#     # too frequent updates.
+    # ----- I_ProgressBarTimed callback interface -----
+    # These are virtual methods that are called by the I_ProgressBarTimed interface
+    # to update the progressbar. The callbacks are protected by a 100ms timer to avoid
+    # too frequent updates.
 
-#     def callback_init(self, first, last, process_name="process"):
-#         self.first = first  # first value of progressbar (usually 0)
-#         self.tqdm = tqdm.tqdm(total=last - first, desc=process_name, ncols=100)
+    def callback_init(self, first, last, process_name="process"):
+        self.first = first  # first value of progressbar (usually 0)
+        self.tqdm = tqdm.tqdm(total=last - first, desc=process_name, ncols=100)
 
-#     def callback_close(self, msg="done"):
-#         self.tqdm.set_postfix_str("[" + msg + "]")
+    def callback_close(self, msg="done"):
+        self.tqdm.set_postfix_str("[" + msg + "]")
 
-#     def callback_set_progress(self, new_progress):
-#         self.tqdm.update(new_progress - self.first - self.tqdm.n)
+    def callback_set_progress(self, new_progress):
+        self.tqdm.update(new_progress - self.first - self.tqdm.n)
 
-#     def callback_set_postfix(self, postfix):
-#         self.tqdm.set_postfix_str("[" + postfix + "]")
+    def callback_set_postfix(self, postfix):
+        self.tqdm.set_postfix_str("[" + postfix + "]")
 
-#     def callback_tick(self, increment=1):
-#         self.tqdm.update(increment)
+    def callback_tick(self, increment=1):
+        self.tqdm.update(increment)
 
-#     def callback_current(self):
-#         self.tqdm.n
+    def callback_current(self):
+        self.tqdm.n
 
 
 # define class for grouping (test sections)
