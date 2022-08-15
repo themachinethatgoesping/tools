@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# from themachinethatgoesping.tools import progressbars as prg
+from themachinethatgoesping.tools import progressbars as prg
 
 import time
 import pytest
