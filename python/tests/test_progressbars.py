@@ -47,8 +47,8 @@ class tqdm_wrapper(prg.I_ProgressBarTimed):
 # define class for grouping (test sections)
 class Test_tools_progressbars:
     def test_progressbars_should_not_add_large_overhead_in_test_loops(self):
-        N = 500  # number of iterations in test loop
-        t = 50  # time between iterations in test loop (in microseconds)
+        N = 1000000  # number of iterations in test loop
+        t = 15       # time between iterations in test loop (in iterations of complicated operation)
 
         t1 = time.time()
 
@@ -74,7 +74,5 @@ class Test_tools_progressbars:
         assert relative_time_diff(time_tqdm_cpp, time_no_progress) < 50
         assert relative_time_diff(time_old_text, time_no_progress) < 100 #this can have a rather large overhead
         assert relative_time_diff(time_indicators, time_no_progress) < 50
-        
-        
 
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second

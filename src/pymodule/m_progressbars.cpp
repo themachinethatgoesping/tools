@@ -4,6 +4,7 @@
 
 // -- c++ library headers
 #include <memory>
+#include <random>
 
 // -- include pybind11 headers
 #include <pybind11/iostream.h>
@@ -300,11 +301,23 @@ void init_m_progressbars(py::module& m)
             // get current time
             auto start = std::chrono::high_resolution_clock::now();
 
+            // initialize random number generator
+            std::random_device                     r;
+            std::default_random_engine             e1(r());
+            std::uniform_real_distribution<double> dist(-100, 100);
+
             if (show_progress)
                 progress.init(0, loops, "test loop");
             for (unsigned int i = 0; i < loops; ++i)
             {
-                std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
+                // std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
+
+                //  do something computation
+                double val = 0;
+                for (auto j = 0; j < sleep_us; ++j)
+                {
+                    val *= 10 * std::log10(std::pow(dist(e1), 2));
+                }
 
                 if (show_progress)
                     progress.tick();
