@@ -109,5 +109,5 @@ class Test_tools_progressbars:
     
     def test_progressbar_tqdm_should_not_cause_a_crash(self):
         a=0
-        for i in tqdm(range(100000)):
+        for i in tqdm.tqdm(range(100000)):
             a += i**2
