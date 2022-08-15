@@ -4,9 +4,9 @@
 
 # from themachinethatgoesping.tools import progressbars as prg
 
-# import time
-# import pytest
-# import tqdm
+import time
+import pytest
+import tqdm
 
 
 # class tqdm_wrapper(prg.I_ProgressBarTimed):
