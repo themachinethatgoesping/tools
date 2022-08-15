@@ -65,7 +65,7 @@ class Test_tools_progressbars:
         time_indicators = prg.test_loop(prg.ProgressIndicator(), N, t)
 
         def relative_time_diff(timing, reference):
-            return (timing - reference - 50) / reference * 100 - 100 # 50 is the overhead of the test loop
+            return (timing - reference - 500) / reference * 100 - 100 # 500 is the overhead of the test loop
 
         # check if relative time difference is within tolerance (in %)
         # this should be 2,5 and 15% respectively but for now I relax this for ci building purposes
