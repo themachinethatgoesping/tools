@@ -65,7 +65,7 @@ class Test_tools_progressbars:
         time_indicators = prg.test_loop(prg.ProgressIndicator(), N, t)
 
         def relative_time_diff(timing, reference):
-            return (timing - reference) / reference * 100 - 100 # 500 is the overhead of the test loop
+            return (timing - reference) / reference * 100
 
         min_ref = 100
 
@@ -84,6 +84,7 @@ class Test_tools_progressbars:
         assert relative_time_diff(time_tqdm_wrapper, time_no_progress + min_ref) < 50
         assert relative_time_diff(time_tqdm_cpp, time_no_progress + min_ref) < 50
 
+        assert False
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
     
