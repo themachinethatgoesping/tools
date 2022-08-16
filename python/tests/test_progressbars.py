@@ -86,8 +86,3 @@ class Test_tools_progressbars:
 
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
-    
-    def test_progressbar_tqdm_should_not_cause_a_crash(self):
-        a=0
-        for i in tqdm.tqdm(range(100000)):
-            a += i**2
