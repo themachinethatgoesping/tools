@@ -57,23 +57,30 @@ class Test_tools_progressbars:
         time_no_indicator = prg.test_loop(prg.NoIndicator(), N, t)
 
         # tqdm wrapper
-        time_tqdm_wrapper = prg.test_loop(tqdm_wrapper(), N, t)
         time_tqdm_cpp     = prg.test_loop(prg.ProgressTqdm(tqdm.tqdm(ncols=100)), N, t)
+        time_tqdm_wrapper = prg.test_loop(tqdm_wrapper(), N, t)
 
         # timing for text progressbar implementations
         time_old_text = prg.test_loop(prg.ConsoleProgressBar(), N, t)
         time_indicators = prg.test_loop(prg.ProgressIndicator(), N, t)
 
         def relative_time_diff(timing, reference):
-            return (timing - reference - 60) / reference * 100 - 100 # 500 is the overhead of the test loop
+            return (timing - reference) / reference * 100 - 100 # 500 is the overhead of the test loop
+
+        print("time_no_progress:  {:3.6f} ms".format(time_no_progress))
+        print("time_no_indicator: {:3.6f} ms / {:3.2f} % / {:3.2f} %".format(time_no_indicator, relative_time_diff(time_no_indicator, time_no_progress), relative_time_diff(time_no_indicator, time_no_progress + 60)))
+        print("time_tqdm_cpp:     {:3.6f} ms / {:3.2f} % / {:3.2f} %".format(time_tqdm_cpp, relative_time_diff(time_tqdm_cpp, time_no_progress), relative_time_diff(time_tqdm_cpp, time_no_progress + 60)))
+        print("time_tqdm_wrapper: {:3.6f} ms / {:3.2f} % / {:3.2f} %".format(time_tqdm_wrapper, relative_time_diff(time_tqdm_wrapper, time_no_progress), relative_time_diff(time_tqdm_wrapper, time_no_progress + 60)))
+        print("time_old_text:     {:3.6f} ms / {:3.2f} % / {:3.2f} %".format(time_old_text, relative_time_diff(time_old_text, time_no_progress), relative_time_diff(time_old_text, time_no_progress + 60)))
+        print("time_indicators:   {:3.6f} ms / {:3.2f} % / {:3.2f} %".format(time_indicators, relative_time_diff(time_indicators, time_no_progress), relative_time_diff(time_indicators, time_no_progress + 60)))
 
         # check if relative time difference is within tolerance (in %)
         # this should be 2,5 and 15% respectively but for now I relax this for ci building purposes
-        assert relative_time_diff(time_no_indicator, time_no_progress) < 20
-        assert relative_time_diff(time_old_text, time_no_progress) < 100 #this can have a rather large overhead
-        assert relative_time_diff(time_indicators, time_no_progress) < 50
-        assert relative_time_diff(time_tqdm_wrapper, time_no_progress) < 50
-        assert relative_time_diff(time_tqdm_cpp, time_no_progress) < 50
+        assert relative_time_diff(time_no_indicator, time_no_progress + 60) < 20
+        assert relative_time_diff(time_old_text, time_no_progress + 60) < 100 #this can have a rather large overhead
+        assert relative_time_diff(time_indicators, time_no_progress + 60) < 50
+        assert relative_time_diff(time_tqdm_wrapper, time_no_progress + 60) < 50
+        assert relative_time_diff(time_tqdm_cpp, time_no_progress + 60) < 50
 
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
