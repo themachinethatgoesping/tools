@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <memory>
-#include <mutex>
 
 #include <indicators/block_progress_bar.hpp>
 #include <indicators/progress_spinner.hpp>
@@ -21,10 +20,10 @@ namespace tools {
 namespace progressbars {
 
 // function that locks a mutex and waits for 10ms
-void lock_mutex_for_x_ms(std::atomic_bool& skip, size_t x_ms = 100)
+void lock_mutex_for_x_ms(std::shared_ptr<std::atomic_bool> skip, size_t x_ms = 100)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(x_ms));
-    skip = false;
+    *skip = false;
 }
 
 /**
@@ -47,11 +46,9 @@ void lock_mutex_for_x_ms(std::atomic_bool& skip, size_t x_ms = 100)
  */
 class I_ProgressBarTimed : public I_ProgressBar
 {
-    double _first = 0.0; ///< lowest number in the range (typically 0.0)
-
-    mutable std::mutex _mutex;      ///< mutex for the progressbar
-    std::atomic_bool _skip = false; ///< atomic (thread safe) boolean to skip the progressbar update
-    const double     _x_ms = 100;   ///< time to wait for a new progress update (100ms)
+    std::shared_ptr<std::atomic_bool> _skip = std::make_shared<std::atomic_bool>(
+        false);              ///< atomic (thread safe) boolean to skip the progressbar update
+    const size_t _x_ms = 50; ///< time to wait for a new progress update (100ms)
 
     double      _state_progress  = 0.0; ///< internal state for the skipped progress
     double      _state_increment = 0.0; ///< internal counter for the skipped increments
@@ -61,7 +58,6 @@ class I_ProgressBarTimed : public I_ProgressBar
     // ----- callbacks -----
     /**
      * @brief Initialize a new progressbar within the given range
-     * This callback is guarded by a mutex.
      *
      * @param first lowest number in the range (typically 0.0)
      * @param last highest number in the range (typically 100.0)
@@ -73,7 +69,6 @@ class I_ProgressBarTimed : public I_ProgressBar
 
     /**
      * @brief Finalize the progressbar
-     * This callback is guarded by a mutex.
      *
      * @param msg A message that can be appended as postfix
      */
@@ -81,7 +76,7 @@ class I_ProgressBarTimed : public I_ProgressBar
 
     /**
      * @brief Increment the progress state by the given amount
-     * This callback is guarded by a mutex and a timer (100ms).
+     * This callback is guarded a timer (100ms).
      *
      * If skipped, the increment is added to the internal counter and will be applied with the next
      * unskipped call to tick().
@@ -95,7 +90,7 @@ class I_ProgressBarTimed : public I_ProgressBar
      * Note some implementations may require the new_progress to be higher than the current
      * progress!
      *
-     * This callback is guarded by a mutex and a timer (100ms). If skipped, the progress is stored
+     * This callback is guarded by a timer (100ms). If skipped, the progress is stored
      * to the internal state and will be applied with the next successful call to set_progress(),
      * tick() or set_postfix().
      *
@@ -106,7 +101,7 @@ class I_ProgressBarTimed : public I_ProgressBar
     /**
      * @brief Append a postfix message to the progressbar
      *
-     * This callback is guarded by a mutex and a timer (100ms). If skipped, the postfix is stored to
+     * This callback is guarded by a timer (100ms). If skipped, the postfix is stored to
      * the internal state and will be applied with the next successful call to set_progress(),
      * tick() or set_postfix().
      *
@@ -116,8 +111,6 @@ class I_ProgressBarTimed : public I_ProgressBar
 
     /**
      * @brief Get the current progress state
-     *
-     * This callback is guarded by a mutex
      *
      * @return progress state
      */
@@ -129,7 +122,6 @@ class I_ProgressBarTimed : public I_ProgressBar
 
     /**
      * @brief Initialize a new progressbar within the given range
-     * This function is thread safe.
      *
      * @param first lowest number in the range (typically 0.0)
      * @param last highest number in the range (typically 100.0)
@@ -137,10 +129,7 @@ class I_ProgressBarTimed : public I_ProgressBar
      */
     void init(double first, double last, const std::string& name = "process") final
     {
-        // lock mutex (no timing)
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        _skip = false;
+        *_skip = false;
 
         _state_increment = 0.0;
         _state_postfix   = "";
@@ -149,37 +138,31 @@ class I_ProgressBarTimed : public I_ProgressBar
 
     /**
      * @brief Finalize the progressbar
-     * This function is thread safe.
      *
      * @param msg A message that can be appended as postfix
      */
     void close(const std::string& msg = "done") final
     {
-        // lock mutex (no timing)
-        std::unique_lock<std::mutex> lock2(_mutex);
-
         // reset state flag (to force apply_state to update)
-        _skip = false;
+        *_skip = false;
         apply_state();
 
         callback_close(msg);
 
         // reset state flags
-        _skip = false;
+        *_skip = false;
     }
 
     /**
      * @brief Increment the progress state by the given amount
      *
-     * This function is guarded by a mutex (threadsafe) and a timer. Calls that happen more
+     * This function is guarded by a timer. Calls that happen more
      * frequent than 100ms are added to the internal state, but not to the progressbar.
      *
      * @param increment Number of steps to increment the progress by
      */
     void tick(double increment = 1) final
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         _state_increment += increment;
 
         apply_state();
@@ -190,15 +173,13 @@ class I_ProgressBarTimed : public I_ProgressBar
      * Note some implementations may require the new_progress to be higher than the current
      * progress!
      *
-     * This function is guarded by a mutex (threadsafe) and a timer. Calls that happen more
+     * This function is guarded by a timer. Calls that happen more
      * frequent than 100ms are added to the internal state, but not to the progressbar.
      *
      * @param new_progress New progress state (within the given first/last range)
      */
     void set_progress(double new_progress) final
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         _state_increment = 0.0; // call to set_progress always resets previously skipped increments
         _state_progress  = new_progress;
 
@@ -208,15 +189,13 @@ class I_ProgressBarTimed : public I_ProgressBar
     /**
      * @brief Append a postfix message to the progressbar
      *
-     * This function is guarded by a mutex (threadsafe) and a timer. Calls that happen more
+     * This function is guarded a timer. Calls that happen more
      * frequent than 100ms are added to the internal state, but not to the progressbar.
      *
      * @param postfix postfix message
      */
     void set_postfix(const std::string& postfix) final
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         _state_postfix = postfix;
         apply_state();
     }
@@ -224,32 +203,27 @@ class I_ProgressBarTimed : public I_ProgressBar
     /**
      * @brief Get the current progress state
      *
-     * This function is threadsafe.
-     *
      * @return progress state
      */
     double current() const final
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         // add skipped increments to the current state of the progressbar
         return callback_current() + _state_increment;
     }
 
-  private:
+
     /**
      * @brief Apply (call appropriate callback) and reset the internal states to the progress bar
      *
-     * Note: this internal function assumes a lock on the _mutex!
      */
     void apply_state()
     {
-        if (_skip)
+        if (*_skip == true)
             return;
 
-        _skip = true;
+        *_skip = true;
         // start detached mutex timer thread
-        std::thread t(lock_mutex_for_x_ms, std::ref(_skip), _x_ms);
+        std::thread t(lock_mutex_for_x_ms, _skip, _x_ms);
         t.detach();
 
         if (_state_progress != 0.0)

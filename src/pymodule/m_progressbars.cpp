@@ -314,7 +314,7 @@ void init_m_progressbars(py::module& m)
 
                 //  do something computation
                 double val = 0;
-                for (auto j = 0; j < sleep_us; ++j)
+                for (size_t j = 0; j < sleep_us; ++j)
                 {
                     val *= 10 * std::log10(std::pow(dist(e1), 2));
                 }

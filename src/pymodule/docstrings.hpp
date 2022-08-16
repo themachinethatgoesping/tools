@@ -292,12 +292,10 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_state =
 R"doc(Apply (call appropriate callback) and reset the internal states to the
-progress bar
-
-Note: this internal function assumes a lock on the _mutex!)doc";
+progress bar)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close =
-R"doc(Finalize the progressbar This callback is guarded by a mutex.
+R"doc(Finalize the progressbar
 
 Parameter ``msg``:
     A message that can be appended as postfix)doc";
@@ -305,14 +303,11 @@ Parameter ``msg``:
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current =
 R"doc(Get the current progress state
 
-This callback is guarded by a mutex
-
 Returns:
     progress state)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_init =
-R"doc(Initialize a new progressbar within the given range This callback is
-guarded by a mutex.
+R"doc(Initialize a new progressbar within the given range
 
 Parameter ``first``:
     lowest number in the range (typically 0.0)
@@ -326,9 +321,9 @@ Parameter ``process_name``:
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_postfix =
 R"doc(Append a postfix message to the progressbar
 
-This callback is guarded by a mutex and a timer (100ms). If skipped,
-the postfix is stored to the internal state and will be applied with
-the next successful call to set_progress(), tick() or set_postfix().
+This callback is guarded by a timer (100ms). If skipped, the postfix
+is stored to the internal state and will be applied with the next
+successful call to set_progress(), tick() or set_postfix().
 
 Parameter ``postfix``:
     postfix message)doc";
@@ -337,16 +332,16 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 R"doc(Set the progress state to the given value. Note some implementations
 may require the new_progress to be higher than the current progress!
 
-This callback is guarded by a mutex and a timer (100ms). If skipped,
-the progress is stored to the internal state and will be applied with
-the next successful call to set_progress(), tick() or set_postfix().
+This callback is guarded by a timer (100ms). If skipped, the progress
+is stored to the internal state and will be applied with the next
+successful call to set_progress(), tick() or set_postfix().
 
 Parameter ``new_progress``:
     New progress state (within the given first/last range))doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_tick =
 R"doc(Increment the progress state by the given amount This callback is
-guarded by a mutex and a timer (100ms).
+guarded a timer (100ms).
 
 If skipped, the increment is added to the internal counter and will be
 applied with the next unskipped call to tick().
@@ -355,7 +350,7 @@ Parameter ``increment``:
     Number of steps to increment the progress by)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close =
-R"doc(Finalize the progressbar This function is thread safe.
+R"doc(Finalize the progressbar
 
 Parameter ``msg``:
     A message that can be appended as postfix)doc";
@@ -363,16 +358,11 @@ Parameter ``msg``:
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_current =
 R"doc(Get the current progress state
 
-This function is threadsafe.
-
 Returns:
     progress state)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_first = R"doc(< lowest number in the range (typically 0.0))doc";
-
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init =
-R"doc(Initialize a new progressbar within the given range This function is
-thread safe.
+R"doc(Initialize a new progressbar within the given range
 
 Parameter ``first``:
     lowest number in the range (typically 0.0)
@@ -383,14 +373,11 @@ Parameter ``last``:
 Parameter ``process_name``:
     Name of the progress)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_mutex = R"doc(< mutex for the progressbar)doc";
-
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix =
 R"doc(Append a postfix message to the progressbar
 
-This function is guarded by a mutex (threadsafe) and a timer. Calls
-that happen more frequent than 100ms are added to the internal state,
-but not to the progressbar.
+This function is guarded a timer. Calls that happen more frequent than
+100ms are added to the internal state, but not to the progressbar.
 
 Parameter ``postfix``:
     postfix message)doc";
@@ -399,14 +386,14 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 R"doc(Set the progress state to the given value. Note some implementations
 may require the new_progress to be higher than the current progress!
 
-This function is guarded by a mutex (threadsafe) and a timer. Calls
-that happen more frequent than 100ms are added to the internal state,
-but not to the progressbar.
+This function is guarded by a timer. Calls that happen more frequent
+than 100ms are added to the internal state, but not to the
+progressbar.
 
 Parameter ``new_progress``:
     New progress state (within the given first/last range))doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc(< atomic (thread safe) boolean to skip the progressbar update)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc(< internal counter for the skipped increments)doc";
 
@@ -417,9 +404,9 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick =
 R"doc(Increment the progress state by the given amount
 
-This function is guarded by a mutex (threadsafe) and a timer. Calls
-that happen more frequent than 100ms are added to the internal state,
-but not to the progressbar.
+This function is guarded by a timer. Calls that happen more frequent
+than 100ms are added to the internal state, but not to the
+progressbar.
 
 Parameter ``increment``:
     Number of steps to increment the progress by)doc";

@@ -4,8 +4,8 @@
 
 from themachinethatgoesping.tools import progressbars as prg
 
+#import pytest
 import time
-import pytest
 import tqdm
 
 
@@ -46,66 +46,37 @@ class tqdm_wrapper(prg.I_ProgressBarTimed):
 
 # define class for grouping (test sections)
 class Test_tools_progressbars:
-#     def test_progressbars_should_not_add_large_overhead_in_test_loops(self):
-#         N = 1000000  # number of iterations in test loop
-#         t = 15       # time between iterations in test loop (in iterations of complicated operation)
+    def test_progressbars_should_not_add_large_overhead_in_test_loops(self):
+        N = 100000  # number of iterations in test loop
+        t = 10       # time between iterations in test loop (in iterations of complicated operation)
 
-#         #t1 = time.time()
+        t1 = time.time()
 
-#         # timing for noindicators (reference)
-#         time_no_progress = prg.test_loop(prg.NoIndicator(), N, t, False)
-#         time_no_indicator = prg.test_loop(prg.NoIndicator(), N, t)
+        # timing for noindicators (reference)
+        time_no_progress = prg.test_loop(prg.NoIndicator(), N, t, False)
+        time_no_indicator = prg.test_loop(prg.NoIndicator(), N, t)
 
-#         # timing for text progressbar implementations
-#         time_old_text = prg.test_loop(prg.ConsoleProgressBar(), N, t)
-#         time_indicators = prg.test_loop(prg.ProgressIndicator(), N, t)
+        # tqdm wrapper
+        time_tqdm_wrapper = prg.test_loop(tqdm_wrapper(), N, t)
+        time_tqdm_cpp     = prg.test_loop(prg.ProgressTqdm(tqdm.tqdm(ncols=100)), N, t)
 
-#         def relative_time_diff(timing, reference):
-#             return (timing - reference - 500) / reference * 100 - 100 # 500 is the overhead of the test loop
+        # timing for text progressbar implementations
+        time_old_text = prg.test_loop(prg.ConsoleProgressBar(), N, t)
+        time_indicators = prg.test_loop(prg.ProgressIndicator(), N, t)
 
-#         # check if relative time difference is within tolerance (in %)
-#         # this should be 2,5 and 15% respectively but for now I relax this for ci building purposes
-#         assert relative_time_diff(time_no_indicator, time_no_progress) < 20
-#         assert relative_time_diff(time_old_text, time_no_progress) < 100 #this can have a rather large overhead
-#         assert relative_time_diff(time_indicators, time_no_progress) < 50
+        def relative_time_diff(timing, reference):
+            return (timing - reference - 60) / reference * 100 - 100 # 500 is the overhead of the test loop
+
+        # check if relative time difference is within tolerance (in %)
+        # this should be 2,5 and 15% respectively but for now I relax this for ci building purposes
+        assert relative_time_diff(time_no_indicator, time_no_progress) < 20
+        assert relative_time_diff(time_old_text, time_no_progress) < 100 #this can have a rather large overhead
+        assert relative_time_diff(time_indicators, time_no_progress) < 50
+        assert relative_time_diff(time_tqdm_wrapper, time_no_progress) < 50
+        assert relative_time_diff(time_tqdm_cpp, time_no_progress) < 50
 
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
-    # def test_progressbar_tqdm_cpp_should_not_add_large_overhead_in_test_loops(self):
-    #     N = 1000000  # number of iterations in test loop
-    #     t = 15       # time between iterations in test loop (in iterations of complicated operation)
-
-    #     #t1 = time.time()
-
-    #     # timing for noindicators (reference)
-    #     time_no_progress = prg.test_loop(prg.NoIndicator(), N, t, False)
-
-    #     # timing for tqdm test implementations
-    #     time_tqdm_cpp = prg.test_loop(prg.ProgressTqdm(tqdm.tqdm(ncols=100)), N, t)
-
-
-    #     def relative_time_diff(timing, reference):
-    #         return (timing - reference - 500) / reference * 100 - 100 # 500 is the overhead of the test loop
-
-    #     assert relative_time_diff(time_tqdm_cpp, time_no_progress) < 50
-
-    # def test_progressbar_tqdm_wrapper_should_not_add_large_overhead_in_test_loops(self):
-    #     N = 1000000  # number of iterations in test loop
-    #     t = 15       # time between iterations in test loop (in iterations of complicated operation)
-
-    #     t1 = time.time()
-
-    #     # timing for noindicators (reference)
-    #     time_no_progress = prg.test_loop(prg.NoIndicator(), N, t, False)
-
-    #     # timing for tqdm test implementations
-    #     time_tqdm_wrapper = prg.test_loop(tqdm_wrapper(), N, t)
-
-
-    #     def relative_time_diff(timing, reference):
-    #         return (timing - reference - 500) / reference * 100 - 100 # 500 is the overhead of the test loop
-
-    #     assert relative_time_diff(time_tqdm_wrapper, time_no_progress) < 50
     
     def test_progressbar_tqdm_should_not_cause_a_crash(self):
         a=0
