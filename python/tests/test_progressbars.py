@@ -84,7 +84,6 @@ class Test_tools_progressbars:
         assert relative_time_diff(time_tqdm_wrapper, time_no_progress + min_ref) < 50
         assert relative_time_diff(time_tqdm_cpp, time_no_progress + min_ref) < 50
 
-        assert False
         #assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
     
