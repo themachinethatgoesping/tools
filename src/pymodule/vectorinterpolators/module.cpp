@@ -18,7 +18,7 @@ using namespace themachinethatgoesping::tools::vectorinterpolators;
 
 #include <pybind11/pybind11.h>
 
-// -- submodule declerations --
+// -- submodule declarations --
 void init_subm_nearestinterpolator(pybind11::module& m); // subm_nearestinterpolator.cpp
 void init_subm_linearinterpolator(pybind11::module& m);  // subm_linearinterpolator.cpp
 void init_subm_akimainterpolator(pybind11::module& m);   // subm_linearinterpolator.cpp

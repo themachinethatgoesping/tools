@@ -40,7 +40,7 @@ class ProgressIndicator : public I_ProgressBarTimed
     void callback_init(double first, double last, const std::string& name = "process") override
     {
         // set the _first state to support ranges that do not start at 0.0
-        _first = _first;
+        _first = first;
 
         // initialize the indicator progressbar
         _indicator = std::make_unique<indicators::ProgressSpinner>();
