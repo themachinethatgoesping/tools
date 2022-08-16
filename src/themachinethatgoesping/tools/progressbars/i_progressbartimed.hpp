@@ -144,13 +144,15 @@ class I_ProgressBarTimed : public I_ProgressBar
     void close(const std::string& msg = "done") final
     {
         // reset state flag (to force apply_state to update)
-        *_skip = false;
+        *_skip                  = false;
+        _check_timer_every_step = 1;
         apply_state();
 
         callback_close(msg);
 
         // reset state flags
-        *_skip = false;
+        *_skip                  = false;
+        _check_timer_every_step = 1;
     }
 
     /**
@@ -211,16 +213,32 @@ class I_ProgressBarTimed : public I_ProgressBar
         return callback_current() + _state_increment;
     }
 
+    int _skips                  = 0;
+    int _check_timer_every_step = 1;
 
     /**
      * @brief Apply (call appropriate callback) and reset the internal states to the progress bar
      *
      */
     void apply_state()
-    {
+    {        
+        // heuristics to skip the atomic boolean (next operation)
+        // we only check the atomic boolean _check_timer_every_step
+        _skips += 1;
+        if (_skips % _check_timer_every_step != 0)
+            return;
+
+        // this atomic shared boolean is slow, but ensures that the progressbar is updated only once
+        // per 100ms
         if (*_skip == true)
             return;
 
+        // compute check_every_step as number of steps counted in the last 100ms divided by 20 (~approx every 5 ms)
+        _check_timer_every_step = ceil(double(_skips) / 100.0);
+        _skips                  = 0;
+        _state_postfix = std::to_string(_check_timer_every_step);
+
+        // reset skip flag
         *_skip = true;
         // start detached mutex timer thread
         std::thread t(lock_mutex_for_x_ms, _skip, _x_ms);

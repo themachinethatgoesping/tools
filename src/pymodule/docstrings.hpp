@@ -349,6 +349,8 @@ applied with the next unskipped call to tick().
 Parameter ``increment``:
     Number of steps to increment the progress by)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_check_timer_every_step = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close =
 R"doc(Finalize the progressbar
 
@@ -394,6 +396,8 @@ Parameter ``new_progress``:
     New progress state (within the given first/last range))doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skips = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc(< internal counter for the skipped increments)doc";
 
