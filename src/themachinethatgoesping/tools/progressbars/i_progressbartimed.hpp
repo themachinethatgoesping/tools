@@ -54,6 +54,8 @@ class I_ProgressBarTimed : public I_ProgressBar
     double      _state_increment = 0.0; ///< internal counter for the skipped increments
     std::string _state_postfix   = "";  ///< internal state for the skipped postfix
 
+    bool _initialized = false;
+
   public:
     // ----- callbacks -----
     /**
@@ -120,6 +122,8 @@ class I_ProgressBarTimed : public I_ProgressBar
     I_ProgressBarTimed()          = default;
     virtual ~I_ProgressBarTimed() = default;
 
+    bool is_initialized() const override { return _initialized; }
+
     /**
      * @brief Initialize a new progressbar within the given range
      *
@@ -134,6 +138,7 @@ class I_ProgressBarTimed : public I_ProgressBar
         _state_increment = 0.0;
         _state_postfix   = "";
         callback_init(first, last, name);
+        _initialized = true;
     }
 
     /**
@@ -153,6 +158,7 @@ class I_ProgressBarTimed : public I_ProgressBar
         // reset state flags
         *_skip                  = false;
         _check_timer_every_step = 1;
+        _initialized            = false;
     }
 
     /**
@@ -232,6 +238,9 @@ class I_ProgressBarTimed : public I_ProgressBar
         // per 100ms
         if (*_skip == true)
             return;
+
+        if (!_initialized)
+            throw(std::runtime_error("ERROR: Progressbar was not initialized!"));
 
         // compute check_every_step as number of steps counted in the last 100ms divided by 20 (~approx every 5 ms)
         _check_timer_every_step = ceil(double(_skips) / 10.0);

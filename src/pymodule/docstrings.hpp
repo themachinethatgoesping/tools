@@ -375,6 +375,10 @@ Parameter ``last``:
 Parameter ``process_name``:
     Name of the progress)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_initialized = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix =
 R"doc(Append a postfix message to the progressbar
 
@@ -443,6 +447,8 @@ Parameter ``last``:
 Parameter ``process_name``:
     Name of the progress)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_is_initialized = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_postfix =
 R"doc(Append a postfix message to the progressbar
 
@@ -473,6 +479,10 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_c
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_current = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_init = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_initialized = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_is_initialized = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_postfix = R"doc()doc";
 

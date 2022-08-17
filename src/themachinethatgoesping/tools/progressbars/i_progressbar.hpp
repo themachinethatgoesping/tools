@@ -29,6 +29,8 @@ class I_ProgressBar
     I_ProgressBar()          = default;
     virtual ~I_ProgressBar() = default;
 
+    virtual bool is_initialized() const = 0;
+    
     /**
      * @brief Initialize a new progressbar within the given range
      *

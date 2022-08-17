@@ -26,6 +26,14 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
     using I_ProgressBar::I_ProgressBar;
 
     /* Override the virtual functions */
+    bool is_initialized() const override
+    {
+        PYBIND11_OVERRIDE_PURE(bool,          /* Return type */
+                               I_ProgressBar, /* Parent class */
+                               is_initialized /* Name of function in C++ (must match Python name) */
+        );
+    }
+
     void init(double first, double last, const std::string& process_name = "process") override
     {
         PYBIND11_OVERRIDE_PURE(void,          /* Return type */
