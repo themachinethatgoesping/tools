@@ -67,7 +67,7 @@ class Test_tools_progressbars:
         def relative_time_diff(timing, reference):
             return (timing - reference) / reference * 100
 
-        min_ref = 200
+        min_ref = 1000
 
         print("time_no_progress:  {:3.6f} ms".format(time_no_progress))
         print(
