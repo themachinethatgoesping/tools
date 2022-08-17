@@ -7,12 +7,14 @@ This module extends the tools.timeconv with some functions implemented in pure p
 
 """
 
-import time
+from __future__ import annotations
 from datetime import datetime
 
 # import c++ module
 from themachinethatgoesping.tools.timeconv import *
 
+#explicitly ignore pylint redefining builtin for this File
+#pylint: disable=redefined-builtin
 
 def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
                            format: str = '%z__%d-%m-%Y__%H:%M:%S') -> str:
