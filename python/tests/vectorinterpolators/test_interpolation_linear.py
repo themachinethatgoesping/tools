@@ -24,7 +24,7 @@ class Test_tools_vectorinterpolators_linear:
         # existing values should be looked up correctly
         assert interpolator(X) == pytest.approx(Y)
 
-        # existing values should be looked up correctly for appendet values
+        # existing values should be looked up correctly for appended values
         assert interpolator(x_append) == pytest.approx(y_append)
 
         # preset values should be interpolated correctly

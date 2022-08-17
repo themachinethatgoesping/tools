@@ -496,14 +496,17 @@ class ObjectPrinter
      */
     void register_string(const std::string& name,
                          const std::string& value,
-                         const std::string& value_info = "",
+                         std::string value_info = "",
                          int                pos        = -1)
     {
+        if (value_info.size() > 0)
+            value_info = fmt::format("[{}]", value_info);
+
         if (pos < 0 || pos >= int(_fields.size()))
         {
             _fields.push_back(name);
             _lines.push_back({ value });
-            _value_infos.push_back({ fmt::format("[{}]", value_info) });
+            _value_infos.push_back(value_info);
             _field_types.push_back(t_field::tstring);
             _section_underliner.push_back(' ');
         }
@@ -511,7 +514,7 @@ class ObjectPrinter
         {
             _fields.insert(_fields.begin() + pos, name);
             _lines.insert(_lines.begin() + pos, { value });
-            _value_infos.insert(_value_infos.begin() + pos, { fmt::format("[{}]", value_info) });
+            _value_infos.insert(_value_infos.begin() + pos, value_info);
             _field_types.insert(_field_types.begin() + pos, t_field::tstring);
             _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }

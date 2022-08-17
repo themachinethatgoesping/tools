@@ -26,12 +26,12 @@ using Buffer        = std::vector<uint8_t>;
 using OutputAdapter = bitsery::OutputBufferAdapter<Buffer>;
 using InputAdapter  = bitsery::InputBufferAdapter<Buffer>;
 
-// update the written testdata
+// update the written test data
 #define __UPDATE_TEST_DATA__ false
 // __PROJECT_TESTDATADIR__ is set in meson build file of the test folder
 const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 
-// -- teamplated functions to avoid code repetition for different interpolators --
+// -- templated functions to avoid code repetition for different interpolators --
 template<typename t_interpolator>
 void test_interpolator_serialize(t_interpolator& ip)
 {
@@ -41,7 +41,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     // create buffer to store data
     Buffer buffer;
     // use quick serialization function,
-    // it will use default configuration to setup all the nesessary steps
+    // it will use default configuration to setup all the necessary steps
     // and serialize data to container
     auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, ip);
     bitsery::quickSerialization<OutputAdapter>(buffer, ip);
@@ -57,7 +57,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     REQUIRE(ip != ip2);
 
     // same as serialization, but returns deserialization state as a pair
-    // first = error code, second = is buffer was successfuly read from begin to the end.
+    // first = error code, second = is buffer was successfully read from begin to the end.
     //#auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
     // ip2);
     // auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
@@ -103,7 +103,7 @@ void test_interpolator_serialize(t_interpolator& ip)
 
     for (auto ipx : { ip2, ip3, ip4, ip5 })
     {
-        // this is a copy so no approx should be necessar
+        // this is a copy so no approx should be necessary
         REQUIRE(ip == ipx);
         REQUIRE(ip(0.5) == ipx(0.5));
         REQUIRE(ip(-100) == ipx(-100));
@@ -185,7 +185,7 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
 }
 
 /**
- * @brief Test that the interpolators throw expected excetions
+ * @brief Test that the interpolators throw expected exceptions
  *
  */
 TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
@@ -319,13 +319,13 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
  * implement all virtual functions such that they can actually be copied (had problems with this)
  *
  */
-TEST_CASE("VectorInterpolators should react correctly to beeing underinitialized", TESTTAG)
+TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", TESTTAG)
 {
-    std::vector<double> x     = { -10, -5, 0, 6, 12 };
-    std::vector<double> y     = { 1, 0, 1, 0, -1 };
-    std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
-    std::vector<double> pitch = { 1, 0, 1, 0, -1 };
-    std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+    // std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    // std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    // std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    // std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    // std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
     vectorinterpolators::LinearInterpolator  lip;
     vectorinterpolators::NearestInterpolator nip;

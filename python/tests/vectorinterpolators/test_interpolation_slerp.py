@@ -40,7 +40,7 @@ class Test_tools_vectorinterpolators_slerp:
         # input in rad
         i3 = vip.SlerpInterpolator(x, y_r, p_r, r_r, False)
 
-        # interpolator classes that will be appendet and extended
+        # interpolator classes that will be appended and extended
         ia1 = vip.SlerpInterpolator(x, y, p, r)
         ia2 = vip.SlerpInterpolator(x, y, p, r)
         ia3 = vip.SlerpInterpolator(x, y_r, p_r, r_r, False)
@@ -94,7 +94,7 @@ class Test_tools_vectorinterpolators_slerp:
             # default interpolators [returned rad]
             assert y1_r == approx(y3_r)
 
-            # appendet and extended interpolators
+            # appended and extended interpolators
             assert y2_e == approx(y1_e)
             assert y3_e == approx(y1_e)
             assert y4_e == approx(y1_e)

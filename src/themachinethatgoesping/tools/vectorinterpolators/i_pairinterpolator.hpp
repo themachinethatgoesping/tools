@@ -84,7 +84,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
             s.value8b(_xfactor);
         }
 
-    } _last_x_pair; ///< last pair (for faster consequtive searches)
+    } _last_x_pair; ///< last pair (for faster consecutive searches)
 
     /**
      * @brief extrapolation mode type.
@@ -154,7 +154,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         if (_X.size() >0)
             if (x <= _X.back())
             {
-                throw(std::domain_error("ERROR[Interpolation::append]: appendet x value is not "
+                throw(std::domain_error("ERROR[Interpolation::append]: appended x value is not "
                                         "larger than existing x values in the interpolator."));
             }
 
@@ -182,7 +182,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::extend]: list sizes do not match"));
 
-        // if no internal dat ayet, just set the data
+        // if no internal data yet, just set the data
         if (_X.size() == 0)
         {
             set_data_XY(X, Y);
@@ -243,7 +243,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
             {
                 ++i;
 
-                // if i is smaler than the index
+                // if i is smaller than the index
                 if (size_t last = _X.size() - 1; i > last)
                 {
                     // set the new last pair (will be used for interpolation)
@@ -287,7 +287,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
             {
                 --i;
 
-                // if i is smaler than the index
+                // if i is smaller than the index
                 if (i < 0)
                 {
 
@@ -325,7 +325,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         {
         }
 
-        /* interpolate useing the (new) last XPair (call function from derived class) */
+        /* interpolate using the (new) last XPair (call function from derived class) */
         return interpolate_pair(_last_x_pair.calc_target_x(target_x),
                                 _Y[_last_x_pair._xmin_index],
                                 _Y[_last_x_pair._xmax_index]);

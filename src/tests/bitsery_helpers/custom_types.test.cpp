@@ -27,7 +27,7 @@ void test_serialize(custom_bitsery_type& iq)
     // create buffer to store data
     Buffer buffer;
     // use quick serialization function,
-    // it will use default configuration to setup all the nesessary steps
+    // it will use default configuration to setup all the necessary steps
     // and serialize data to container
     auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, iq);
 
@@ -35,7 +35,7 @@ void test_serialize(custom_bitsery_type& iq)
     REQUIRE(iq != iq2);
 
     // same as serialization, but returns deserialization state as a pair
-    // first = error code, second = is buffer was successfuly read from begin to the end.
+    // first = error code, second = is buffer was successfully read from begin to the end.
     auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, iq2);
     REQUIRE(state.first == bitsery::ReaderError::NoError);
     REQUIRE(state.second);
@@ -65,12 +65,14 @@ struct MyStruct
 
 TEST_CASE("Custom bitsery types should serializable", TESTTAG)
 {
-    auto     q = t_quaternion(10, 11, 12, 13);
+    auto     q1 = t_quaternion(10, 11, 12, 13);
+    auto     q2 = t_quaternion(11, 22, 33, 44);
     MyStruct Q, QQ;
-    Q.Q = { q, q, q };
+    Q.Q = { q1, q1, q1 };
+    QQ.Q = { q2, q2, q2 };
 
     REQUIRE(Q != QQ);
 
-    test_serialize(q);
+    test_serialize(q1);
     test_serialize(Q);
 }

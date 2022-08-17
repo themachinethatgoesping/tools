@@ -67,7 +67,7 @@ TEST_CASE(
     vectorinterpolators::SlerpInterpolator i3(x, y_r, p_r, r_r, false);
     vectorinterpolators::SlerpInterpolator i4(x, ypr_r, false);
 
-    // interpolator classes that will be appendet and extended
+    // interpolator classes that will be appended and extended
     vectorinterpolators::SlerpInterpolator ia1(x, y, p, r);
     vectorinterpolators::SlerpInterpolator ia2(x, y, p, r);
     vectorinterpolators::SlerpInterpolator ia3(x, y_r, p_r, r_r, false);
@@ -136,7 +136,7 @@ TEST_CASE(
             REQUIRE(y2_r[i] == Approx(y3_r[i]));
             REQUIRE(y3_r[i] == Approx(y4_r[i]));
 
-            // appendet and extended interpolators
+            // appended and extended interpolators
             REQUIRE(y2_e[i] == Approx(y1_e[i]));
             REQUIRE(y3_e[i] == Approx(y1_e[i]));
             REQUIRE(y4_e[i] == Approx(y1_e[i]));

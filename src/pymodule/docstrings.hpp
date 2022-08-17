@@ -950,7 +950,7 @@ Parameter ``y1``:
 Returns:
     interpolated y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consequtive searches))doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consecutive searches))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
 R"doc(get the interpolated y value for given x target

@@ -5,7 +5,7 @@
 """The object printer python interface is not yet ready for anything useful
 """
 
-import pytest
+# import pytest
 import numpy as np
 
 from themachinethatgoesping.tools import classhelpers as ch
@@ -13,7 +13,7 @@ from themachinethatgoesping.tools import classhelpers as ch
 
 class Test_tools_classhelpers_objectprinter:
     def test_ObjectPrinter_should_not_crash_for_basic_operations(self):
-        a = ch.ObjectPrinter("ObjectPrinterTester",2)
+        a = ch.ObjectPrinter("ObjectPrinterTester", 2)
 
         a.register_value("test1", 0, "int")
         a.register_value("test1", 0, "int")
@@ -30,7 +30,7 @@ class Test_tools_classhelpers_objectprinter:
         a.register_container("50 elements", np.random.random(50))
         a.register_container("90 elements", np.random.randint(0, 100, 90))
 
-        #test if functions crash
+        # test if functions crash
         a.print()
         print(a)
         assert len(a.info_string()) != 0
