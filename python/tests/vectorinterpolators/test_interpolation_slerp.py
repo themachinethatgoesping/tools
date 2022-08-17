@@ -156,11 +156,11 @@ class Test_tools_vectorinterpolators_slerp:
         # -- extrapolation mode nearest --
         interpolator.set_extrapolation_mode(vip.t_extr_mode.nearest)
 
-        assert interpolator(-11) == approx([Y[0],P[0],R[0]])
+        assert interpolator(-11) == approx([Y[0], P[0], R[0]])
         assert interpolator(13) == approx(ypr_append)
 
         # -- extrapolation mode extrapolate--
-        interpolator.set_extrapolation_mode(vip.t_extr_mode.extrapolate)        
+        interpolator.set_extrapolation_mode(vip.t_extr_mode.extrapolate)
         too_small_ypr = interpolator(-11)
         too_large_ypr = interpolator(13)
 
