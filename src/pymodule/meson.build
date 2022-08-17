@@ -11,12 +11,12 @@ sources = [
     'm_timeconv.cpp',
     'm_progressbars.cpp',
     'vectorinterpolators/module.cpp',
-    'vectorinterpolators/subm_nearestinterpolator.cpp',
-    'vectorinterpolators/subm_linearinterpolator.cpp',
-    'vectorinterpolators/subm_akimainterpolator.cpp',
-    'vectorinterpolators/subm_slerpinterpolator.cpp',
+    'vectorinterpolators/c_nearestinterpolator.cpp',
+    'vectorinterpolators/c_linearinterpolator.cpp',
+    'vectorinterpolators/c_akimainterpolator.cpp',
+    'vectorinterpolators/c_slerpinterpolator.cpp',
     'classhelpers/module.cpp',
-    'classhelpers/subm_objectprinter.cpp'
+    'classhelpers/c_objectprinter.cpp'
 ]
 
 # define python module

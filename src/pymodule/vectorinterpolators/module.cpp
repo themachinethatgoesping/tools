@@ -19,10 +19,10 @@ using namespace themachinethatgoesping::tools::vectorinterpolators;
 #include <pybind11/pybind11.h>
 
 // -- submodule declarations --
-void init_subm_nearestinterpolator(pybind11::module& m); // subm_nearestinterpolator.cpp
-void init_subm_linearinterpolator(pybind11::module& m);  // subm_linearinterpolator.cpp
-void init_subm_akimainterpolator(pybind11::module& m);   // subm_linearinterpolator.cpp
-void init_subm_slerpinterpolator(pybind11::module& m);   // subm_linearinterpolator.cpp
+void init_c_nearestinterpolator(pybind11::module& m); // c_nearestinterpolator.cpp
+void init_c_linearinterpolator(pybind11::module& m);  // c_linearinterpolator.cpp
+void init_c_akimainterpolator(pybind11::module& m);   // c_linearinterpolator.cpp
+void init_c_slerpinterpolator(pybind11::module& m);   // c_linearinterpolator.cpp
 
 // -- create submodule --
 void init_m_vectorinterpolators(pybind11::module& m)
@@ -48,8 +48,8 @@ void init_m_vectorinterpolators(pybind11::module& m)
     py::implicitly_convertible<std::string, t_extr_mode>();
 
     // interpolator classes
-    init_subm_nearestinterpolator(m_vectorinterpolators);
-    init_subm_linearinterpolator(m_vectorinterpolators);
-    init_subm_akimainterpolator(m_vectorinterpolators);
-    init_subm_slerpinterpolator(m_vectorinterpolators);
+    init_c_nearestinterpolator(m_vectorinterpolators);
+    init_c_linearinterpolator(m_vectorinterpolators);
+    init_c_akimainterpolator(m_vectorinterpolators);
+    init_c_slerpinterpolator(m_vectorinterpolators);
 }

@@ -17,7 +17,7 @@
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
 
-void init_subm_slerpinterpolator(pybind11::module& m)
+void init_c_slerpinterpolator(pybind11::module& m)
 {
 
     py::class_<SlerpInterpolator>(

@@ -17,7 +17,7 @@
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::classhelpers;
 
-void init_subm_objectprinter(pybind11::module& m)
+void init_c_objectprinter(pybind11::module& m)
 {
 
     py::class_<ObjectPrinter>(

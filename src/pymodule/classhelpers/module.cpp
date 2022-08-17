@@ -18,7 +18,7 @@ using namespace themachinethatgoesping::tools::classhelpers;
 #include <pybind11/pybind11.h>
 
 // -- submodule declarations --
-void init_subm_objectprinter(pybind11::module& m); // init_subm_objectprinter.cpp
+void init_c_objectprinter(pybind11::module& m); // init_c_objectprinter.cpp
 
 // -- create submodule --
 void init_m_classhelpers(pybind11::module& m)
@@ -28,5 +28,5 @@ void init_m_classhelpers(pybind11::module& m)
         "classhelpers", "Classes that help adding common functionality to themachinethatgoesping classes");
 
     // submodules
-    init_subm_objectprinter(m_classhelpers);
+    init_c_objectprinter(m_classhelpers);
 }
