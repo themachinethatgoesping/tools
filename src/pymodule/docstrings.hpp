@@ -490,6 +490,10 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_s
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_tick = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarVisitor = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarVisitor_operator_call = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator =
 R"doc(Text based ProgressBar that uses the indicators library.
 (https://github.com/p-ranav/indicators)
@@ -544,6 +548,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_callback_tick = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_first = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_get_progress_bar = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_lock_mutex_for_x_ms = R"doc()doc";
 

@@ -2,7 +2,10 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+#pragma once
+
 #include "progressbars/i_progressbar.hpp"
 #include "progressbars/noindicator.hpp"
 #include "progressbars/progressindicator.hpp"
 #include "progressbars/consoleprogressbar.hpp"
+#include "progressbars/t_progressbar.hpp"
