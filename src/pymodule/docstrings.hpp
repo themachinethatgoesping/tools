@@ -725,6 +725,31 @@ Parameter ``UnixTime:``:
 Returns:
     chrono::system_clock::time_point)doc";
 
+static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_windows_filetime =
+R"doc(Convert a unix timestamp to a windows 32bit Filetime conversion to 2 x
+32 bit word see: https://support.microsoft.com/en-us/help/188768/info-
+working-with-the-filetime-structure
+
+Parameter ``unixTime``:
+    in seconds since 1970
+
+Returns:
+    std::pair<uint32_t, uint32_t>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_timeconv_windows_filetime_to_unixtime =
+R"doc(Convert a windows 32bit Filetime to a unix timestamp conversion to
+unixtime see: http://www.frenk.com/2009/12/convert-filetime-to-unix-
+timestamp/
+
+WARNING: converting to unixtime and then back causes small (100 ns )
+rounding error *
+
+Parameter ``highDateTime``:
+    $Parameter ``lowDateTime``:
+
+Returns:
+    double)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator. Note: this interpolator acts as linear

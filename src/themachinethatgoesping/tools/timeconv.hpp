@@ -86,7 +86,7 @@ std::string unixtime_to_datestring(
  * @param lowDateTime 
  * @return double 
  */
-double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDateTime)
+inline double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDateTime)
 {
     uint64_t date = (((int64_t)highDateTime) << 32) + lowDateTime;
     static const uint64_t adjust = 11644473600000 * 10000; ///< 100-nanoseconds = milliseconds * 10000
@@ -104,7 +104,7 @@ double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDateTime)
  * @param unixTime in seconds since 1970
  * @return std::pair<uint32_t, uint32_t> 
  */
-std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixTime)
+inline std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixTime)
 {
     /* just reverting the function above */
     static const int64_t adjust = 11644473600000. * 10000.;
