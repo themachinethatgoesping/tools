@@ -501,6 +501,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarCh
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_3 = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_builtin_progress_bar = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_get =
 R"doc(get the ProgressBarInterface
 
