@@ -32,7 +32,8 @@ headers = [
   'progressbars/noindicator.hpp',
   'progressbars/progressindicator.hpp',
   'progressbars/consoleprogressbar.hpp',
-  'progressbars/progresstqdm.hpp'
+  'progressbars/progresstqdm.hpp',
+  'progressbars/progressbarchooser.hpp'
 ]
 
 # -- targets --

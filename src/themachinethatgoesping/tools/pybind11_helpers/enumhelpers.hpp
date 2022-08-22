@@ -54,7 +54,7 @@ namespace pybind_helpers {
              return enum_value.value();                                                            \
          }),                                                                                       \
          "Construct this enum type from string",                                                   \
-         py::arg("str"))
+         py::arg("str"))                                                                           
 
 }
 }

@@ -8,4 +8,4 @@
 #include "progressbars/noindicator.hpp"
 #include "progressbars/progressindicator.hpp"
 #include "progressbars/consoleprogressbar.hpp"
-#include "progressbars/t_progressbar.hpp"
+#include "progressbars/progressbarchooser.hpp"

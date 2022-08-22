@@ -490,9 +490,34 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_s
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarVisitor = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser =
+R"doc(This class allows choosing between different progress bars It will be
+extended in the future to allow setting the default progressbar using
+a configuration file)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarVisitor_operator_call = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_2 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_3 = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_get =
+R"doc(get the ProgressBarInterface
+
+Returns:
+    I_ProgressBar&)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_operator_call =
+R"doc(This is the visitor function that implicitly converts t_ProgressBar to
+I_ProgressBar (the common interface)
+
+Template parameter ``t_ProgressBar``:
+    $Parameter ``progress_bar``:
+
+ProgressBar class that is derived from I_ProgressBar
+
+Returns:
+    I_ProgressBar&)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator =
 R"doc(Text based ProgressBar that uses the indicators library.
@@ -549,9 +574,15 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressTqdm_first = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_get_progress_bar = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_progressbars_lock_mutex_for_x_ms = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar_pbar_Classic = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar_pbar_Indicator = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar_pbar_NoIndicator = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =
 R"doc(compute heading from northing and easting north 0°/360°, east 90°,

@@ -10,6 +10,9 @@
 #include <pybind11/iostream.h>
 #include <pybind11/stl.h>
 
+// ping headers
+#include <themachinethatgoesping/tools/pybind11_helpers/enumhelpers.hpp>
+
 // -- module header
 #include "../themachinethatgoesping/tools/progressbars.hpp"
 #include "../themachinethatgoesping/tools/progressbars/progresstqdm.hpp"
@@ -28,9 +31,11 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
     /* Override the virtual functions */
     bool is_initialized() const override
     {
-        PYBIND11_OVERRIDE_PURE(bool,          /* Return type */
-                               I_ProgressBar, /* Parent class */
-                               is_initialized /* Name of function in C++ (must match Python name) */
+        PYBIND11_OVERRIDE_PURE(
+            bool,           /* Return type */
+            I_ProgressBar,  /* Parent class */
+            is_initialized, /* Name of function in C++ (must match Python name) */
+            nullptr         /* No arguments */
         );
     }
 
@@ -160,11 +165,27 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
     }
 };
 
+// dummy config class
+class config {};
+
 void init_m_progressbars(py::module& m)
 {
     auto m_progressbars = m.def_submodule("progressbars",
                                           "Progress indicators that can be called directly or "
                                           "passed to specific themachinethatgoesping functions");
+
+    // // BuiltInProgressBars enum
+    // py::enum_<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
+    //     .value("pbar_NoIndicator", t_BuiltInProgressBar::pbar_NoIndicator)
+    //     .value("pbar_Indicator", t_BuiltInProgressBar::pbar_Indicator)
+    //     .value("pbar_Classic", t_BuiltInProgressBar::pbar_Classic)
+    //     .export_values()
+    //     // pybind enum helpers
+    //     __PYENUM_FROM_STRING__(t_BuiltInProgressBar)
+    //     // end
+    //     ;
+
+    // py::implicitly_convertible<std::string, t_BuiltInProgressBar>();
 
     // interface class
     py::class_<I_ProgressBar, I_ProgressBar_PybindTrampoline>(
