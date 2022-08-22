@@ -57,6 +57,8 @@ class ProgressBarChooser
                 case t_BuiltInProgressBar::pbar_NoIndicator:
                     builtin_progress_bar.emplace<NoIndicator>();
                     break;
+                default:
+                    throw std::runtime_error("Unknown progress bar type");
             }
         }
         // else //(variants default is NoIndicator )
