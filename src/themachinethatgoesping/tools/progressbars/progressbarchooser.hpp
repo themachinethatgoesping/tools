@@ -33,8 +33,15 @@ class ProgressBarChooser
     // I would prefer to derive from std::variant, but this is not supported by g++-11
     v_BuiltInProgressBar builtin_progress_bar;
 
-    public:
-        ProgressBarChooser() = default;
+  public:
+    ProgressBarChooser() = default;
+
+    /**
+     * @brief Construct a new Progress Bar Chooser. This will select the default progress bar type
+     * if show_progress is true and NoIndicator otherwise.
+     *
+     * @param show_progress
+     */
     ProgressBarChooser(bool show_progress)
     {
         if (show_progress)
@@ -57,21 +64,21 @@ class ProgressBarChooser
         //     builtin_progress_bar.emplace<NoIndicator>();
         // }
     }
-    ProgressBarChooser(t_BuiltInProgressBar progress_bar_type)
-    {
-        switch (progress_bar_type)
-        {
-            case t_BuiltInProgressBar::pbar_Indicator:
-                builtin_progress_bar.emplace<ProgressIndicator>();
-                break;
-            case t_BuiltInProgressBar::pbar_Classic:
-                builtin_progress_bar.emplace<ConsoleProgressBar>();
-                break;
-            case t_BuiltInProgressBar::pbar_NoIndicator:
-                builtin_progress_bar.emplace<NoIndicator>();
-                break;
-        }
-    }
+    // ProgressBarChooser(t_BuiltInProgressBar progress_bar_type)
+    // {
+    //     switch (progress_bar_type)
+    //     {
+    //         case t_BuiltInProgressBar::pbar_Indicator:
+    //             builtin_progress_bar.emplace<ProgressIndicator>();
+    //             break;
+    //         case t_BuiltInProgressBar::pbar_Classic:
+    //             builtin_progress_bar.emplace<ConsoleProgressBar>();
+    //             break;
+    //         case t_BuiltInProgressBar::pbar_NoIndicator:
+    //             builtin_progress_bar.emplace<NoIndicator>();
+    //             break;
+    //     }
+    // }
 
     ~ProgressBarChooser() = default;
 

@@ -497,9 +497,11 @@ a configuration file)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_2 = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_2 =
+R"doc(Construct a new Progress Bar Chooser. This will select the default
+progress bar type if show_progress is true and NoIndicator otherwise.
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_3 = R"doc()doc";
+Parameter ``show_progress``:)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_builtin_progress_bar = R"doc()doc";
 
