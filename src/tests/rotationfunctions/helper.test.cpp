@@ -73,7 +73,7 @@ TEST_CASE("normalize_angles", TESTTAG)
         }
     }
 
-    SECTION("normalize_angles should place yaw pitch and roll into defined limiets")
+    SECTION("normalize_angles should place yaw pitch and roll into defined limits")
     {
         std::vector<std::pair<std::array<double, 3>, std::array<double, 3>>> YPR = {
             {{ -720., 0., -720. },     { 0., 0., 0. }       }, // 0
