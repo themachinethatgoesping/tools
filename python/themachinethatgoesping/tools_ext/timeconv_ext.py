@@ -11,13 +11,21 @@ from __future__ import annotations
 from datetime import datetime
 
 # import c++ module
-from themachinethatgoesping.tools.timeconv import *
+from themachinethatgoesping.tools.timeconv import * # noqa
+from themachinethatgoesping.tools.timeconv import (
+    unixtime_to_datestring,
+    datestring_to_unixtime,
+)
 
-#explicitly ignore pylint redefining builtin for this File
-#pylint: disable=redefined-builtin
+# explicitly ignore pylint redefining builtin for this File
+# pylint: disable=redefined-builtin
 
-def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
-                           format: str = '%z__%d-%m-%Y__%H:%M:%S') -> str:
+
+def datetime_to_datestring(
+    dt: datetime,
+    fractionalSecondsDigits: int = 0,
+    format: str = "%z__%d-%m-%Y__%H:%M:%S",
+) -> str:
     """Converting python datetime objects to datestrings
 
     Parameters
@@ -29,7 +37,7 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
         Minimum is 0 (second resolution)
         Maximum is 6 (microsecond resolution), by default 0
     format : _type_, optional
-        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/,
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
         by default '%z__%d-%m-%Y__%H:%M:%S'
 
@@ -38,13 +46,14 @@ def datetime_to_datestring(dt: datetime, fractionalSecondsDigits: int = 0,
     str
         DateString that fits to the specified format
     """
-    return unixtime_to_datestring(dt.timestamp(),
-                                  fractionalSecondsDigits=fractionalSecondsDigits,
-                                  format=format)
+    return unixtime_to_datestring(
+        dt.timestamp(), fractionalSecondsDigits=fractionalSecondsDigits, format=format
+    )
 
 
-def datestring_to_datetime(datestring: str,
-                           format: str = '%z__%d-%m-%Y__%H:%M:%S') -> datetime:
+def datestring_to_datetime(
+    datestring: str, format: str = "%z__%d-%m-%Y__%H:%M:%S"
+) -> datetime:
     """Converting date strings to python datetime objects
 
     Parameters
@@ -52,7 +61,7 @@ def datestring_to_datetime(datestring: str,
     datestring : str
         DateString to be converted. Must fit format string.
     format : _type_, optional
-        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/, 
+        %z__%d-%m-%Y__%H:%M:%S" see: https://m.cplusplus.com/reference/ctime/strftime/,
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
         by default '%z__%d-%m-%Y__%H:%M:%S'
 
@@ -61,5 +70,4 @@ def datestring_to_datetime(datestring: str,
     datetime
         python datetime object
     """
-    return datetime.fromtimestamp(datestring_to_unixtime(datestring,
-                                                         format=format))
+    return datetime.fromtimestamp(datestring_to_unixtime(datestring, format=format))

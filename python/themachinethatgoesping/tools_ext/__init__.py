@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-from themachinethatgoesping.tools import *
+from themachinethatgoesping.tools import * # noqa
 
-from . import timeconv_ext as timeconv
+from . import timeconv_ext as timeconv # noqa
