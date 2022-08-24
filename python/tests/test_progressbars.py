@@ -117,3 +117,27 @@ class Test_tools_progressbars:
         assert relative_time_diff(time_tqdm_cpp, time_no_progress + min_ref) < 50
 
         # assert time.time() - t1 < 1  # check if test loop took less than 1 second
+
+    def test_progressbars_should_support_common_functions(self):
+        N = 100000  # number of iterations in test loop
+        t = 10  # time between iterations in test loop (in iterations of complicated operation)
+
+        for progressbar in [
+            prg.ProgressIndicator(),
+            prg.ProgressTqdm(tqdm.tqdm(ncols=100)),
+            tqdm_wrapper(),
+            prg.ConsoleProgressBar(),
+            prg.NoIndicator(),
+        ]:
+            # test loop
+            progressbar.init(0, 100, "test1")
+            for i in range(100):
+                progressbar.tick()
+
+            # reinitialize
+            progressbar.init(0, 20, "test2")
+            for i in range(20):
+                progressbar.tick()
+
+
+
