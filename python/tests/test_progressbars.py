@@ -15,9 +15,9 @@ class tqdm_wrapper(prg.I_ProgressBarTimed):
     The main problem is that it does not not play well with tqdm.auto (notebooks).
     """
 
-    def __init__(self):
-        # initialize prg.I_ProgressBarTimed base class
-        super().__init__()
+    # def __init__(self):
+    #     # initialize prg.I_ProgressBarTimed base class
+    #     super().__init__()
 
     # ----- I_ProgressBarTimed callback interface -----
     # These are virtual methods that are called by the I_ProgressBarTimed interface
@@ -119,8 +119,6 @@ class Test_tools_progressbars:
         # assert time.time() - t1 < 1  # check if test loop took less than 1 second
 
     def test_progressbars_should_support_common_functions(self):
-        N = 100000  # number of iterations in test loop
-        t = 10  # time between iterations in test loop (in iterations of complicated operation)
 
         for progressbar in [
             prg.ProgressIndicator(),
@@ -131,13 +129,10 @@ class Test_tools_progressbars:
         ]:
             # test loop
             progressbar.init(0, 100, "test1")
-            for i in range(100):
+            for _ in range(100):
                 progressbar.tick()
 
             # reinitialize
             progressbar.init(0, 20, "test2")
-            for i in range(20):
+            for _ in range(20):
                 progressbar.tick()
-
-
-

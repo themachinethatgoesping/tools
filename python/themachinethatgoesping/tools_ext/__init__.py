@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-from themachinethatgoesping.tools import * # noqa: F401
+from themachinethatgoesping.tools import * # flake8: noqa
 
-from . import timeconv_ext as timeconv # noqa: F401
+from . import timeconv_ext as timeconv # flake8: noqa
