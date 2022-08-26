@@ -1,0 +1,19 @@
+[wrap-file]
+#directory = xtl-0.6.12
+#source_url = https://github.com/xtensor-stack/xtl/archive/0.6.12.tar.gz
+#source_filename = xtl-0.6.12.tar.gz
+#source_hash = 25a16958195f939e6fb7c8feccad89b3e450a18124be6aee119c69a1ee2b308c
+#patch_filename = xtl_0.6.12-1_patch.zip
+#patch_url = https://wrapdb.mesonbuild.com/v2/xtl_0.6.12-1/get_patch
+#patch_hash = 36ebfc6656d025143877670dba79fecdece9e97bd8b717fcc44e29ab119eb2cf
+
+directory = xtl-0.7.4
+source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.7.4.tar.gz
+source_filename = xtl-0.7.4.tar.gz
+source_hash = 3c88be0e696b64150c4de7a70f9f09c00a335186b0b0b409771ef9f56bca7d9a
+
+patch_directory = xtl
+
+[provide]
+xtl = xtl_dep
+

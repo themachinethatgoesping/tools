@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.4.8',
+  version: '0.5.0',
   default_options: ['warning_level=3', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -64,6 +64,13 @@ magic_enum_dep = dependency('magic_enum', required: false)
 
 if not magic_enum_dep.found()
   magic_enum_dep = subproject('magic_enum').get_variable('magic_enum_dep')
+endif
+
+#xtensor (for numpy array support)
+xtensor_dep = dependency('xtensor', required: false)
+
+if not xtensor_dep.found()
+  xtensor_dep = subproject('xtensor').get_variable('xtensor_dep')
 endif
 
 #themachinethatgoesping meta info
