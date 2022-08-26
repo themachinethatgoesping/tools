@@ -17,6 +17,7 @@ headers = [
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
   'classhelpers/bitsery_helpers/helpers.hpp',
+  'classhelpers/bitsery_helpers/nosizevector.hpp',
   'classhelpers/bitsery_helpers/eigen.hpp',
   'pybind11_helpers/classhelpers.hpp',
   'rotationfunctions/quaternions.hpp',

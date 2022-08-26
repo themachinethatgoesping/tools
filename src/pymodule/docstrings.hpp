@@ -27,6 +27,20 @@ static const char *__doc_Eigen_serialize = R"doc()doc";
 
 static const char *__doc_Eigen_serialize_2 = R"doc()doc";
 
+static const char *__doc_ExtensionTraits = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_NoSizeVector = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_deserialize = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_serDe = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_serialize = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_size = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_bitsery_helpers_is_input_2 = R"doc()doc";
