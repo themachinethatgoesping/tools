@@ -20,7 +20,8 @@
         "copy",                                                                                    \
         [](const T_CLASS& self) { return T_CLASS(self); },                                         \
         "return a copy using the c++ default copy constructor")                                    \
-        .def("__copy__", [](const T_CLASS& self) { return T_CLASS(self); })
+        .def("__copy__", [](const T_CLASS& self) { return T_CLASS(self); })                        \
+        .def("__deepcopy__", [](const T_CLASS& self, py::dict) { return T_CLASS(self); })
 
 // TODO: deepcopy example does not work
 // https://pybind11.readthedocs.io/en/stable/advanced/classes.html?highlight=deepcopy#deepcopy-support
