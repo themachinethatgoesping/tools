@@ -29,7 +29,7 @@ endif
 
 # # boost
 boost_version = '>=1.73'
-boost_modules = dependency('boost', modules: ['filesystem'], static: true, version: boost_version)
+boost_modules = dependency('boost', modules: ['iostreams'], static: true, version: boost_version)
 boost_dep     = dependency('boost', version: boost_version)
 
 # eigen 3
