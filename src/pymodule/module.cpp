@@ -11,10 +11,11 @@
 #include "vectorinterpolators/module.hpp"
 #include "classhelpers/module.hpp"
 
-PYBIND11_MODULE(PYTHON_LIB, m)
+PYBIND11_MODULE(MODULE_NAME, m)
 {
     pybind11::add_ostream_redirect(m, "ostream_redirect");
 
+    m.attr("__version__") = MODULE_VERSION;
     m.doc() = "Small python tool functions for themachinethatgoesping";
 
     init_m_timeconv(m);
