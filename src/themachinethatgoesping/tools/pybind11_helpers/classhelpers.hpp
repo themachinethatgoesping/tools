@@ -42,7 +42,7 @@
 #define __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                     \
     .def(                                                                                          \
         "to_binary", /*&T_CLASS::to_binary,  */                                                    \
-        [](const T_CLASS& self, bool resize_buffer) {                                              \
+        [](T_CLASS& self, bool resize_buffer) {                                                    \
             return py::bytes(self.to_binary(resize_buffer));                                       \
         },                                                                                         \
         "convert object to bytearray",                                                             \
@@ -59,7 +59,7 @@
         py::arg("check_buffer_is_read_completely") = true)
 
 #define __PYCLASS_DEFAULT_PICKLE__(T_CLASS)                                                        \
-    .def(py::pickle([](const T_CLASS& self) { return py::bytes(self.to_binary()); },               \
+    .def(py::pickle([](T_CLASS& self) { return py::bytes(self.to_binary()); },                     \
                     [](const py::bytes& b) { return T_CLASS::from_binary(b); }))
 
 // --- print functions (need objectprinter __printer__ function) ---
@@ -74,13 +74,15 @@
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
-            [](const T_CLASS& self, unsigned int float_precision)                                  \
-            { return self.__printer__(float_precision).create_str(); },                            \
+            [](const T_CLASS& self, unsigned int float_precision) {                                \
+                return self.__printer__(float_precision).create_str();                             \
+            },                                                                                     \
             "Return object information as string",                                                 \
             py::arg("float_precision") = 2)                                                        \
         .def(                                                                                      \
             "print",                                                                               \
-            [](const T_CLASS& self, unsigned int float_precision)                                  \
-            { py::print(self.__printer__(float_precision).create_str()); },                        \
+            [](const T_CLASS& self, unsigned int float_precision) {                                \
+                py::print(self.__printer__(float_precision).create_str());                         \
+            },                                                                                     \
             "Print object information",                                                            \
             py::arg("float_precision") = 2)

@@ -16,6 +16,7 @@ headers = [
   'helper.hpp',
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
+  'classhelpers/stream.hpp',
   'classhelpers/bitsery_helpers/helpers.hpp',
   'classhelpers/bitsery_helpers/nosizevector.hpp',
   'classhelpers/bitsery_helpers/eigen.hpp',
