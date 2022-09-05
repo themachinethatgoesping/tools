@@ -55,7 +55,7 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
  * @return UnixTime as double (seconds since 01.01.1970)
  */
 double datestring_to_unixtime(const std::string& DateString,
-                              const std::string& format = std::string("%z__%d-%m-%Y__%H:%M:%S"));
+                              const std::string& format = "%z__%d-%m-%Y__%H:%M:%S");
 
 /**
  * @brief Converting between date strings and UnixTime stamps (ref 1970)
@@ -73,7 +73,7 @@ double datestring_to_unixtime(const std::string& DateString,
 std::string unixtime_to_datestring(
     double             UnixTime,
     unsigned int       fractionalSecondsDigits = 0,
-    const std::string& format                  = std::string("%z__%d-%m-%Y__%H:%M:%S"));
+    const std::string& format                  = "%z__%d-%m-%Y__%H:%M:%S");
 
 
 
