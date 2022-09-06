@@ -5,9 +5,8 @@
 
 #pragma once
 
-#include <math.h>
+#include <cmath>
 #include <string>
-#include <stdio.h>
 
 namespace themachinethatgoesping {
 namespace tools {

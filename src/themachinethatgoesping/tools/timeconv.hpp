@@ -107,7 +107,7 @@ inline double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDa
 inline std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixTime)
 {
     /* just reverting the function above */
-    static const int64_t adjust = 11644473600000. * 10000.;
+    static const int64_t adjust = int64_t(11644473600000. * 10000.);
 
     unixTime *= 10000000.;
 

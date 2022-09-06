@@ -335,7 +335,7 @@ class ObjectPrinter
 
         // add values to {} list
         str = "{";
-        for (unsigned int i = 0; i < values.size(); ++i)
+        for (size_t i = 0; i < values.size(); ++i)
         {
             if (i != 0)
                 str += ", ";
