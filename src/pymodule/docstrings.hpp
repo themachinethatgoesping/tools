@@ -239,6 +239,10 @@ Parameter ``relative_difference_factor``:
 Returns:
     true/false)doc";
 
+static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar =
 R"doc(Old-school progress bar that prints to terminal. For reference only,
 might be removed in the future.
