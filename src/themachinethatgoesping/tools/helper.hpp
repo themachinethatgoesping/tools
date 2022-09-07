@@ -8,6 +8,8 @@
 #include <cmath>
 #include <string>
 
+#include "fast_float/fast_float.h"
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
@@ -50,6 +52,29 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
     // if the difference between both is smaller than the relative difference factor (compared to
     // the larger float) return true
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
+}
+
+/**
+ * @brief convert a string to float using fast_float::from_chars
+ * Fast_float conforms to std::from_chars (c++17, but not completely implemented in clang yet)
+ * The conversion is locale independent (. is the decimal separator)
+ * see also: https://github.com/fastfloat/fast_float
+ * 
+ * @param str if empty or non-numeric a NAN is returned
+ * @return double 
+ */
+inline double string_to_double(std::string_view str)
+{
+    if (str.empty())
+        return std::numeric_limits<double>::quiet_NaN();
+
+    double result;
+    auto answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
+
+    if(answer.ec != std::errc())
+        return std::numeric_limits<double>::quiet_NaN();
+
+    return result;
 }
 
 template<typename int_type>

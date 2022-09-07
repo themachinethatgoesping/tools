@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.5.6',
+  version: '0.6.0',
   default_options: ['warning_level=3', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -33,51 +33,33 @@ boost_modules = dependency('boost', modules: ['iostreams'], static: true, versio
 boost_dep     = dependency('boost', version: boost_version)
 
 # eigen 3
-eigen3_dep = dependency('eigen3', required: false)
-if not eigen3_dep.found()
-    eigen3_dep = subproject('eigen').get_variable('eigen_dep')
-endif
+eigen3_dep = dependency('eigen3')
 
 # fmt for pretty printing
-fmt_dep = dependency('fmt', required: false)
-if not fmt_dep.found()
-    fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
-endif
+#fmt_dep = dependency('fmt', static: true)
+fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
 
 # indicators for pretty progress bars
-indicators_dep = dependency('indicators', required: false)
-if not indicators_dep.found()
-    indicators_dep = subproject('indicators').get_variable('indicators_dep')
-endif
+indicators_dep = dependency('indicators')
 
 #date (to be replaced with c++20 features)
 hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #bitsery (for object serialization)
-bitsery_dep = dependency('bitsery', required: false)
-if not bitsery_dep.found()
-  bitsery_dep = subproject('bitsery').get_variable('bitsery_dep')
-endif
+bitsery_dep = dependency('bitsery')
 
 #magic_enum (for enum reflection)
-magic_enum_dep = dependency('magic_enum', required: false)
-
-if not magic_enum_dep.found()
-  magic_enum_dep = subproject('magic_enum').get_variable('magic_enum_dep')
-endif
+magic_enum_dep = dependency('magic_enum')
 
 #xtensor (for numpy array support)
-xtensor_dep = dependency('xtensor', required: false)
+xtensor_dep = dependency('xtensor')
 
-if not xtensor_dep.found()
-  xtensor_dep = subproject('xtensor').get_variable('xtensor_dep')
-endif
+#fast_float (for fast locale independent float parsing)
+fast_float_dep = dependency('fast_float')
+
 
 #themachinethatgoesping meta info
-meta_dep = dependency('themachinethatgoesping_meta', required: false)
-if not meta_dep.found()
-    meta_dep = subproject('meta').get_variable('meta_dep')
-endif
+meta_dep = dependency('themachinethatgoesping_meta')
 
 #setup test_data_path
 test_data_path = '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/test_data"'

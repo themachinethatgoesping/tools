@@ -6,5 +6,5 @@ Source: https://github.com/themachinethatgoesping/tools
 # Sample paragraph, commented out:
 #
 # Files: src/*
-# Copyright: $YEAR $NAME <$CONTACT>
+# Copyright: $get_year $NAME <$CONTACT>
 # License: ...

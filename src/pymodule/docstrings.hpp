@@ -243,6 +243,18 @@ static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"d
 
 static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_helper_string_to_double =
+R"doc(convert a string to float using fast_float::from_chars Fast_float
+conforms to std::from_chars (c++17, but not completely implemented in
+clang yet) The conversion is locale independent (. is the decimal
+separator) see also: https://github.com/fastfloat/fast_float
+
+Parameter ``str``:
+    if empty or non-numeric a NAN is returned
+
+Returns:
+    double)doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar =
 R"doc(Old-school progress bar that prints to terminal. For reference only,
 might be removed in the future.
