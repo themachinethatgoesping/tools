@@ -342,7 +342,7 @@ void init_m_progressbars(py::module& m)
                 // std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
 
                 //  do something computation
-                double val = 0;
+                [[maybe_unused]] double val = 0;
                 for (size_t j = 0; j < sleep_us; ++j)
                 {
                     val *= 10 * std::log10(std::pow(dist(e1), 2));

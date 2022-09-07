@@ -20,10 +20,10 @@ namespace tools {
 
 namespace timeconv {
 
-chrono::system_clock::time_point unixtime_to_timepoint(double UnixTime)
+chrono::system_clock::time_point unixtime_to_timepoint(double unixtime)
 {
 
-    chrono::duration<double> time_since_epoch(UnixTime);
+    chrono::duration<double> time_since_epoch(unixtime);
 
     return (chrono::system_clock::time_point(
         chrono::duration_cast<chrono::microseconds>(time_since_epoch)));
@@ -48,20 +48,23 @@ double datestring_to_unixtime(const string& DateString, const string& format)
     return timepoint_to_unixtime(timePoint);
 }
 
-string unixtime_to_datestring(double        UnixTime,
+string unixtime_to_datestring(double        unixtime,
                               unsigned int  fractionalSecondsDigits,
                               const string& format)
 {
+    if(!std::isfinite(unixtime))
+        return "NaN_time_string";
+
     // microsecond precision is the max
     if (fractionalSecondsDigits > 6)
         fractionalSecondsDigits = 6;
 
     double digits = pow(10, fractionalSecondsDigits);
 
-    UnixTime = std::round(UnixTime * digits);
-    UnixTime /= digits;
+    unixtime = std::round(unixtime * digits);
+    unixtime /= digits;
 
-    auto time = unixtime_to_timepoint(UnixTime);
+    auto time = unixtime_to_timepoint(unixtime);
 
     auto datestring = date::format(format, time);
 

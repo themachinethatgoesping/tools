@@ -29,10 +29,10 @@ namespace timeconv {
 /**
  * @brief unixtime_to_timepoint
  *        IMPORTANT: return value will only have microseconds precision!
- * @param UnixTime: Unix time stamp (seconds since 01.01.1970) as double
+ * @param unixtime: Unix time stamp (seconds since 01.01.1970) as double
  * @return chrono::system_clock::time_point
  */
-std::chrono::system_clock::time_point unixtime_to_timepoint(double UnixTime);
+std::chrono::system_clock::time_point unixtime_to_timepoint(double unixtime);
 
 /**
  * @brief timepoint_to_unixtime
@@ -45,22 +45,22 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
 //------------------------------------- time conversions
 //------------------------------------------
 /**
- * @brief Converting between date strings and UnixTime stamps (ref 1970)
+ * @brief Converting between date strings and unixtime stamps (ref 1970)
  *
  * @param  DateString: DateString to be converted. Must fit format string.
  * @param  format: Format string to convert Date string.
  *      Default Format: "%z__%d-%m-%Y__%H:%M:%S"
  *      see https://m.cplusplus.com/reference/ctime/strftime/ *
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
- * @return UnixTime as double (seconds since 01.01.1970)
+ * @return unixtime as double (seconds since 01.01.1970)
  */
 double datestring_to_unixtime(const std::string& DateString,
                               const std::string& format = "%z__%d-%m-%Y__%H:%M:%S");
 
 /**
- * @brief Converting between date strings and UnixTime stamps (ref 1970)
+ * @brief Converting between date strings and unixtime stamps (ref 1970)
  *
- * @param UnixTime: seconds since 01.01.1970 as double
+ * @param unixtime: seconds since 01.01.1970 as double
  * @param fractionalSecondsDigits: How many digits to use for the split seconds.
  *          Minimum is 0 (second resolution)
  *          Maximum is 6 (microsecond resolution)
@@ -71,7 +71,7 @@ double datestring_to_unixtime(const std::string& DateString,
  * @return DateString that fits to the specified format
  */
 std::string unixtime_to_datestring(
-    double             UnixTime,
+    double             unixtime,
     unsigned int       fractionalSecondsDigits = 0,
     const std::string& format                  = "%z__%d-%m-%Y__%H:%M:%S");
 
@@ -92,26 +92,26 @@ inline double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDa
     static const uint64_t adjust = 11644473600000 * 10000; ///< 100-nanoseconds = milliseconds * 10000
 
     // removes the diff between 1970 and 1601 and convert nanoseconds to seconds
-    double unixTime = ((double)(date - adjust)) / 10000000.;
+    double unixtime = ((double)(date - adjust)) / 10000000.;
 
-    return unixTime;
+    return unixtime;
 }
 
 /**
  * @brief Convert a unix timestamp to a windows 32bit Filetime
  * conversion to 2 x 32 bit word see: https://support.microsoft.com/en-us/help/188768/info-working-with-the-filetime-structure
  * 
- * @param unixTime in seconds since 1970
+ * @param unixtime in seconds since 1970
  * @return std::pair<uint32_t, uint32_t> 
  */
-inline std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixTime)
+inline std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixtime)
 {
     /* just reverting the function above */
     static const int64_t adjust = int64_t(11644473600000. * 10000.);
 
-    unixTime *= 10000000.;
+    unixtime *= 10000000.;
 
-    uint64_t date = (uint64_t)std::llround(unixTime) + adjust;
+    uint64_t date = (uint64_t)std::llround(unixtime) + adjust;
 
     uint32_t lowDateTime  = (uint32_t)(date & 0xFFFFFFFF);
     uint32_t highDateTime = (uint32_t)(date >> 32);

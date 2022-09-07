@@ -700,7 +700,7 @@ Returns:
     Eigen::Quaternion<floattype>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
-R"doc(Converting between date strings and UnixTime stamps (ref 1970)
+R"doc(Converting between date strings and unixtime stamps (ref 1970)
 
 Parameter ``DateString:``:
     DateString to be converted. Must fit format string.
@@ -713,7 +713,7 @@ Parameter ``format:``:
     tml#format-string
 
 Returns:
-    UnixTime as double (seconds since 01.01.1970))doc";
+    unixtime as double (seconds since 01.01.1970))doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_timepoint_to_unixtime =
 R"doc(timepoint_to_unixtime IMPORTANT: Conversion does only have
@@ -726,9 +726,9 @@ Returns:
     Unix time stamp (seconds since 01.01.1970) as double)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
-R"doc(Converting between date strings and UnixTime stamps (ref 1970)
+R"doc(Converting between date strings and unixtime stamps (ref 1970)
 
-Parameter ``UnixTime:``:
+Parameter ``unixtime:``:
     seconds since 01.01.1970 as double
 
 Parameter ``fractionalSecondsDigits:``:
@@ -749,7 +749,7 @@ static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_timep
 R"doc(unixtime_to_timepoint IMPORTANT: return value will only have
 microseconds precision!
 
-Parameter ``UnixTime:``:
+Parameter ``unixtime:``:
     Unix time stamp (seconds since 01.01.1970) as double
 
 Returns:
@@ -760,7 +760,7 @@ R"doc(Convert a unix timestamp to a windows 32bit Filetime conversion to 2 x
 32 bit word see: https://support.microsoft.com/en-us/help/188768/info-
 working-with-the-filetime-structure
 
-Parameter ``unixTime``:
+Parameter ``unixtime``:
     in seconds since 1970
 
 Returns:
