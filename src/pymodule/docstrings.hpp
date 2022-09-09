@@ -220,6 +220,10 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos = R"doc(< additional info (printed in []))doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelpers_stream_container_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelpers_stream_container_to_stream = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_helper_approx =
 R"doc(compare to floats using a relative difference factor
 
