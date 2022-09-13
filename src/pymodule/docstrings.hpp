@@ -243,10 +243,6 @@ Parameter ``relative_difference_factor``:
 Returns:
     true/false)doc";
 
-static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_helper_string_to_double =
 R"doc(convert a string to float using fast_float::from_chars Fast_float
 conforms to std::from_chars (c++17, but not completely implemented in

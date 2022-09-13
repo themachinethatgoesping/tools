@@ -77,6 +77,23 @@ inline double string_to_double(std::string_view str)
     return result;
 }
 
+inline std::vector<double> string_to_double_vector(std::string_view std, char delim = ',')
+{
+    std::vector<double> result;
+    std::string_view::size_type pos = 0;
+    while (pos != std::string_view::npos)
+    {
+        auto next_pos = std.find(delim, pos);
+        auto str = std.substr(pos, next_pos - pos);
+        result.push_back(string_to_double(str));
+        pos = next_pos;
+        if (pos != std::string_view::npos)
+            pos++;
+    }
+    return result;
+}
+
+
 template<typename int_type>
 inline std::string int_as_string(int_type value)
 {
