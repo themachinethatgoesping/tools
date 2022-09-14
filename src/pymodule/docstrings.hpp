@@ -618,6 +618,21 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProg
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar_pbar_NoIndicator = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_pybind_helpers_add_string_to_enum_conversion =
+R"doc(Convert a string to an enum using magic_enum
+
+Template parameter ``T_ENUM``:
+    enum type
+
+Template parameter ``T_PYBIND_ENUM``:
+    pybind11::enum_<T_ENUM>
+
+Parameter ``self``:
+    enum class that is to be changes
+
+Parameter ``str``:
+    string that is to be converted)doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_compute_heading =
 R"doc(compute heading from northing and easting north 0°/360°, east 90°,
 south 180°, west 270

@@ -15,6 +15,7 @@
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
+using namespace themachinethatgoesping;
 
 #include <pybind11/pybind11.h>
 
@@ -32,7 +33,7 @@ void init_m_vectorinterpolators(pybind11::module& m)
         "vectorinterpolators", "Classes for getting interpolated values from within vectors");
 
     // small classes
-    pybind11::enum_<t_extr_mode>(
+    auto pyenum_extr_mode = pybind11::enum_<t_extr_mode>(
         m_vectorinterpolators,
         "t_extr_mode",
         DOC(themachinethatgoesping, tools, vectorinterpolators, t_extr_mode))
@@ -40,12 +41,9 @@ void init_m_vectorinterpolators(pybind11::module& m)
         .value("nearest", t_extr_mode::nearest)
         .value("fail", t_extr_mode::fail)
         .export_values()
-        //pybind enum helpers
-        __PYENUM_FROM_STRING__(t_extr_mode)
         //end
         ;
-
-    py::implicitly_convertible<std::string, t_extr_mode>();
+    tools::pybind_helpers::add_string_to_enum_conversion<t_extr_mode>(pyenum_extr_mode);
 
     // interpolator classes
     init_c_nearestinterpolator(m_vectorinterpolators);
