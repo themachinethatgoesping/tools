@@ -115,11 +115,9 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             return false;
 
         // compare data
+        //TODO: what happens for empty/nan quaternions?
         if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
             return false;
-        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
-            return false;
-
         if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
             return false;
 

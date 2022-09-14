@@ -22,6 +22,7 @@
 
 #include "../classhelpers/objectprinter.hpp"
 #include "../classhelpers/bitsery.hpp"
+#include "../helper.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -53,19 +54,10 @@ class LinearInterpolator : public I_PairInterpolator<double>
         if (_extr_mode != rhs.get_extrapolation_mode())
             return false;
 
-        // compare size of vectors
-        if (_X.size() != rhs._X.size())
-            return false;
-        if (_Y.size() != rhs._Y.size())
-            return false;
-
         // compare data
-        if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
+        if (!helper::approx_container(_X, rhs._X))
             return false;
-        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
-            return false;
-
-        if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
+        if (!helper::approx_container(_Y, rhs._Y))
             return false;
 
         return true;
