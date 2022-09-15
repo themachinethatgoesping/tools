@@ -8,12 +8,15 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <complex>
 
 #include "fast_float/fast_float.h"
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
+
+
 
 /**
  * @brief compare to floats using a relative difference factor
@@ -55,6 +58,12 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
 }
 
+template <typename t_float>
+bool approx_complex(std::complex<t_float> f1, std::complex<t_float> f2, t_float relative_difference_factor = 0.0001 /* 0.01% */)
+{
+    return approx(f1.real(),f2.real(),relative_difference_factor) && approx(f1.imag(),f2.imag(),relative_difference_factor);
+}
+
 
 template<typename t_container>
 bool approx_container(const t_container& c1, const t_container& c2, typename t_container::value_type relative_difference_factor = 0.0001 // 0.01%
@@ -65,6 +74,20 @@ bool approx_container(const t_container& c1, const t_container& c2, typename t_c
 
     for (size_t i = 0; i < c1.size(); i++)
         if (!approx(c1[i], c2[i], relative_difference_factor))
+            return false;
+
+    return true;
+}
+
+template<typename t_container>
+bool approx_container_complex(const t_container& c1, const t_container& c2, float relative_difference_factor = 0.0001 /* 0.01% */
+)
+{
+    if (c1.size() != c2.size())
+        return false;
+
+    for (size_t i = 0; i < c1.size(); i++)
+        if (!approx_complex(c1[i], c2[i], relative_difference_factor))
             return false;
 
     return true;

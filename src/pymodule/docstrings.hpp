@@ -243,7 +243,11 @@ Parameter ``relative_difference_factor``:
 Returns:
     true/false)doc";
 
+static const char *__doc_themachinethatgoesping_tools_helper_approx_complex = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_helper_approx_container = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_approx_container_complex = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_string_to_double =
 R"doc(convert a string to float using fast_float::from_chars Fast_float
