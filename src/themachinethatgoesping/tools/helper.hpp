@@ -57,7 +57,7 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
 
 
 template<typename t_container>
-bool approx_container(const t_container& c1, const t_container& c2, double relative_difference_factor = 0.0001 // 0.01%
+bool approx_container(const t_container& c1, const t_container& c2, typename t_container::value_type relative_difference_factor = 0.0001 // 0.01%
 )
 {
     if (c1.size() != c2.size())
