@@ -80,7 +80,7 @@ bool approx_container(const t_container& c1, const t_container& c2, typename t_c
 }
 
 template<typename t_container>
-bool approx_container_complex(const t_container& c1, const t_container& c2, float relative_difference_factor = 0.0001 /* 0.01% */
+bool approx_container_complex(const t_container& c1, const t_container& c2, typename t_container::value_type::value_type relative_difference_factor = 0.0001f /* 0.01% */
 )
 {
     if (c1.size() != c2.size())
