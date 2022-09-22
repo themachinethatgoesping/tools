@@ -413,17 +413,18 @@ class ObjectPrinter
      * @param value_info additional info (is printed in [] behind the variable)
      * @param pos position where the value is registers (if negative, the value is appended)
      */
-    template<typename t_value>
+    template<typename t_container>
     void register_container(const std::string&          name,
-                            const std::vector<t_value>& values,
+                            const t_container& values,
                             std::string                 value_info = "",
                             int                         pos        = -1)
     {
         static const size_t max_visible_elements = 9; // maximum values to display for a vector
         std::string         str, format;
+        using t_value = typename t_container::value_type;
 
         // define value to string format
-        if constexpr (std::is_floating_point<t_value>())
+        if constexpr (std::is_floating_point<typename t_container::value_type>())
             format = "{:.6g}"; // 6 characters, automatic scientific notation depending on magnitude
         else if constexpr (std::is_base_of<t_value, std::string>())
             format = "\"{}\"";
@@ -516,7 +517,12 @@ class ObjectPrinter
                         }
                     }
                     else
-                        v = values;
+                    // copy all values to v
+                    {
+                        v.resize(values.size());
+                        std::copy(values.begin(), values.end(), v.begin());
+                    }
+
 
                     // get statistics from nan/inf cleaned lists
                     auto minmax = std::minmax_element(std::begin(v), std::end(v));
@@ -599,22 +605,51 @@ class ObjectPrinter
         if (value_info.size() > 0)
             value_info = fmt::format("[{}]", value_info);
 
+        std::vector<std::string> lines;
+        
+        // split string into lines
+        std::string::size_type start = 0;
+        std::string::size_type end   = 0;
+        while ((end = value.find('\n', start)) != std::string::npos)
+        {
+            lines.push_back(value.substr(start, end - start));
+            start = end + 1;
+        }
+        lines.push_back(value.substr(start));
+
         if (pos < 0 || pos >= int(_fields.size()))
         {
             _fields.push_back(name);
-            _lines.push_back({ value });
-            _value_infos.push_back(value_info);
+            _lines.push_back(lines);
             _field_types.push_back(t_field::tstring);
+            _value_infos.push_back(value_info);
             _section_underliner.push_back(' ');
         }
         else
         {
             _fields.insert(_fields.begin() + pos, name);
-            _lines.insert(_lines.begin() + pos, { value });
-            _value_infos.insert(_value_infos.begin() + pos, value_info);
+            _lines.insert(_lines.begin() + pos, lines);
             _field_types.insert(_field_types.begin() + pos, t_field::tstring);
+            _value_infos.insert(_value_infos.begin() + pos, value_info);
             _section_underliner.insert(_section_underliner.begin() + pos, ' ');
         }
+
+        // if (pos < 0 || pos >= int(_fields.size()))
+        // {
+        //     _fields.push_back(name);
+        //     _lines.push_back({value});
+        //     _value_infos.push_back(value_info);
+        //     _field_types.push_back(t_field::tstring);
+        //     _section_underliner.push_back(' ');
+        // }
+        // else
+        // {
+        //     _fields.insert(_fields.begin() + pos, name);
+        //     _lines.insert(_lines.begin() + pos, {value});
+        //     _value_infos.insert(_value_infos.begin() + pos, value_info);
+        //     _field_types.insert(_field_types.begin() + pos, t_field::tstring);
+        //     _section_underliner.insert(_section_underliner.begin() + pos, ' ');
+        // }
     }
 
     /**
