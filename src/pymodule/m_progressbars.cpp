@@ -166,7 +166,8 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
 };
 
 // dummy config class
-class config {};
+class config
+{};
 
 void init_m_progressbars(py::module& m)
 {

@@ -48,8 +48,7 @@ class ProgressIndicator : public I_ProgressBarTimed
 
         // set the possible spinner states
         _indicator->set_option(indicators::option::SpinnerStates{
-            std::vector<std::string>{"⠈", "⠐", "⠠", "⢀", "⡀", "⠄", "⠂", "⠁"}
-        });
+            std::vector<std::string>{ "⠈", "⠐", "⠠", "⢀", "⡀", "⠄", "⠂", "⠁" } });
 
         // set indicator progressbar options
         _indicator->set_option(indicators::option::ForegroundColor{ indicators::Color::yellow });
@@ -90,10 +89,11 @@ class ProgressIndicator : public I_ProgressBarTimed
         callback_set_progress(_indicator->current() + increment);
     }
 
-    double callback_current() const override { 
+    double callback_current() const override
+    {
         // return the current progress of the indicator progressbar
-        return _indicator->current(); 
-        }
+        return _indicator->current();
+    }
 };
 
 }

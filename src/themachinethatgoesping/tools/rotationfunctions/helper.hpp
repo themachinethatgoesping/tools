@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 /**
- * @brief some convinience functions to create eigen quaternions from yaw pitch
+ * @brief some convenience functions to create eigen quaternions from yaw pitch
  * roll values using eigen rotations Note: Rotations are created in the
  * following order: 1. yaw, 2. pitch, 3. roll
  *
@@ -42,7 +42,7 @@ template<typename floattype>
 std::array<floattype, 3> normalize_angles_rad(std::array<floattype, 3> ypr)
 {
     /* pitch is constrained to -90° -> 90°
-     * otherwise there is two possibilites to reach every point.
+     * otherwise there is two possibilities to reach every point.
      * because: rotate(yaw,pitch,roll) == rotate(yaw+pi,pi-pitch,roll+pi)
      * Also note: pitch = 90 degrees leads to a gimbal lock situation
      */
@@ -93,7 +93,7 @@ std::array<floattype, 3> normalize_angles_degrees(std::array<floattype, 3> ypr)
     //
 
     /* pitch is constrained to -90° -> 90°
-     * otherwise there is two possibilites to reach every point.
+     * otherwise there is two possibilities to reach every point.
      * because: rotate(yaw,pitch,roll) == rotate(yaw+pi,pi-pitch,roll+pi)
      * Also note: pitch = 90 degrees leads to a gimbal lock situation
      */
@@ -130,11 +130,11 @@ std::array<floattype, 3> normalize_angles_degrees(std::array<floattype, 3> ypr)
 /**
  * @brief compute heading from northing and easting
  * north 0°/360°, east 90°, south 180°, west 270
- * 
+ *
  * @param northing northing in m
  * @param easting easting in m
  * @param radians return as rad, otherwise as degrees
- * @return heading in rad or degrees 
+ * @return heading in rad or degrees
  */
 inline double compute_heading(double northing, double easting, bool radians = false)
 {
@@ -142,7 +142,7 @@ inline double compute_heading(double northing, double easting, bool radians = fa
     if (heading < 0)
         heading += 2 * M_PI;
 
-    if(!radians)
+    if (!radians)
         heading *= 180. / M_PI;
 
     return heading;

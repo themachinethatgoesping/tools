@@ -19,8 +19,8 @@
 #include <bitsery/traits/string.h>
 #include <bitsery/traits/vector.h>
 
-#include "bitsery_helpers/helpers.hpp"
 #include "bitsery_helpers/eigen.hpp"
+#include "bitsery_helpers/helpers.hpp"
 
 #define __BITSERY_DEFAULT_TO_BINARY__                                                              \
     /** @brief convert object to vector of bytes                                                   \
@@ -99,9 +99,8 @@
         return object;                                                                             \
     }
 
-
 #define __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(T_CLASS)                                       \
     __BITSERY_DEFAULT_TO_BINARY__                                                                  \
     __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)                                                       \
     __BITSERY_DEFAULT_TO_STREAM__                                                                  \
-    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)                                                       
+    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)

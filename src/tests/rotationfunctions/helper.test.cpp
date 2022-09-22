@@ -34,15 +34,16 @@ TEST_CASE("compute_heading should return correct heading", TESTTAG)
     REQUIRE(rotationfunctions::compute_heading(1, -1.) == Approx(315.));  // north west
 
     // radians
-    REQUIRE(rotationfunctions::compute_heading(0., 0., true) == Approx(0.));    // edge case
-    REQUIRE(rotationfunctions::compute_heading(1., 0., true) == Approx(0.));    // north
-    REQUIRE(rotationfunctions::compute_heading(1., 1., true) == Approx(M_PI/4));   // north east
-    REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Approx(M_PI/2));   // east
-    REQUIRE(rotationfunctions::compute_heading(-1, 1., true) == Approx(M_PI*3/4));  // south east
-    REQUIRE(rotationfunctions::compute_heading(-1, 0., true) == Approx(M_PI));  // south
-    REQUIRE(rotationfunctions::compute_heading(-1, -1., true) == Approx(M_PI*5/4)); // south west
-    REQUIRE(rotationfunctions::compute_heading(0, -1., true) == Approx(M_PI*6/4));  // west
-    REQUIRE(rotationfunctions::compute_heading(1, -1., true) == Approx(M_PI*7/4));  // north west
+    REQUIRE(rotationfunctions::compute_heading(0., 0., true) == Approx(0.));           // edge case
+    REQUIRE(rotationfunctions::compute_heading(1., 0., true) == Approx(0.));           // north
+    REQUIRE(rotationfunctions::compute_heading(1., 1., true) == Approx(M_PI / 4));     // north east
+    REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Approx(M_PI / 2));     // east
+    REQUIRE(rotationfunctions::compute_heading(-1, 1., true) == Approx(M_PI * 3 / 4)); // south east
+    REQUIRE(rotationfunctions::compute_heading(-1, 0., true) == Approx(M_PI));         // south
+    REQUIRE(rotationfunctions::compute_heading(-1, -1., true) ==
+            Approx(M_PI * 5 / 4));                                                     // south west
+    REQUIRE(rotationfunctions::compute_heading(0, -1., true) == Approx(M_PI * 6 / 4)); // west
+    REQUIRE(rotationfunctions::compute_heading(1, -1., true) == Approx(M_PI * 7 / 4)); // north west
 }
 
 TEST_CASE("normalize_angles", TESTTAG)
@@ -76,32 +77,32 @@ TEST_CASE("normalize_angles", TESTTAG)
     SECTION("normalize_angles should place yaw pitch and roll into defined limits")
     {
         std::vector<std::pair<std::array<double, 3>, std::array<double, 3>>> YPR = {
-            {{ -720., 0., -720. },     { 0., 0., 0. }       }, // 0
-            { { -540., -90., -540. },  { 180., -90., -180. }}, // 1
-            { { -360., 80., -360. },   { 0., 80., 0. }      }, // 2
-            { { -270., -40., -270. },  { 90., -40., 90. }   }, // 3
-            { { -180., 30., -180. },   { 180., 30., -180. } }, // 4
-            { { -90., -30., -90. },    { 270., -30., -90. } }, // 5
-            { { -45., -45., -45. },    { 315., -45., -45. } }, // 6
-            { { 0., 0., 0. },          { 0., 0., 0. }       }, // 7
-            { { 45., 45., 45. },       { 45., 45., 45. }    }, // 8
-            { { 90., 80., 90. },       { 90., 80., 90. }    }, // 9
-            { { 135., -80., 135. },    { 135., -80., 135. } }, // 10
-            { { 180., 80., 180. },     { 180., 80., -180. } }, // 11
-            { { 225., -90, 225. },     { 225., -90, -135. } }, // 12
-            { { 270., 90, 270. },      { 270., 90, -90. }   }, // 13
-            { { 360., 0., 360. },      { 0., 0., 0. }       }, // 14
-  // --- section for pitch larger 90
-            { { 45., 100., 45. },      { 225., 80., -135. } }, // 15
-            { { 45., -100., 45. },     { 225., -80., -135. }}, // 16
-            { { 90., 120., 90. },      { 270., 60., -90. }  }, // 17
-            { { -45., -120., -45. },   { 135., -60., 135. } }, //, // 18
-            { { 456., 789., 456. },    { 96., 69., 96. }    }, // 19
+            { { -720., 0., -720. }, { 0., 0., 0. } },          // 0
+            { { -540., -90., -540. }, { 180., -90., -180. } }, // 1
+            { { -360., 80., -360. }, { 0., 80., 0. } },        // 2
+            { { -270., -40., -270. }, { 90., -40., 90. } },    // 3
+            { { -180., 30., -180. }, { 180., 30., -180. } },   // 4
+            { { -90., -30., -90. }, { 270., -30., -90. } },    // 5
+            { { -45., -45., -45. }, { 315., -45., -45. } },    // 6
+            { { 0., 0., 0. }, { 0., 0., 0. } },                // 7
+            { { 45., 45., 45. }, { 45., 45., 45. } },          // 8
+            { { 90., 80., 90. }, { 90., 80., 90. } },          // 9
+            { { 135., -80., 135. }, { 135., -80., 135. } },    // 10
+            { { 180., 80., 180. }, { 180., 80., -180. } },     // 11
+            { { 225., -90, 225. }, { 225., -90, -135. } },     // 12
+            { { 270., 90, 270. }, { 270., 90, -90. } },        // 13
+            { { 360., 0., 360. }, { 0., 0., 0. } },            // 14
+                                                               // --- section for pitch larger 90
+            { { 45., 100., 45. }, { 225., 80., -135. } },      // 15
+            { { 45., -100., 45. }, { 225., -80., -135. } },    // 16
+            { { 90., 120., 90. }, { 270., 60., -90. } },       // 17
+            { { -45., -120., -45. }, { 135., -60., 135. } },   //, // 18
+            { { 456., 789., 456. }, { 96., 69., 96. } },       // 19
             { { -456., -789., -456. }, { 264., -69., -96. } }, // 20
-            { { -90., -300., -90. },   { 270., 60., -90. }  }, // 21
-            { { -90., 300., -90. },    { 270., -60., -90. } }, // 22
-            { { -90., -100., -90. },   { 90., -80., 90. }   }, // 23
-            { { -90., 100., -90. },    { 90., 80., 90. }    }  // 24
+            { { -90., -300., -90. }, { 270., 60., -90. } },    // 21
+            { { -90., 300., -90. }, { 270., -60., -90. } },    // 22
+            { { -90., -100., -90. }, { 90., -80., 90. } },     // 23
+            { { -90., 100., -90. }, { 90., 80., 90. } }        // 24
         };
 
         for (unsigned int c = 0; c < YPR.size(); ++c)

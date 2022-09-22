@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
-// SPDX-FileCopyrightText: (c)2019 Michael Tesch. tesch1@gmail.com (struct fmt::formatter<std::complex<T>,Char> : public fmt::formatter<T,Char>)
+// SPDX-FileCopyrightText: (c)2019 Michael Tesch. tesch1@gmail.com (struct
+// fmt::formatter<std::complex<T>,Char> : public fmt::formatter<T,Char>)
 //
 // SPDX-License-Identifier: MPL-2.0
 
@@ -28,7 +29,6 @@
 #include "../classhelpers/bitsery.hpp"
 #include <bitsery/traits/string.h>
 
-
 // source https://gitlab.com/tesch1/cppduals/blob/master/duals/dual#L1379-1452
 /// std::complex<> Formatter for libfmt https://github.com/fmtlib/fmt
 ///
@@ -51,67 +51,88 @@
 /// | {:$g}, {:*g}, or {:,g}, respectively.  (this implementation is a
 /// bit hacky - glad for cleanups).
 ///
-template <typename T, typename Char>
-struct fmt::formatter<std::complex<T>,Char> : public fmt::formatter<T,Char>
+template<typename T, typename Char>
+struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
 {
-  typedef fmt::formatter<T,Char> base;
-  enum style { expr, star, pair } style_ = expr;
-  fmt::detail::dynamic_format_specs<Char> specs_;
-  FMT_CONSTEXPR auto parse(format_parse_context & ctx) -> decltype(ctx.begin()) {
-    using handler_type = fmt::detail::dynamic_specs_handler<format_parse_context>;
-    auto type = fmt::detail::type_constant<T, Char>::value;
-    fmt::detail::specs_checker<handler_type> handler(handler_type(specs_, ctx), type);
-    auto it = ctx.begin();
-    if (it != ctx.end()) {
-      switch (*it) {
-      case '$': style_ = style::expr; ctx.advance_to(++it); break;
-      case '*': style_ = style::star; ctx.advance_to(++it); break;
-      case ',': style_ = style::pair; ctx.advance_to(++it); break;
-      default: break;
-      }
+    typedef fmt::formatter<T, Char> base;
+    enum style
+    {
+        expr,
+        star,
+        pair
+    } style_ = expr;
+    fmt::detail::dynamic_format_specs<Char> specs_;
+    FMT_CONSTEXPR auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
+    {
+        using handler_type = fmt::detail::dynamic_specs_handler<format_parse_context>;
+        auto                                     type = fmt::detail::type_constant<T, Char>::value;
+        fmt::detail::specs_checker<handler_type> handler(handler_type(specs_, ctx), type);
+        auto                                     it = ctx.begin();
+        if (it != ctx.end())
+        {
+            switch (*it)
+            {
+                case '$':
+                    style_ = style::expr;
+                    ctx.advance_to(++it);
+                    break;
+                case '*':
+                    style_ = style::star;
+                    ctx.advance_to(++it);
+                    break;
+                case ',':
+                    style_ = style::pair;
+                    ctx.advance_to(++it);
+                    break;
+                default:
+                    break;
+            }
+        }
+        parse_format_specs(ctx.begin(), ctx.end(), handler);
+        // todo: fixup alignment
+        return base::parse(ctx);
     }
-    parse_format_specs(ctx.begin(), ctx.end(), handler);
-    //todo: fixup alignment
-    return base::parse(ctx);
-  }
-  template <typename FormatCtx>
-  auto format(const std::complex<T> & x, FormatCtx & ctx) -> decltype(ctx.out()) {
-    format_to(ctx.out(), "(");
-    if (style_ == style::pair) {
-      base::format(x.real(), ctx);
-      format_to(ctx.out(), ",");
-      base::format(x.imag(), ctx);
-      return format_to(ctx.out(), ")");
+    template<typename FormatCtx>
+    auto format(const std::complex<T>& x, FormatCtx& ctx) -> decltype(ctx.out())
+    {
+        format_to(ctx.out(), "(");
+        if (style_ == style::pair)
+        {
+            base::format(x.real(), ctx);
+            format_to(ctx.out(), ",");
+            base::format(x.imag(), ctx);
+            return format_to(ctx.out(), ")");
+        }
+        if (x.real() || !x.imag())
+            base::format(x.real(), ctx);
+        if (x.imag())
+        {
+            if (x.real() && x.imag() >= 0 && specs_.sign != sign::plus)
+                format_to(ctx.out(), "+");
+            base::format(x.imag(), ctx);
+            if (style_ == style::star)
+                format_to(ctx.out(), "*i");
+            else
+                format_to(ctx.out(), "i");
+            if (std::is_same<typename std::decay<T>::type, float>::value)
+                format_to(ctx.out(), "f");
+            if (std::is_same<typename std::decay<T>::type, long double>::value)
+                format_to(ctx.out(), "l");
+        }
+        return format_to(ctx.out(), ")");
     }
-    if (x.real() || !x.imag())
-      base::format(x.real(), ctx);
-    if (x.imag()) {
-      if (x.real() && x.imag() >= 0 && specs_.sign != sign::plus)
-        format_to(ctx.out(), "+");
-      base::format(x.imag(), ctx);
-      if (style_ == style::star)
-        format_to(ctx.out(), "*i");
-      else
-        format_to(ctx.out(), "i");
-      if (std::is_same<typename std::decay<T>::type,float>::value)       format_to(ctx.out(), "f");
-      if (std::is_same<typename std::decay<T>::type,long double>::value) format_to(ctx.out(), "l");
-    }
-    return format_to(ctx.out(), ")");
-  }
 };
-
-
 
 // --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
 #define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
     /**                                                                                            \
      * @brief return an info string using the class __printer__ object                             \
-     * @param float_precision number of digits for floating point values                          \
+     * @param float_precision number of digits for floating point values                           \
      * @return std::string                                                                         \
      */                                                                                            \
-    std::string info_string(unsigned int float_precision = 2) const                               \
+    std::string info_string(unsigned int float_precision = 2) const                                \
     {                                                                                              \
-        return this->__printer__(float_precision).create_str();                                                   \
+        return this->__printer__(float_precision).create_str();                                    \
     }
 
 #define __CLASSHELPERS_PRINTER_PRINT__                                                             \
@@ -119,11 +140,11 @@ struct fmt::formatter<std::complex<T>,Char> : public fmt::formatter<T,Char>
      * @brief print the object information to the given outpustream                                \
      *                                                                                             \
      * @param os output stream, e.g. file stream or std::out or std::cerr                          \
-     * @param float_precision number of digits for floating point values                          \
+     * @param float_precision number of digits for floating point values                           \
      */                                                                                            \
-    void print(std::ostream& os,unsigned int float_precision = 2) const                                                             \
+    void print(std::ostream& os, unsigned int float_precision = 2) const                           \
     {                                                                                              \
-        os << this->__printer__(float_precision).create_str() << std::endl;                                       \
+        os << this->__printer__(float_precision).create_str() << std::endl;                        \
     }
 
 #define __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__                                                \
@@ -572,7 +593,7 @@ class ObjectPrinter
      */
     void register_string(const std::string& name,
                          const std::string& value,
-                         std::string value_info = "",
+                         std::string        value_info = "",
                          int                pos        = -1)
     {
         if (value_info.size() > 0)

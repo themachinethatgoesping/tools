@@ -15,8 +15,8 @@
 
 /* std includes */
 #include <chrono>
-#include <string>
 #include <cmath>
+#include <string>
 
 namespace themachinethatgoesping {
 
@@ -70,26 +70,24 @@ double datestring_to_unixtime(const std::string& DateString,
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
  * @return DateString that fits to the specified format
  */
-std::string unixtime_to_datestring(
-    double             unixtime,
-    unsigned int       fractionalSecondsDigits = 0,
-    const std::string& format                  = "%z__%d-%m-%Y__%H:%M:%S");
-
-
+std::string unixtime_to_datestring(double             unixtime,
+                                   unsigned int       fractionalSecondsDigits = 0,
+                                   const std::string& format = "%z__%d-%m-%Y__%H:%M:%S");
 
 /**
  * @brief Convert a windows 32bit Filetime to a unix timestamp
- * conversion to unixtime see: http://www.frenk.com/2009/12/convert-filetime-to-unix-timestamp/ 
- * 
- * WARNING: converting to unixtime and then back causes small (100 ns ) rounding error * 
- * @param highDateTime 
- * @param lowDateTime 
- * @return double 
+ * conversion to unixtime see: http://www.frenk.com/2009/12/convert-filetime-to-unix-timestamp/
+ *
+ * WARNING: converting to unixtime and then back causes small (100 ns ) rounding error *
+ * @param highDateTime
+ * @param lowDateTime
+ * @return double
  */
 inline double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDateTime)
 {
-    uint64_t date = (((int64_t)highDateTime) << 32) + lowDateTime;
-    static const uint64_t adjust = 11644473600000 * 10000; ///< 100-nanoseconds = milliseconds * 10000
+    uint64_t              date = (((int64_t)highDateTime) << 32) + lowDateTime;
+    static const uint64_t adjust =
+        11644473600000 * 10000; ///< 100-nanoseconds = milliseconds * 10000
 
     // removes the diff between 1970 and 1601 and convert nanoseconds to seconds
     double unixtime = ((double)(date - adjust)) / 10000000.;
@@ -99,10 +97,11 @@ inline double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDa
 
 /**
  * @brief Convert a unix timestamp to a windows 32bit Filetime
- * conversion to 2 x 32 bit word see: https://support.microsoft.com/en-us/help/188768/info-working-with-the-filetime-structure
- * 
+ * conversion to 2 x 32 bit word see:
+ * https://support.microsoft.com/en-us/help/188768/info-working-with-the-filetime-structure
+ *
  * @param unixtime in seconds since 1970
- * @return std::pair<uint32_t, uint32_t> 
+ * @return std::pair<uint32_t, uint32_t>
  */
 inline std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixtime)
 {

@@ -11,7 +11,7 @@ import os
 
 from themachinethatgoesping.tools import vectorinterpolators as vip
 
-test_tmp = 'interpolator.tmp'
+test_tmp = "interpolator.tmp"
 
 # define class for grouping (test sections)
 class Test_tools_vectorinterpolators_all:
@@ -32,17 +32,17 @@ class Test_tools_vectorinterpolators_all:
             ip2 = ip.from_binary(binary)
 
             # write using binary
-            with open(test_tmp,'wb') as ofi:
+            with open(test_tmp, "wb") as ofi:
                 ofi.write(binary)
 
-            with open(test_tmp, 'rb') as ifi:
+            with open(test_tmp, "rb") as ifi:
                 ip3 = ip.from_binary(ifi.read())
 
             # serialize using pickle
-            with open(test_tmp,'wb') as ofi:
-                pickle.dump(ip,ofi)
+            with open(test_tmp, "wb") as ofi:
+                pickle.dump(ip, ofi)
 
-            with open(test_tmp, 'rb') as ifi:
+            with open(test_tmp, "rb") as ifi:
                 ip4 = pickle.load(ifi)
 
             assert ip.get_data_X() == approx(ip2.get_data_X())
@@ -84,7 +84,7 @@ class Test_tools_vectorinterpolators_all:
 
             ip2 = ip.copy()
             ip3 = copy(ip2)
-            ip4 = deepcopy(ip2) #deepcopy does not yet work
+            ip4 = deepcopy(ip2)  # deepcopy does not yet work
 
             # assert copies are the same
             assert ip(100) == ip2(100)
@@ -124,11 +124,11 @@ class Test_tools_vectorinterpolators_all:
                 assert y1 == approx(y_exp1)
                 assert y2 == approx(y_exp2)
 
-            #test that info string conversion does not crash or produce empty strings
+            # test that info string conversion does not crash or produce empty strings
             print(ip)
             ip.print()
-            assert (len(str(ip)) > 0)
-            assert (len(ip.info_string()) > 0)
+            assert len(str(ip)) > 0
+            assert len(ip.info_string()) > 0
 
     def test_VectorInterpolators_should_throw_expected_exceptions(self):
         X = [-10, -5, 0, 6, 12]
@@ -261,12 +261,11 @@ class Test_tools_vectorinterpolators_all:
         with pytest.raises(ValueError):
             interpolator.extend([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
 
-
-        #should not raise here
+        # should not raise here
         vip.SlerpInterpolator(x + [100], yaw + [1], pitch + [2], roll + [3])
         # interpolator should fail if double nan x elements
         with pytest.raises(ValueError):
-            print (x + [np.nan])
+            print(x + [np.nan])
             vip.SlerpInterpolator(x + [np.nan], yaw + [1], pitch + [2], roll + [3])
         # interpolator should fail if double nan x elements
         with pytest.raises(ValueError):

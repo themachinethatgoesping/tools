@@ -25,7 +25,8 @@ void init_m_classhelpers(pybind11::module& m)
 {
     // module description
     auto m_classhelpers = m.def_submodule(
-        "classhelpers", "Classes that help adding common functionality to themachinethatgoesping classes");
+        "classhelpers",
+        "Classes that help adding common functionality to themachinethatgoesping classes");
 
     // submodules
     init_c_objectprinter(m_classhelpers);

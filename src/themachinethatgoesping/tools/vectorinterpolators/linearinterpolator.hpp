@@ -20,8 +20,8 @@
 
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelpers/objectprinter.hpp"
 #include "../classhelpers/bitsery.hpp"
+#include "../classhelpers/objectprinter.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -35,7 +35,7 @@ namespace vectorinterpolators {
 class LinearInterpolator : public I_PairInterpolator<double>
 {
   public:
-    LinearInterpolator(t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
+    LinearInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<double>(extrapolation_mode)
     {
     }

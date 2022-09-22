@@ -5,8 +5,9 @@
 from themachinethatgoesping.tools_ext import timeconv
 
 from datetime import datetime
-#import time
-#import pytest
+
+# import time
+# import pytest
 
 # This tests the python extensions in tools_ext (timeconv_ext)
 

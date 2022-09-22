@@ -52,7 +52,7 @@ string unixtime_to_datestring(double        unixtime,
                               unsigned int  fractionalSecondsDigits,
                               const string& format)
 {
-    if(!std::isfinite(unixtime))
+    if (!std::isfinite(unixtime))
         return "NaN_time_string";
 
     // microsecond precision is the max

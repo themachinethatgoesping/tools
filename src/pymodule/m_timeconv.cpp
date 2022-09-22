@@ -46,6 +46,5 @@ void init_m_timeconv(py::module& m)
                    DOC(themachinethatgoesping, tools, timeconv, unixtime_to_datestring),
                    py::arg("unixtime"),
                    py::arg("fractionalSecondsDigits") = 0,
-                   py::arg("format")                  = "%z__%d-%m-%Y__%H:%M:%S"
-    );
+                   py::arg("format")                  = "%z__%d-%m-%Y__%H:%M:%S");
 }

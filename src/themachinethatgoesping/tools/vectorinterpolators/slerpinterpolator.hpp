@@ -107,7 +107,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
             return false;
-        
+
         // compare size of vectors
         if (_X.size() != rhs._X.size())
             return false;
@@ -115,7 +115,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             return false;
 
         // compare data
-        //TODO: what happens for empty/nan quaternions?
+        // TODO: what happens for empty/nan quaternions?
         if (!std::equal(_X.begin(), _X.end(), rhs.get_data_X().begin()))
             return false;
         if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
@@ -302,7 +302,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         s.container(
             _Y,
             SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigen quaternion, therefore this call
-                                                    // needs the include of tools/classhelpers/bitsery_helpers/eigen.hpp
+                                                    // needs the include of
+                                                    // tools/classhelpers/bitsery_helpers/eigen.hpp
     }
 
   public:

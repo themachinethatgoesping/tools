@@ -227,7 +227,7 @@ class I_ProgressBarTimed : public I_ProgressBar
      *
      */
     void apply_state()
-    {        
+    {
         // heuristics to skip the atomic boolean (next operation)
         // we only check the atomic boolean _check_timer_every_step
         _skips += 1;
@@ -242,7 +242,8 @@ class I_ProgressBarTimed : public I_ProgressBar
         if (!_initialized)
             throw(std::runtime_error("ERROR: Progressbar was not initialized!"));
 
-        // compute check_every_step as number of steps counted in the last 100ms divided by 20 (~approx every 5 ms)
+        // compute check_every_step as number of steps counted in the last 100ms divided by 20
+        // (~approx every 5 ms)
         _check_timer_every_step = ceil(double(_skips) / 10.0);
         _skips                  = 0;
         // _state_postfix = std::to_string(_check_timer_every_step);

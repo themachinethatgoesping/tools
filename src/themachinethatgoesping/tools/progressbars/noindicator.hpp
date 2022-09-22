@@ -13,27 +13,27 @@ namespace progressbars {
 
 /**
  * @brief A progress bar that does not show any progress and has nearly no overhead.
- * 
+ *
  */
 class NoIndicator : public I_ProgressBar
 {
-  bool _initialized = false;
+    bool _initialized = false;
 
   public:
     NoIndicator() = default;
 
-    // ----- I_ProgressBar interface -----    
+    // ----- I_ProgressBar interface -----
     // (all functions simply do nothing)
     bool is_initialized() const override { return _initialized; }
 
     void init([[maybe_unused]] double             first,
               [[maybe_unused]] double             last,
-              [[maybe_unused]] const std::string& name = "process") override 
+              [[maybe_unused]] const std::string& name = "process") override
     {
-      _initialized = true;
+        _initialized = true;
     }
 
-    void close([[maybe_unused]] const std::string& msg = "done") override { _initialized = false;}
+    void close([[maybe_unused]] const std::string& msg = "done") override { _initialized = false; }
 
     void set_progress([[maybe_unused]] double new_progress) override {}
     void set_postfix([[maybe_unused]] const std::string& postfix) override{};

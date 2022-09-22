@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 /**
- * @brief some convinience functions to create eigen quaternions from yaw pitch
+ * @brief some convenience functions to create eigen quaternions from yaw pitch
  * roll values using eigen rotations Note: Rotations are created in the
  * following order: 1. yaw, 2. pitch, 3. roll
  *
@@ -61,13 +61,13 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
         ypr[2] *= _quaternion_from_ypr_to_rad;
     }
 
-    // creaste quaternion by rotating around axes first, yaw, then pitch, then roll
+    // create quaternion by rotating around axes first, yaw, then pitch, then roll
     Eigen::Quaternion<floattype> q =
         Eigen::AngleAxis<floattype>(ypr[0], Eigen::Matrix<floattype, 1, 3>::UnitZ()) *
         Eigen::AngleAxis<floattype>(ypr[1], Eigen::Matrix<floattype, 1, 3>::UnitY()) *
         Eigen::AngleAxis<floattype>(ypr[2], Eigen::Matrix<floattype, 1, 3>::UnitX());
 
-    // normalize quaterion
+    // normalize quaternion
     q.normalize();
 
     return q;
@@ -112,7 +112,7 @@ std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
     std::array<floattype, 3> ypr = { Me[0], Me[1], Me[2] };
 
     /* pitch is constrained to -90° -> 89.9999°
-     * otherwise there is two possibilites to reach every point.
+     * otherwise there is two possibilities to reach every point.
      * because: rotate(yaw,pitch,roll) == rotate(yaw+pi,pi-pitch,roll+pi)
      * Also note: pitch = 90 degrees leads to a gimbal lock situation
      */
@@ -162,7 +162,7 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(
  * @tparam floattype
  * @tparam floattype floating point value
  * @param yaw vector of rotation values around the z axis [° or rad]
- * @param pitchvector of rotation values the y axis [° or rad]
+ * @param pitch vector of rotation values the y axis [° or rad]
  * @param roll of rotation values the x axis [° or rad]
  * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
  * @return std::vector<Eigen::Quaternion<floattype>>
@@ -213,9 +213,9 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
     return YPR;
 }
 
-/// ---- untestesd ////
+/// ---- untested ////
 /**
- * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
+ * @brief get_quaterniond_from_vector: creates a Quaternion that holds the passed
  * parameters x,y,z as a Vector
  * @param x: x as double or float
  * @param y: y as double or float
@@ -224,7 +224,7 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
  * @return returns the Quaternion that holds a vector
  */
 template<typename floattype>
-Eigen::Quaternion<floattype> getQuaterniondfromVector(floattype x,
+Eigen::Quaternion<floattype> get_quaterniond_from_vector(floattype x,
                                                       floattype y,
                                                       floattype z,
                                                       floattype w = 0.0)
@@ -237,17 +237,17 @@ Eigen::Quaternion<floattype> getQuaterniondfromVector(floattype x,
 }
 
 /**
- * @brief getQuaterniondfromVector: creates a Quaternion that holds the passed
+ * @brief get_quaterniond_from_vector: creates a Quaternion that holds the passed
  * parameters x,y,z as a Vector
  * @param xyz: x, y, z as Array<floattype, 3>
  * @param w: w as double or float with the default value 0.0
  * @return returns the Quaternion that holds a vector
  */
 template<typename floattype>
-Eigen::Quaternion<floattype> getQuaterniondfromVector(const std::array<floattype, 3>& xyz,
+Eigen::Quaternion<floattype> get_quaterniond_from_vector(const std::array<floattype, 3>& xyz,
                                                       const floattype                 w = 0.0)
 {
-    return getQuaterniondfromVector(xyz[0], xyz[1], xyz[2], w);
+    return get_quaterniond_from_vector(xyz[0], xyz[1], xyz[2], w);
 }
 
 template<typename floattype>
@@ -270,11 +270,11 @@ Eigen::Vector3d rotateXYZ(Eigen::Quaternion<floattype> q, floattype x, floattype
 {
     q.normalize();
 
-    Eigen::Quaternion<floattype> vec_to_rotate_as_quat = getQuaterniondfromVector(x, y, z);
+    Eigen::Quaternion<floattype> vec_to_rotate_as_quat = get_quaterniond_from_vector(x, y, z);
 
-    Eigen::Quaternion<floattype> rotatedquat = q * vec_to_rotate_as_quat * q.inverse();
+    Eigen::Quaternion<floattype> rotated_quaternion = q * vec_to_rotate_as_quat * q.inverse();
 
-    Eigen::Vector3d rotatedV = rotatedquat.vec();
+    Eigen::Vector3d rotatedV = rotated_quaternion.vec();
 
     return rotatedV;
 }
@@ -291,9 +291,9 @@ Eigen::Vector3d rotateXYZ(Eigen::Quaternion<floattype> q, Eigen::Quaternion<floa
 {
     q.normalize();
 
-    Eigen::Quaternion<floattype> rotatedquat = q * v * q.inverse();
+    Eigen::Quaternion<floattype> rotated_quaternion = q * v * q.inverse();
 
-    Eigen::Vector3d rotatedV = rotatedquat.vec();
+    Eigen::Vector3d rotatedV = rotated_quaternion.vec();
 
     return rotatedV;
 }

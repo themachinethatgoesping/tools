@@ -32,7 +32,8 @@ namespace vectorinterpolators {
 
 /**
  * @brief Interpolator class to perform a (modified) akima interpolation. Uses
- * boost makima interpolator. Note: this interpolator acts as linear interpolator if less than 4 values are stored.
+ * boost makima interpolator. Note: this interpolator acts as linear interpolator if less than 4
+ * values are stored.
  *
  */
 class AkimaInterpolator : public I_Interpolator<double>
@@ -48,6 +49,7 @@ class AkimaInterpolator : public I_Interpolator<double>
     LinearInterpolator _max_linearextrapolator = LinearInterpolator();
     boost::math::interpolators::makima<std::vector<double>> _akima_spline =
         boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 0, 0, 0 });
+
   public:
     /**
      * @brief Construct a new (uninitialized) Akima Interpolator object

@@ -6,9 +6,10 @@
 #pragma once
 
 #include <cmath>
-#include <string>
-#include <vector>
 #include <complex>
+#include <string>
+#include <variant>
+#include <vector>
 
 #include "fast_float/fast_float.h"
 
@@ -16,7 +17,28 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
 
+// source https://gist.github.com/s3rvac/d1f30364ce1f732d75ef0c89a1c8c1ef
+template<typename... Ts>
+struct make_overload : Ts...
+{
+    using Ts::operator()...;
+};
+template<typename... Ts>
+make_overload(Ts...) -> make_overload<Ts...>;
 
+template<typename Variant, typename... Alternatives>
+decltype(auto) visit_variant(Variant&& variant, Alternatives&&... alternatives)
+{
+    return std::visit(make_overload{ std::forward<Alternatives>(alternatives)... },
+                      std::forward<Variant>(variant));
+}
+
+// usage:
+//  visit_variant(v,
+//          [](int i) { std::cout << i << '\n'; },
+//          [](double d) { std::cout << d << '\n'; },
+//          [](const std::string& s) { std::cout << s << '\n'; }
+//      );
 
 /**
  * @brief compare to floats using a relative difference factor
@@ -58,15 +80,19 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
 }
 
-template <typename t_float>
-bool approx_complex(std::complex<t_float> f1, std::complex<t_float> f2, t_float relative_difference_factor = 0.0001 /* 0.01% */)
+template<typename t_float>
+bool approx_complex(std::complex<t_float> f1,
+                    std::complex<t_float> f2,
+                    t_float               relative_difference_factor = 0.0001 /* 0.01% */)
 {
-    return approx(f1.real(),f2.real(),relative_difference_factor) && approx(f1.imag(),f2.imag(),relative_difference_factor);
+    return approx(f1.real(), f2.real(), relative_difference_factor) &&
+           approx(f1.imag(), f2.imag(), relative_difference_factor);
 }
 
-
 template<typename t_container>
-bool approx_container(const t_container& c1, const t_container& c2, typename t_container::value_type relative_difference_factor = 0.0001 // 0.01%
+bool approx_container(const t_container&               c1,
+                      const t_container&               c2,
+                      typename t_container::value_type relative_difference_factor = 0.0001 // 0.01%
 )
 {
     if (c1.size() != c2.size())
@@ -80,7 +106,10 @@ bool approx_container(const t_container& c1, const t_container& c2, typename t_c
 }
 
 template<typename t_container>
-bool approx_container_complex(const t_container& c1, const t_container& c2, typename t_container::value_type::value_type relative_difference_factor = 0.0001f /* 0.01% */
+bool approx_container_complex(
+    const t_container&                           c1,
+    const t_container&                           c2,
+    typename t_container::value_type::value_type relative_difference_factor = 0.0001f /* 0.01% */
 )
 {
     if (c1.size() != c2.size())
@@ -98,9 +127,9 @@ bool approx_container_complex(const t_container& c1, const t_container& c2, type
  * Fast_float conforms to std::from_chars (c++17, but not completely implemented in clang yet)
  * The conversion is locale independent (. is the decimal separator)
  * see also: https://github.com/fastfloat/fast_float
- * 
+ *
  * @param str if empty or non-numeric a NAN is returned
- * @return double 
+ * @return double
  */
 inline double string_to_double(std::string_view str)
 {
@@ -108,9 +137,9 @@ inline double string_to_double(std::string_view str)
         return std::numeric_limits<double>::quiet_NaN();
 
     double result;
-    auto answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
+    auto   answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
 
-    if(answer.ec != std::errc())
+    if (answer.ec != std::errc())
         return std::numeric_limits<double>::quiet_NaN();
 
     return result;
@@ -118,12 +147,12 @@ inline double string_to_double(std::string_view str)
 
 inline std::vector<double> string_to_double_vector(std::string_view std, char delim = ',')
 {
-    std::vector<double> result;
+    std::vector<double>         result;
     std::string_view::size_type pos = 0;
     while (pos != std::string_view::npos)
     {
         auto next_pos = std.find(delim, pos);
-        auto str = std.substr(pos, next_pos - pos);
+        auto str      = std.substr(pos, next_pos - pos);
         result.push_back(string_to_double(str));
         pos = next_pos;
         if (pos != std::string_view::npos)
@@ -131,7 +160,6 @@ inline std::vector<double> string_to_double_vector(std::string_view std, char de
     }
     return result;
 }
-
 
 template<typename int_type>
 inline std::string int_as_string(int_type value)

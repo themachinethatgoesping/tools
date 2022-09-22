@@ -6,23 +6,22 @@
 #include <pybind11/iostream.h>
 #include <pybind11/pybind11.h>
 
-#include "m_timeconv.hpp"
+#include "classhelpers/module.hpp"
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
+#include "m_timeconv.hpp"
 #include "vectorinterpolators/module.hpp"
-#include "classhelpers/module.hpp"
 
 PYBIND11_MODULE(MODULE_NAME, m)
 {
     pybind11::add_ostream_redirect(m, "ostream_redirect");
 
     m.attr("__version__") = MODULE_VERSION;
-    m.doc() = "Small python tool functions for themachinethatgoesping";
+    m.doc()               = "Small python tool functions for themachinethatgoesping";
 
     init_m_timeconv(m);
     init_m_helper(m);
     init_m_progressbars(m);
     init_m_vectorinterpolators(m);
     init_m_classhelpers(m);
-
 }

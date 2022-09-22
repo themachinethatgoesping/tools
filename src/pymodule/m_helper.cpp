@@ -17,16 +17,27 @@
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 
-namespace py        = pybind11;
+namespace py = pybind11;
 using namespace themachinethatgoesping::tools::helper;
 
 void init_m_helper(py::module& m)
 {
-    auto m_helper =
-        m.def_submodule("helper", "Small helper functions");
+    auto m_helper = m.def_submodule("helper", "Small helper functions");
 
-    m_helper.def("int_as_string_4b", &int_as_string<int32_t>, "Interprete an integer to a 4 byte string", py::arg("value"));
-    m_helper.def("int_as_string_8b", &int_as_string<int64_t>, "Interprete an integer to a 8 byte string", py::arg("value"));
-    m_helper.def("string_as_int_4b", &string_as_int<int32_t>, "Interprete a 4 byte string to an integer", py::arg("value"));
-    m_helper.def("string_as_int_8b", &string_as_int<int64_t>, "Interprete a 8 byte string to an integer", py::arg("value"));
+    m_helper.def("int_as_string_4b",
+                 &int_as_string<int32_t>,
+                 "Interprete an integer to a 4 byte string",
+                 py::arg("value"));
+    m_helper.def("int_as_string_8b",
+                 &int_as_string<int64_t>,
+                 "Interprete an integer to a 8 byte string",
+                 py::arg("value"));
+    m_helper.def("string_as_int_4b",
+                 &string_as_int<int32_t>,
+                 "Interprete a 4 byte string to an integer",
+                 py::arg("value"));
+    m_helper.def("string_as_int_8b",
+                 &string_as_int<int64_t>,
+                 "Interprete a 8 byte string to an integer",
+                 py::arg("value"));
 }

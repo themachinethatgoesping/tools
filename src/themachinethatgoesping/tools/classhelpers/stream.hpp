@@ -60,17 +60,19 @@ inline void container_to_stream(std::ostream& os, const T_container& container)
 {
     size_t size = container.size();
     os.write(reinterpret_cast<const char*>(&size), sizeof(size_t));
-    os.write(reinterpret_cast<const char*>(container.data()), size * sizeof(typename T_container::value_type));
+    os.write(reinterpret_cast<const char*>(container.data()),
+             size * sizeof(typename T_container::value_type));
 }
 
 template<typename T_container>
 inline T_container container_from_stream(std::istream& is)
 {
     T_container container;
-    size_t size;
+    size_t      size;
     is.read(reinterpret_cast<char*>(&size), sizeof(size_t));
     container.resize(size);
-    is.read(reinterpret_cast<char*>(container.data()), size * sizeof(typename T_container::value_type));
+    is.read(reinterpret_cast<char*>(container.data()),
+            size * sizeof(typename T_container::value_type));
 
     return container;
 }

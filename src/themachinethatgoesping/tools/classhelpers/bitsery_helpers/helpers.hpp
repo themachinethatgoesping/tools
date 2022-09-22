@@ -15,7 +15,7 @@
 namespace themachinethatgoesping {
 namespace tools {
 namespace bitsery_helpers {
-  
+
 template<typename T>
 inline constexpr bool is_input([[maybe_unused]] bitsery::Serializer<T>& S)
 {

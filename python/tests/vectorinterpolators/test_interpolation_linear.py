@@ -19,7 +19,7 @@ class Test_tools_vectorinterpolators_linear:
 
         interpolator = vip.LinearInterpolator(X, Y)
 
-        interpolator.append(x_append,y_append)
+        interpolator.append(x_append, y_append)
 
         # existing values should be looked up correctly
         assert interpolator(X) == pytest.approx(Y)
@@ -36,7 +36,7 @@ class Test_tools_vectorinterpolators_linear:
         interpolator = vip.LinearInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.fail
         )
-        interpolator.append(x_append,y_append)
+        interpolator.append(x_append, y_append)
         with pytest.raises(IndexError):
             interpolator(-11)
         with pytest.raises(IndexError):
@@ -46,7 +46,7 @@ class Test_tools_vectorinterpolators_linear:
         interpolator = vip.LinearInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.nearest
         )
-        interpolator.append(x_append,y_append)
+        interpolator.append(x_append, y_append)
         assert interpolator(-11) == pytest.approx(Y[0])
         assert interpolator(13) == pytest.approx(y_append)
 
@@ -54,6 +54,6 @@ class Test_tools_vectorinterpolators_linear:
         interpolator = vip.LinearInterpolator(
             X, Y, extrapolation_mode=vip.t_extr_mode.extrapolate
         )
-        interpolator.append(x_append,y_append)
+        interpolator.append(x_append, y_append)
         assert interpolator(-11) == pytest.approx(1.2)
         assert interpolator(14) == pytest.approx(-4 / 3)

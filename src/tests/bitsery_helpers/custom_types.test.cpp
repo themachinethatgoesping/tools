@@ -68,7 +68,7 @@ TEST_CASE("Custom bitsery types should serializable", TESTTAG)
     auto     q1 = t_quaternion(10, 11, 12, 13);
     auto     q2 = t_quaternion(11, 22, 33, 44);
     MyStruct Q, QQ;
-    Q.Q = { q1, q1, q1 };
+    Q.Q  = { q1, q1, q1 };
     QQ.Q = { q2, q2, q2 };
 
     REQUIRE(Q != QQ);

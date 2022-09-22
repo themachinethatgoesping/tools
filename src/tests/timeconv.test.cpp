@@ -139,11 +139,12 @@ TEST_CASE("windows_filetime_conversion", TESTTAG)
     SECTION("conversion should be reproduce precomputed values")
     {
         double unixtime = 123456789.123456789;
-        auto high_low = timeconv::unixtime_to_windows_filetime(unixtime);
+        auto   high_low = timeconv::unixtime_to_windows_filetime(unixtime);
 
         REQUIRE(high_low.first == 27399348);
         REQUIRE(high_low.second == 299511560);
 
-        REQUIRE(timeconv::windows_filetime_to_unixtime(high_low.first, high_low.second) == Approx(unixtime));
+        REQUIRE(timeconv::windows_filetime_to_unixtime(high_low.first, high_low.second) ==
+                Approx(unixtime));
     }
 }

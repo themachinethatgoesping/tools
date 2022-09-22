@@ -30,12 +30,12 @@ class ProgressTqdm
     double _first = 0;
 
   public:
-  /**
-   * @brief Construct a new Progress Tqdm object
-   * To initialize a tqdm object call: from tqdm import tqdm, and use tqdm()
-   * 
-   * @param tqdm A python tqdm class object
-   */
+    /**
+     * @brief Construct a new Progress Tqdm object
+     * To initialize a tqdm object call: from tqdm import tqdm, and use tqdm()
+     *
+     * @param tqdm A python tqdm class object
+     */
     ProgressTqdm(pybind11::object tqdm)
         : pybind11::object(tqdm)
     {
@@ -43,7 +43,7 @@ class ProgressTqdm
     ~ProgressTqdm() = default;
 
   private:
-      // ----- I_ProgressBarTimed interface -----
+    // ----- I_ProgressBarTimed interface -----
 
     void callback_init(double first, double last, const std::string& name = "process") override
     {
@@ -74,15 +74,17 @@ class ProgressTqdm
         attr("set_postfix_str")("[" + postfix + "]");
     }
 
-    void callback_tick(double increment = 1) override { 
+    void callback_tick(double increment = 1) override
+    {
         // increment the tqdm progressbar
-        attr("update")(increment); 
-        }
+        attr("update")(increment);
+    }
 
-    double callback_current() const override { 
+    double callback_current() const override
+    {
         // get state of the tqdm progressbar
-        return pybind11::cast<double>(attr("n")()); 
-        }
+        return pybind11::cast<double>(attr("n")());
+    }
 };
 
 }

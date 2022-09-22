@@ -45,8 +45,8 @@ class ConsoleProgressBar : public I_ProgressBarTimed
         /* check if _initialized already */
         if (_initialized)
             I_ProgressBarTimed::close();
-            // throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar "
-            //                          "is already _initialized!"));
+        // throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar "
+        //                          "is already _initialized!"));
 
         /* check conditions */
         if (first > last)

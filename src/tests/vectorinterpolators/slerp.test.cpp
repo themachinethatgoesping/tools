@@ -225,7 +225,7 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                     break;
 
                 case vectorinterpolators::t_extr_mode::nearest:
-                    SECTION(" - extrapolate nearst when set")
+                    SECTION(" - extrapolate nearest when set")
                     {
                         auto too_small_ypr = interpolator.ypr(-11);
                         auto too_large_ypr = interpolator.ypr(13);

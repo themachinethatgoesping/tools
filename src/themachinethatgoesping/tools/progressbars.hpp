@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include "progressbars/consoleprogressbar.hpp"
 #include "progressbars/i_progressbar.hpp"
 #include "progressbars/noindicator.hpp"
-#include "progressbars/progressindicator.hpp"
-#include "progressbars/consoleprogressbar.hpp"
 #include "progressbars/progressbarchooser.hpp"
+#include "progressbars/progressindicator.hpp"

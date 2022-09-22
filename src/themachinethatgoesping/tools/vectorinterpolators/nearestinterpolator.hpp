@@ -35,7 +35,7 @@ namespace vectorinterpolators {
 class NearestInterpolator : public I_PairInterpolator<double>
 {
   public:
-    NearestInterpolator(t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
+    NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<double>(extrapolation_mode)
     {
     }
@@ -64,7 +64,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
         // compare extrapolation mode
         if (_extr_mode != rhs.get_extrapolation_mode())
             return false;
-        
+
         // compare data
         if (!helper::approx_container(_X, rhs._X))
             return false;
