@@ -1,5 +1,5 @@
 project('xtensor', 'cpp',
-        version:'0.24.2',
+        version:'0.24.3',
         license:'BSD-3-Clause',
         default_options : ['warning_level=3', 'cpp_std=c++14'])
 
@@ -10,17 +10,17 @@ json_dep = dependency('nlohmann_json',
     version:'>=3.1.1')
 
 #TODO: currently build error when using xsimd ...
-# xsimd_dep = dependency('xsimd',
-#     #required: get_option('xsimd'),
-#     required: true,
-#     version: ['>=8.0.0']
-#     )
-#
-# if xsimd_dep.found()
-#     xtensor_cpp_arg = ['-Duse_xsimd']
-# else
-#     xtensor_cpp_arg = []
-# endif
+xsimd_dep = dependency('xsimd',
+    #required: get_option('xsimd'),
+    required: true,
+    version: ['>=9.0.1']
+    )
+
+if xsimd_dep.found()
+    xtensor_cpp_arg = ['-Duse_xsimd']
+else
+    xtensor_cpp_arg = []
+endif
 xtensor_cpp_arg = []
 
 xtensor_dep = declare_dependency(
@@ -28,7 +28,7 @@ xtensor_dep = declare_dependency(
     dependencies: [
     xtl_dep,
     json_dep,
-    #xsimd_dep
+    xsimd_dep
     ],
     compile_args: xtensor_cpp_arg)
 

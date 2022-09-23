@@ -414,10 +414,10 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     template<typename t_container>
-    void register_container(const std::string&          name,
+    void register_container(const std::string& name,
                             const t_container& values,
-                            std::string                 value_info = "",
-                            int                         pos        = -1)
+                            std::string        value_info = "",
+                            int                pos        = -1)
     {
         static const size_t max_visible_elements = 9; // maximum values to display for a vector
         std::string         str, format;
@@ -523,7 +523,6 @@ class ObjectPrinter
                         std::copy(values.begin(), values.end(), v.begin());
                     }
 
-
                     // get statistics from nan/inf cleaned lists
                     auto minmax = std::minmax_element(std::begin(v), std::end(v));
                     auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
@@ -606,7 +605,7 @@ class ObjectPrinter
             value_info = fmt::format("[{}]", value_info);
 
         std::vector<std::string> lines;
-        
+
         // split string into lines
         std::string::size_type start = 0;
         std::string::size_type end   = 0;

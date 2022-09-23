@@ -142,7 +142,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         _X = X;
         _Y = Y;
 
-        if(_X.size() > 1)
+        if (_X.size() > 1)
             _last_x_pair = _t_x_pair(0, 1, _X[0], _X[1]);
     }
 
@@ -151,7 +151,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     // -----------------------
     void append(double x, YType y) final
     {
-        if (_X.size() >0)
+        if (_X.size() > 0)
             if (x <= _X.back())
             {
                 throw(std::domain_error("ERROR[Interpolation::append]: appended x value is not "
@@ -169,7 +169,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         // if the internal data is one element, call set data to initialize _last_x_pair
         if (_X.size() == 1)
         {
-            set_data_XY(std::vector<double>{_X[0],x}, std::vector<YType>{_Y[0],y});
+            set_data_XY(std::vector<double>{ _X[0], x }, std::vector<YType>{ _Y[0], y });
             return;
         }
 
@@ -226,7 +226,8 @@ class I_PairInterpolator : public I_Interpolator<YType>
     {
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
         if (_X.size() == 0)
-            throw(std::domain_error("ERROR[Interpolator::operator()]: data vectors are not initialized!"));
+            throw(std::domain_error(
+                "ERROR[Interpolator::operator()]: data vectors are not initialized!"));
 
         // if size of _X is 1, return _Y[0]
         if (_X.size() == 1)

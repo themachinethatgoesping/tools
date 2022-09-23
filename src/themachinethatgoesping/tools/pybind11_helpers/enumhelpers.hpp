@@ -60,6 +60,8 @@ void add_string_to_enum_conversion(T_PYBIND_ENUM& t_enum)
                "Construct this enum type from string",
                pybind11::arg("str"));
 
+    t_enum.def("str", [](const T_ENUM& self) { return magic_enum::enum_name(self); });
+
     pybind11::implicitly_convertible<std::string, T_ENUM>();
 }
 

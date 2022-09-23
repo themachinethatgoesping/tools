@@ -3,10 +3,10 @@
 #source_url = https://github.com/xtensor-stack/xtensor/archive/0.21.5.tar.gz
 #source_filename = xtensor-0.21.5.tar.gz
 #source_hash = 30cb896b6686683ddaefb12c98bf1109fdfe666136dd027aba1a1e9aa825c241
-directory = xtensor-0.24.2
-source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.24.2.tar.gz
-source_filename = xtensor-0.24.2.tar.gz
-source_hash = 790d9e449add817154177157a850b9afd0260dc0f9df857d8b3a38886a10ef8b
+directory = xtensor-0.24.3
+source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.24.3.tar.gz
+source_filename = xtensor-0.24.3.tar.gz
+source_hash = 3acde856b9fb8cf4e2a7b66726da541275d40ab9b002e618ad985ab97f08ca4f
 
 patch_directory = xtensor
 #patch_filename = xtensor_0.21.5-1_patch.zip

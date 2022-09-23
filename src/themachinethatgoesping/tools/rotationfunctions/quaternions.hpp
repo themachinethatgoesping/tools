@@ -225,9 +225,9 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
  */
 template<typename floattype>
 Eigen::Quaternion<floattype> get_quaterniond_from_vector(floattype x,
-                                                      floattype y,
-                                                      floattype z,
-                                                      floattype w = 0.0)
+                                                         floattype y,
+                                                         floattype z,
+                                                         floattype w = 0.0)
 {
     Eigen::Vector3<floattype>    vec_to_rotate(x, y, z);
     Eigen::Quaternion<floattype> vec_to_rotate_as_quat;
@@ -245,7 +245,7 @@ Eigen::Quaternion<floattype> get_quaterniond_from_vector(floattype x,
  */
 template<typename floattype>
 Eigen::Quaternion<floattype> get_quaterniond_from_vector(const std::array<floattype, 3>& xyz,
-                                                      const floattype                 w = 0.0)
+                                                         const floattype                 w = 0.0)
 {
     return get_quaterniond_from_vector(xyz[0], xyz[1], xyz[2], w);
 }
