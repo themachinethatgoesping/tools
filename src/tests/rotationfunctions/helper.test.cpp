@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_all.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
@@ -23,27 +24,27 @@ static const double to_degrees = 1 / to_rad;
 TEST_CASE("compute_heading should return correct heading", TESTTAG)
 {
     // degrees
-    REQUIRE(rotationfunctions::compute_heading(0., 0.) ==Catch::Approx(0.));    // edge case
-    REQUIRE(rotationfunctions::compute_heading(1., 0.) ==Catch::Approx(0.));    // north
-    REQUIRE(rotationfunctions::compute_heading(1., 1.) ==Catch::Approx(45.));   // north east
-    REQUIRE(rotationfunctions::compute_heading(0., 1.) ==Catch::Approx(90.));   // east
-    REQUIRE(rotationfunctions::compute_heading(-1, 1.) ==Catch::Approx(135.));  // south east
-    REQUIRE(rotationfunctions::compute_heading(-1, 0.) ==Catch::Approx(180.));  // south
-    REQUIRE(rotationfunctions::compute_heading(-1, -1.) ==Catch::Approx(225.)); // south west
-    REQUIRE(rotationfunctions::compute_heading(0, -1.) ==Catch::Approx(270.));  // west
-    REQUIRE(rotationfunctions::compute_heading(1, -1.) ==Catch::Approx(315.));  // north west
+    REQUIRE(rotationfunctions::compute_heading(0., 0.) == Catch::Approx(0.));    // edge case
+    REQUIRE(rotationfunctions::compute_heading(1., 0.) == Catch::Approx(0.));    // north
+    REQUIRE(rotationfunctions::compute_heading(1., 1.) == Catch::Approx(45.));   // north east
+    REQUIRE(rotationfunctions::compute_heading(0., 1.) == Catch::Approx(90.));   // east
+    REQUIRE(rotationfunctions::compute_heading(-1, 1.) == Catch::Approx(135.));  // south east
+    REQUIRE(rotationfunctions::compute_heading(-1, 0.) == Catch::Approx(180.));  // south
+    REQUIRE(rotationfunctions::compute_heading(-1, -1.) == Catch::Approx(225.)); // south west
+    REQUIRE(rotationfunctions::compute_heading(0, -1.) == Catch::Approx(270.));  // west
+    REQUIRE(rotationfunctions::compute_heading(1, -1.) == Catch::Approx(315.));  // north west
 
     // radians
-    REQUIRE(rotationfunctions::compute_heading(0., 0., true) ==Catch::Approx(0.));           // edge case
-    REQUIRE(rotationfunctions::compute_heading(1., 0., true) ==Catch::Approx(0.));           // north
-    REQUIRE(rotationfunctions::compute_heading(1., 1., true) ==Catch::Approx(M_PI / 4));     // north east
-    REQUIRE(rotationfunctions::compute_heading(0., 1., true) ==Catch::Approx(M_PI / 2));     // east
-    REQUIRE(rotationfunctions::compute_heading(-1, 1., true) ==Catch::Approx(M_PI * 3 / 4)); // south east
-    REQUIRE(rotationfunctions::compute_heading(-1, 0., true) ==Catch::Approx(M_PI));         // south
+    REQUIRE(rotationfunctions::compute_heading(0., 0., true) == Catch::Approx(0.));           // edge case
+    REQUIRE(rotationfunctions::compute_heading(1., 0., true) == Catch::Approx(0.));           // north
+    REQUIRE(rotationfunctions::compute_heading(1., 1., true) == Catch::Approx(M_PI / 4));     // north east
+    REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Catch::Approx(M_PI / 2));     // east
+    REQUIRE(rotationfunctions::compute_heading(-1, 1., true) == Catch::Approx(M_PI * 3 / 4)); // south east
+    REQUIRE(rotationfunctions::compute_heading(-1, 0., true) == Catch::Approx(M_PI));         // south
     REQUIRE(rotationfunctions::compute_heading(-1, -1., true) ==
            Catch::Approx(M_PI * 5 / 4));                                                     // south west
-    REQUIRE(rotationfunctions::compute_heading(0, -1., true) ==Catch::Approx(M_PI * 6 / 4)); // west
-    REQUIRE(rotationfunctions::compute_heading(1, -1., true) ==Catch::Approx(M_PI * 7 / 4)); // north west
+    REQUIRE(rotationfunctions::compute_heading(0, -1., true) == Catch::Approx(M_PI * 6 / 4)); // west
+    REQUIRE(rotationfunctions::compute_heading(1, -1., true) == Catch::Approx(M_PI * 7 / 4)); // north west
 }
 
 TEST_CASE("normalize_angles", TESTTAG)
@@ -70,7 +71,7 @@ TEST_CASE("normalize_angles", TESTTAG)
             auto ypr_rad_result = rotationfunctions::normalize_angles_rad(ypr_rad);
 
             for (unsigned int i = 0; i < 3; ++i)
-                CHECK(ypr_deg_result[i] ==Catch::Approx(ypr_rad_result[i] * to_degrees));
+                CHECK(ypr_deg_result[i] == Catch::Approx(ypr_rad_result[i] * to_degrees));
         }
     }
 
@@ -116,7 +117,7 @@ TEST_CASE("normalize_angles", TESTTAG)
             {
                 INFO("value: " << c << '/' << i << " / " << ypr[i] << " / " << ypr_new[i] << " / "
                                << e[i]);
-                CHECK(ypr_new[i] ==Catch::Approx(e[i]).scale(1));
+                CHECK(ypr_new[i] == Catch::Approx(e[i]).scale(1));
             }
         }
     }

@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_all.hpp>
-
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
 #include <chrono>
@@ -127,23 +127,23 @@ TEST_CASE(
         for (unsigned int i = 0; i < y1.size(); ++i)
         {
             // default interpolators [returned degrees]
-            REQUIRE(y2[i] ==Catch::Approx(y1[i]));
-            REQUIRE(y3[i] ==Catch::Approx(y1[i]));
-            REQUIRE(y4[i] ==Catch::Approx(y1[i]));
+            REQUIRE(y2[i] == Catch::Approx(y1[i]));
+            REQUIRE(y3[i] == Catch::Approx(y1[i]));
+            REQUIRE(y4[i] == Catch::Approx(y1[i]));
 
             // default interpolators [returned rad]
-            REQUIRE(y1_r[i] ==Catch::Approx(y2_r[i]));
-            REQUIRE(y2_r[i] ==Catch::Approx(y3_r[i]));
-            REQUIRE(y3_r[i] ==Catch::Approx(y4_r[i]));
+            REQUIRE(y1_r[i] == Catch::Approx(y2_r[i]));
+            REQUIRE(y2_r[i] == Catch::Approx(y3_r[i]));
+            REQUIRE(y3_r[i] == Catch::Approx(y4_r[i]));
 
             // appended and extended interpolators
-            REQUIRE(y2_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y3_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y4_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y5_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y6_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y7_e[i] ==Catch::Approx(y1_e[i]));
-            REQUIRE(y8_e[i] ==Catch::Approx(y1_e[i]));
+            REQUIRE(y2_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y3_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y4_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y5_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y6_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y7_e[i] == Catch::Approx(y1_e[i]));
+            REQUIRE(y8_e[i] == Catch::Approx(y1_e[i]));
         }
     }
 
@@ -155,8 +155,8 @@ TEST_CASE(
     {
         for (unsigned int i = 0; i < y1[j].size(); ++i)
         {
-            REQUIRE(y_results[j][i] ==Catch::Approx(y1[j][i]));
-            REQUIRE(y_r_results[j][i] ==Catch::Approx(y1_r[j][i]));
+            REQUIRE(y_results[j][i] == Catch::Approx(y1[j][i]));
+            REQUIRE(y_r_results[j][i] == Catch::Approx(y1_r[j][i]));
         }
     }
 }
@@ -181,16 +181,16 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
         for (unsigned int i = 0; i < x.size(); ++i)
         {
             auto ypr = interpolator.ypr(x[i]);
-            REQUIRE(ypr[0] ==Catch::Approx(y[i]));
-            REQUIRE(ypr[1] ==Catch::Approx(p[i]));
-            REQUIRE(ypr[2] ==Catch::Approx(r[i]));
+            REQUIRE(ypr[0] == Catch::Approx(y[i]));
+            REQUIRE(ypr[1] == Catch::Approx(p[i]));
+            REQUIRE(ypr[2] == Catch::Approx(r[i]));
         }
 
         {
             auto ypr = interpolator.ypr(x_append);
-            CHECK(ypr[0] ==Catch::Approx(ypr_append[0]));
-            CHECK(ypr[1] ==Catch::Approx(ypr_append[1]));
-            CHECK(ypr[2] ==Catch::Approx(ypr_append[2]));
+            CHECK(ypr[0] == Catch::Approx(ypr_append[0]));
+            CHECK(ypr[1] == Catch::Approx(ypr_append[1]));
+            CHECK(ypr[2] == Catch::Approx(ypr_append[2]));
         }
     }
 
@@ -199,13 +199,13 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
         auto ypr_1 = interpolator.ypr(-3);
         auto ypr_2 = interpolator.ypr(9);
 
-        REQUIRE(ypr_1[0] ==Catch::Approx(58.5679194066));
-        REQUIRE(ypr_1[1] ==Catch::Approx(5.0841237338));
-        REQUIRE(ypr_1[2] ==Catch::Approx(37.6730325392));
+        REQUIRE(ypr_1[0] == Catch::Approx(58.5679194066));
+        REQUIRE(ypr_1[1] == Catch::Approx(5.0841237338));
+        REQUIRE(ypr_1[2] == Catch::Approx(37.6730325392));
 
-        REQUIRE(ypr_2[0] ==Catch::Approx(333.5151692017));
-        REQUIRE(ypr_2[1] ==Catch::Approx(0.632182955));
-        REQUIRE(ypr_2[2] ==Catch::Approx(-158.8770719663));
+        REQUIRE(ypr_2[0] == Catch::Approx(333.5151692017));
+        REQUIRE(ypr_2[1] == Catch::Approx(0.632182955));
+        REQUIRE(ypr_2[2] == Catch::Approx(-158.8770719663));
     }
 
     SECTION("extrapolation mode should cause:")
@@ -230,13 +230,13 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                         auto too_small_ypr = interpolator.ypr(-11);
                         auto too_large_ypr = interpolator.ypr(13);
 
-                        REQUIRE(too_small_ypr[0] ==Catch::Approx(y[0]));
-                        REQUIRE(too_small_ypr[1] ==Catch::Approx(p[0]));
-                        REQUIRE(too_small_ypr[2] ==Catch::Approx(r[0]));
+                        REQUIRE(too_small_ypr[0] == Catch::Approx(y[0]));
+                        REQUIRE(too_small_ypr[1] == Catch::Approx(p[0]));
+                        REQUIRE(too_small_ypr[2] == Catch::Approx(r[0]));
 
-                        REQUIRE(too_large_ypr[0] ==Catch::Approx(ypr_append[0]));
-                        REQUIRE(too_large_ypr[1] ==Catch::Approx(ypr_append[1]));
-                        REQUIRE(too_large_ypr[2] ==Catch::Approx(ypr_append[2]));
+                        REQUIRE(too_large_ypr[0] == Catch::Approx(ypr_append[0]));
+                        REQUIRE(too_large_ypr[1] == Catch::Approx(ypr_append[1]));
+                        REQUIRE(too_large_ypr[2] == Catch::Approx(ypr_append[2]));
                     }
                     break;
 
@@ -246,13 +246,13 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                         auto too_small_ypr = interpolator.ypr(-11);
                         auto too_large_ypr = interpolator.ypr(13);
 
-                        REQUIRE(too_small_ypr[0] ==Catch::Approx(347.01848882));
-                        REQUIRE(too_small_ypr[1] ==Catch::Approx(9.3296836006));
-                        REQUIRE(too_small_ypr[2] ==Catch::Approx(-153.7039370777));
+                        REQUIRE(too_small_ypr[0] == Catch::Approx(347.01848882));
+                        REQUIRE(too_small_ypr[1] == Catch::Approx(9.3296836006));
+                        REQUIRE(too_small_ypr[2] == Catch::Approx(-153.7039370777));
 
-                        REQUIRE(too_large_ypr[0] ==Catch::Approx(147.0971139354));
-                        REQUIRE(too_large_ypr[1] ==Catch::Approx(-72.4669510216));
-                        REQUIRE(too_large_ypr[2] ==Catch::Approx(34.2739577346));
+                        REQUIRE(too_large_ypr[0] == Catch::Approx(147.0971139354));
+                        REQUIRE(too_large_ypr[1] == Catch::Approx(-72.4669510216));
+                        REQUIRE(too_large_ypr[2] == Catch::Approx(34.2739577346));
                     }
 
                     break;

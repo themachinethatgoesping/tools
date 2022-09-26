@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_all.hpp>
-
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 
@@ -31,28 +31,28 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
-            REQUIRE(interpolator(x[i]) ==Catch::Approx(y[i]));
+            REQUIRE(interpolator(x[i]) == Catch::Approx(y[i]));
 
-        REQUIRE(interpolator(x_append) ==Catch::Approx(y_append));
+        REQUIRE(interpolator(x_append) == Catch::Approx(y_append));
     }
 
     SECTION("preset values should be interpolated correctly")
     {
-        CHECK(interpolator(-7.6) ==Catch::Approx(0.52));
-        CHECK(interpolator(-7.5) ==Catch::Approx(0.5));
-        CHECK(interpolator(-7.4) ==Catch::Approx(0.48));
+        CHECK(interpolator(-7.6) == Catch::Approx(0.52));
+        CHECK(interpolator(-7.5) == Catch::Approx(0.5));
+        CHECK(interpolator(-7.4) == Catch::Approx(0.48));
 
-        CHECK(interpolator(-2.6) ==Catch::Approx(0.48));
-        CHECK(interpolator(-2.5) ==Catch::Approx(0.5));
-        CHECK(interpolator(-2.4) ==Catch::Approx(0.52));
+        CHECK(interpolator(-2.6) == Catch::Approx(0.48));
+        CHECK(interpolator(-2.5) == Catch::Approx(0.5));
+        CHECK(interpolator(-2.4) == Catch::Approx(0.52));
 
-        CHECK(interpolator(2) ==Catch::Approx(2. / 3.));
-        CHECK(interpolator(3.0) ==Catch::Approx(1. / 2.));
-        CHECK(interpolator(4) ==Catch::Approx(1. / 3.));
+        CHECK(interpolator(2) == Catch::Approx(2. / 3.));
+        CHECK(interpolator(3.0) == Catch::Approx(1. / 2.));
+        CHECK(interpolator(4) == Catch::Approx(1. / 3.));
 
-        CHECK(interpolator(8) ==Catch::Approx(-1. / 3.));
-        CHECK(interpolator(9.0) ==Catch::Approx(-1. / 2.));
-        CHECK(interpolator(10) ==Catch::Approx(-2. / 3.));
+        CHECK(interpolator(8) == Catch::Approx(-1. / 3.));
+        CHECK(interpolator(9.0) == Catch::Approx(-1. / 2.));
+        CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
     SECTION("preset value vectors should be interpolated correctly")
@@ -82,15 +82,15 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearest when set")
                     {
-                        REQUIRE(interpolator(-11) ==Catch::Approx(1));
-                        REQUIRE(interpolator(13) ==Catch::Approx(y_append));
+                        REQUIRE(interpolator(-11) == Catch::Approx(1));
+                        REQUIRE(interpolator(13) == Catch::Approx(y_append));
                     }
                     break;
 
                 default:
                     SECTION(" - extrapolation in all other cases")
-                    REQUIRE(interpolator(-11) ==Catch::Approx(1.2));
-                    REQUIRE(interpolator(14) ==Catch::Approx(-4 / 3.));
+                    REQUIRE(interpolator(-11) == Catch::Approx(1.2));
+                    REQUIRE(interpolator(14) == Catch::Approx(-4 / 3.));
 
                     break;
             }

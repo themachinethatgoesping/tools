@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_all.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
@@ -96,7 +97,7 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
             {
                 INFO("value: " << c << '/' << i << " / " << ypr[i] << " / " << ypr_new[i] << " / "
                                << e[i]);
-                CHECK(ypr_new[i] ==Catch::Approx(e[i]).scale(1));
+                CHECK(ypr_new[i] == Catch::Approx(e[i]).scale(1));
             }
         }
     }
@@ -143,8 +144,8 @@ TEST_CASE("rotationfunctions: quaternion / ypr conversion", TESTTAG)
                 for (unsigned int i = 0; i < 3; ++i)
                 {
                     INFO("degrees = " << degrees);
-                    CHECK(YPR_result1[c][i] ==Catch::Approx(ypr[i]));
-                    CHECK(YPR_result2[c][i] ==Catch::Approx(ypr[i]));
+                    CHECK(YPR_result1[c][i] == Catch::Approx(ypr[i]));
+                    CHECK(YPR_result2[c][i] == Catch::Approx(ypr[i]));
                 }
             }
         }
