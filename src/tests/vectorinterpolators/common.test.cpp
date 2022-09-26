@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
@@ -339,9 +339,9 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     REQUIRE(lip(-10) == 20);
     REQUIRE(nip(100) == 20);
     REQUIRE(aip(10) == 20);
-    REQUIRE(slerp.ypr(10)[0] == Approx(20));
-    REQUIRE(slerp.ypr(10)[1] == Approx(30));
-    REQUIRE(slerp.ypr(10)[2] == Approx(40));
+    REQUIRE(slerp.ypr(10)[0] ==Catch::Approx(20));
+    REQUIRE(slerp.ypr(10)[1] ==Catch::Approx(30));
+    REQUIRE(slerp.ypr(10)[2] ==Catch::Approx(40));
 
     // lip, nip and slerp interpolators should act normally if they are initialized with multiple
     // values
@@ -352,9 +352,9 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     REQUIRE(lip(25) == 35);
     REQUIRE(nip(14) == 20);
     REQUIRE(nip(16) == 30);
-    REQUIRE(slerp.ypr(15)[0] == Approx(24.579580303));
-    REQUIRE(slerp.ypr(15)[1] == Approx(35.1774819807));
-    REQUIRE(slerp.ypr(15)[2] == Approx(44.579580303));
+    REQUIRE(slerp.ypr(15)[0] ==Catch::Approx(24.579580303));
+    REQUIRE(slerp.ypr(15)[1] ==Catch::Approx(35.1774819807));
+    REQUIRE(slerp.ypr(15)[2] ==Catch::Approx(44.579580303));
 
     // aip should act as linear interpolator when initialized with 2 values
     aip.append(20, 30);
@@ -369,6 +369,6 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     // aip should act as akima interpolator when initialized with 4 values
     aip.append(40, 60);
     CHECK(aip(25) == 40);
-    CHECK(aip(35) == Approx(56.25));
-    REQUIRE(aip(15) == Approx(23.75));
+    CHECK(aip(35) ==Catch::Approx(56.25));
+    REQUIRE(aip(15) ==Catch::Approx(23.75));
 }

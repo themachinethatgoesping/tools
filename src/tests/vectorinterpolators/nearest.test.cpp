@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
@@ -31,29 +31,29 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
-            REQUIRE(interpolator(x[i]) == Approx(y[i]));
+            REQUIRE(interpolator(x[i]) ==Catch::Approx(y[i]));
 
-        REQUIRE(interpolator(x_append) == Approx(y_append));
+        REQUIRE(interpolator(x_append) ==Catch::Approx(y_append));
     }
 
     SECTION("preset values should be interpolated correctly")
     {
 
-        REQUIRE(interpolator(-7.6) == Approx(1));
-        REQUIRE(interpolator(-7.5) == Approx(0));
-        REQUIRE(interpolator(-7.4) == Approx(0));
+        REQUIRE(interpolator(-7.6) ==Catch::Approx(1));
+        REQUIRE(interpolator(-7.5) ==Catch::Approx(0));
+        REQUIRE(interpolator(-7.4) ==Catch::Approx(0));
 
-        REQUIRE(interpolator(-2.6) == Approx(0));
-        REQUIRE(interpolator(-2.5) == Approx(1));
-        REQUIRE(interpolator(-2.4) == Approx(1));
+        REQUIRE(interpolator(-2.6) ==Catch::Approx(0));
+        REQUIRE(interpolator(-2.5) ==Catch::Approx(1));
+        REQUIRE(interpolator(-2.4) ==Catch::Approx(1));
 
-        REQUIRE(interpolator(2.9) == Approx(1));
-        REQUIRE(interpolator(3.0) == Approx(0));
-        REQUIRE(interpolator(3.1) == Approx(0));
+        REQUIRE(interpolator(2.9) ==Catch::Approx(1));
+        REQUIRE(interpolator(3.0) ==Catch::Approx(0));
+        REQUIRE(interpolator(3.1) ==Catch::Approx(0));
 
-        REQUIRE(interpolator(8.9) == Approx(0));
-        REQUIRE(interpolator(9.0) == Approx(-1));
-        REQUIRE(interpolator(9.1) == Approx(-1));
+        REQUIRE(interpolator(8.9) ==Catch::Approx(0));
+        REQUIRE(interpolator(9.0) ==Catch::Approx(-1));
+        REQUIRE(interpolator(9.1) ==Catch::Approx(-1));
     }
 
     SECTION("preset value vectors should be interpolated correctly")
@@ -82,8 +82,8 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
 
                 default:
                     SECTION(" - nearest extrapolation in all other cases")
-                    REQUIRE(interpolator(-11) == Approx(1));
-                    REQUIRE(interpolator(13) == Approx(y_append));
+                    REQUIRE(interpolator(-11) ==Catch::Approx(1));
+                    REQUIRE(interpolator(13) ==Catch::Approx(y_append));
 
                     break;
             }

@@ -39,12 +39,8 @@ endif
 
 # -- tests (catch2) --
 if get_option('build_tests').enabled()
-    catch2 = dependency('catch2', required : false)
-
-    if not catch2.found()
-        catch2 = subproject('catch2')
-        catch2 = catch2.get_variable('catch2_dep')
-    endif
+    catch2 = subproject('catch2')
+    catch2 = catch2.get_variable('catch2_with_main_dep')
 
     subdir('tests')
 endif

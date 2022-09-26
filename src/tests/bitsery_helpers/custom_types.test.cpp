@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <bitsery/adapter/buffer.h>
 #include <bitsery/bitsery.h>

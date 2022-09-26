@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <chrono>
 
@@ -46,7 +46,7 @@ TEST_CASE("unixtime_to_datestring: should convert a specified timepoint to speci
     auto unixtime   = 1234567890.123456;
     auto datestring = "+0000__13-02-2009__23:31:30.123456";
 
-    REQUIRE(timeconv::datestring_to_unixtime(datestring) == Approx(unixtime));
+    REQUIRE(timeconv::datestring_to_unixtime(datestring) ==Catch::Approx(unixtime));
     REQUIRE(timeconv::unixtime_to_datestring(unixtime, 6) == datestring);
 }
 
@@ -57,7 +57,7 @@ TEST_CASE("unixtime_to_datestring: should be reversible", TESTTAG)
     auto unixtime   = timeconv::timepoint_to_unixtime(now);
     auto datestring = timeconv::unixtime_to_datestring(unixtime, 18);
 
-    REQUIRE(timeconv::datestring_to_unixtime(datestring) == Approx(unixtime));
+    REQUIRE(timeconv::datestring_to_unixtime(datestring) ==Catch::Approx(unixtime));
 }
 
 TEST_CASE("datestring_to_unixtime: should be reversible", TESTTAG)
@@ -145,6 +145,6 @@ TEST_CASE("windows_filetime_conversion", TESTTAG)
         REQUIRE(high_low.second == 299511560);
 
         REQUIRE(timeconv::windows_filetime_to_unixtime(high_low.first, high_low.second) ==
-                Approx(unixtime));
+               Catch::Approx(unixtime));
     }
 }

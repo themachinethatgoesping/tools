@@ -24,7 +24,7 @@ foreach source : sources
     testname = testname.replace('/', '.')
 
     testexe = executable(testname,
-            sources: [source, 'test_main.cpp'],
+            sources: [source],
             dependencies : [catch2, tools_dep],
             link_language : 'cpp',
             override_options: [
