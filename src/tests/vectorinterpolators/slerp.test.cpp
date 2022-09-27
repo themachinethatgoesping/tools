@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_approx.hpp>
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
+#include <catch2/catch_approx.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <chrono>
 
 #include "../../themachinethatgoesping/tools/rotationfunctions/quaternions.hpp"

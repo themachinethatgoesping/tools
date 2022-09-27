@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-#include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include <chrono>
 
@@ -146,6 +146,6 @@ TEST_CASE("windows_filetime_conversion", TESTTAG)
         REQUIRE(high_low.second == 299511560);
 
         REQUIRE(timeconv::windows_filetime_to_unixtime(high_low.first, high_low.second) ==
-               Catch::Approx(unixtime));
+                Catch::Approx(unixtime));
     }
 }
