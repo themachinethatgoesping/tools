@@ -40,7 +40,7 @@ eigen3_dep = dependency('eigen3')
 fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
 
 # indicators for pretty progress bars
-indicators_dep = dependency('indicators')
+indicators_dep = dependency('indicators', static: true)
 
 #date (to be replaced with c++20 features)
 hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
@@ -52,7 +52,7 @@ bitsery_dep = dependency('bitsery')
 magic_enum_dep = dependency('magic_enum')
 
 #xtensor (for numpy array support)
-xtensor_dep = dependency('xtensor')
+xtensor_dep = dependency('xtensor', static: true)
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
