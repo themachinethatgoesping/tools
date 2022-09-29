@@ -92,7 +92,7 @@ class ProgressIndicator : public I_ProgressBarTimed
     double callback_current() const override
     {
         // return the current progress of the indicator progressbar
-        return _indicator->current();
+        return double(_indicator->current());
     }
 };
 
