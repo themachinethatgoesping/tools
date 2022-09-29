@@ -244,7 +244,7 @@ class I_ProgressBarTimed : public I_ProgressBar
 
         // compute check_every_step as number of steps counted in the last 100ms divided by 20
         // (~approx every 5 ms)
-        _check_timer_every_step = ceil(double(_skips) / 10.0);
+        _check_timer_every_step = int(ceil(double(_skips) / 10.0));
         _skips                  = 0;
         // _state_postfix = std::to_string(_check_timer_every_step);
 

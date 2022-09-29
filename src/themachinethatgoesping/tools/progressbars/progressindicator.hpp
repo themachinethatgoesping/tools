@@ -61,7 +61,7 @@ class ProgressIndicator : public I_ProgressBarTimed
         _indicator->set_option(indicators::option::ShowRemainingTime{ true });
 
         _indicator->set_option(indicators::option::PrefixText{ name + " " });
-        _indicator->set_option(indicators::option::MaxProgress{ last - first });
+        _indicator->set_option(indicators::option::MaxProgress{ size_t(ceil(last - first)) });
     }
 
     void callback_close(const std::string& msg = "done") override
@@ -74,7 +74,7 @@ class ProgressIndicator : public I_ProgressBarTimed
     void callback_set_progress(double new_progress) override
     {
         // set the progress of the indicator progressbar
-        _indicator->set_progress(new_progress - _first);
+        _indicator->set_progress(size_t(new_progress - _first));
     }
     void callback_set_postfix(const std::string& postfix) override
     {

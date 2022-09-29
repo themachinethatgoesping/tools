@@ -337,7 +337,7 @@ void init_m_progressbars(py::module& m)
             std::uniform_real_distribution<double> dist(-100, 100);
 
             if (show_progress)
-                progress.init(0, loops, "test loop");
+                progress.init(0., double(loops), "test loop");
             for (unsigned int i = 0; i < loops; ++i)
             {
                 // std::this_thread::sleep_for(std::chrono::microseconds(sleep_us));
