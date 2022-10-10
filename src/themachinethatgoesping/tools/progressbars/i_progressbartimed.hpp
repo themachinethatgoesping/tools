@@ -20,7 +20,7 @@ namespace tools {
 namespace progressbars {
 
 // function that locks a mutex and waits for 10ms
-void lock_mutex_for_x_ms(std::shared_ptr<std::atomic_bool> skip, size_t x_ms = 100)
+inline void lock_mutex_for_x_ms(std::shared_ptr<std::atomic_bool> skip, size_t x_ms = 100)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(x_ms));
     *skip = false;
