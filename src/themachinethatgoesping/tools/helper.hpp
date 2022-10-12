@@ -13,6 +13,8 @@
 
 #include "fast_float/fast_float.h"
 
+#include "helper/defaultsharedpointermap.hpp"
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace helper {

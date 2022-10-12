@@ -14,6 +14,7 @@ sources = [
 headers = [
   'timeconv.hpp',
   'helper.hpp',
+  'helper/defaultsharedpointermap.hpp',
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
   'classhelpers/stream.hpp',
