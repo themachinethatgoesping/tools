@@ -29,13 +29,13 @@ class DefaultSharedPointerMap : public std::map<t_key, std::shared_ptr<t_value>>
         return it->second;
     }
 
-    std::shared_ptr<t_value> get_const(const t_key& key) const
+    std::shared_ptr<const t_value> get_const(const t_key& key) const
     {
         auto it = this->find(key);
 
         if (it == this->end())
         {
-            std::make_shared<t_value>();
+            return std::make_shared<const t_value>();
         }
         return it->second;
     }
