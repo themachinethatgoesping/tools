@@ -16,7 +16,7 @@ class DefaultSharedPointerMap : public std::map<t_key, std::shared_ptr<t_value>>
     // use all constructors of the base class
     DefaultSharedPointerMap() = default;
 
-    std::shared_ptr<t_value>& get(const t_key& key)
+    std::shared_ptr<t_value>& at(const t_key& key)
     {
         auto it = this->find(key);
 
@@ -29,7 +29,7 @@ class DefaultSharedPointerMap : public std::map<t_key, std::shared_ptr<t_value>>
         return it->second;
     }
 
-    std::shared_ptr<t_value> get_const(const t_key& key) const //TODO: this function is lying about constness. While the map is const, the return pointer and return value are not.
+    std::shared_ptr<t_value> at_const(const t_key& key) const //TODO: this function is lying about constness. While the map is const, the return pointer and return value are not.
     {
         auto it = this->find(key);
 
