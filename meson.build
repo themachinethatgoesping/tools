@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.8.0',
+  version: '0.8.1',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -52,7 +52,7 @@ bitsery_dep = dependency('bitsery')
 magic_enum_dep = dependency('magic_enum')
 
 #xtensor (for numpy array support)
-xtensor_dep = dependency('xtensor', static: true)
+xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabled'])
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')

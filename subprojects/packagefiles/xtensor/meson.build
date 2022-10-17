@@ -16,12 +16,14 @@ xsimd_dep = dependency('xsimd',
     version: ['>=9.0.1']
     )
 
-if xsimd_dep.found()
-    xtensor_cpp_arg = ['-Duse_xsimd']
+
+if meson.get_compiler('cpp').get_id() == 'msvc'
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '/EHsc', '/MP', '/bigobj', '/arch:AVX-512']
+elif meson.get_compiler('cpp').get_id() == 'clang'
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
 else
-    xtensor_cpp_arg = []
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '-march=native']
 endif
-xtensor_cpp_arg = []
 
 xtensor_dep = declare_dependency(
     include_directories:include_directories('include', is_system: true),
