@@ -18,7 +18,7 @@ xsimd_dep = dependency('xsimd',
 
 
 if meson.get_compiler('cpp').get_id() == 'msvc'
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '/EHsc', '/MP', '/bigobj', '/arch:AVX-512']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '/EHsc', '/MP', '/bigobj']
 elif meson.get_compiler('cpp').get_id() == 'clang'
     xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
 else
