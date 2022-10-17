@@ -22,7 +22,8 @@ if meson.get_compiler('cpp').get_id() == 'msvc'
 elif meson.get_compiler('cpp').get_id() == 'clang'
     xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
 else
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '-march=native']
+    #xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '-march=native']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
 endif
 
 xtensor_dep = declare_dependency(
