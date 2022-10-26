@@ -21,7 +21,7 @@ projectnamespace = 'themachinethatgoesping'
 # system
 if meson.get_compiler('cpp').get_id() == 'clang'
   omp_dep = declare_dependency(
-    compile_args: ['-Xpreprocessor', '-fopenmp']
+    compile_args: ['-Xpreprocessor', '-fopenmp', '-I/usr/local/opt/libomp/include', '-L/usr/local/opt/libomp/lib', '-lomp']
   )
 else
   omp_dep = dependency('openmp')
