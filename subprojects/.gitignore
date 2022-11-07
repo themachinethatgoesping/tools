@@ -6,23 +6,19 @@
 packagecache/*
 date*/*
 Catch2*/*
-meta-main*
 
-#inherited wrap files
-catch2.wrap
-hinnant-date.wrap
+pybind11*/*
+eigen*/*
+fast_float*/*
+fmt*/*
+magic_enum*/*
+xtensor*/*
+nlohmann_json*/*
+pugixml*/*
+xsimd*/*
+xtl*/*
 
-#inherited wrap and folders
-pybind11*
-eigen*
-fast_float*
-fmt*
-magic_enum*
-bitsery*
-xtensor*
-indicators*
-nlohmann_json*
-pugixml*
-xsimd*
-xtl*
-
+#git repos
+meta-*
+indicators-*
+bitsery-*
