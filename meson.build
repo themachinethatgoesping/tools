@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.9.0',
+  version: '0.9.1',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -63,6 +63,22 @@ if get_option('build_pythonmodule').enabled()
 
   python3_dep = pymod.dependency()
   pybind11_dep = dependency('pybind11')
+  xtensor_python_dep = dependency('xtensor-python', static: true)
+
+  # -- numpy (necessary for xtensor_python) --
+  #numpy (copied from https://github.com/mesonbuild/meson/issues/9598)
+  # NumPy include directory - needed in all submodules
+  py3 = find_program('python3', 'python')
+  incdir_numpy = run_command(py3,
+  [
+      '-c',
+      'import os; os.chdir(".."); import numpy; print(numpy.get_include())'
+  ],
+  check: true
+  ).stdout().strip()
+
+  inc_np = include_directories(incdir_numpy)
+  numpy_dep = declare_dependency(include_directories: inc_np)
 
   # set path where to install sources (pythonpath/site-packages/projectnamespace)
   pythoninstallpath = pymod.get_install_dir() + projectnamespace + '/'

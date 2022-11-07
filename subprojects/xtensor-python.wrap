@@ -1,0 +1,14 @@
+#[wrap-file]
+#directory = xtensor-python-0.26.1
+#source_url = https://github.com/xtensor-stack/xtensor-python/archive/refs/tags/0.26.1.tar.gz
+#source_filename = xtensor-python-0.26.1.tar.gz
+#source_hash = eb64155c6824be471decf93927beedae3645714c8ce92f38e037434db2c2454a
+
+[wrap-git]
+url = https://github.com/peter-urban/xtensor-python.git
+revision = master
+directory = xtensor-python-master
+patch_directory = xtensor-python
+
+[provide]
+xtensor-python = xtensor_python_dep
