@@ -23,6 +23,7 @@ if build_machine.system() != 'linux'
                           tools_dep,
                           pybind11_dep,
                           python3_dep,
+                          xtensor_python_dep,
                           numpy_dep],
                         override_options: [
                           'b_lundef=false'
@@ -35,6 +36,7 @@ else
                           tools_dep,
                           pybind11_dep,
                           python3_dep,
+                          xtensor_python_dep,
                           numpy_dep],
                         override_options: [
                           'b_lundef=false'
@@ -50,6 +52,7 @@ tools_pybind_dep = declare_dependency(
                 tools_dep,
                 pybind11_dep,
                 python3_dep,
+                xtensor_python_dep,
                 numpy_dep
   ],
   link_with : [tools_pybind_lib],
