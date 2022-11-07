@@ -6,7 +6,7 @@
 packagecache/*
 date*/*
 Catch2*/*
-meta-main/*
+meta-main*
 
 #inherited wrap files
 catch2.wrap
