@@ -7,3 +7,10 @@ base_path = meson.current_source_dir()
 
 # -- C++ projects --
 subdir('tools')
+
+
+# -- tools_pybind --
+if get_option('build_pythonmodule').enabled()
+    #put module folders here
+    subdir('tools_pybind')
+endif

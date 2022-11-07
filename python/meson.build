@@ -8,7 +8,6 @@ sources = [
     'themachinethatgoesping/tools_ext/timeconv_ext.py',
 ]
 
-pymod = import('python').find_installation(get_option('python_path'), required : get_option('build_pythonmodule'))
 if get_option('build_pythonmodule').enabled()
     
     if get_option('pydev_install').disabled() #don't install if pydev_install is activated

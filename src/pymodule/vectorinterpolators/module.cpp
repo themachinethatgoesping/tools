@@ -8,7 +8,7 @@
 #include <tuple>
 #include <vector>
 
-#include "../../themachinethatgoesping/tools/pybind11_helpers/enumhelpers.hpp"
+#include "../../themachinethatgoesping/tools_pybind/enumhelpers.hpp"
 #include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"

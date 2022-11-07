@@ -26,6 +26,7 @@ py_tools = pymod.extension_module(
     sources: sources,
     dependencies : [
         tools_dep,
+        tools_pybind_dep,
         pybind11_dep,
         python3_dep],
     #link_with : [tools],

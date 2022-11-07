@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.8.2',
+  version: '0.9.0',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -57,6 +57,17 @@ xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabl
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
 
+# -- python modules --
+if get_option('build_pythonmodule').enabled()
+  pymod = import('python').find_installation(get_option('python_path'))
+
+  python3_dep = pymod.dependency()
+  pybind11_dep = dependency('pybind11')
+
+  # set path where to install sources (pythonpath/site-packages/projectnamespace)
+  pythoninstallpath = pymod.get_install_dir() + projectnamespace + '/'
+  message('python module install directory:', pythoninstallpath)
+endif
 
 #themachinethatgoesping meta info
 meta_dep = dependency('themachinethatgoesping_meta')

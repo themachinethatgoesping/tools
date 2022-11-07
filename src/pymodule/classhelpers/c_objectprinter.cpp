@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "../../themachinethatgoesping/tools/classhelpers/objectprinter.hpp"
-#include "../../themachinethatgoesping/tools/pybind11_helpers/classhelpers.hpp"
+#include "../../themachinethatgoesping/tools_pybind/classhelpers.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 

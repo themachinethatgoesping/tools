@@ -2,16 +2,27 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
+#folders
 packagecache/*
 date*/*
-eigen*/*
-pybind11*/*
 Catch2*/*
-indicators-2.2/*
-magic_enum-*
-fmt*/*
-bitsery-*
+meta-main/*
 
-indicators-*
-tools-main*
-meta-main*
+#inherited wrap files
+catch2.wrap
+hinnant-date.wrap
+
+#inherited wrap and folders
+pybind11*
+eigen*
+fast_float*
+fmt*
+magic_enum*
+bitsery*
+xtensor*
+indicators*
+nlohmann_json*
+pugixml*
+xsimd*
+xtl*
+
