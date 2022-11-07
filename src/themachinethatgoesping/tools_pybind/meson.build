@@ -22,7 +22,8 @@ if build_machine.system() != 'linux'
                         dependencies : [
                           tools_dep,
                           pybind11_dep,
-                          python3_dep],
+                          python3_dep,
+                          numpy_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -33,7 +34,8 @@ else
                         dependencies : [
                           tools_dep,
                           pybind11_dep,
-                          python3_dep],
+                          python3_dep,
+                          numpy_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -47,7 +49,8 @@ tools_pybind_dep = declare_dependency(
   dependencies : [
                 tools_dep,
                 pybind11_dep,
-                python3_dep
+                python3_dep,
+                numpy_dep
   ],
   link_with : [tools_pybind_lib],
   compile_args : ['-D_USE_MATH_DEFINES'],
