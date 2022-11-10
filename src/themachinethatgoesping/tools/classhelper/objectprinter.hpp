@@ -9,7 +9,7 @@
  * usage:
  *  1. Implement a __printer__ function as public class member this function should return a
  *     ObjectPrinter object. Register all, values, containers, objects that are to be printed.
- *  2. Add the __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public functions.
+ *  2. Add the __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro to the public functions.
  *     This macro implements std::string info_string() and print(std::ostream) functions using the
  * object printer
  *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
@@ -26,7 +26,7 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
-#include "../classhelpers/bitsery.hpp"
+#include "../classhelper/bitsery.hpp"
 #include <bitsery/traits/string.h>
 
 // source https://gitlab.com/tesch1/cppduals/blob/master/duals/dual#L1379-1452
@@ -124,7 +124,7 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
 };
 
 // --- print functions (need objectprinter __printer__ function that returns an ObjectPrinter) ---
-#define __CLASSHELPERS_PRINTER_INFO_STRING__                                                       \
+#define __CLASShelper_PRINTER_INFO_STRING__                                                       \
     /**                                                                                            \
      * @brief return an info string using the class __printer__ object                             \
      * @param float_precision number of digits for floating point values                           \
@@ -135,7 +135,7 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
         return this->__printer__(float_precision).create_str();                                    \
     }
 
-#define __CLASSHELPERS_PRINTER_PRINT__                                                             \
+#define __CLASShelper_PRINTER_PRINT__                                                             \
     /**                                                                                            \
      * @brief print the object information to the given outpustream                                \
      *                                                                                             \
@@ -147,20 +147,20 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
         os << this->__printer__(float_precision).create_str() << std::endl;                        \
     }
 
-#define __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__                                                \
-    __CLASSHELPERS_PRINTER_INFO_STRING__                                                           \
-    __CLASSHELPERS_PRINTER_PRINT__
+#define __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__                                                \
+    __CLASShelper_PRINTER_INFO_STRING__                                                           \
+    __CLASShelper_PRINTER_PRINT__
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace classhelpers {
+namespace classhelper {
 
 /**
  * @brief Class that allows for easy pretty printing of class members
  * usage:
  *  1. Implement a __printer__ function as public class member this function should return a
  *     ObjectPrinter object. Register all, values, containers, objects that are to be printed.
- *  2. Add the __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public functions.
+ *  2. Add the __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro to the public functions.
  *     This macro implements std::string info_string() and print(std::ostream) functions using the
  * object printer
  *  3. Add the __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This macro implements
@@ -218,7 +218,7 @@ class ObjectPrinter
 
   public:
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
-    __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
+    __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
 
     ObjectPrinter __printer__(unsigned int float_precision) const
     {

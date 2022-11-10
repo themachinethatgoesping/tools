@@ -12,7 +12,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace bitsery_helpers {
+namespace bitsery_helper {
 
 template<typename T>
 class NoSizeVector
@@ -59,7 +59,7 @@ class NoSizeVector
 
 template<typename T>
 struct bitsery::traits::
-    ExtensionTraits<themachinethatgoesping::tools::bitsery_helpers::NoSizeVector<T>, T>
+    ExtensionTraits<themachinethatgoesping::tools::bitsery_helper::NoSizeVector<T>, T>
 {
     // T is a container type, which has should have a value_type
     using TValue                                = typename T::value_type;

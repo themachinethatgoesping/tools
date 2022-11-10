@@ -181,6 +181,6 @@ inline int_type string_as_int(std::string_view value)
     return valueAsFourByteInt;
 }
 
-} // namespace helpers
+} // namespace helper
 } // namespace tools
 } // namespace themachinethatgoesping

@@ -11,8 +11,8 @@ sources = [
 ]
 
 headers = [
-  'classhelpers.hpp',
-  'enumhelpers.hpp',
+  'classhelper.hpp',
+  'enumhelper.hpp',
 ]
 
 # -- targets --

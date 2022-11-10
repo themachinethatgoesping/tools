@@ -24,7 +24,7 @@
 #include <utility>
 #include <vector>
 
-#include "../classhelpers/bitsery.hpp"
+#include "../classhelper/bitsery.hpp"
 #include "i_interpolator.hpp"
 
 namespace themachinethatgoesping {

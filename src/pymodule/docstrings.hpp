@@ -28,92 +28,92 @@ static const char* __doc_Eigen_serialize_2 = R"doc()doc";
 
 static const char* __doc_ExtensionTraits = R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector = R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_NoSizeVector =
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector_NoSizeVector =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_deserialize =
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector_deserialize =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_serDe =
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector_serDe =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_serialize =
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector_serialize =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_NoSizeVector_size =
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_NoSizeVector_size =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_is_input = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_is_input = R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_bitsery_helpers_is_input_2 = R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_bitsery_helper_is_input_2 = R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter =
     R"doc(Class that allows for easy pretty printing of class members usage: 1.
 Implement a __printer__ function as public class member this function
 should return a ObjectPrinter object. Register all, values,
 containers, objects that are to be printed. 2. Add the
-__CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro to the public
+__CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro to the public
 functions. This macro implements std::string info_string() and
 print(std::ostream) functions using the object printer 3. Add the
 __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
 macro implements __str__(), __repr__(), info_string() and print() as
 python functions)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_ObjectPrinter =
     R"doc(Construct a new Object Printer object
 
 Parameter ``float_precision``:
     default 2, set number of digits for floating point values)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_ObjectPrinter_2 =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_ObjectPrinter_2 =
     R"doc(Construct a new Object Printer object
 
 Parameter ``name``:
     name of the class that is to be printed)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_append =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_append =
     R"doc(Append the fields of an existing object printer
 
 Parameter ``printer``:
     printer to be appended)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_create_str =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_create_str =
     R"doc(Create an info_string from the registered values/sections
 
 Returns:
     std::string)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_field_types =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_field_types =
     R"doc(< variable types)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_fields =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_fields =
     R"doc(< variable names)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_float_precision =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_float_precision =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_binary =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_binary =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_from_stream =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_stream =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_info_string =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_name =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name =
     R"doc(< name of the class that is to be printed)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_print =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_printer =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_printer =
     R"doc()doc";
 
 static const char*
-    __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_container =
+    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_container =
         R"doc(register a 1D container for printing
 
 Template parameter ``t_value``:
@@ -132,7 +132,7 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_enum =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_enum =
     R"doc(register an enumeration for printing
 
 Template parameter ``t_value``:
@@ -151,7 +151,7 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_section =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_section =
     R"doc(register a section break for printing
 
 Parameter ``name``:
@@ -164,7 +164,7 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_string =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_string =
     R"doc(register a formatted string field for printing
 
 Parameter ``name``:
@@ -180,7 +180,7 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_register_value =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_value =
     R"doc(register a single integer of floating point value for printing
 
 Template parameter ``t_value``:
@@ -199,43 +199,43 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_remove_sections =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_remove_sections =
     R"doc(Remove all existing sections)doc";
 
 static const char*
-    __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_section_underliner =
+    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner =
         R"doc(< additional info (printed in []))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_serialize =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_serialize =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field =
     R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
 
 static const char*
-    __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tcontainer =
+    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer =
         R"doc(< 1D container (floating point or integer))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tenum =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum =
     R"doc(< enumerator)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tsection =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection =
     R"doc(< section break)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tstring =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring =
     R"doc(< formatted string field)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_t_field_tvalue =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue =
     R"doc(< double or integer)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_to_binary =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_binary =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_to_stream =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_stream =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_underline =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_underline =
     R"doc(add a line under a given line string
 
 Parameter ``line``:
@@ -244,13 +244,13 @@ Parameter ``line``:
 Returns:
     std::string)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_ObjectPrinter_value_infos =
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_value_infos =
     R"doc(< additional info (printed in []))doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_stream_container_from_stream =
+static const char* __doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelpers_stream_container_to_stream =
+static const char* __doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream =
     R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_helper_approx =
@@ -739,7 +739,7 @@ static const char*
     __doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar_pbar_NoIndicator =
         R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_pybind_helpers_add_string_to_enum_conversion =
+static const char* __doc_themachinethatgoesping_tools_pybind_helper_add_string_to_enum_conversion =
     R"doc(Convert a string to an enum using magic_enum
 
 Template parameter ``T_ENUM``:

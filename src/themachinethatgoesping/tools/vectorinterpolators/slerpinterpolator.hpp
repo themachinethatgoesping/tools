@@ -15,8 +15,8 @@
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelpers/bitsery.hpp"
-#include "../classhelpers/objectprinter.hpp"
+#include "../classhelper/bitsery.hpp"
+#include "../classhelper/objectprinter.hpp"
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
@@ -303,13 +303,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             _Y,
             SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigen quaternion, therefore this call
                                                     // needs the include of
-                                                    // tools/classhelpers/bitsery_helpers/eigen.hpp
+                                                    // tools/classhelper/bitsery_helper/eigen.hpp
     }
 
   public:
-    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("SlerpInterpolator", float_precision);
+        classhelper::ObjectPrinter printer("SlerpInterpolator", float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");
@@ -335,7 +335,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     // define to_binary and from_binary functions (needs the serialize function)
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
     // define info_string and print functions (needs the __printer__ function)
-    __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
+    __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
 };
 
 } // namespace vectorinterpolators

@@ -5,7 +5,7 @@ import os
 # does not work because pybind11_mkdoc only provides a module script
 #from pybind11_mkdoc import mkdoc
 ignore_files = [
-    # 'classhelpers.hpp'
+    # 'classhelper.hpp'
 ]
 
 headers = []

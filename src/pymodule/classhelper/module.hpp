@@ -6,4 +6,4 @@
 #include <pybind11/pybind11.h>
 
 // -- initialize module --
-void init_m_classhelpers(pybind11::module& m);
+void init_m_classhelper(pybind11::module& m);

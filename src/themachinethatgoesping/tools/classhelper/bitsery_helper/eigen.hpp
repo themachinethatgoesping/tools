@@ -7,8 +7,8 @@
 // include bitsery
 #include <bitsery/bitsery.h>
 
-// helpers
-#include "helpers.hpp"
+// helper
+#include "helper.hpp"
 
 // eigen quaternions
 #include <Eigen/Eigen>

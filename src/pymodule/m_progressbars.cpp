@@ -11,7 +11,7 @@
 #include <pybind11/stl.h>
 
 // ping headers
-#include <themachinethatgoesping/tools_pybind/enumhelpers.hpp>
+#include <themachinethatgoesping/tools_pybind/enumhelper.hpp>
 
 // -- module header
 #include "../themachinethatgoesping/tools/progressbars.hpp"
@@ -181,7 +181,7 @@ void init_m_progressbars(py::module& m)
     //     .value("pbar_Indicator", t_BuiltInProgressBar::pbar_Indicator)
     //     .value("pbar_Classic", t_BuiltInProgressBar::pbar_Classic)
     //     .export_values()
-    //     // pybind enum helpers
+    //     // pybind enum helper
     //     __PYENUM_FROM_STRING__(t_BuiltInProgressBar)
     //     // end
     //     ;

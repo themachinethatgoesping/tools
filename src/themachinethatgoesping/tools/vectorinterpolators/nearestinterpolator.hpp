@@ -20,8 +20,8 @@
 
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelpers/bitsery.hpp"
-#include "../classhelpers/objectprinter.hpp"
+#include "../classhelper/bitsery.hpp"
+#include "../classhelper/objectprinter.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -103,9 +103,9 @@ class NearestInterpolator : public I_PairInterpolator<double>
     }
 
   public:
-    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("NearestInterpolator", float_precision);
+        classhelper::ObjectPrinter printer("NearestInterpolator", float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");
@@ -120,7 +120,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
     // define to_binary and from_binary functions (needs the serialize function)
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
     // define info_string and print functions (needs the __printer__ function)
-    __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
+    __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
 };
 
 } // namespace interpolation

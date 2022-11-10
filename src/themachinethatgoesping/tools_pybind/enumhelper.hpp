@@ -18,7 +18,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace pybind_helpers {
+namespace pybind_helper {
 
 /**
  * @brief Convert a string to an enum using magic_enum

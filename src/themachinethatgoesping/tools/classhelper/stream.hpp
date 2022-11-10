@@ -52,7 +52,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace classhelpers {
+namespace classhelper {
 namespace stream {
 
 template<typename T_container>
@@ -78,6 +78,6 @@ inline T_container container_from_stream(std::istream& is)
 }
 
 } // stream
-} // classhelpers
+} // classhelper
 } // tools
 } // themachinethatgoesping

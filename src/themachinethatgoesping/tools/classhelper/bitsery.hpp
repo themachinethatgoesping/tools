@@ -19,8 +19,8 @@
 #include <bitsery/traits/string.h>
 #include <bitsery/traits/vector.h>
 
-#include "bitsery_helpers/eigen.hpp"
-#include "bitsery_helpers/helpers.hpp"
+#include "bitsery_helper/eigen.hpp"
+#include "bitsery_helper/helper.hpp"
 
 #define __BITSERY_DEFAULT_TO_BINARY__                                                              \
     /** @brief convert object to vector of bytes                                                   \

@@ -9,8 +9,8 @@
  * @authors Peter Urban
  */
 
-#include "../classhelpers/objectprinter.hpp"
-#include "../classhelpers/stream.hpp"
+#include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 
 #pragma once
 
@@ -134,7 +134,7 @@ class PyIndexer
      * @param index (python style) index of the element (can be negative)
      * @return size_t 
      */
-    size_t operator()(long index)
+    size_t operator()(long index) const
     {
         if (_is_slice)
         {
@@ -227,15 +227,15 @@ class PyIndexer
 
     // ----- printing -----
     /**
-     * @brief Print function, needs __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__ macro
-     * See also: classhelpers/objectprinter.hpp
+     * @brief Print function, needs __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro
+     * See also: classhelper/objectprinter.hpp
      * 
      * @param float_precision Precision of floating point numbers
-     * @return classhelpers::ObjectPrinter 
+     * @return classhelper::ObjectPrinter 
      */
-    classhelpers::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelpers::ObjectPrinter printer("PyIndexer", float_precision);
+        classhelper::ObjectPrinter printer("PyIndexer", float_precision);
 
         printer.register_value("_vector_size", _vector_size);
 
@@ -258,7 +258,7 @@ class PyIndexer
     // define to_binary and from_binary functions (needs to_stream and from_stream)
     __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(PyIndexer)
     // define info_string and print functions (needs the __printer__ function)
-    __CLASSHELPERS_DEFAULT_PRINTING_FUNCTIONS__
+    __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
 };
 
 }

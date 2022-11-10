@@ -8,7 +8,7 @@
 #include <tuple>
 #include <vector>
 
-#include "../../themachinethatgoesping/tools_pybind/enumhelpers.hpp"
+#include "../../themachinethatgoesping/tools_pybind/enumhelper.hpp"
 #include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
@@ -44,7 +44,7 @@ void init_m_vectorinterpolators(pybind11::module& m)
             .export_values()
         // end
         ;
-    tools::pybind_helpers::add_string_to_enum_conversion<t_extr_mode>(pyenum_extr_mode);
+    tools::pybind_helper::add_string_to_enum_conversion<t_extr_mode>(pyenum_extr_mode);
 
     // interpolator classes
     init_c_nearestinterpolator(m_vectorinterpolators);

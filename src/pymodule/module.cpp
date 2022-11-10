@@ -6,7 +6,7 @@
 #include <pybind11/iostream.h>
 #include <pybind11/pybind11.h>
 
-#include "classhelpers/module.hpp"
+#include "classhelper/module.hpp"
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
 #include "m_timeconv.hpp"
@@ -23,5 +23,5 @@ PYBIND11_MODULE(MODULE_NAME, m)
     init_m_helper(m);
     init_m_progressbars(m);
     init_m_vectorinterpolators(m);
-    init_m_classhelpers(m);
+    init_m_classhelper(m);
 }
