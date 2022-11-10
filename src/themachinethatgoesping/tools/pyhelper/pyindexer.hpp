@@ -54,9 +54,9 @@ class PyIndexer
  * Allow for sliced indexing (start, stop, step)
      * 
      * @param vector_size Size of the vector to be indexed
-     * @param index_start Start index of the slice
-     * @param index_end End index of the slice
-     * @param index_step Step size of the slice
+     * @param start Start index of the slice
+     * @param end End index of the slice
+     * @param step Step size of the slice
      */
     PyIndexer(size_t vector_size, long start, long end, long step = 1)
         : _vector_size(vector_size)
@@ -116,11 +116,12 @@ class PyIndexer
     }
 
     /**
-     * @brief Deactivate slice indexing
+     * @brief Reset the indexer (deactivates slicing)
      * 
      */
-    void reset_slice_indexing()
+    void reset(size_t vector_size)
     {
+        _vector_size = vector_size;
         _is_slice    = false;
         _index_start = 0;
         _index_end   = std::numeric_limits<long>::max();
