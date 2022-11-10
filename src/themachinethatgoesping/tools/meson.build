@@ -15,6 +15,7 @@ headers = [
   'timeconv.hpp',
   'helper.hpp',
   'helper/defaultsharedpointermap.hpp',
+  'pyhelper/pyindexer.hpp',
   'classhelpers/objectprinter.hpp',
   'classhelpers/bitsery.hpp',
   'classhelpers/stream.hpp',

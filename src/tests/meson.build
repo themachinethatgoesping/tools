@@ -9,6 +9,7 @@ testcomponent = 'tools'
 sources = [
     'tutorial.test.cpp',
     'timeconv.test.cpp',
+    'pyhelper/pyindexer.test.cpp',
     'helper/defaultsharedpointermap.test.cpp',
     'bitsery_helpers/custom_types.test.cpp',
     'rotationfunctions/helper.test.cpp',
