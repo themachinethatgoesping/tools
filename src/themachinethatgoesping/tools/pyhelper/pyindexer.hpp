@@ -16,7 +16,7 @@
 
 namespace themachinethatgoesping {
 namespace tools {
-namespace pyhelpers {
+namespace pyhelper {
 
 /**
  * @brief A class to compute python style indexing

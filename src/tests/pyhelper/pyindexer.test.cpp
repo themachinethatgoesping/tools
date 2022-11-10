@@ -9,7 +9,7 @@
 
 // using namespace testing;
 using namespace std;
-using namespace themachinethatgoesping::tools::pyhelpers;
+using namespace themachinethatgoesping::tools::pyhelper;
 
 #define TESTTAG "[pyhelper]"
 
