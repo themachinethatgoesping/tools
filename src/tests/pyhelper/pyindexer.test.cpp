@@ -22,6 +22,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Support common functions")
     {
         PyIndexer indexer(10, 1, 5, 2);
+        REQUIRE(indexer.size() == 2);
 
         // copy operator
         auto indexer_copy = indexer;
@@ -37,6 +38,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         // check inequality
         indexer.set_slice_indexing(2,5,2);
+        REQUIRE(indexer.size() == 2);
         REQUIRE(indexer_copy2 != indexer);
         REQUIRE(indexer_move != indexer);
 
@@ -70,6 +72,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE(indexer(-89) == 11);
         REQUIRE(indexer(-1) == 99);
 
+        REQUIRE(indexer.size() == 100);
+
         REQUIRE_THROWS_AS(indexer(100),std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-101),std::out_of_range);
     }
@@ -87,6 +91,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE(indexer(-10) == 80);
         REQUIRE(indexer(-79) == 11);
         REQUIRE(indexer(-80) == 10);
+
+        REQUIRE(indexer.size() == 80);
 
         REQUIRE_THROWS_AS(indexer(80),std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-81),std::out_of_range);
@@ -106,6 +112,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         CHECK(indexer(-26) == 14);
         CHECK(indexer(-27) == 11);
 
+        REQUIRE(indexer.size() == 27);
+
         REQUIRE_THROWS_AS(indexer(27),std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-28),std::out_of_range);
     }
@@ -124,6 +132,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE(indexer(-79) == 88);
         REQUIRE(indexer(-80) == 89);
 
+        REQUIRE(indexer.size() == 80);
+
         REQUIRE_THROWS_AS(indexer(80),std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-81),std::out_of_range);
     }
@@ -141,6 +151,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         CHECK(indexer(-10) == 37);
         CHECK(indexer(-26) == 85);
         CHECK(indexer(-27) == 88);
+
+        REQUIRE(indexer.size() == 27);
 
         REQUIRE_THROWS_AS(indexer(27),std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-28),std::out_of_range);

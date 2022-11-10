@@ -172,7 +172,16 @@ class PyIndexer
         return size_t(index);
     }
 
-    //----- operators (common) -----
+    // ----- common functions -----
+    size_t size() const
+    {
+        if (_is_slice)
+            return size_t((_index_end - _index_start) / std::abs(_index_step)) +
+                   1; // TODO this needs to be checked
+        return _vector_size;
+    }
+
+    // ----- operators (common) -----
     bool operator!=(const PyIndexer& rhs) const { return !(rhs == *this); }
     bool operator==(const PyIndexer& rhs) const
     {
