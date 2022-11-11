@@ -21,10 +21,10 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 {
     SECTION("Support basic loop iteration")
     {
-        PyIndexer indexer(10, 1, 5, 2);
-        std::vector<size_t> expected_results = {1,3};
+        PyIndexer           indexer(10, 1, 5, 2);
+        std::vector<size_t> expected_results = { 1, 3 };
 
-        for (size_t i = 0; i< indexer.size(); ++i)
+        for (size_t i = 0; i < indexer.size(); ++i)
         {
             REQUIRE(indexer(i) == expected_results.at(i));
         }
@@ -47,13 +47,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         // move operator
         auto indexer_move = std::move(indexer_copy);
         REQUIRE(indexer_move == indexer);
-    
+
         // copy constructor
         auto indexer_copy2(indexer);
         REQUIRE(indexer_copy2 == indexer);
 
         // check inequality
-        indexer.set_slice_indexing(2,5,2);
+        indexer.set_slice_indexing(2, 5, 2);
         REQUIRE(indexer.size() == 2);
         REQUIRE(indexer_copy2 != indexer);
         REQUIRE(indexer_move != indexer);
@@ -63,7 +63,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         indexer.print(ss);
 
         // test internal to/from binary functions
-        auto buffer = indexer.to_binary();
+        auto buffer              = indexer.to_binary();
         auto indexer_from_binary = PyIndexer::from_binary(buffer);
         REQUIRE(indexer_from_binary == indexer);
 
@@ -71,7 +71,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         std::stringstream ss2;
         indexer.to_stream(ss2);
         auto indexer_from_stream = PyIndexer::from_stream(ss2);
-        REQUIRE(indexer_from_stream == indexer);       
+        REQUIRE(indexer_from_stream == indexer);
     }
 
     SECTION("Reproduce precomputed results (standard)")
@@ -90,13 +90,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == 100);
 
-        REQUIRE_THROWS_AS(indexer(100),std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-101),std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(100), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-101), std::out_of_range);
     }
 
     SECTION("Reproduce precomputed results (slice, positive single step)")
     {
-        PyIndexer indexer(100,10,90,1);
+        PyIndexer indexer(100, 10, 90, 1);
 
         REQUIRE(indexer(0) == 10);
         REQUIRE(indexer(1) == 11);
@@ -110,13 +110,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == 80);
 
-        REQUIRE_THROWS_AS(indexer(80),std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-81),std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(80), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-81), std::out_of_range);
     }
 
     SECTION("Reproduce precomputed results (slice, positive multi step)")
     {
-        PyIndexer indexer(100,10,90,3);
+        PyIndexer indexer(100, 10, 90, 3);
 
         CHECK(indexer(0) == 10);
         CHECK(indexer(1) == 13);
@@ -130,13 +130,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == 27);
 
-        REQUIRE_THROWS_AS(indexer(27),std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-28),std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(27), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-28), std::out_of_range);
     }
 
     SECTION("Reproduce precomputed results (slice, negative single step)")
     {
-        PyIndexer indexer(100,10,90,-1);
+        PyIndexer indexer(100, 10, 90, -1);
 
         REQUIRE(indexer(0) == 89);
         REQUIRE(indexer(1) == 88);
@@ -150,13 +150,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == 80);
 
-        REQUIRE_THROWS_AS(indexer(80),std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-81),std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(80), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-81), std::out_of_range);
     }
 
     SECTION("Reproduce precomputed results (slice, negative multi step)")
     {
-        PyIndexer indexer(100,10,90,-3);
+        PyIndexer indexer(100, 10, 90, -3);
 
         CHECK(indexer(0) == 89);
         CHECK(indexer(1) == 86);
@@ -170,8 +170,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == 27);
 
-        REQUIRE_THROWS_AS(indexer(27),std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-28),std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(27), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-28), std::out_of_range);
     }
-
 }

@@ -14,8 +14,7 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace progressbars {
 
-static enum class t_BuiltInProgressBar
-{
+static enum class t_BuiltInProgressBar {
     pbar_NoIndicator,
     pbar_Indicator,
     pbar_Classic

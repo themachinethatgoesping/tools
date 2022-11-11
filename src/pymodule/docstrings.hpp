@@ -106,15 +106,13 @@ static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name =
     R"doc(< name of the class that is to be printed)doc";
 
-static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print =
-    R"doc()doc";
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print = R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_printer =
     R"doc()doc";
 
-static const char*
-    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_container =
-        R"doc(register a 1D container for printing
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_container =
+    R"doc(register a 1D container for printing
 
 Template parameter ``t_value``:
     integer or floating point
@@ -202,9 +200,8 @@ Parameter ``pos``:
 static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_remove_sections =
     R"doc(Remove all existing sections)doc";
 
-static const char*
-    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner =
-        R"doc(< additional info (printed in []))doc";
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner =
+    R"doc(< additional info (printed in []))doc";
 
 static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_serialize =
     R"doc()doc";
@@ -213,9 +210,8 @@ static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
     R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
 
-static const char*
-    __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer =
-        R"doc(< 1D container (floating point or integer))doc";
+static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer =
+    R"doc(< 1D container (floating point or integer))doc";
 
 static const char* __doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum =
     R"doc(< enumerator)doc";

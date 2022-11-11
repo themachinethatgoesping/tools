@@ -208,7 +208,7 @@ class PyIndexer
     // ----- operators (iteration) -----
     /**
      * @brief Simple iterator class to allow for range-based for loops
-     * 
+     *
      */
     struct PyRangeIterator
     {
@@ -233,10 +233,11 @@ class PyIndexer
 
     /**
      * @brief Get the begin iterator (for range-based for loops)
-     * 
-     * @return PyRangeIterator 
+     *
+     * @return PyRangeIterator
      */
-    PyRangeIterator begin() const { 
+    PyRangeIterator begin() const
+    {
         if (_is_slice)
             return PyRangeIterator(_index_start);
         return PyRangeIterator(0);
@@ -244,10 +245,10 @@ class PyIndexer
 
     /**
      * @brief Get the end iterator (for range-based for loops)
-     * 
-     * @return PyRangeIterator 
+     *
+     * @return PyRangeIterator
      */
-    PyRangeIterator end() const { return PyRangeIterator( this->size()); }
+    PyRangeIterator end() const { return PyRangeIterator(this->size()); }
 
     // ----- from/to binary -----
     /**

@@ -33,6 +33,4 @@ TEST_CASE("defaultsharedpointermap: test default values", TESTTAG)
 
     REQUIRE(map_vec.at_const("test3")->size() == 0);
     REQUIRE(map_vec.at("test3")->size() == 0);
-    
 }
-
