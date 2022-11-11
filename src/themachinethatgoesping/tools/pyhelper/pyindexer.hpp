@@ -205,6 +205,50 @@ class PyIndexer
         return true;
     }
 
+    // ----- operators (iteration) -----
+    /**
+     * @brief Simple iterator class to allow for range-based for loops
+     * 
+     */
+    struct PyRangeIterator
+    {
+        size_t _val;
+
+        PyRangeIterator(size_t val)
+            : _val(val)
+        {
+        }
+
+        bool operator==(const PyRangeIterator& rhs)
+        {
+            if (_val != rhs._val)
+                return false;
+            return true;
+        }
+        bool operator!=(const PyRangeIterator& rhs) { return !(*this == rhs); }
+
+        size_t& operator*() { return _val; }
+        void    operator++() { ++_val; }
+    };
+
+    /**
+     * @brief Get the begin iterator (for range-based for loops)
+     * 
+     * @return PyRangeIterator 
+     */
+    PyRangeIterator begin() const { 
+        if (_is_slice)
+            return PyRangeIterator(_index_start);
+        return PyRangeIterator(0);
+    }
+
+    /**
+     * @brief Get the end iterator (for range-based for loops)
+     * 
+     * @return PyRangeIterator 
+     */
+    PyRangeIterator end() const { return PyRangeIterator( this->size()); }
+
     // ----- from/to binary -----
     /**
      * @brief Return a PyIndexer read from a binary stream

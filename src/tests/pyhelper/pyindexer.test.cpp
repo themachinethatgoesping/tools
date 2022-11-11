@@ -19,6 +19,22 @@ using namespace themachinethatgoesping::tools::pyhelper;
 
 TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 {
+    SECTION("Support basic loop iteration")
+    {
+        PyIndexer indexer(10, 1, 5, 2);
+        std::vector<size_t> expected_results = {1,3};
+
+        for (size_t i = 0; i< indexer.size(); ++i)
+        {
+            REQUIRE(indexer(i) == expected_results.at(i));
+        }
+
+        for (const auto i : indexer)
+        {
+            REQUIRE(indexer(i) == expected_results.at(i));
+        }
+    }
+
     SECTION("Support common functions")
     {
         PyIndexer indexer(10, 1, 5, 2);
