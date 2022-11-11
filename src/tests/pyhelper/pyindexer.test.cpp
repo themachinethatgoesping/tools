@@ -74,6 +74,19 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE(indexer_from_stream == indexer);
     }
 
+    SECTION("Reproduce precomputed results (extra cases)")
+    {
+        PyIndexer indexer(1,0,1,1);
+
+        REQUIRE(indexer(0) == 0);
+        REQUIRE(indexer(-1) == 0);
+
+        REQUIRE(indexer.size() == 1);
+
+        REQUIRE_THROWS_AS(indexer(1), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-2), std::out_of_range);
+    }
+
     SECTION("Reproduce precomputed results (standard)")
     {
         PyIndexer indexer(100);

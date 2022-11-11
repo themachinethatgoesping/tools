@@ -106,8 +106,8 @@ class PyIndexer
             throw(std::out_of_range("PyIndexer: start is out of bounds!"));
         if (end < 0 || end >= long(_vector_size))
             throw(std::out_of_range("PyIndexer: end is out of bounds!"));
-        if (start >= end)
-            throw(std::out_of_range("PyIndexer: _start >= _end!"));
+        if (start > end)
+            throw(std::out_of_range("PyIndexer: _start > _end!"));
 
         _is_slice    = true;
         _index_start = start;
