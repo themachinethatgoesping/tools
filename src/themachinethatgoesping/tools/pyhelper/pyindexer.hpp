@@ -22,27 +22,27 @@ namespace pyhelper {
  * @brief A class to compute python style indexing
  * Allow for negative indexing (starting from the end of the container)
  * Allow for sliced indexing (start, stop, step)
- * 
+ *
  */
 class PyIndexer
 {
     size_t _vector_size; ///< the size of the vector to be indexed
 
-    bool   _is_slice    = false; ///< is this a slice?
-    size_t _index_start = 0;    ///< the start index of the slice
+    bool   _is_slice    = false;                            ///< is this a slice?
+    size_t _index_start = 0;                                ///< the start index of the slice
     size_t _index_end   = std::numeric_limits<long>::max(); ///< the end index of the slice
-    long   _index_step  = 1;   ///< the step size of the slice
+    long   _index_step  = 1;                                ///< the step size of the slice
 
     // make this private (only allowed in factory functions)
     PyIndexer() = default;
 
   public:
-  /**
-   * @brief Construct a new Py Indexer object   * 
- * Allow for negative indexing (starting from the end of the container)
-   * 
-   * @param vector_size Size of the vector to be indexed
-   */
+    /**
+     * @brief Construct a new Py Indexer object   *
+     * Allow for negative indexing (starting from the end of the container)
+     *
+     * @param vector_size Size of the vector to be indexed
+     */
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
     {
@@ -50,9 +50,9 @@ class PyIndexer
 
     /**
      * @brief Construct a new Py Indexer object
- * Allow for negative indexing (starting from the end of the container)
- * Allow for sliced indexing (start, stop, step)
-     * 
+     * Allow for negative indexing (starting from the end of the container)
+     * Allow for sliced indexing (start, stop, step)
+     *
      * @param vector_size Size of the vector to be indexed
      * @param start Start index of the slice
      * @param end End index of the slice
@@ -66,7 +66,7 @@ class PyIndexer
 
     /**
      * @brief Setup slice indexing after construction
-     * 
+     *
      * @param start Start index of the slice
      * @param end End index of the slice
      * @param step Step size of the slice
@@ -117,23 +117,27 @@ class PyIndexer
 
     /**
      * @brief Reset the indexer (deactivates slicing)
-     * 
+     *
      */
     void reset(size_t vector_size)
     {
         _vector_size = vector_size;
-        _is_slice    = false;
-        _index_start = 0;
-        _index_end   = std::numeric_limits<long>::max();
-        _index_step  = 1;
+
+        if (_is_slice)
+        {
+            _is_slice    = false;
+            _index_start = 0;
+            _index_end   = std::numeric_limits<long>::max();
+            _index_step  = 1;
+        }
     }
 
     // ----- operators (index) -----
     /**
      * @brief Get the index of the element at position i
-     * 
+     *
      * @param index (python style) index of the element (can be negative)
-     * @return size_t 
+     * @return size_t
      */
     size_t operator()(long index) const
     {
@@ -204,9 +208,9 @@ class PyIndexer
     // ----- from/to binary -----
     /**
      * @brief Return a PyIndexer read from a binary stream
-     * 
+     *
      * @param is input stream
-     * @return PyIndexer 
+     * @return PyIndexer
      */
     static PyIndexer from_stream(std::istream& is)
     {
@@ -218,7 +222,7 @@ class PyIndexer
 
     /**
      * @brief Write a PyIndexer to a binary stream
-     * 
+     *
      * @param os output stream
      */
     void to_stream(std::ostream& os)
@@ -230,9 +234,9 @@ class PyIndexer
     /**
      * @brief Print function, needs __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro
      * See also: classhelper/objectprinter.hpp
-     * 
+     *
      * @param float_precision Precision of floating point numbers
-     * @return classhelper::ObjectPrinter 
+     * @return classhelper::ObjectPrinter
      */
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
@@ -252,7 +256,6 @@ class PyIndexer
 
         return printer;
     }
-
 
   public:
     // -- class helper function macros --
