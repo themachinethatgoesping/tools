@@ -688,13 +688,23 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRange
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_PyRangeIterator = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_eq = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_inc = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_mul = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_ne = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_ne =
+R"doc(operator != for range-based for loops Only compare _val, since _step
+is not relevant for the it != end comparison
+
+Parameter ``rhs``:
+    $Returns:
+
+true
+
+Returns:
+    false)doc";
+
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_step = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_val = R"doc()doc";
 
@@ -721,11 +731,15 @@ Parameter ``is``:
 Returns:
     PyIndexer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_end = R"doc(< the end index of the slice)doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_end = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_start = R"doc(< the start index of the slice)doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_max = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_step = R"doc(< the step size of the slice)doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_min = R"doc(< the minimum index of the slice (0 if not sliced))doc";
+
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_start = R"doc(< the start index of the slice (0 if not sliced))doc";
+
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_step = R"doc(< the step size of the slice (1 if not sliced))doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_info_string = R"doc()doc";
 
@@ -756,7 +770,26 @@ Parameter ``float_precision``:
 Returns:
     classhelper::ObjectPrinter)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_reset = R"doc(Reset the indexer (deactivates slicing))doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_reset =
+R"doc(Reset the indexer (deactivates slicing)
+
+Parameter ``vector_size``:
+    Size of the vector to be indexed)doc";
+
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_reset_2 =
+R"doc(Reset the indexer (set up new slicing)
+
+Parameter ``vector_size``:
+    Size of the vector to be indexed
+
+Parameter ``start``:
+    Start index of the slice
+
+Parameter ``end``:
+    End index of the slice
+
+Parameter ``step``:
+    Step size of the slice)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_set_slice_indexing =
 R"doc(Setup slice indexing after construction
@@ -771,6 +804,8 @@ Parameter ``step``:
     Step size of the slice)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_size = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slice_size = R"doc(< the size of the slice (_vector_size if not sliced))doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_binary = R"doc()doc";
 

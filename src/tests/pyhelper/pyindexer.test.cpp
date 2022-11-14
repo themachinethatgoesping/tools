@@ -5,6 +5,8 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <xtensor/xtensor.hpp>
+
 #include "../../themachinethatgoesping/tools/pyhelper/pyindexer.hpp"
 
 // using namespace testing;
@@ -21,17 +23,36 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 {
     SECTION("Support basic loop iteration")
     {
-        PyIndexer           indexer(10, 1, 5, 2);
-        std::vector<size_t> expected_results = { 1, 3 };
+        PyIndexer           indexer(10, 1, 6, 2);
+        std::vector<size_t> expected_results = { 1, 3, 5 };
 
-        for (size_t i = 0; i < indexer.size(); ++i)
+        REQUIRE(indexer.size() == expected_results.size());
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
         {
-            REQUIRE(indexer(i) == expected_results.at(i));
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
 
+        size_t enumerator = 0;
         for (const auto i : indexer)
         {
-            REQUIRE(indexer(i) == expected_results.at(i));
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(i == expected_results.at(enumerator));
+            ++enumerator;
+        }
+
+        indexer.reset(10, 5, 0, -2);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        enumerator = expected_results.size() - 1;
+        for (const auto i : indexer)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(i == expected_results.at(enumerator));
+            --enumerator;
         }
     }
 
@@ -54,6 +75,10 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         // check inequality
         indexer.set_slice_indexing(2, 5, 2);
+        INFO(indexer.info_string());
+        REQUIRE(indexer(0) == 2);
+        REQUIRE(indexer(1) == 4);
+        REQUIRE_THROWS_AS(indexer(2), std::out_of_range);
         REQUIRE(indexer.size() == 2);
         REQUIRE(indexer_copy2 != indexer);
         REQUIRE(indexer_move != indexer);
@@ -76,15 +101,51 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (extra cases)")
     {
-        PyIndexer indexer(1,0,1,1);
+        {
+            // not well defined yet
+            // PyIndexer indexer(1, 1 , 0, -1);
 
-        REQUIRE(indexer(0) == 0);
-        REQUIRE(indexer(-1) == 0);
+            // INFO(indexer.info_string());
 
-        REQUIRE(indexer.size() == 1);
+            // REQUIRE(indexer(0) == 0);
+            // REQUIRE(indexer(-1) == 0);
 
-        REQUIRE_THROWS_AS(indexer(1), std::out_of_range);
-        REQUIRE_THROWS_AS(indexer(-2), std::out_of_range);
+            // REQUIRE(indexer.size() == 1);
+
+            // REQUIRE_THROWS_AS(indexer(1), std::out_of_range);
+            // REQUIRE_THROWS_AS(indexer(-2), std::out_of_range);
+        }
+
+        {
+            // (_pings: 162315, pyindexer: 2000, start 36500, end 1, step 38500, I 125816, i 162315)
+            PyIndexer indexer(162315, 36500, 38500, 1);
+            auto      expected_results_step1 = xt::arange(36500, 38500, 1);
+            REQUIRE(indexer.size() == expected_results_step1.size());
+
+            size_t enumerator = 0;
+            for (const auto i : indexer)
+            {
+                INFO(fmt::format("enumerator: {}", enumerator));
+                INFO(fmt::format("--- indexer ---\n{}", indexer.info_string()));
+
+                REQUIRE(i == size_t(expected_results_step1.at(enumerator)));
+                ++enumerator;
+            }
+
+            indexer.reset(162315, 36500, 38500, 3);
+            auto expected_results_step3 = xt::arange(36500, 38500, 3);
+            REQUIRE(indexer.size() == expected_results_step3.size());
+
+            enumerator = 0;
+            for (const auto i : indexer)
+            {
+                INFO(fmt::format("enumerator: {}", enumerator));
+                INFO(fmt::format("--- indexer ---\n{}", indexer.info_string()));
+
+                REQUIRE(i == size_t(expected_results_step3.at(enumerator)));
+                ++enumerator;
+            }
+        }
     }
 
     SECTION("Reproduce precomputed results (standard)")
@@ -110,6 +171,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Reproduce precomputed results (slice, positive single step)")
     {
         PyIndexer indexer(100, 10, 90, 1);
+        INFO(indexer.info_string());
 
         REQUIRE(indexer(0) == 10);
         REQUIRE(indexer(1) == 11);
@@ -130,16 +192,20 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Reproduce precomputed results (slice, positive multi step)")
     {
         PyIndexer indexer(100, 10, 90, 3);
+        auto      expected_results = xt::arange(10, 90, 3);
+        REQUIRE(indexer.size() == expected_results.size());
 
-        CHECK(indexer(0) == 10);
-        CHECK(indexer(1) == 13);
-        CHECK(indexer(11) == 43);
-        CHECK(indexer(26) == 88);
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
 
-        CHECK(indexer(-1) == 89);
-        CHECK(indexer(-10) == 62);
-        CHECK(indexer(-26) == 14);
-        CHECK(indexer(-27) == 11);
+        CHECK(indexer(-1) == indexer(26));
+        CHECK(indexer(-10) == indexer(17));
+        CHECK(indexer(-26) == indexer(1));
+        CHECK(indexer(-27) == indexer(0));
 
         REQUIRE(indexer.size() == 27);
 
@@ -149,17 +215,23 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, negative single step)")
     {
-        PyIndexer indexer(100, 10, 90, -1);
+        PyIndexer indexer(100, 90, 10, -1);
 
-        REQUIRE(indexer(0) == 89);
-        REQUIRE(indexer(1) == 88);
-        REQUIRE(indexer(11) == 78);
-        REQUIRE(indexer(79) == 10);
+        auto expected_results = xt::arange(90, 10, -1);
 
-        REQUIRE(indexer(-1) == 10);
-        REQUIRE(indexer(-10) == 19);
-        REQUIRE(indexer(-79) == 88);
-        REQUIRE(indexer(-80) == 89);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        CHECK(indexer(-1) == 11);
+        CHECK(indexer(-10) == 20);
+        CHECK(indexer(-79) == 89);
+        CHECK(indexer(-80) == 90);
 
         REQUIRE(indexer.size() == 80);
 
@@ -169,17 +241,17 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, negative multi step)")
     {
-        PyIndexer indexer(100, 10, 90, -3);
+        PyIndexer indexer(100, 90, 10, -3);
 
-        CHECK(indexer(0) == 89);
-        CHECK(indexer(1) == 86);
-        CHECK(indexer(11) == 56);
-        CHECK(indexer(26) == 11);
+        CHECK(indexer(0) == 90);
+        CHECK(indexer(1) == 87);
+        CHECK(indexer(11) == 57);
+        CHECK(indexer(26) == 12);
 
-        CHECK(indexer(-1) == 10);
-        CHECK(indexer(-10) == 37);
-        CHECK(indexer(-26) == 85);
-        CHECK(indexer(-27) == 88);
+        CHECK(indexer(-1) == 12);
+        CHECK(indexer(-10) == 39);
+        CHECK(indexer(-26) == 87);
+        CHECK(indexer(-27) == 90);
 
         REQUIRE(indexer.size() == 27);
 
