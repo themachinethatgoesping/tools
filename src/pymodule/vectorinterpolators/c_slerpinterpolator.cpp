@@ -9,8 +9,8 @@
 #include <tuple>
 #include <vector>
 
-#include "../../themachinethatgoesping/tools_pybind/classhelper.hpp"
 #include "../../themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp"
+#include "../../themachinethatgoesping/tools_pybind/classhelper.hpp"
 #include "../docstrings.hpp"
 #include "module.hpp"
 

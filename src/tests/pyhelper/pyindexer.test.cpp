@@ -119,7 +119,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         {
             // (_pings: 162315, pyindexer: 2000, start 36500, end 1, step 38500, I 125816, i 162315)
             PyIndexer indexer(162315, 36500, 38500, 1);
-            auto      expected_results_step1 = xt::arange(36500, 38500, 1);
+            REQUIRE(indexer == PyIndexer(162315, PyIndexer::Slice(36500, 38500, 1)));
+            auto expected_results_step1 = xt::arange(36500, 38500, 1);
             REQUIRE(indexer.size() == expected_results_step1.size());
 
             size_t enumerator = 0;
@@ -133,6 +134,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             }
 
             indexer.reset(162315, 36500, 38500, 3);
+            REQUIRE(indexer == PyIndexer(162315, PyIndexer::Slice(36500, 38500, 3)));
             auto expected_results_step3 = xt::arange(36500, 38500, 3);
             REQUIRE(indexer.size() == expected_results_step3.size());
 
@@ -172,6 +174,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     {
         PyIndexer indexer(100, 10, 90, 1);
         INFO(indexer.info_string());
+
+        REQUIRE(indexer == PyIndexer(100, PyIndexer::Slice(10, 90, 1)));
 
         REQUIRE(indexer(0) == 10);
         REQUIRE(indexer(1) == 11);
@@ -272,7 +276,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 3);
         CHECK(indexer(-10) == 30);
         CHECK(indexer(-26) == 78);
@@ -299,7 +303,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 96);
         CHECK(indexer(-10) == 69);
         CHECK(indexer(-26) == 21);
@@ -313,7 +317,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-34), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, negative start, negative end, positive multi step)")
+    SECTION(
+        "Reproduce precomputed results (slice, negative start, negative end, positive multi step)")
     {
         PyIndexer indexer(100, -80, -10, 3);
         auto      expected_results = xt::arange(20, 90, 3);
@@ -326,7 +331,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 89);
         CHECK(indexer(-10) == 62);
         CHECK(indexer(-23) == 23);
@@ -338,7 +343,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-25), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, negative start, negative end, negative multi step)")
+    SECTION(
+        "Reproduce precomputed results (slice, negative start, negative end, negative multi step)")
     {
         PyIndexer indexer(100, -30, -70, -7);
         auto      expected_results = xt::arange(70, 30, -7);
@@ -351,7 +357,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 35);
         CHECK(indexer(-2) == 42);
         CHECK(indexer(-3) == 49);
@@ -378,7 +384,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 63);
         CHECK(indexer(-2) == 56);
         CHECK(indexer(-9) == 7);
@@ -403,7 +409,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 71);
         CHECK(indexer(-2) == 78);
         CHECK(indexer(-4) == 92);
@@ -428,7 +434,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 28);
         CHECK(indexer(-2) == 21);
         CHECK(indexer(-4) == 7);
@@ -453,7 +459,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 36);
         CHECK(indexer(-2) == 43);
         CHECK(indexer(-9) == 92);
@@ -467,8 +473,9 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, none end, positive multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), 5);
-        auto      expected_results = xt::arange(0, 99, 5);
+        PyIndexer indexer(
+            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), 5);
+        auto expected_results = xt::arange(0, 99, 5);
         REQUIRE(indexer.size() == expected_results.size());
 
         for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
@@ -478,7 +485,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 95);
         CHECK(indexer(-2) == 90);
         CHECK(indexer(-19) == 5);
@@ -492,12 +499,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, none end, negative single step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -1);
+        PyIndexer indexer(
+            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -1);
         // xt::arange(99, 0, -1) does not capture the very last index (0)
-        auto      expected_results = xt::arange(99, 0, -1);
+        auto expected_results = xt::arange(99, 0, -1);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (size_t enumerator = 0; enumerator < indexer.size()-1; ++enumerator)
+        for (size_t enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -505,7 +513,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(99) == 0);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 0);
         CHECK(indexer(-2) == 1);
         CHECK(indexer(-99) == 98);
@@ -519,12 +527,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, none end, negative multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -11);
+        PyIndexer indexer(
+            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -11);
         // xt::arange(99, 0, -11) does not capture the very last index (0)
-        auto      expected_results = xt::arange(99, 0, -11);
-        REQUIRE(indexer.size() == expected_results.size()+1);
+        auto expected_results = xt::arange(99, 0, -11);
+        REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (size_t enumerator = 0; enumerator < indexer.size()-1; ++enumerator)
+        for (size_t enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -532,7 +541,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(9) == 0);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 0);
         CHECK(indexer(-2) == 11);
         CHECK(indexer(-9) == 88);
@@ -557,7 +566,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
             REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
         }
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 96);
         CHECK(indexer(-2) == 85);
         CHECK(indexer(-6) == 41);
@@ -583,7 +592,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(0) == 30);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 4);
         CHECK(indexer(-2) == 17);
         CHECK(indexer(-3) == 30);
@@ -608,7 +617,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(0) == 30);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 0);
         CHECK(indexer(-2) == 1);
         CHECK(indexer(-30) == 29);
@@ -634,7 +643,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(0) == 70);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 98);
         CHECK(indexer(-2) == 94);
         CHECK(indexer(-7) == 74);
@@ -660,7 +669,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
         CHECK(indexer(0) == 70);
 
-        //INFO(indexer.info_string());
+        // INFO(indexer.info_string());
         CHECK(indexer(-1) == 2);
         CHECK(indexer(-2) == 6);
         CHECK(indexer(-17) == 66);
@@ -670,5 +679,13 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE_THROWS_AS(indexer(18), std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-19), std::out_of_range);
+    }
+
+    SECTION("Compare initialization using default and PyIndexer::Slice")
+    {
+        REQUIRE(PyIndexer(100, 0, 100, 1) == PyIndexer(100, PyIndexer::Slice(0, 100, 1)));
+
+        REQUIRE(PyIndexer(100, PyIndexer::None, -10, -1) ==
+                PyIndexer(100, PyIndexer::Slice(PyIndexer::None, -10, -1)));
     }
 }

@@ -45,6 +45,30 @@ class PyIndexer
     PyIndexer() = default;
 
   public:
+    const static long None = std::numeric_limits<long>::max(); ///< a static value to indicate None
+
+    /**
+     * @brief A structure to hold a slice
+     *
+     */
+    struct Slice
+    {
+
+        long start = PyIndexer::None; ///< the start index of the slice (None if not sliced)
+        long end   = PyIndexer::None; ///< the end index of the slice (None if not sliced)
+                                      ///< (end is exclusive)
+        long step = 1;                ///< the step size of the slice (1 if not sliced)
+
+        Slice() = default;
+
+        Slice(long start, long end, long step = 1)
+            : start(start)
+            , end(end)
+            , step(step)
+        {
+        }
+    };
+
     /**
      * @brief Construct a new Py Indexer object   *
      * Allow for negative indexing (starting from the end of the container)
@@ -73,20 +97,46 @@ class PyIndexer
     }
 
     /**
+     * @brief Construct a new Py Indexer object
+     * Allow for negative indexing (starting from the end of the container)
+     * Allow for sliced indexing (start, stop, step)
+     *
+     * @param vector_size Size of the vector to be indexed
+     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     */
+    PyIndexer(size_t vector_size, const PyIndexer::Slice& slice)
+        : _vector_size(vector_size)
+    {
+        set_slice_indexing(slice);
+    }
+
+    /**
+     * @brief Setup slice indexing after construction
+     *
+     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     */
+    void set_slice_indexing(const PyIndexer::Slice& slice)
+    {
+        set_slice_indexing(slice.start, slice.end, slice.step);
+    }
+
+    /**
      * @brief Setup slice indexing after construction
      *
      * @param start Start index of the slice
      * @param end End index of the slice
      * @param step Step size of the slice
      */
-    void set_slice_indexing(long start, long end, const long step = 1)
+    void set_slice_indexing(long start, long end, long step = 1)
     {
         if (step == 0)
             throw(std::out_of_range("PyIndexer: step is zero!"));
+        else if (step == PyIndexer::None)
+            step = 1;
 
         if (end < 0)
             end += _vector_size;
-        else if (end == std::numeric_limits<long>::max())
+        else if (end == PyIndexer::None)
         {
             if (step > 0)
                 end = _vector_size;
@@ -96,14 +146,13 @@ class PyIndexer
 
         if (start < 0)
             start += _vector_size;
-        else if (start == std::numeric_limits<long>::max())
+        else if (start == PyIndexer::None)
         {
             if (step > 0)
                 start = 0;
             else
                 start = _vector_size - 1;
         }
-
 
         if (start < end && step > 0)
         {
@@ -208,6 +257,18 @@ class PyIndexer
     {
         _vector_size = vector_size;
         set_slice_indexing(start, end, step);
+    }
+
+    /**
+     * @brief Reset the indexer (set up new slicing)
+     *
+     * @param vector_size Size of the vector to be indexed
+     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     */
+    void reset(size_t vector_size, PyIndexer::Slice slice)
+    {
+        _vector_size = vector_size;
+        set_slice_indexing(slice);
     }
 
     // ----- operators (index) -----
