@@ -364,4 +364,311 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(6), std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-7), std::out_of_range);
     }
+
+    SECTION("Reproduce precomputed results (slice, none start, positive end, positive multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, 7);
+        auto      expected_results = xt::arange(0, 70, 7);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 63);
+        CHECK(indexer(-2) == 56);
+        CHECK(indexer(-9) == 7);
+        CHECK(indexer(-10) == 0);
+
+        REQUIRE(indexer.size() == 10);
+
+        REQUIRE_THROWS_AS(indexer(10), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, positive end, negative multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, -7);
+        auto      expected_results = xt::arange(99, 70, -7);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 71);
+        CHECK(indexer(-2) == 78);
+        CHECK(indexer(-4) == 92);
+        CHECK(indexer(-5) == 99);
+
+        REQUIRE(indexer.size() == 5);
+
+        REQUIRE_THROWS_AS(indexer(5), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-6), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, negative end, positive multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, 7);
+        auto      expected_results = xt::arange(0, 30, 7);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 28);
+        CHECK(indexer(-2) == 21);
+        CHECK(indexer(-4) == 7);
+        CHECK(indexer(-5) == 0);
+
+        REQUIRE(indexer.size() == 5);
+
+        REQUIRE_THROWS_AS(indexer(5), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-6), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, negative end, negative multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, -7);
+        auto      expected_results = xt::arange(99, 30, -7);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 36);
+        CHECK(indexer(-2) == 43);
+        CHECK(indexer(-9) == 92);
+        CHECK(indexer(-10) == 99);
+
+        REQUIRE(indexer.size() == 10);
+
+        REQUIRE_THROWS_AS(indexer(10), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, none end, positive multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), 5);
+        auto      expected_results = xt::arange(0, 99, 5);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 95);
+        CHECK(indexer(-2) == 90);
+        CHECK(indexer(-19) == 5);
+        CHECK(indexer(-20) == 0);
+
+        REQUIRE(indexer.size() == 20);
+
+        REQUIRE_THROWS_AS(indexer(20), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-21), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, none end, negative single step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -1);
+        // xt::arange(99, 0, -1) does not capture the very last index (0)
+        auto      expected_results = xt::arange(99, 0, -1);
+        REQUIRE(indexer.size() == expected_results.size() + 1);
+
+        for (size_t enumerator = 0; enumerator < indexer.size()-1; ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(99) == 0);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 0);
+        CHECK(indexer(-2) == 1);
+        CHECK(indexer(-99) == 98);
+        CHECK(indexer(-100) == 99);
+
+        REQUIRE(indexer.size() == 100);
+
+        REQUIRE_THROWS_AS(indexer(100), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-101), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, none start, none end, negative multi step)")
+    {
+        PyIndexer indexer(100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -11);
+        // xt::arange(99, 0, -11) does not capture the very last index (0)
+        auto      expected_results = xt::arange(99, 0, -11);
+        REQUIRE(indexer.size() == expected_results.size()+1);
+
+        for (size_t enumerator = 0; enumerator < indexer.size()-1; ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(9) == 0);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 0);
+        CHECK(indexer(-2) == 11);
+        CHECK(indexer(-9) == 88);
+        CHECK(indexer(-10) == 99);
+
+        REQUIRE(indexer.size() == 10);
+
+        REQUIRE_THROWS_AS(indexer(10), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, positive start, none end, positive multi step)")
+    {
+        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), 11);
+        auto      expected_results = xt::arange(30, 100, 11);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 96);
+        CHECK(indexer(-2) == 85);
+        CHECK(indexer(-6) == 41);
+        CHECK(indexer(-7) == 30);
+
+        REQUIRE(indexer.size() == 7);
+
+        REQUIRE_THROWS_AS(indexer(7), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-8), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, positive start, none end, negative multi step)")
+    {
+        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -13);
+        auto      expected_results = xt::arange(30, 0, -13);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(0) == 30);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 4);
+        CHECK(indexer(-2) == 17);
+        CHECK(indexer(-3) == 30);
+
+        REQUIRE(indexer.size() == 3);
+
+        REQUIRE_THROWS_AS(indexer(3), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-4), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, positive start, none end, negative single step)")
+    {
+        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -1);
+        auto      expected_results = xt::arange(30, 0, -1);
+        REQUIRE(indexer.size() == expected_results.size() + 1);
+
+        for (size_t enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(0) == 30);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 0);
+        CHECK(indexer(-2) == 1);
+        CHECK(indexer(-30) == 29);
+        CHECK(indexer(-31) == 30);
+
+        REQUIRE(indexer.size() == 31);
+
+        REQUIRE_THROWS_AS(indexer(31), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-32), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, negative start, none end, positive multi step)")
+    {
+        PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), 4);
+        auto      expected_results = xt::arange(70, 100, 4);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(0) == 70);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 98);
+        CHECK(indexer(-2) == 94);
+        CHECK(indexer(-7) == 74);
+        CHECK(indexer(-8) == 70);
+
+        REQUIRE(indexer.size() == 8);
+
+        REQUIRE_THROWS_AS(indexer(8), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-9), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, negative start, none end, negative multi step)")
+    {
+        PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), -4);
+        auto      expected_results = xt::arange(70, 0, -4);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+        CHECK(indexer(0) == 70);
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 2);
+        CHECK(indexer(-2) == 6);
+        CHECK(indexer(-17) == 66);
+        CHECK(indexer(-18) == 70);
+
+        REQUIRE(indexer.size() == 18);
+
+        REQUIRE_THROWS_AS(indexer(18), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-19), std::out_of_range);
+    }
 }

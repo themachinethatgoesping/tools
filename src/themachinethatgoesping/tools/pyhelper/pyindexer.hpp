@@ -87,16 +87,22 @@ class PyIndexer
         if (end < 0)
             end += _vector_size;
         else if (end == std::numeric_limits<long>::max())
-            end = _vector_size;
-        else if (end == std::numeric_limits<long>::min())
-            end = 0;
+        {
+            if (step > 0)
+                end = _vector_size;
+            else
+                end = -1;
+        }
 
         if (start < 0)
             start += _vector_size;
         else if (start == std::numeric_limits<long>::max())
-            start = _vector_size;
-        else if (start == std::numeric_limits<long>::min())
-            start = 0;
+        {
+            if (step > 0)
+                start = 0;
+            else
+                start = _vector_size - 1;
+        }
 
 
         if (start < end && step > 0)
@@ -109,14 +115,7 @@ class PyIndexer
 
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
-                    "PyIndexer({}, {}, {}): Start is out of bounds!\n--- indexer ---\n{}",
-                    start,
-                    end,
-                    step,
-                    info_string())));
-            if (_index_end > long(_vector_size))
-                throw(std::out_of_range(fmt::format(
-                    "PyIndexer({}, {}, {}): Ends is out of bounds!\n--- indexer ---\n{}",
+                    "PyIndexer({}, {}, {}): index_start is out of bounds!\n--- indexer ---\n{}",
                     start,
                     end,
                     step,
@@ -137,13 +136,6 @@ class PyIndexer
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
                     "PyIndexer({}, {}, {}): Start is out of bounds!\n--- indexer ---\n{}",
-                    start,
-                    end,
-                    step,
-                    info_string())));
-            if (_index_end > long(_vector_size))
-                throw(std::out_of_range(fmt::format(
-                    "PyIndexer({}, {}, {}): Ends is out of bounds!\n--- indexer ---\n{}",
                     start,
                     end,
                     step,
