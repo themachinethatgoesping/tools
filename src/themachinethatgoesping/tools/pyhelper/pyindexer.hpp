@@ -79,13 +79,25 @@ class PyIndexer
      * @param end End index of the slice
      * @param step Step size of the slice
      */
-    void set_slice_indexing(const long start, long end, const long step = 1)
+    void set_slice_indexing(long start, long end, const long step = 1)
     {
         if (step == 0)
             throw(std::out_of_range("PyIndexer: step is zero!"));
 
-        if (end == std::numeric_limits<long>::max())
+        if (end < 0)
+            end += _vector_size;
+        else if (end == std::numeric_limits<long>::max())
             end = _vector_size;
+        else if (end == std::numeric_limits<long>::min())
+            end = 0;
+
+        if (start < 0)
+            start += _vector_size;
+        else if (start == std::numeric_limits<long>::max())
+            start = _vector_size;
+        else if (start == std::numeric_limits<long>::min())
+            start = 0;
+
 
         if (start < end && step > 0)
         {

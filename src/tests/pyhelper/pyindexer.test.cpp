@@ -258,4 +258,110 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(27), std::out_of_range);
         REQUIRE_THROWS_AS(indexer(-28), std::out_of_range);
     }
+
+    SECTION("Reproduce precomputed results (slice, negative start, negative multi step)")
+    {
+        PyIndexer indexer(100, -1, 0, -3);
+        auto      expected_results = xt::arange(99, 0, -3);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 3);
+        CHECK(indexer(-10) == 30);
+        CHECK(indexer(-26) == 78);
+        CHECK(indexer(-27) == 81);
+        CHECK(indexer(-32) == 96);
+        CHECK(indexer(-33) == 99);
+
+        REQUIRE(indexer.size() == 33);
+
+        REQUIRE_THROWS_AS(indexer(33), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-34), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, negative end, positive multi step)")
+    {
+        PyIndexer indexer(100, 0, -1, 3);
+        auto      expected_results = xt::arange(0, 99, 3);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 96);
+        CHECK(indexer(-10) == 69);
+        CHECK(indexer(-26) == 21);
+        CHECK(indexer(-27) == 18);
+        CHECK(indexer(-32) == 3);
+        CHECK(indexer(-33) == 0);
+
+        REQUIRE(indexer.size() == 33);
+
+        REQUIRE_THROWS_AS(indexer(33), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-34), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, negative start, negative end, positive multi step)")
+    {
+        PyIndexer indexer(100, -80, -10, 3);
+        auto      expected_results = xt::arange(20, 90, 3);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 89);
+        CHECK(indexer(-10) == 62);
+        CHECK(indexer(-23) == 23);
+        CHECK(indexer(-24) == 20);
+
+        REQUIRE(indexer.size() == 24);
+
+        REQUIRE_THROWS_AS(indexer(24), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-25), std::out_of_range);
+    }
+
+    SECTION("Reproduce precomputed results (slice, negative start, negative end, negative multi step)")
+    {
+        PyIndexer indexer(100, -30, -70, -7);
+        auto      expected_results = xt::arange(70, 30, -7);
+        REQUIRE(indexer.size() == expected_results.size());
+
+        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        {
+            INFO(fmt::format("enumerator: {}", enumerator));
+            INFO(indexer.info_string());
+            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+        }
+
+        //INFO(indexer.info_string());
+        CHECK(indexer(-1) == 35);
+        CHECK(indexer(-2) == 42);
+        CHECK(indexer(-3) == 49);
+        CHECK(indexer(-4) == 56);
+        CHECK(indexer(-5) == 63);
+        CHECK(indexer(-6) == 70);
+
+        REQUIRE(indexer.size() == 6);
+
+        REQUIRE_THROWS_AS(indexer(6), std::out_of_range);
+        REQUIRE_THROWS_AS(indexer(-7), std::out_of_range);
+    }
 }
