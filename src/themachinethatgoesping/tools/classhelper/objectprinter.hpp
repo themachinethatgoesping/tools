@@ -766,6 +766,10 @@ class ObjectPrinter
                 max_len_value.back() = str_lines.back().size();
         }
 
+        // If no variables are added, do not underline the object name
+        if (str_lines.size() == 0)
+            return _name;
+
         std::string str = underline(_name, '#');
         section_nr      = 0;
         for (size_t i = 0; i < str_lines.size(); ++i)
