@@ -105,6 +105,14 @@ class PyIndexer
         __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
     };
 
+    Slice to_slice() const
+    {
+        if (_index_stop < 0)
+            return Slice(_index_start, PyIndexer::None, _index_step);            
+
+        return Slice(_index_start, _index_stop, _index_step);
+    }
+
     /**
      * @brief Construct a new Py Indexer object   *
      * Allow for negative indexing (starting from the stop of the container)
@@ -504,7 +512,7 @@ class PyIndexer
         else
         {
             printer.register_section(
-                PyIndexer::Slice(_index_start, _index_stop, _index_step).info_string());
+                this->to_slice().info_string());
             printer.register_value("_index_start", _index_start);
             printer.register_value("_index_stop", _index_stop);
             printer.register_value("_index_step", _index_step);
