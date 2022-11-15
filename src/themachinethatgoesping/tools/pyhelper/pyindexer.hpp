@@ -149,6 +149,22 @@ class PyIndexer
     }
 
     /**
+     * @brief Get a reversed PyIndexer object
+     *
+     * @return PyIndexer
+     */
+    PyIndexer reversed() const
+    {
+        long new_start = _index_stop - _index_step;
+        long new_stop  = _index_start - _index_step;
+
+        if (new_stop < 0)
+            new_stop = PyIndexer::None;
+
+        return PyIndexer(_vector_size, new_start, new_stop, -_index_step);
+    }
+
+    /**
      * @brief Setup slice indexing after construction
      *
      * @param slice PyIndexer::Slice structure (contains, start, stop, step)
