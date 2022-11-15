@@ -16,13 +16,12 @@ using namespace themachinethatgoesping::tools::pyhelper;
 
 void init_c_pyindexer(pybind11::module& m)
 {
-
     py::class_<PyIndexer::Slice>(
         m, "PyIndexerSlice", DOC(themachinethatgoesping, tools, pyhelper, PyIndexer, Slice))
         .def(py::init<long, long, long>(),
              DOC(themachinethatgoesping, tools, pyhelper, PyIndexer, Slice, Slice_2),
-             py::arg("start") = PyIndexer::None,
-             py::arg("stop")  = PyIndexer::None,
+             py::arg("start") = std::numeric_limits<long>::max(),
+             py::arg("stop")  = std::numeric_limits<long>::max(),
              py::arg("step")  = 1)
         .def(py::init([](const py::object& pyslice) {
                  auto pystart = pyslice.attr("start");
@@ -30,11 +29,11 @@ void init_c_pyindexer(pybind11::module& m)
                  auto pystep  = pyslice.attr("step");
 
                  long start = py::cast<py::object>(pystart).is(py::none())
-                                  ? PyIndexer::None
+                                  ? std::numeric_limits<long>::max()
                                   : py::cast<long>(pystart);
-                 long stop  = py::cast<py::object>(pystop).is(py::none()) ? PyIndexer::None
+                 long stop  = py::cast<py::object>(pystop).is(py::none()) ? std::numeric_limits<long>::max()
                                                                           : py::cast<long>(pystop);
-                 long step  = py::cast<py::object>(pystep).is(py::none()) ? PyIndexer::None
+                 long step  = py::cast<py::object>(pystep).is(py::none()) ? std::numeric_limits<long>::max()
                                                                           : py::cast<long>(pystep);
 
                  return PyIndexer::Slice(start, stop, step);

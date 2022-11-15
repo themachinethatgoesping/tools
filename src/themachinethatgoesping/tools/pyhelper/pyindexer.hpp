@@ -30,12 +30,10 @@ class PyIndexer
 
     size_t _slice_size = _vector_size; ///< the size of the slice (_vector_size if not sliced)
     size_t _index_min  = 0;            ///< the minimum index of the slice (0 if not sliced)
-    size_t _index_max =
-        _vector_size - 1; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
+    size_t _index_max; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
     long _index_start = 0; ///< the start index of the slice (0 if not sliced)
-    long _index_stop =
-        _vector_size;         ///< the stop index of the slice (_vector_size if not sliced)
+    long _index_stop;         ///< the stop index of the slice (_vector_size if not sliced)
                               ///< (stop is exclusive) (long because can be negative under some
                               ///< circumstances (see below) this index is used for out of bounds
     long _index_step = 1;     ///< the step size of the slice (1 if not sliced)
@@ -115,6 +113,8 @@ class PyIndexer
      */
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
+        , _index_max(vector_size - 1)
+        , _index_stop(vector_size)
     {
     }
 
