@@ -689,3 +689,46 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
                 PyIndexer(100, PyIndexer::Slice(PyIndexer::None, -10, -1)));
     }
 }
+
+
+
+TEST_CASE("pyhelper:PyIndexer::Slice should", TESTTAG)
+{
+    SECTION("Support common functions")
+    {
+        PyIndexer::Slice slice(1, 5, 2);
+
+        // copy operator
+        auto slice_copy = slice;
+        REQUIRE(slice_copy == slice);
+
+        // move operator
+        auto slice_move = std::move(slice_copy);
+        REQUIRE(slice_move == slice);
+
+        // copy constructor
+        auto slice_copy2(slice);
+        REQUIRE(slice_copy2 == slice);
+
+        // check inequality
+        slice = PyIndexer::Slice(2, 5, 2);
+        INFO(slice.info_string());
+        REQUIRE(slice_copy2 != slice);
+        REQUIRE(slice_move != slice);
+
+        // check that printing to stream does not crash
+        std::stringstream ss;
+        slice.print(ss);
+
+        // test internal to/from binary functions
+        auto buffer              = slice.to_binary();
+        auto slice_from_binary = PyIndexer::Slice::from_binary(buffer);
+        REQUIRE(slice_from_binary == slice);
+
+        // test internal to/from stream functions
+        std::stringstream ss2;
+        slice.to_stream(ss2);
+        auto slice_from_stream = PyIndexer::Slice::from_stream(ss2);
+        REQUIRE(slice_from_stream == slice);
+    }
+}

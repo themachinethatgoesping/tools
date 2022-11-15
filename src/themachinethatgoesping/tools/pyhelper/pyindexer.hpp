@@ -67,6 +67,44 @@ class PyIndexer
             , step(step)
         {
         }
+
+        // operators
+        bool operator==(const Slice& other) const
+        {
+            return start == other.start && end == other.end && step == other.step;
+        }
+        bool operator !=(const Slice& other) const { return !(*this == other); }
+
+        classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+        {
+            std::string start_ = start == PyIndexer::None ? "" : std::to_string(start);
+            std::string end_   = end == PyIndexer::None ? "" : std::to_string(end);
+            std::string step_  = step == PyIndexer::None ? "" : std::to_string(step);
+
+            classhelper::ObjectPrinter printer(
+                fmt::format("PyIndexer::Slice({}:{}:{})", start_, end_, step_), float_precision);
+
+            return printer;
+        }
+
+        static PyIndexer::Slice from_stream(std::istream& is)
+        {
+            PyIndexer::Slice slice;
+            is.read(reinterpret_cast<char*>(&slice.start), sizeof(PyIndexer::Slice));
+
+            return slice;
+        }
+
+        void to_stream(std::ostream& os) const
+        {
+            os.write(reinterpret_cast<const char*>(&start), sizeof(PyIndexer::Slice));
+        }
+
+        // -- class helper function macros --
+        // define to_binary and from_binary functions (needs to_stream and from_stream)
+        __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(PyIndexer::Slice)
+        // define info_string and print functions (needs the __printer__ function)
+        __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
     };
 
     /**
@@ -449,7 +487,7 @@ class PyIndexer
             printer.register_value("_is_slice", _is_slice);
         else
         {
-            printer.register_section("Slice");
+            printer.register_section(PyIndexer::Slice(_index_start,_index_end,_index_step).info_string());
             printer.register_value("_index_start", _index_start);
             printer.register_value("_index_end", _index_end);
             printer.register_value("_index_step", _index_step);
