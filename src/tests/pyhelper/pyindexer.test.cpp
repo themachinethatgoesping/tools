@@ -117,7 +117,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         }
 
         {
-            // (_pings: 162315, pyindexer: 2000, start 36500, end 1, step 38500, I 125816, i 162315)
+            // (_pings: 162315, pyindexer: 2000, start 36500, stop 1, step 38500, I 125816, i
+            // 162315)
             PyIndexer indexer(162315, 36500, 38500, 1);
             REQUIRE(indexer == PyIndexer(162315, PyIndexer::Slice(36500, 38500, 1)));
             auto expected_results_step1 = xt::arange(36500, 38500, 1);
@@ -290,7 +291,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-34), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, negative end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, negative stop, positive multi step)")
     {
         PyIndexer indexer(100, 0, -1, 3);
         auto      expected_results = xt::arange(0, 99, 3);
@@ -318,7 +319,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     }
 
     SECTION(
-        "Reproduce precomputed results (slice, negative start, negative end, positive multi step)")
+        "Reproduce precomputed results (slice, negative start, negative stop, positive multi step)")
     {
         PyIndexer indexer(100, -80, -10, 3);
         auto      expected_results = xt::arange(20, 90, 3);
@@ -344,7 +345,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     }
 
     SECTION(
-        "Reproduce precomputed results (slice, negative start, negative end, negative multi step)")
+        "Reproduce precomputed results (slice, negative start, negative stop, negative multi step)")
     {
         PyIndexer indexer(100, -30, -70, -7);
         auto      expected_results = xt::arange(70, 30, -7);
@@ -371,7 +372,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-7), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, positive end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, positive stop, positive multi step)")
     {
         PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, 7);
         auto      expected_results = xt::arange(0, 70, 7);
@@ -396,7 +397,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, positive end, negative multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, positive stop, negative multi step)")
     {
         PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, -7);
         auto      expected_results = xt::arange(99, 70, -7);
@@ -421,7 +422,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-6), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, negative end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, negative stop, positive multi step)")
     {
         PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, 7);
         auto      expected_results = xt::arange(0, 30, 7);
@@ -446,7 +447,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-6), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, negative end, negative multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, negative stop, negative multi step)")
     {
         PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, -7);
         auto      expected_results = xt::arange(99, 30, -7);
@@ -471,7 +472,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, none end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, none stop, positive multi step)")
     {
         PyIndexer indexer(
             100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), 5);
@@ -497,7 +498,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-21), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, none end, negative single step)")
+    SECTION("Reproduce precomputed results (slice, none start, none stop, negative single step)")
     {
         PyIndexer indexer(
             100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -1);
@@ -525,7 +526,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-101), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, none start, none end, negative multi step)")
+    SECTION("Reproduce precomputed results (slice, none start, none stop, negative multi step)")
     {
         PyIndexer indexer(
             100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -11);
@@ -553,7 +554,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-11), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, positive start, none end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, positive start, none stop, positive multi step)")
     {
         PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), 11);
         auto      expected_results = xt::arange(30, 100, 11);
@@ -578,7 +579,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-8), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, positive start, none end, negative multi step)")
+    SECTION("Reproduce precomputed results (slice, positive start, none stop, negative multi step)")
     {
         PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -13);
         auto      expected_results = xt::arange(30, 0, -13);
@@ -603,7 +604,8 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-4), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, positive start, none end, negative single step)")
+    SECTION(
+        "Reproduce precomputed results (slice, positive start, none stop, negative single step)")
     {
         PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -1);
         auto      expected_results = xt::arange(30, 0, -1);
@@ -629,7 +631,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-32), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, negative start, none end, positive multi step)")
+    SECTION("Reproduce precomputed results (slice, negative start, none stop, positive multi step)")
     {
         PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), 4);
         auto      expected_results = xt::arange(70, 100, 4);
@@ -655,7 +657,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         REQUIRE_THROWS_AS(indexer(-9), std::out_of_range);
     }
 
-    SECTION("Reproduce precomputed results (slice, negative start, none end, negative multi step)")
+    SECTION("Reproduce precomputed results (slice, negative start, none stop, negative multi step)")
     {
         PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), -4);
         auto      expected_results = xt::arange(70, 0, -4);
@@ -690,8 +692,6 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     }
 }
 
-
-
 TEST_CASE("pyhelper:PyIndexer::Slice should", TESTTAG)
 {
     SECTION("Support common functions")
@@ -721,7 +721,7 @@ TEST_CASE("pyhelper:PyIndexer::Slice should", TESTTAG)
         slice.print(ss);
 
         // test internal to/from binary functions
-        auto buffer              = slice.to_binary();
+        auto buffer            = slice.to_binary();
         auto slice_from_binary = PyIndexer::Slice::from_binary(buffer);
         REQUIRE(slice_from_binary == slice);
 

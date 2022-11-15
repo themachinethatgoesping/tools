@@ -20,7 +20,7 @@ namespace pyhelper {
 
 /**
  * @brief A class to compute python style indexing
- * Allow for negative indexing (starting from the end of the container)
+ * Allow for negative indexing (starting from the stop of the container)
  * Allow for sliced indexing (start, stop, step)
  *
  */
@@ -34,9 +34,9 @@ class PyIndexer
         _vector_size - 1; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
     long _index_start = 0; ///< the start index of the slice (0 if not sliced)
-    long _index_end =
-        _vector_size;         ///< the end index of the slice (_vector_size if not sliced)
-                              ///< (end is exclusive) (long because can be negative under some
+    long _index_stop =
+        _vector_size;         ///< the stop index of the slice (_vector_size if not sliced)
+                              ///< (stop is exclusive) (long because can be negative under some
                               ///< circumstances (see below) this index is used for out of bounds
     long _index_step = 1;     ///< the step size of the slice (1 if not sliced)
     bool _is_slice   = false; ///< is this a slice?
@@ -55,15 +55,15 @@ class PyIndexer
     {
 
         long start = PyIndexer::None; ///< the start index of the slice (None if not sliced)
-        long end   = PyIndexer::None; ///< the end index of the slice (None if not sliced)
-                                      ///< (end is exclusive)
+        long stop  = PyIndexer::None; ///< the stop index of the slice (None if not sliced)
+                                      ///< (stop is exclusive)
         long step = 1;                ///< the step size of the slice (1 if not sliced)
 
         Slice() = default;
 
-        Slice(long start, long end, long step = 1)
+        Slice(long start, long stop, long step = 1)
             : start(start)
-            , end(end)
+            , stop(stop)
             , step(step)
         {
         }
@@ -71,18 +71,18 @@ class PyIndexer
         // operators
         bool operator==(const Slice& other) const
         {
-            return start == other.start && end == other.end && step == other.step;
+            return start == other.start && stop == other.stop && step == other.step;
         }
-        bool operator !=(const Slice& other) const { return !(*this == other); }
+        bool operator!=(const Slice& other) const { return !(*this == other); }
 
         classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
         {
             std::string start_ = start == PyIndexer::None ? "" : std::to_string(start);
-            std::string end_   = end == PyIndexer::None ? "" : std::to_string(end);
+            std::string stop_  = stop == PyIndexer::None ? "" : std::to_string(stop);
             std::string step_  = step == PyIndexer::None ? "" : std::to_string(step);
 
             classhelper::ObjectPrinter printer(
-                fmt::format("PyIndexer::Slice({}:{}:{})", start_, end_, step_), float_precision);
+                fmt::format("PyIndexer::Slice({}:{}:{})", start_, stop_, step_), float_precision);
 
             return printer;
         }
@@ -109,7 +109,7 @@ class PyIndexer
 
     /**
      * @brief Construct a new Py Indexer object   *
-     * Allow for negative indexing (starting from the end of the container)
+     * Allow for negative indexing (starting from the stop of the container)
      *
      * @param vector_size Size of the vector to be indexed
      */
@@ -120,27 +120,27 @@ class PyIndexer
 
     /**
      * @brief Construct a new Py Indexer object
-     * Allow for negative indexing (starting from the end of the container)
+     * Allow for negative indexing (starting from the stop of the container)
      * Allow for sliced indexing (start, stop, step)
      *
      * @param vector_size Size of the vector to be indexed
      * @param start Start index of the slice
-     * @param end End index of the slice
+     * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    PyIndexer(size_t vector_size, long start, long end, long step = 1)
+    PyIndexer(size_t vector_size, long start, long stop, long step = 1)
         : _vector_size(vector_size)
     {
-        set_slice_indexing(start, end, step);
+        set_slice_indexing(start, stop, step);
     }
 
     /**
      * @brief Construct a new Py Indexer object
-     * Allow for negative indexing (starting from the end of the container)
+     * Allow for negative indexing (starting from the stop of the container)
      * Allow for sliced indexing (start, stop, step)
      *
      * @param vector_size Size of the vector to be indexed
-     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     * @param slice PyIndexer::Slice structure (contains, start, stop, step)
      */
     PyIndexer(size_t vector_size, const PyIndexer::Slice& slice)
         : _vector_size(vector_size)
@@ -151,35 +151,35 @@ class PyIndexer
     /**
      * @brief Setup slice indexing after construction
      *
-     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     * @param slice PyIndexer::Slice structure (contains, start, stop, step)
      */
     void set_slice_indexing(const PyIndexer::Slice& slice)
     {
-        set_slice_indexing(slice.start, slice.end, slice.step);
+        set_slice_indexing(slice.start, slice.stop, slice.step);
     }
 
     /**
      * @brief Setup slice indexing after construction
      *
      * @param start Start index of the slice
-     * @param end End index of the slice
+     * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    void set_slice_indexing(long start, long end, long step = 1)
+    void set_slice_indexing(long start, long stop, long step = 1)
     {
         if (step == 0)
             throw(std::out_of_range("PyIndexer: step is zero!"));
         else if (step == PyIndexer::None)
             step = 1;
 
-        if (end < 0)
-            end += _vector_size;
-        else if (end == PyIndexer::None)
+        if (stop < 0)
+            stop += _vector_size;
+        else if (stop == PyIndexer::None)
         {
             if (step > 0)
-                end = _vector_size;
+                stop = _vector_size;
             else
-                end = -1;
+                stop = -1;
         }
 
         if (start < 0)
@@ -192,39 +192,39 @@ class PyIndexer
                 start = _vector_size - 1;
         }
 
-        if (start < end && step > 0)
+        if (start < stop && step > 0)
         {
             _is_slice    = true;
             _index_start = start;
             _index_step  = step;
-            _slice_size  = size_t(std::ceil(float(end - start) / float(_index_step)));
-            _index_end   = _index_start + _slice_size * _index_step;
+            _slice_size  = size_t(std::ceil(float(stop - start) / float(_index_step)));
+            _index_stop  = _index_start + _slice_size * _index_step;
 
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
                     "PyIndexer({}, {}, {}): index_start is out of bounds!\n--- indexer ---\n{}",
                     start,
-                    end,
+                    stop,
                     step,
                     info_string())));
         }
-        else if (start > end && step < 0)
+        else if (start > stop && step < 0)
         {
             _is_slice    = true;
             _index_start = start;
             _index_step  = step;
-            _slice_size  = size_t(std::ceil(float(end - start) / float(_index_step)));
+            _slice_size  = size_t(std::ceil(float(stop - start) / float(_index_step)));
 
-            // _index end can be negative (if start is negative and end is positive, e.g. (start =
-            // 5, end = 0, step = -2)) this is not a problem, because the index is only used to
+            // _index stop can be negative (if start is negative and stop is positive, e.g. (start =
+            // 5, stop = 0, step = -2)) this is not a problem, because the index is only used to
             // check if it is out of bounds
-            _index_end = _index_start + _slice_size * _index_step;
+            _index_stop = _index_start + _slice_size * _index_step;
 
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
                     "PyIndexer({}, {}, {}): Start is out of bounds!\n--- indexer ---\n{}",
                     start,
-                    end,
+                    stop,
                     step,
                     info_string())));
         }
@@ -232,32 +232,32 @@ class PyIndexer
         {
             _is_slice    = true;
             _index_start = start;
-            _index_end   = end;
+            _index_stop  = stop;
             _index_step  = step;
             _slice_size  = 0;
 
             throw(std::out_of_range(
                 fmt::format("PyIndexer({}, {}, {}): Slice with zero size!\n--- indexer ---\n{}",
                             start,
-                            end,
+                            stop,
                             step,
                             info_string())));
         }
 
-        _index_min = std::min(_index_start, _index_end - _index_step);
-        _index_max = std::max(_index_start, _index_end - _index_step);
+        _index_min = std::min(_index_start, _index_stop - _index_step);
+        _index_max = std::max(_index_start, _index_stop - _index_step);
         if (_index_min >= _vector_size)
             throw(std::out_of_range(fmt::format(
                 "PyIndexer({}, {}, {}): _index_min is out of bounds!\n--- indexer ---\n{}",
                 start,
-                end,
+                stop,
                 step,
                 info_string())));
         if (_index_max >= _vector_size)
             throw(std::out_of_range(fmt::format(
                 "PyIndexer({}, {}, {}): _index_max is out of bounds!\n--- indexer ---\n{}",
                 start,
-                end,
+                stop,
                 step,
                 info_string())));
     }
@@ -270,7 +270,7 @@ class PyIndexer
     void reset(size_t vector_size)
     {
         _vector_size = vector_size;
-        _index_end   = vector_size;
+        _index_stop  = vector_size;
         _slice_size  = vector_size;
         _index_min   = 0;
         _index_max   = vector_size - 1;
@@ -288,20 +288,20 @@ class PyIndexer
      *
      * @param vector_size Size of the vector to be indexed
      * @param start Start index of the slice
-     * @param end End index of the slice
+     * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    void reset(size_t vector_size, long start, long end, long step = 1)
+    void reset(size_t vector_size, long start, long stop, long step = 1)
     {
         _vector_size = vector_size;
-        set_slice_indexing(start, end, step);
+        set_slice_indexing(start, stop, step);
     }
 
     /**
      * @brief Reset the indexer (set up new slicing)
      *
      * @param vector_size Size of the vector to be indexed
-     * @param slice PyIndexer::Slice structure (contains, start, end, step)
+     * @param slice PyIndexer::Slice structure (contains, start, stop, step)
      */
     void reset(size_t vector_size, PyIndexer::Slice slice)
     {
@@ -386,7 +386,7 @@ class PyIndexer
             return false;
         if (_index_start != rhs._index_start)
             return false;
-        if (_index_end != rhs._index_end)
+        if (_index_stop != rhs._index_stop)
             return false;
         if (_index_min != rhs._index_min)
             return false;
@@ -418,7 +418,7 @@ class PyIndexer
 
         /**
          * @brief operator != for range-based for loops
-         * Only compare _val, since _step is not relevant for the it != end comparison
+         * Only compare _val, since _step is not relevant for the it != stop comparison
          *
          * @param rhs
          * @return true
@@ -438,11 +438,11 @@ class PyIndexer
     PyRangeIterator begin() const { return PyRangeIterator(_index_start, _index_step); }
 
     /**
-     * @brief Get the end iterator (for range-based for loops)
+     * @brief Get the stop iterator (for range-based for loops)
      *
      * @return PyRangeIterator
      */
-    PyRangeIterator end() const { return PyRangeIterator(_index_end, _index_step); }
+    PyRangeIterator end() const { return PyRangeIterator(_index_stop, _index_step); }
 
     // ----- from/to binary -----
     /**
@@ -487,9 +487,10 @@ class PyIndexer
             printer.register_value("_is_slice", _is_slice);
         else
         {
-            printer.register_section(PyIndexer::Slice(_index_start,_index_end,_index_step).info_string());
+            printer.register_section(
+                PyIndexer::Slice(_index_start, _index_stop, _index_step).info_string());
             printer.register_value("_index_start", _index_start);
-            printer.register_value("_index_end", _index_end);
+            printer.register_value("_index_stop", _index_stop);
             printer.register_value("_index_step", _index_step);
             printer.register_value("_slice_size", _slice_size);
             printer.register_value("_index_min", _index_min);

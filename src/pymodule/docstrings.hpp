@@ -764,21 +764,21 @@ Parameter ``str``:
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer =
     R"doc(A class to compute python style indexing Allow for negative indexing
-(starting from the end of the container) Allow for sliced indexing
+(starting from the stop of the container) Allow for sliced indexing
 (start, stop, step))doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyIndexer = R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyIndexer_2 =
     R"doc(Construct a new Py Indexer object * Allow for negative indexing
-(starting from the end of the container)
+(starting from the stop of the container)
 
 Parameter ``vector_size``:
     Size of the vector to be indexed)doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyIndexer_3 =
     R"doc(Construct a new Py Indexer object Allow for negative indexing
-(starting from the end of the container) Allow for sliced indexing
+(starting from the stop of the container) Allow for sliced indexing
 (start, stop, step)
 
 Parameter ``vector_size``:
@@ -787,22 +787,22 @@ Parameter ``vector_size``:
 Parameter ``start``:
     Start index of the slice
 
-Parameter ``end``:
-    End index of the slice
+Parameter ``stop``:
+    Stop index of the slice
 
 Parameter ``step``:
     Step size of the slice)doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyIndexer_4 =
     R"doc(Construct a new Py Indexer object Allow for negative indexing
-(starting from the end of the container) Allow for sliced indexing
+(starting from the stop of the container) Allow for sliced indexing
 (start, stop, step)
 
 Parameter ``vector_size``:
     Size of the vector to be indexed
 
 Parameter ``slice``:
-    PyIndexer::Slice structure (contains, start, end, step))doc";
+    PyIndexer::Slice structure (contains, start, stop, step))doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator =
     R"doc(Simple iterator class to allow for range-based for loops)doc";
@@ -822,7 +822,7 @@ static const char*
 static const char*
     __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_PyRangeIterator_operator_ne =
         R"doc(operator != for range-based for loops Only compare _val, since _step
-is not relevant for the it != end comparison
+is not relevant for the it != stop comparison
 
 Parameter ``rhs``:
     $Returns:
@@ -846,14 +846,41 @@ static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_S
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_Slice_2 =
     R"doc()doc";
 
-static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_end =
-    R"doc(< the end index of the slice (None if not sliced) < (end is exclusive))doc";
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_from_binary =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_from_stream =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_info_string =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_operator_eq =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_operator_ne =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_print = R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_printer =
+    R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_start =
     R"doc(< the start index of the slice (None if not sliced))doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_step =
     R"doc(< the step size of the slice (1 if not sliced))doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_stop =
+    R"doc(< the stop index of the slice (None if not sliced) < (stop is
+exclusive))doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_to_binary =
+    R"doc()doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_to_stream =
+    R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_begin =
     R"doc(Get the begin iterator (for range-based for loops)
@@ -862,7 +889,7 @@ Returns:
     PyRangeIterator)doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_end =
-    R"doc(Get the end iterator (for range-based for loops)
+    R"doc(Get the stop iterator (for range-based for loops)
 
 Returns:
     PyRangeIterator)doc";
@@ -878,8 +905,6 @@ Parameter ``is``:
 Returns:
     PyIndexer)doc";
 
-static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_end = R"doc()doc";
-
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_max = R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_min =
@@ -890,6 +915,8 @@ static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_s
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_step =
     R"doc(< the step size of the slice (1 if not sliced))doc";
+
+static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_stop = R"doc()doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_info_string = R"doc()doc";
 
@@ -936,8 +963,8 @@ Parameter ``vector_size``:
 Parameter ``start``:
     Start index of the slice
 
-Parameter ``end``:
-    End index of the slice
+Parameter ``stop``:
+    Stop index of the slice
 
 Parameter ``step``:
     Step size of the slice)doc";
@@ -949,13 +976,13 @@ Parameter ``vector_size``:
     Size of the vector to be indexed
 
 Parameter ``slice``:
-    PyIndexer::Slice structure (contains, start, end, step))doc";
+    PyIndexer::Slice structure (contains, start, stop, step))doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_set_slice_indexing =
     R"doc(Setup slice indexing after construction
 
 Parameter ``slice``:
-    PyIndexer::Slice structure (contains, start, end, step))doc";
+    PyIndexer::Slice structure (contains, start, stop, step))doc";
 
 static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_set_slice_indexing_2 =
     R"doc(Setup slice indexing after construction
@@ -963,8 +990,8 @@ static const char* __doc_themachinethatgoesping_tools_pyhelper_PyIndexer_set_sli
 Parameter ``start``:
     Start index of the slice
 
-Parameter ``end``:
-    End index of the slice
+Parameter ``stop``:
+    Stop index of the slice
 
 Parameter ``step``:
     Step size of the slice)doc";

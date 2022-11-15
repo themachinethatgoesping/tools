@@ -17,7 +17,9 @@ sources = [
     'vectorinterpolators/c_akimainterpolator.cpp',
     'vectorinterpolators/c_slerpinterpolator.cpp',
     'classhelper/module.cpp',
-    'classhelper/c_objectprinter.cpp'
+    'classhelper/c_objectprinter.cpp',
+    'pyhelper/module.cpp',
+    'pyhelper/c_pyindexer.cpp'
 ]
 
 # define python module
