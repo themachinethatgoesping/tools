@@ -14,6 +14,7 @@ sources = [
 headers = [
   'timeconv.hpp',
   'helper.hpp',
+  'helper/defaultmap.hpp',
   'helper/defaultsharedpointermap.hpp',
   'pyhelper/pyindexer.hpp',
   'classhelper/objectprinter.hpp',

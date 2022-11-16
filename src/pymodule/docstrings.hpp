@@ -50,7 +50,7 @@ R"doc(Class that allows for easy pretty printing of class members usage: 1.
 Implement a __printer__ function as public class member this function
 should return a ObjectPrinter object. Register all, values,
 containers, objects that are to be printed. 2. Add the
-__CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro to the public
+__CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__ macro to the public
 functions. This macro implements std::string info_string() and
 print(std::ostream) functions using the object printer 3. Add the
 __PYCLASS_DEFAULT_PRINTING__ to the python module defintion. This
@@ -813,7 +813,7 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_operato
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_printer =
-R"doc(Print function, needs __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro
+R"doc(Print function, needs __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__ macro
 See also: classhelper/objectprinter.hpp
 
 Parameter ``float_precision``:

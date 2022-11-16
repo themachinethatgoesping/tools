@@ -102,7 +102,7 @@ class PyIndexer
         // define to_binary and from_binary functions (needs to_stream and from_stream)
         __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(PyIndexer::Slice)
         // define info_string and print functions (needs the __printer__ function)
-        __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
+        __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
     };
 
     Slice to_slice() const
@@ -495,7 +495,7 @@ class PyIndexer
 
     // ----- printing -----
     /**
-     * @brief Print function, needs __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__ macro
+     * @brief Print function, needs __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__ macro
      * See also: classhelper/objectprinter.hpp
      *
      * @param float_precision Precision of floating point numbers
@@ -529,7 +529,7 @@ class PyIndexer
     // define to_binary and from_binary functions (needs to_stream and from_stream)
     __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(PyIndexer)
     // define info_string and print functions (needs the __printer__ function)
-    __CLASShelper_DEFAULT_PRINTING_FUNCTIONS__
+    __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
 
 }
