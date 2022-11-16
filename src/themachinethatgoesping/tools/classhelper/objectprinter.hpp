@@ -679,6 +679,16 @@ class ObjectPrinter
     }
 
     /**
+     * @brief Get the registered name of the object
+     * 
+     * @return std::string 
+     */
+    std::string get_name() const
+    {
+        return _name;
+    }
+
+    /**
      * @brief Create an info_string from the registered values/sections
      *
      * @return std::string

@@ -26,6 +26,9 @@ void init_c_objectprinter(pybind11::module& m)
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),
              py::arg("name"),
              py::arg("float_precission"))
+        .def("get_name",
+             &ObjectPrinter::get_name,
+             DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, get_name))
         .def("create_str",
              &ObjectPrinter::create_str,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, create_str))

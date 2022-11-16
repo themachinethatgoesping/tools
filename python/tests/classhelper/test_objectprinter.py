@@ -35,6 +35,7 @@ class Test_tools_classhelper_objectprinter:
         print(a)
         assert len(a.info_string()) != 0
         assert len(a.create_str()) != 0
+        assert a.get_name() == "ObjectPrinterTester"
 
         # info_string should be the same if objects are the same
 
