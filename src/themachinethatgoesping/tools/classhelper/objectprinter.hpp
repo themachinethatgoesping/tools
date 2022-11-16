@@ -287,7 +287,7 @@ class ObjectPrinter
      *
      * @param printer printer to be appended
      */
-    void append(ObjectPrinter printer, char remove_sections = false)
+    void append(ObjectPrinter printer, char remove_sections = false, char section_underliner = 0)
     {
         if (remove_sections)
             printer.remove_sections();
@@ -298,9 +298,14 @@ class ObjectPrinter
         _lines.insert(_lines.end(), printer._lines.begin(), printer._lines.end());
         _value_infos.insert(
             _value_infos.end(), printer._value_infos.begin(), printer._value_infos.end());
-        _section_underliner.insert(_section_underliner.end(),
-                                   printer._section_underliner.begin(),
-                                   printer._section_underliner.end());
+
+        if (!section_underliner)
+            _section_underliner.insert(_section_underliner.end(),
+                                       printer._section_underliner.begin(),
+                                       printer._section_underliner.end());
+        else
+            for ([[maybe_unused]] const auto& c : printer._section_underliner)
+                _section_underliner.push_back(section_underliner);
     }
 
     // --- functions to register values for printing ----
@@ -680,13 +685,10 @@ class ObjectPrinter
 
     /**
      * @brief Get the registered name of the object
-     * 
-     * @return std::string 
+     *
+     * @return std::string
      */
-    std::string get_name() const
-    {
-        return _name;
-    }
+    std::string get_name() const { return _name; }
 
     /**
      * @brief Create an info_string from the registered values/sections
