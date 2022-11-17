@@ -70,7 +70,7 @@
         "Return object information as string")                                                     \
         .def(                                                                                      \
             "__repr__",                                                                            \
-            [](const T_CLASS& self) { return self.__printer__(2).get_name(); },                  \
+            [](const T_CLASS& self) { return self.__printer__(2).get_name(); },                    \
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \

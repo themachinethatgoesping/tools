@@ -32,7 +32,7 @@ class PyIndexer
     size_t _index_min  = 0;            ///< the minimum index of the slice (0 if not sliced)
     size_t _index_max; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
-    long _index_start = 0; ///< the start index of the slice (0 if not sliced)
+    long _index_start = 0;    ///< the start index of the slice (0 if not sliced)
     long _index_stop;         ///< the stop index of the slice (_vector_size if not sliced)
                               ///< (stop is exclusive) (long because can be negative under some
                               ///< circumstances (see below) this index is used for out of bounds
@@ -108,7 +108,7 @@ class PyIndexer
     Slice to_slice() const
     {
         if (_index_stop < 0)
-            return Slice(_index_start, PyIndexer::None, _index_step);            
+            return Slice(_index_start, PyIndexer::None, _index_step);
 
         return Slice(_index_start, _index_stop, _index_step);
     }
@@ -511,8 +511,7 @@ class PyIndexer
             printer.register_value("_is_slice", _is_slice);
         else
         {
-            printer.register_section(
-                this->to_slice().info_string());
+            printer.register_section(this->to_slice().info_string());
             printer.register_value("_index_start", _index_start);
             printer.register_value("_index_stop", _index_stop);
             printer.register_value("_index_step", _index_step);

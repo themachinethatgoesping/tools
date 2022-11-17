@@ -31,10 +31,12 @@ void init_c_pyindexer(pybind11::module& m)
                  long start = py::cast<py::object>(pystart).is(py::none())
                                   ? std::numeric_limits<long>::max()
                                   : py::cast<long>(pystart);
-                 long stop  = py::cast<py::object>(pystop).is(py::none()) ? std::numeric_limits<long>::max()
-                                                                          : py::cast<long>(pystop);
-                 long step  = py::cast<py::object>(pystep).is(py::none()) ? std::numeric_limits<long>::max()
-                                                                          : py::cast<long>(pystep);
+                 long stop  = py::cast<py::object>(pystop).is(py::none())
+                                  ? std::numeric_limits<long>::max()
+                                  : py::cast<long>(pystop);
+                 long step  = py::cast<py::object>(pystep).is(py::none())
+                                  ? std::numeric_limits<long>::max()
+                                  : py::cast<long>(pystep);
 
                  return PyIndexer::Slice(start, stop, step);
              }),

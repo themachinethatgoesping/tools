@@ -13,6 +13,7 @@ template<typename t_key, typename t_value>
 class DefaultMap : public std::map<t_key, t_value>
 {
     const t_value _default_value;
+
   public:
     // use all constructors of the base class
     DefaultMap(t_value default_value = t_value())
