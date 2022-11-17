@@ -230,6 +230,16 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_stream_contain
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_DefaultMap = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_at = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_at_const = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_default_value = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointerMap = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointerMap_DefaultSharedPointerMap = R"doc()doc";
