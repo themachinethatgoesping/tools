@@ -109,6 +109,7 @@ void test_interpolator_serialize(t_interpolator& ip)
         REQUIRE(ip(-100) == ipx(-100));
         REQUIRE(ip(100) == ipx(100));
     }
+
 }
 
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)
@@ -371,4 +372,28 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     CHECK(aip(25) == 40);
     CHECK(aip(35) == Catch::Approx(56.25));
     REQUIRE(aip(15) == Catch::Approx(23.75));
+}
+
+TEST_CASE("VectorInterpolators should hashable", TESTTAG)
+{
+    std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+
+    vectorinterpolators::LinearInterpolator  lip(x, y);
+    vectorinterpolators::NearestInterpolator nip(x, y);
+    vectorinterpolators::AkimaInterpolator   aip(x, y);
+    vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
+
+    REQUIRE(lip.slow_hash() != 0);
+    REQUIRE(nip.slow_hash() != 0);
+    REQUIRE(aip.slow_hash() != 0);
+    REQUIRE(slerp.slow_hash() != 0);
+
+    // test_interpolator_serialize(nip);
+    // test_interpolator_serialize(lip);
+    // test_interpolator_serialize(aip);
+    // test_interpolator_serialize(slerp);
 }

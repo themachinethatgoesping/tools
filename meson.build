@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.11.2',
+  version: '0.12.0',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=0.63' #0.63 added preserve_path for install headers option
 )
@@ -56,6 +56,9 @@ xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabl
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
+
+#xxhash_cpp (for fast hashing of classes/buffers)
+xxhash_cpp_dep = dependency('xxhash_cpp')
 
 # -- python modules --
 if get_option('build_pythonmodule').enabled()

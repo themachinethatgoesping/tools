@@ -37,7 +37,14 @@
 #define __PYCLASS_DEFAULT_BINARY__(T_CLASS)                                                        \
     __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                         \
     __PYCLASS_DEFAULT_BINARY__2__(T_CLASS)                                                         \
-    __PYCLASS_DEFAULT_PICKLE__(T_CLASS)
+    __PYCLASS_DEFAULT_PICKLE__(T_CLASS)                                                            \
+    __PYCLASS_DEFAULT_HASH__(T_CLASS)
+
+#define __PYCLASS_DEFAULT_HASH__(T_CLASS)                                                          \
+    .def(                                                                                          \
+        "__hash__",                                                                                \
+        [](T_CLASS& self) { return self.slow_hash(); },                                            \
+        "hash function implemented using slow_hash")
 
 #define __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                     \
     .def(                                                                                          \

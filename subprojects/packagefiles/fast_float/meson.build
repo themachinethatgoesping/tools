@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 project(
-    'magic_enum', ['cpp'],
+    'fast_float', ['cpp'],
     default_options: ['cpp_std=c++17'],
     version: '3.5.1',
 )

@@ -54,7 +54,8 @@ if build_machine.system() != 'linux'
                           indicators_dep,
                           magic_enum_dep,
                           xtensor_dep,
-                          fast_float_dep],
+                          fast_float_dep,
+                          xxhash_cpp_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -72,7 +73,8 @@ else
                           indicators_dep,
                           magic_enum_dep,
                           xtensor_dep,
-                          fast_float_dep],
+                          fast_float_dep,
+                          xxhash_cpp_dep],
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -93,7 +95,8 @@ tools_dep = declare_dependency(
     indicators_dep,
     magic_enum_dep,
     xtensor_dep,
-    fast_float_dep
+    fast_float_dep,
+    xxhash_cpp_dep
   ],
   link_with : [tools_lib],
   compile_args : ['-D_USE_MATH_DEFINES'],
