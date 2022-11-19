@@ -54,6 +54,10 @@ class I_ProgressBarTimed : public I_ProgressBar
     double      _state_increment = 0.0; ///< internal counter for the skipped increments
     std::string _state_postfix   = "";  ///< internal state for the skipped postfix
 
+    int _skips                  = 0;   ///< number of skipped progressbar updates (set in apply_state)
+    int _check_timer_every_step = 1;   ///< check the timer every n steps (set in apply_state)
+    int _max_skips              = 100; ///< this is set to 0.25% of the total progress (used in apply_state set in init)
+
     bool _initialized = false;
 
   public:
@@ -134,6 +138,9 @@ class I_ProgressBarTimed : public I_ProgressBar
     void init(double first, double last, const std::string& name = "process") final
     {
         *_skip = false;
+
+        _max_skips = int((last - first)/400);
+        if (_max_skips < 1) _max_skips = 1;
 
         _state_increment = 0.0;
         _state_postfix   = "";
@@ -219,9 +226,6 @@ class I_ProgressBarTimed : public I_ProgressBar
         return callback_current() + _state_increment;
     }
 
-    int _skips                  = 0;
-    int _check_timer_every_step = 1;
-
     /**
      * @brief Apply (call appropriate callback) and reset the internal states to the progress bar
      *
@@ -245,6 +249,8 @@ class I_ProgressBarTimed : public I_ProgressBar
         // compute check_every_step as number of steps counted in the last 100ms divided by 20
         // (~approx every 5 ms)
         _check_timer_every_step = int(ceil(double(_skips) / 10.0));
+        if (_check_timer_every_step > _max_skips)
+            _check_timer_every_step = _max_skips;
         _skips                  = 0;
         // _state_postfix = std::to_string(_check_timer_every_step);
 
