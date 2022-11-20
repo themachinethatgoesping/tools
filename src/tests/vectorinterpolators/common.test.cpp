@@ -109,7 +109,6 @@ void test_interpolator_serialize(t_interpolator& ip)
         REQUIRE(ip(-100) == ipx(-100));
         REQUIRE(ip(100) == ipx(100));
     }
-
 }
 
 TEST_CASE("VectorInterpolators should serializable", TESTTAG)

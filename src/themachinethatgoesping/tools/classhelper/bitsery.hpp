@@ -105,5 +105,5 @@
     __BITSERY_DEFAULT_TO_BINARY__                                                                  \
     __BITSERY_DEFAULT_FROM_BINARY__(T_CLASS)                                                       \
     __BITSERY_DEFAULT_TO_STREAM__                                                                  \
-    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)\
+    __BITSERY_DEFAULT_FROM_STREAM__(T_CLASS)                                                       \
     __SLOW_HASH__

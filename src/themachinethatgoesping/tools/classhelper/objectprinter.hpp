@@ -219,8 +219,7 @@ class ObjectPrinter
     __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 
-        ObjectPrinter
-        __printer__(unsigned int float_precision) const
+    ObjectPrinter __printer__(unsigned int float_precision) const
     {
         ObjectPrinter printer("ObjectPrinter", float_precision);
 

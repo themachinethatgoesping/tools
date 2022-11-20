@@ -54,9 +54,10 @@ class I_ProgressBarTimed : public I_ProgressBar
     double      _state_increment = 0.0; ///< internal counter for the skipped increments
     std::string _state_postfix   = "";  ///< internal state for the skipped postfix
 
-    int _skips                  = 0;   ///< number of skipped progressbar updates (set in apply_state)
-    int _check_timer_every_step = 1;   ///< check the timer every n steps (set in apply_state)
-    int _max_skips              = 100; ///< this is set to 0.25% of the total progress (used in apply_state set in init)
+    int _skips                  = 0; ///< number of skipped progressbar updates (set in apply_state)
+    int _check_timer_every_step = 1; ///< check the timer every n steps (set in apply_state)
+    int _max_skips =
+        100; ///< this is set to 0.25% of the total progress (used in apply_state set in init)
 
     bool _initialized = false;
 
@@ -139,8 +140,9 @@ class I_ProgressBarTimed : public I_ProgressBar
     {
         *_skip = false;
 
-        _max_skips = int((last - first)/400);
-        if (_max_skips < 1) _max_skips = 1;
+        _max_skips = int((last - first) / 400);
+        if (_max_skips < 1)
+            _max_skips = 1;
 
         _state_increment = 0.0;
         _state_postfix   = "";
@@ -251,7 +253,7 @@ class I_ProgressBarTimed : public I_ProgressBar
         _check_timer_every_step = int(ceil(double(_skips) / 10.0));
         if (_check_timer_every_step > _max_skips)
             _check_timer_every_step = _max_skips;
-        _skips                  = 0;
+        _skips = 0;
         // _state_postfix = std::to_string(_check_timer_every_step);
 
         // reset skip flag
