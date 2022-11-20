@@ -488,9 +488,9 @@ class PyIndexer
      *
      * @param os output stream
      */
-    void to_stream(std::ostream& os)
+    void to_stream(std::ostream& os) const
     {
-        os.write(reinterpret_cast<char*>(&_vector_size), sizeof(PyIndexer));
+        os.write(reinterpret_cast<const char*>(&_vector_size), sizeof(PyIndexer));
     }
 
     // ----- printing -----

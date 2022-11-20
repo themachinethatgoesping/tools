@@ -74,7 +74,7 @@
      *                                                                                             \
      * @param os reference to output stream (must be opened)                                       \
      * */                                                                                          \
-    void to_stream(std::ostream& os)                                                               \
+    void to_stream(std::ostream& os) const                                                         \
     {                                                                                              \
         bitsery::Serializer<bitsery::OutputBufferedStreamAdapter> ser{ os };                       \
                                                                                                    \
