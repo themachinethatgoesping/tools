@@ -256,8 +256,8 @@ class ObjectPrinter
      *
      * @param name name of the class that is to be printed
      */
-    ObjectPrinter(const std::string& name, unsigned int float_precision)
-        : _name(name)
+    ObjectPrinter(std::string_view name, unsigned int float_precision)
+        : _name(std::string(name))
         , _float_precision(float_precision)
     {
     }
