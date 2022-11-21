@@ -24,7 +24,7 @@ void test_reversed(const PyIndexer& indexer)
     INFO("reversed indexer");
     INFO(reversed.info_string());
 
-    for (size_t i = 0; i < indexer.size(); ++i)
+    for (long i = 0; i < long(indexer.size()); ++i)
     {
         INFO("i: " << i);
         REQUIRE(indexer(i) == reversed(-i - 1));
@@ -44,14 +44,14 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         std::vector<size_t> expected_results = { 1, 3, 5 };
 
         REQUIRE(indexer.size() == expected_results.size());
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
             REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
 
-        size_t enumerator = 0;
+        long enumerator = 0;
         for (const auto i : indexer)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
@@ -221,7 +221,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(10, 90, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -248,11 +248,11 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; long(enumerator < indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+            REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
 
         CHECK(indexer(-1) == 11);
@@ -294,11 +294,11 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 0, -3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+            REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
 
         // INFO(indexer.info_string());
@@ -322,7 +322,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(0, 99, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -351,7 +351,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(20, 90, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -378,7 +378,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(70, 30, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -406,7 +406,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(0, 70, 7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -432,7 +432,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 70, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -458,7 +458,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(0, 30, 7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -484,7 +484,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 30, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -511,7 +511,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(0, 99, 5);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -595,7 +595,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(30, 100, 11);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -621,7 +621,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(30, 0, -13);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -675,7 +675,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(70, 100, 4);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -702,7 +702,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(70, 0, -4);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (size_t enumerator = 0; enumerator < indexer.size(); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());

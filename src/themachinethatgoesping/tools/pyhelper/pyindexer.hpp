@@ -121,8 +121,8 @@ class PyIndexer
      */
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
-        , _index_max(vector_size - 1)
-        , _index_stop(vector_size)
+        , _index_max(long(vector_size - 1))
+        , _index_stop(long(vector_size))
     {
     }
 
@@ -197,23 +197,23 @@ class PyIndexer
             step = 1;
 
         if (stop < 0)
-            stop += _vector_size;
+            stop += long(_vector_size);
         else if (stop == PyIndexer::None)
         {
             if (step > 0)
-                stop = _vector_size;
+                stop = long(_vector_size);
             else
                 stop = -1;
         }
 
         if (start < 0)
-            start += _vector_size;
+            start += long(_vector_size);
         else if (start == PyIndexer::None)
         {
             if (step > 0)
                 start = 0;
             else
-                start = _vector_size - 1;
+                start = long(_vector_size - 1);
         }
 
         if (start < stop && step > 0)
@@ -222,7 +222,7 @@ class PyIndexer
             _index_start = start;
             _index_step  = step;
             _slice_size  = size_t(std::ceil(float(stop - start) / float(_index_step)));
-            _index_stop  = _index_start + _slice_size * _index_step;
+            _index_stop  = _index_start + long(_slice_size) * _index_step;
 
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
@@ -242,7 +242,7 @@ class PyIndexer
             // _index stop can be negative (if start is negative and stop is positive, e.g. (start =
             // 5, stop = 0, step = -2)) this is not a problem, because the index is only used to
             // check if it is out of bounds
-            _index_stop = _index_start + _slice_size * _index_step;
+            _index_stop = _index_start + long(_slice_size) * _index_step;
 
             if (_index_start >= long(_vector_size))
                 throw(std::out_of_range(fmt::format(
@@ -294,7 +294,7 @@ class PyIndexer
     void reset(size_t vector_size)
     {
         _vector_size = vector_size;
-        _index_stop  = vector_size;
+        _index_stop  = long(vector_size);
         _slice_size  = vector_size;
         _index_min   = 0;
         _index_max   = vector_size - 1;
