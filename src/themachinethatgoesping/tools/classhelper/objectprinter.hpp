@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <fmt/ostream.h>
 #include <limits>
 #include <magic_enum.hpp>
 #include <numeric>
