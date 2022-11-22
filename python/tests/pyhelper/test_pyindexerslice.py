@@ -13,7 +13,7 @@ from themachinethatgoesping.tools import pyhelper as ph
 
 class Test_tools_pyhelper_pyindexerslice:
     def test_PyIndexerSlice_should_support_common_functions(self):
-        sl = ph.PyIndexerSlice(0,10,2)
+        sl = ph.PyIndexerSlice(0, 10, 2)
 
         # test if functions crash
         sl.print()
@@ -32,8 +32,8 @@ class Test_tools_pyhelper_pyindexerslice:
 
     def test_PyIndexerSlice_should_support_implicit_conversion(self):
 
-        sl1 = ph.PyIndexerSlice(0,10,2)
-        sl2 = slice(0,10,2)
+        sl1 = ph.PyIndexerSlice(0, 10, 2)
+        sl2 = slice(0, 10, 2)
 
         # note the comparison works only because slice can be implicitly converted to PyIndexerSlice
         assert sl1 == sl2

@@ -30,14 +30,14 @@
         return buffer_stream.str();                                                                \
     };
 
-    #define __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                               \
+#define __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                     \
     /** @brief convert object to vector of bytes                                                   \
      *                                                                                             \
      * @param resize_buffer variable for interface compatibility, does not do anything             \
      *                                                                                             \
      * @return vector of bytes                                                                     \
      * */                                                                                          \
-    std::string to_binary([[maybe_unused]] bool resize_buffer = true)                        \
+    std::string to_binary([[maybe_unused]] bool resize_buffer = true)                              \
     {                                                                                              \
         std::stringstream buffer_stream;                                                           \
                                                                                                    \
@@ -68,8 +68,8 @@
     __SLOW_HASH__
 
 // this assumes that T_CLASS has from_stream and to_stream functions
-#define __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS_NOT_CONST__(T_CLASS)                                        \
-    __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                                   \
+#define __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS_NOT_CONST__(T_CLASS)                              \
+    __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                         \
     __STREAM_DEFAULT_FROM_BINARY__(T_CLASS)                                                        \
     __SLOW_HASH_NOT_CONST__
 
