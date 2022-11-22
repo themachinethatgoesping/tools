@@ -14,6 +14,8 @@ from themachinethatgoesping.tools import vectorinterpolators as vip
 test_tmp = "interpolator.tmp"
 
 # define class for grouping (test sections)
+
+
 class Test_tools_vectorinterpolators_all:
     def test_vectorinterpolators_should_be_serializable(self):
         X = [-10, -5, 0, 6, 12]
@@ -210,6 +212,42 @@ class Test_tools_vectorinterpolators_all:
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [np.inf, -1])
+
+            # --- inserting --- (like extending but does not have to be sorted)
+            # check of exceptions are raised for extending items
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([11, 12], [-1, -1])
+
+            # check of exceptions are raised for extending items
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([12, 13], [-1, -1])
+
+            # check of exceptions are raised for extending items
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([14, 13], [-1, -1])
+
+            # check of exceptions are raised for extending nan x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([13, np.nan], [-1, -1])
+
+            # check of exceptions are raised for extending nan x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([13, 14], [-1, np.nan])
+
+            # check of exceptions are raised for extending inf x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([13, np.inf], [-1, -1])
+
+            # check of exceptions are raised for extending inf x values
+            interpolator = interpolatorType(X, Y)
+            with pytest.raises(ValueError):
+                interpolator.insert([13, 14], [np.inf, -1])
 
             # should not throw
             interpolator = interpolatorType(X, Y)
