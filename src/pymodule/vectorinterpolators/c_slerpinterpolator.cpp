@@ -143,6 +143,26 @@ void init_c_slerpinterpolator(pybind11::module& m)
              py::arg("X"),
              py::arg("YPR"),
              py::arg("input_in_degrees") = true)
+        .def("insert",
+             py::overload_cast<const std::vector<double>&,
+                               const std::vector<double>&,
+                               const std::vector<double>&,
+                               const std::vector<double>&,
+                               bool>(&SlerpInterpolator::insert),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert),
+             py::arg("X"),
+             py::arg("Yaw"),
+             py::arg("Pitch"),
+             py::arg("Roll"),
+             py::arg("input_in_degrees") = true)
+        .def("insert",
+             py::overload_cast<const std::vector<double>&,
+                               const std::vector<std::array<double, 3>>&,
+                               bool>(&SlerpInterpolator::insert),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert_2),
+             py::arg("X"),
+             py::arg("YPR"),
+             py::arg("input_in_degrees") = true)
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(SlerpInterpolator)
         // default binary functions

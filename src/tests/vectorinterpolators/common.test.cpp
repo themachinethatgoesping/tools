@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <fstream>
 
+#include "../../themachinethatgoesping/tools/helper.hpp"
 #include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
 
 // using namespace testing;
@@ -221,6 +222,25 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             interpolator->set_data_XY(x, y);
             interpolator->extend({ 13, 14 }, { -1, 1 });
 
+            // same for inserting lists (does not have to be sorted, but must be unique)
+            REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
+            interpolator->set_data_XY(x, y);
+            interpolator->insert({ 11, 13 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() ==
+                    std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
+            REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+                interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
+            interpolator->set_data_XY(x, y);
+            interpolator->insert({ 14, 13 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() ==
+                    std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
+            REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+                interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
+            interpolator->set_data_XY(x, y);
+            REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
+            interpolator->set_data_XY(x, y);
+            interpolator->insert({ 13, 14 }, { -1, 1 });
+
             // initialize test data (wrong order)
             std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
 
@@ -277,6 +297,18 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE_THROWS(interpolator.extend({ 14, 14 }, { { -1, -1, -1 }, { 1, 1, 1 } }));
         interpolator.set_data_XYPR(x, yaw, pitch, roll);
         interpolator.extend({ 13, 14 }, { { -1, -1, -1 }, { 1, 1, 1 } });
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
+        REQUIRE_THROWS(interpolator.insert({ 12, 13 }, { { -1, -1, -1 }, { 1, 1, 1 } }));
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
+        interpolator.insert({ 11, 13 }, { { -1, -1, -1 }, { 1, 1, 1 } });
+        REQUIRE(interpolator.get_data_X() == std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
+        interpolator.insert({ 14, 13 }, { { -1, -1, -1 }, { 1, 1, 1 } });
+        REQUIRE(interpolator.get_data_X() == std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
+        REQUIRE_THROWS(interpolator.insert({ 14, 14 }, { { -1, -1, -1 }, { 1, 1, 1 } }));
+        interpolator.set_data_XYPR(x, yaw, pitch, roll);
 
         // initialize test data (wrong order)
         std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };

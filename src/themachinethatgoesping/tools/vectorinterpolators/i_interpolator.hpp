@@ -168,6 +168,15 @@ class I_Interpolator
      */
     virtual void extend(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
 
+    /**
+     * @brief append x and y value lists to the interpolator data (vectorized call)
+     * This call is much more expensive than extend as it requires copying data and sorting.
+     *
+     * @param X list of x values. (Does not have to be sorted. But must be unique)
+     * @param Y list of corresponding Y values. Must be same size as X
+     */
+    virtual void insert(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
+
   protected:
     /**
      * @brief check if input data is valid (e.g. sorted, no duplicated x values)

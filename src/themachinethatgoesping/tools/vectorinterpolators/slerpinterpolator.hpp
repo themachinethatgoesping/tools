@@ -279,6 +279,40 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     }
 
     /**
+     * @brief append data with lists of x, yaw, pitch, roll data (vectorized call)
+     *
+     * @param X vector; must be unique
+     * @param yaw vector with yaw data (rotation around z axis). Must be same size as X!
+     * @param pitch vector with pitch data (rotation around y axis). Must be same size as X!
+     * @param roll vector with roll data (rotation around x axis). Must be same size as X!
+     * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+     */
+    void insert(const std::vector<double>& x,
+                const std::vector<double>& yaw,
+                const std::vector<double>& pitch,
+                const std::vector<double>& roll,
+                bool                       input_in_degrees = true)
+    {
+        I_PairInterpolator<t_quaternion>::insert(
+            x, rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees));
+    }
+
+    /**
+     * @brief append data with list of x, yaw, pitch, roll data (vectorized call)
+     *
+     * @param X vector; must be unique
+     * @param ypr vector with yaw, pitch and roll data points. Must be same size as X!
+     * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+     */
+    void insert(const std::vector<double>&                x,
+                const std::vector<std::array<double, 3>>& ypr,
+                bool                                      input_in_degrees = true)
+    {
+        I_PairInterpolator<t_quaternion>::insert(
+            x, rotationfunctions::quaternion_from_ypr(ypr, input_in_degrees));
+    }
+
+    /**
      * @brief Interpolate: Slerp interpolation between two values
      * @param target_x: the target point [0.0 - 1.0]
      * @param y1     : first quaternion (target_x = 0)

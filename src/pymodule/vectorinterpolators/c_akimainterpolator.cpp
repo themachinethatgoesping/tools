@@ -84,6 +84,11 @@ void init_c_akimainterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend),
              py::arg("X"),
              py::arg("Y"))
+        .def("insert",
+             &AkimaInterpolator::insert,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
+             py::arg("X"),
+             py::arg("Y"))
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(AkimaInterpolator)
         // default binary functions

@@ -244,11 +244,11 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         PyIndexer indexer(100, 90, 10, -1);
         test_reversed(indexer);
 
-        auto expected_results = xt::arange(90, 10, -1);
+        auto expected_results = xt::arange<size_t>(90, 10, -1);
 
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; long(enumerator < indexer.size()); ++enumerator)
+        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -291,7 +291,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     {
         PyIndexer indexer(100, -1, 0, -3);
         test_reversed(indexer);
-        auto expected_results = xt::arange(99, 0, -3);
+        auto expected_results = xt::arange<size_t>(99, 0, -3);
         REQUIRE(indexer.size() == expected_results.size());
 
         for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)

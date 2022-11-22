@@ -214,37 +214,38 @@ class Test_tools_vectorinterpolators_all:
                 interpolator.extend([13, 14], [np.inf, -1])
 
             # --- inserting --- (like extending but does not have to be sorted)
-            # check of exceptions are raised for extending items
+            # check of exceptions are raised for inserting items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([11, 12], [-1, -1])
 
-            # check of exceptions are raised for extending items
+            # check of exceptions are raised for inserting items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([12, 13], [-1, -1])
 
-            # check of exceptions are raised for extending items
+            # check of exceptions are raised for inserting items
             interpolator = interpolatorType(X, Y)
-            with pytest.raises(ValueError):
-                interpolator.insert([14, 13], [-1, -1])
+            interpolator.insert([14, 13], [1, -1])
+            assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
+            assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1, 1])
 
-            # check of exceptions are raised for extending nan x values
+            # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, np.nan], [-1, -1])
 
-            # check of exceptions are raised for extending nan x values
+            # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [-1, np.nan])
 
-            # check of exceptions are raised for extending inf x values
+            # check of exceptions are raised for inserting inf x values
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, np.inf], [-1, -1])
 
-            # check of exceptions are raised for extending inf x values
+            # check of exceptions are raised for inserting inf x values
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [np.inf, -1])
@@ -298,6 +299,31 @@ class Test_tools_vectorinterpolators_all:
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
+
+        # insert same behavior for vectorized calls
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.insert([12, 13], [[-1, -1, -1], [1, 1, 1]])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        interpolator.insert([11, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 11, 12, 13])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        interpolator.insert([14, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.insert([14, 14], [[-1, -1, -1], [1, 1, 1]])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.insert([np.nan, 14], [[-1, -1, -1], [1, 1, 1]])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        with pytest.raises(ValueError):
+            interpolator.insert([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
 
         # should not raise here
         vip.SlerpInterpolator(x + [100], yaw + [1], pitch + [2], roll + [3])

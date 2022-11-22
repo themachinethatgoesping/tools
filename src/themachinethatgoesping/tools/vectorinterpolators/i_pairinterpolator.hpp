@@ -195,6 +195,39 @@ class I_PairInterpolator : public I_Interpolator<YType>
         }
     }
 
+    void insert(const std::vector<double>& X, const std::vector<YType>& Y) final
+    {
+        if (X.size() != Y.size())
+            throw(std::domain_error("ERROR[Interpolator::insert]: list sizes do not match"));
+
+        std::vector<std::pair<double, YType>> XY;
+        XY.reserve(_X.size() + X.size());
+
+        // sort _X and _Y by _X (ascending)
+        for (unsigned int i = 0; i < _X.size(); ++i)
+        {
+            XY.push_back(std::pair<double, YType>(_X[i], _Y[i]));
+        }
+        for (unsigned int i = 0; i < X.size(); ++i)
+        {
+            XY.push_back(std::pair<double, YType>(X[i], Y[i]));
+        }
+
+        std::sort(
+            XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
+
+        // copy back to _X and _Y
+        _X.resize(XY.size());
+        _Y.resize(XY.size());
+        for (unsigned int i = 0; i < _X.size(); ++i)
+        {
+            _X[i] = XY[i].first;
+            _Y[i] = XY[i].second;
+        }
+
+        set_data_XY(_X, _Y);
+    }
+
     // -----------------------
     // getter functions
     // -----------------------
