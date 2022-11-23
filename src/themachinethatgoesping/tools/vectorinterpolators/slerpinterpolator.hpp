@@ -38,6 +38,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     // explicitly ignore hidden overloaded virtual warning (clang)
     using I_PairInterpolator<t_quaternion>::append;
     using I_PairInterpolator<t_quaternion>::extend;
+    using I_PairInterpolator<t_quaternion>::insert;
 
   public:
     /**
