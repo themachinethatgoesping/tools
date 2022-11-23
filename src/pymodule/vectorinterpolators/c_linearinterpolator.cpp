@@ -89,6 +89,14 @@ void init_c_linearinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
              py::arg("X"),
              py::arg("Y"))
+        .def("__eq__",
+             &LinearInterpolator::operator==,
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 LinearInterpolator,
+                 operator_eq),
+             py::arg("other"))
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(LinearInterpolator)
         // default binary functions

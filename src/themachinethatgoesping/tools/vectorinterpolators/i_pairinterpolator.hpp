@@ -104,17 +104,19 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the
      * extrapolation mode
      */
-    I_PairInterpolator(const std::vector<double>& X,
-                       const std::vector<YType>&  Y,
-                       t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<YType>(extrapolation_mode)
+    I_PairInterpolator(std::vector<double> X,
+                       std::vector<YType>  Y,
+                       t_extr_mode         extrapolation_mode = t_extr_mode::extrapolate,
+                       std::string_view    name               = "I_PairInterpolator")
+        : I_Interpolator<YType>(extrapolation_mode, name)
         , _last_x_pair(0, 1, 0, 1)
     {
-        set_data_XY(X, Y);
+        set_data_XY(std::move(X), std::move(Y));
     }
 
-    I_PairInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<YType>(extrapolation_mode)
+    I_PairInterpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate,
+                       std::string_view name               = "I_PairInterpolator")
+        : I_Interpolator<YType>(extrapolation_mode, name)
         , _last_x_pair(0, 1, 0, 1)
     {
     }
@@ -128,19 +130,20 @@ class I_PairInterpolator : public I_Interpolator<YType>
 
     /**
      * @brief change the input data to these X and Y vectors
+     * Exception: raises domain error, strong exception guarantee
      *
      * @param X: x vector (must be same size, must be sorted in ascending order)
      * @param Y: y vector (must be same size)
      */
-    void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) final
+    void set_data_XY(std::vector<double> X, std::vector<YType> Y) final
     {
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
         I_Interpolator<YType>::_check_XY(X, Y);
 
-        _X = X;
-        _Y = Y;
+        _X = std::move(X);
+        _Y = std::move(Y);
 
         if (_X.size() > 1)
             _last_x_pair = _t_x_pair(0, 1, _X[0], _X[1]);
@@ -189,9 +192,21 @@ class I_PairInterpolator : public I_Interpolator<YType>
             return;
         }
 
-        for (unsigned int i = 0; i < X.size(); ++i)
+        size_t orig_size = _X.size();
+
+        try
         {
-            append(X[i], Y[i]);
+            for (unsigned int i = 0; i < X.size(); ++i)
+            {
+                append(X[i], Y[i]);
+            }
+        }
+        catch (...)
+        {
+            // restore original size if something went wrong
+            _X.resize(orig_size);
+            _Y.resize(orig_size);
+            throw;
         }
     }
 
@@ -217,15 +232,17 @@ class I_PairInterpolator : public I_Interpolator<YType>
             XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
 
         // copy back to _X and _Y
-        _X.resize(XY.size());
-        _Y.resize(XY.size());
-        for (unsigned int i = 0; i < _X.size(); ++i)
+        std::vector<double> X_new;
+        std::vector<YType>  Y_new;
+        X_new.resize(XY.size());
+        Y_new.resize(XY.size());
+        for (unsigned int i = 0; i < XY.size(); ++i)
         {
-            _X[i] = XY[i].first;
-            _Y[i] = XY[i].second;
+            X_new[i] = XY[i].first;
+            Y_new[i] = XY[i].second;
         }
 
-        set_data_XY(_X, _Y);
+        set_data_XY(std::move(X_new), std::move(Y_new));
     }
 
     // -----------------------

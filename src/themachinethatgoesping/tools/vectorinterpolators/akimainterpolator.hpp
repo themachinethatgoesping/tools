@@ -56,7 +56,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      *
      */
     AkimaInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<double>(extrapolation_mode)
+        : I_Interpolator<double>(extrapolation_mode, "AkimaInterpolator")
     {
         // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
     }
@@ -75,12 +75,12 @@ class AkimaInterpolator : public I_Interpolator<double>
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object
      * that describes the extrapolation mode
      */
-    AkimaInterpolator(const std::vector<double>& X,
-                      const std::vector<double>& Y,
-                      t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<double>(extrapolation_mode)
+    AkimaInterpolator(std::vector<double> X,
+                      std::vector<double> Y,
+                      t_extr_mode         extrapolation_mode = t_extr_mode::extrapolate)
+        : I_Interpolator<double>(extrapolation_mode, "AkimaInterpolator")
     {
-        set_data_XY(X, Y);
+        set_data_XY(std::move(X), std::move(Y));
     }
     ~AkimaInterpolator() = default;
 
@@ -187,7 +187,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      * @param X: x vector (must be same size)
      * @param Y: y vector (must be same size)
      */
-    void set_data_XY(const std::vector<double>& X, const std::vector<double>& Y) final
+    void set_data_XY(std::vector<double> X, std::vector<double> Y) final
     {
         // check if X and Y are valid
         I_Interpolator<double>::_check_XY(X, Y);
@@ -198,23 +198,26 @@ class AkimaInterpolator : public I_Interpolator<double>
 
         if (_X.size() >= 4) // default case
         {
-            // This should be easier: Move semantics of makima seem to be more in the way here than
-            // they help ...
-            auto x = X;
-            auto y = Y;
             _akima_spline =
-                boost::math::interpolators::makima<std::vector<double>>(std::move(x), std::move(y));
+                boost::math::interpolators::makima<std::vector<double>>(std::move(X), std::move(Y));
 
             _init_linearextrapolators();
         }
         else // if < 4 values, act as linear interpolator
         {
-            _min_linearextrapolator.set_data_XY(X, Y);
+            _min_linearextrapolator.set_data_XY(std::move(X), std::move(Y));
         }
     }
 
     void append(double x, double y) final
     {
+        if (_X.size() > 0)
+            if (x <= _X.back())
+            {
+                throw(std::domain_error("ERROR[Interpolation::append]: appended x value is not "
+                                        "larger than existing x values in the interpolator."));
+            }
+
         if (!std::isfinite(x))
             throw(std::domain_error(
                 "ERROR[Interpolator::append]: X contains NAN or INFINITE values!"));
@@ -233,7 +236,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
         else // initialize interpolator if less than 4 values where present before
         {
-            set_data_XY(_X, _Y);
+            set_data_XY(std::move(_X), std::move(_Y));
         }
     }
 
@@ -242,26 +245,40 @@ class AkimaInterpolator : public I_Interpolator<double>
         if (X.size() != Y.size())
             throw(std::invalid_argument("ERROR[Interpolator::extend]: list sizes do not match"));
 
-        // initialize interpolator if less than 4 values where present before
-        if (_X.size() < 4)
+        size_t orig_size = _X.size();
+
+        try
         {
-            std::copy(X.begin(), X.end(), std::back_inserter(_X));
-            std::copy(Y.begin(), Y.end(), std::back_inserter(_Y));
+            // initialize interpolator if less than 4 values where present before
+            if (_X.size() < 4)
+            {
+                std::copy(X.begin(), X.end(), std::back_inserter(_X));
+                std::copy(Y.begin(), Y.end(), std::back_inserter(_Y));
 
-            set_data_XY(_X, _Y);
-            return;
+                set_data_XY(std::move(_X), std::move(_Y));
+                return;
+            }
+
+            for (unsigned int i = 0; i < X.size(); ++i)
+            {
+                _akima_spline.push_back(X[i], Y[i]);
+
+                // copy data to allow get_X and get_Y functions
+                _X.push_back(X[i]);
+                _Y.push_back(Y[i]);
+            }
+
+            _init_linearextrapolators();
         }
-
-        for (unsigned int i = 0; i < X.size(); ++i)
+        catch (...)
         {
-            _akima_spline.push_back(X[i], Y[i]);
+            // restore original size if something went wrong
+            _X.resize(orig_size);
+            _Y.resize(orig_size);
 
-            // copy data to allow get_X and get_Y functions
-            _X.push_back(X[i]);
-            _Y.push_back(Y[i]);
+            set_data_XY(std::move(_X), std::move(_Y));
+            throw;
         }
-
-        _init_linearextrapolators();
     }
 
     void insert(const std::vector<double>& X, const std::vector<double>& Y) final
@@ -286,15 +303,17 @@ class AkimaInterpolator : public I_Interpolator<double>
             XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
 
         // copy back to _X and _Y
-        _X.resize(XY.size());
-        _Y.resize(XY.size());
-        for (unsigned int i = 0; i < _X.size(); ++i)
+        std::vector<double> X_new;
+        std::vector<double> Y_new;
+        X_new.resize(XY.size());
+        Y_new.resize(XY.size());
+        for (unsigned int i = 0; i < XY.size(); ++i)
         {
-            _X[i] = XY[i].first;
-            _Y[i] = XY[i].second;
+            X_new[i] = XY[i].first;
+            Y_new[i] = XY[i].second;
         }
 
-        set_data_XY(_X, _Y);
+        set_data_XY(std::move(X_new), std::move(Y_new));
     }
 
     // -----------------------
@@ -348,14 +367,14 @@ class AkimaInterpolator : public I_Interpolator<double>
         // and Y data structures
         if (bitsery_helper::is_input(s))
         {
-            this->set_data_XY(_X, _Y);
+            this->set_data_XY(std::move(_X), std::move(_Y));
         }
     }
 
   public:
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelper::ObjectPrinter printer("AkimaInterpolator", float_precision);
+        classhelper::ObjectPrinter printer(this->get_name(), float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

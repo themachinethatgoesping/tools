@@ -89,6 +89,14 @@ void init_c_nearestinterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
              py::arg("X"),
              py::arg("Y"))
+        .def("__eq__",
+             &NearestInterpolator::operator==,
+             DOC(themachinethatgoesping,
+                 tools,
+                 vectorinterpolators,
+                 NearestInterpolator,
+                 operator_eq),
+             py::arg("other"))
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(NearestInterpolator)
         // default binary functions

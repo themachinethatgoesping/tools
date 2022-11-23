@@ -21,6 +21,8 @@
 #include <utility>
 #include <vector>
 
+#include "../classhelper/objectprinter.hpp"
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
@@ -53,11 +55,8 @@ template<typename YType>
 class I_Interpolator
 {
   protected:
-    /**
-     * @brief extrapolation mode type.
-     *
-     */
-    t_extr_mode _extr_mode;
+    std::string_view _name;
+    t_extr_mode      _extr_mode; ///< extrapolation mode
 
   public:
     /**
@@ -66,11 +65,20 @@ class I_Interpolator
      *
      * @param extrapolation_mode extrapolation mode (nearest or fail)
      */
-    I_Interpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : _extr_mode(extrapolation_mode)
+    I_Interpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate,
+                   std::string_view name               = "I_Interpolator")
+        : _name(name)
+        , _extr_mode(extrapolation_mode)
     {
     }
     virtual ~I_Interpolator() = default;
+
+    /**
+     * @brief Get the interpolator name (for debugging)
+     *
+     * @return std::string_view
+     */
+    std::string_view get_name() const { return _name; }
 
     /**
      * @brief change the input data to these X and Y vectors
@@ -78,7 +86,7 @@ class I_Interpolator
      * @param X: x vector (must be same size, must be sorted in ascending order)
      * @param Y: y vector (must be same size)
      */
-    virtual void set_data_XY(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
+    virtual void set_data_XY(std::vector<double> X, std::vector<YType> Y) = 0;
 
     // -----------------------
     // getter functions
@@ -153,6 +161,7 @@ class I_Interpolator
 
     /**
      * @brief append an x- and the corresponding y value to the interpolator data.
+     * Exception: raises domain error, strong exception guarantee
      *
      * @param x value, must be > than all existing x values
      * @param y corresponding y value
@@ -161,6 +170,7 @@ class I_Interpolator
 
     /**
      * @brief append x and y value lists to the interpolator data (vectorized call)
+     * Exception: raises domain error, strong exception guarantee
      *
      * @param X list of x values. Must be sorted in ascending order. All x values must be larger
      * than the largest x value in the interpolator data.
@@ -171,11 +181,23 @@ class I_Interpolator
     /**
      * @brief append x and y value lists to the interpolator data (vectorized call)
      * This call is much more expensive than extend as it requires copying data and sorting.
+     * Exception: raises domain error, strong exception guarantee
      *
      * @param X list of x values. (Does not have to be sorted. But must be unique)
      * @param Y list of corresponding Y values. Must be same size as X
      */
     virtual void insert(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
+
+    /**
+     * @brief return a printer object
+     *
+     * @param float_precision number of digits for floating point numbers
+     * @return classhelper::ObjectPrinter
+     */
+    virtual classhelper::ObjectPrinter __printer__(unsigned int float_precision) const = 0;
+
+    // define info_string and print functions (needs the __printer__ function)
+    __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 
   protected:
     /**

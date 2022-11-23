@@ -1204,6 +1204,7 @@ Parameter ``extrapolation_mode``:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append =
 R"doc(append an x- and the corresponding y value to the interpolator data.
+Exception: raises domain error, strong exception guarantee
 
 Parameter ``x``:
     value, must be > than all existing x values
@@ -1215,6 +1216,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Inte
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
 R"doc(append x and y value lists to the interpolator data (vectorized call)
+Exception: raises domain error, strong exception guarantee
 
 Parameter ``X``:
     list of x values. Must be sorted in ascending order. All x values
@@ -1223,7 +1225,7 @@ Parameter ``X``:
 Parameter ``Y``:
     list of corresponding Y values. Must be same size as X)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(extrapolation mode type.)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(< extrapolation mode)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_data_X =
 R"doc(return the x component of the internal data vector
@@ -1245,16 +1247,27 @@ Returns:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_name =
+R"doc(Get the interpolator name (for debugging)
+
+Returns:
+    std::string_view)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_insert =
 R"doc(append x and y value lists to the interpolator data (vectorized call)
 This call is much more expensive than extend as it requires copying
-data and sorting.
+data and sorting. Exception: raises domain error, strong exception
+guarantee
 
 Parameter ``X``:
     list of x values. (Does not have to be sorted. But must be unique)
 
 Parameter ``Y``:
     list of corresponding Y values. Must be same size as X)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call =
 R"doc(get the interpolated y value for given x target
@@ -1274,6 +1287,17 @@ Parameter ``targets_x``:
 
 Returns:
     corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_print = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_printer =
+R"doc(return a printer object
+
+Parameter ``float_precision``:
+    number of digits for floating point numbers
+
+Returns:
+    classhelper::ObjectPrinter)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors
@@ -1387,7 +1411,8 @@ Returns:
     corresponding y value)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
-R"doc(change the input data to these X and Y vectors
+R"doc(change the input data to these X and Y vectors Exception: raises
+domain error, strong exception guarantee
 
 Parameter ``X:``:
     x vector (must be same size, must be sorted in ascending order)

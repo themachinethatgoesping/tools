@@ -163,6 +163,11 @@ void init_c_slerpinterpolator(pybind11::module& m)
              py::arg("X"),
              py::arg("YPR"),
              py::arg("input_in_degrees") = true)
+        .def(
+            "__eq__",
+            &SlerpInterpolator::operator==,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, operator_eq),
+            py::arg("other"))
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(SlerpInterpolator)
         // default binary functions

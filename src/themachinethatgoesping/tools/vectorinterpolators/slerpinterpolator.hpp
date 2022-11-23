@@ -17,6 +17,8 @@
 
 #include "../classhelper/bitsery.hpp"
 #include "../classhelper/objectprinter.hpp"
+#include "../helper.hpp"
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace vectorinterpolators {
@@ -42,14 +44,14 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      * @brief Constructor to make default initialization possible (necessary?)
      */
     SlerpInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<t_quaternion>(extrapolation_mode)
+        : I_PairInterpolator<t_quaternion>(extrapolation_mode, "SlerpInterpolator")
     {
     }
 
     SlerpInterpolator(const std::vector<double>&       X,
                       const std::vector<t_quaternion>& Y,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<t_quaternion>(X, Y, extrapolation_mode)
+        : I_PairInterpolator<t_quaternion>(X, Y, extrapolation_mode, "SlerpInterpolator")
     {
     }
 
@@ -74,7 +76,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         : I_PairInterpolator<t_quaternion>(
               X,
               rotationfunctions::quaternion_from_ypr(Yaw, Pitch, Roll, input_in_degrees),
-              extrapolation_mode)
+              extrapolation_mode,
+              "SlerpInterpolator")
     {
     }
 
@@ -95,7 +98,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         : I_PairInterpolator<t_quaternion>(
               X,
               rotationfunctions::quaternion_from_ypr(YPR, input_in_degrees),
-              extrapolation_mode)
+              extrapolation_mode,
+              "SlerpInterpolator")
     {
     }
 
@@ -120,6 +124,12 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
             return false;
         if (!std::equal(_Y.begin(), _Y.end(), rhs.get_data_Y().begin()))
             return false;
+
+        // compare data
+        // if (!helper::approx_container(_X, rhs._X))
+        //     return false;
+        // if (!helper::approx_container(_Y, rhs._Y))
+        //     return false;
 
         return true;
     }
@@ -343,7 +353,7 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
   public:
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelper::ObjectPrinter printer("SlerpInterpolator", float_precision);
+        classhelper::ObjectPrinter printer(this->get_name(), float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

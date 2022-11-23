@@ -36,7 +36,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
 {
   public:
     NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(extrapolation_mode)
+        : I_PairInterpolator<double>(extrapolation_mode, "NearestInterpolator")
     {
     }
 
@@ -51,7 +51,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
     NearestInterpolator(const std::vector<double>& X,
                         const std::vector<double>& Y,
                         t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(X, Y, extrapolation_mode)
+        : I_PairInterpolator<double>(X, Y, extrapolation_mode, "NearestInterpolator")
     {
     }
     ~NearestInterpolator() = default;
@@ -105,7 +105,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
   public:
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelper::ObjectPrinter printer("NearestInterpolator", float_precision);
+        classhelper::ObjectPrinter printer(this->get_name(), float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

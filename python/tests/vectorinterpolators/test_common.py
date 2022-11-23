@@ -166,93 +166,101 @@ class Test_tools_vectorinterpolators_all:
 
             # should not throw
             interpolator = interpolatorType(X, Y)
+            orig_interpolator = interpolator.copy()
+            print(interpolator)
+            print(orig_interpolator)
+            assert interpolator == orig_interpolator
             interpolator.append(13, -1)
+            assert interpolator != orig_interpolator
 
             # check of exceptions are raised for appending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.append(12, -1)
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for appending items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.append(11, -1)
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([11, 12], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([12, 13], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([14, 13], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending nan x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([13, np.nan], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending nan x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [-1, np.nan])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending inf x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([13, np.inf], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for extending inf x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [np.inf, -1])
+            assert interpolator == orig_interpolator
 
             # --- inserting --- (like extending but does not have to be sorted)
             # check of exceptions are raised for inserting items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
-                interpolator.insert([11, 12], [-1, -1])
+                interpolator.insert([11, 12], [-2, -3])
+            assert interpolator == orig_interpolator, interpolator.info_string() +"\n" + orig_interpolator.info_string()
 
             # check of exceptions are raised for inserting items
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([12, 13], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for inserting items
-            interpolator = interpolatorType(X, Y)
             interpolator.insert([14, 13], [1, -1])
             assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
             assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1, 1])
+            assert interpolator != orig_interpolator
 
             # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, np.nan], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for inserting nan x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [-1, np.nan])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for inserting inf x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, np.inf], [-1, -1])
+            assert interpolator == orig_interpolator
 
             # check of exceptions are raised for inserting inf x values
-            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [np.inf, -1])
+            assert interpolator == orig_interpolator
 
             # should not throw
             interpolator = interpolatorType(X, Y)
             interpolator.extend([13, 14], [-1, -1])
+            assert interpolator != orig_interpolator
 
     def test_SlerpInterpolator_should_throw_expected_exceptions(self):
         """this interpolator uses different input data than the other interpolators"""
@@ -262,68 +270,74 @@ class Test_tools_vectorinterpolators_all:
         roll = [1, 0, 1, 0, -1]
 
         interpolator = vip.SlerpInterpolator(x, yaw, pitch, roll)
+        orig_interpolator = interpolator.copy()
+        assert interpolator == orig_interpolator
 
         # interpolator should fail if double x elements are appended
         with pytest.raises(ValueError):
             interpolator.append(12, [-1, -1, -1])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.append(11, [-1, -1, -1])
+        assert interpolator == orig_interpolator
 
         # should not fail here
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         interpolator.append(13, [-1, -1, -1])
+        assert interpolator != orig_interpolator
 
         # same behavior for vectorized calls
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([12, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([11, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([14, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([14, 14], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([np.nan, 14], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.extend([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
         # insert same behavior for vectorized calls
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.insert([12, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         interpolator.insert([11, 13], [[-1, -1, -1], [1, 1, 1]])
         assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 11, 12, 13])
+        assert interpolator != orig_interpolator
 
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         interpolator.insert([14, 13], [[-1, -1, -1], [1, 1, 1]])
         assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
+        assert interpolator != orig_interpolator
 
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.insert([14, 14], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.insert([np.nan, 14], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
-        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.insert([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
+        assert interpolator == orig_interpolator
 
         # should not raise here
         vip.SlerpInterpolator(x + [100], yaw + [1], pitch + [2], roll + [3])
@@ -338,6 +352,7 @@ class Test_tools_vectorinterpolators_all:
         # should not fail here
         interpolator.set_data_XYPR(x, yaw, pitch, roll)
         interpolator.extend([13, 14], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator != orig_interpolator
 
         # initialize test data (wrong order)
         x_wrong_order = [-5, -10, 0, 6, 12]

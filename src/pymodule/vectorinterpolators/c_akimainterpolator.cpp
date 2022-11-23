@@ -89,6 +89,11 @@ void init_c_akimainterpolator(pybind11::module& m)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
              py::arg("X"),
              py::arg("Y"))
+        .def(
+            "__eq__",
+            &AkimaInterpolator::operator==,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, operator_eq),
+            py::arg("other"))
         // default copy functions
         __PYCLASS_DEFAULT_COPY__(AkimaInterpolator)
         // default binary functions
