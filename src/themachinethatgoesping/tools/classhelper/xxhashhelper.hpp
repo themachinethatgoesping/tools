@@ -29,18 +29,13 @@
         return xxh::xxhash3<64>(this->to_binary());                                                \
     }
 
-/*
 // // inject object.hash() into namespace std
-// // not used so far
-// #define __HASHABLE__(T_OBJECT) \
-// namespace std { \
-// template<> \
-// struct hash<T_OBJECT> \
-// { \
-//     std::size_t operator()(T_OBJECT& object) const \
-//     { \
-//         return object.slow_hash(); \
-//     } \
-// }; \
-// }
-*/
+//   template <> struct std::hash<>
+//   {
+//     size_t
+//     operator()(themachinethatgoesping::echosounders::simrad::datagrams::xml_datagrams::XML_Parameter_Channel
+//     & arg) const
+//     {
+//         return arg.slow_hash();
+//     }
+//   };
