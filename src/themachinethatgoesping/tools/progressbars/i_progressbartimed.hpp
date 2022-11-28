@@ -57,7 +57,7 @@ class I_ProgressBarTimed : public I_ProgressBar
     int _skips                  = 0; ///< number of skipped progressbar updates (set in apply_state)
     int _check_timer_every_step = 1; ///< check the timer every n steps (set in apply_state)
     int _max_skips =
-        100; ///< this is set to 0.25% of the total progress (used in apply_state set in init)
+        100; ///< this is set to 0.01% of the total progress (used in apply_state set in init)
 
     bool _initialized = false;
 
@@ -140,7 +140,7 @@ class I_ProgressBarTimed : public I_ProgressBar
     {
         *_skip = false;
 
-        _max_skips = int((last - first) / 400);
+        _max_skips = int((last - first) / 1000);
         if (_max_skips < 1)
             _max_skips = 1;
 
