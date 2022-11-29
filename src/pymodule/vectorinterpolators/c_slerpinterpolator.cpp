@@ -148,21 +148,25 @@ void init_c_slerpinterpolator(pybind11::module& m)
                                const std::vector<double>&,
                                const std::vector<double>&,
                                const std::vector<double>&,
+                               bool,
                                bool>(&SlerpInterpolator::insert),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert),
              py::arg("X"),
              py::arg("Yaw"),
              py::arg("Pitch"),
              py::arg("Roll"),
-             py::arg("input_in_degrees") = true)
+             py::arg("input_in_degrees") = true,
+             py::arg("bool")             = false)
         .def("insert",
              py::overload_cast<const std::vector<double>&,
                                const std::vector<std::array<double, 3>>&,
+                               bool,
                                bool>(&SlerpInterpolator::insert),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert_2),
              py::arg("X"),
              py::arg("YPR"),
-             py::arg("input_in_degrees") = true)
+             py::arg("input_in_degrees") = true,
+             py::arg("bool")             = false)
         .def(
             "__eq__",
             &SlerpInterpolator::operator==,

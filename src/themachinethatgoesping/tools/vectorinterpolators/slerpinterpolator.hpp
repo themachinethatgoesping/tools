@@ -302,10 +302,13 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
                 const std::vector<double>& yaw,
                 const std::vector<double>& pitch,
                 const std::vector<double>& roll,
-                bool                       input_in_degrees = true)
+                bool                       input_in_degrees = true,
+                bool                       is_sorted        = false)
     {
         I_PairInterpolator<t_quaternion>::insert(
-            x, rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees));
+            x,
+            rotationfunctions::quaternion_from_ypr(yaw, pitch, roll, input_in_degrees),
+            is_sorted);
     }
 
     /**
@@ -317,10 +320,11 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
      */
     void insert(const std::vector<double>&                x,
                 const std::vector<std::array<double, 3>>& ypr,
-                bool                                      input_in_degrees = true)
+                bool                                      input_in_degrees = true,
+                bool                                      is_sorted        = false)
     {
         I_PairInterpolator<t_quaternion>::insert(
-            x, rotationfunctions::quaternion_from_ypr(ypr, input_in_degrees));
+            x, rotationfunctions::quaternion_from_ypr(ypr, input_in_degrees), is_sorted);
     }
 
     /**

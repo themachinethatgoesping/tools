@@ -88,7 +88,8 @@ void init_c_akimainterpolator(pybind11::module& m)
              &AkimaInterpolator::insert,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
              py::arg("X"),
-             py::arg("Y"))
+             py::arg("Y"),
+             py::arg("bool") = false)
         .def(
             "__eq__",
             &AkimaInterpolator::operator==,

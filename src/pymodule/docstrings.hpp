@@ -1265,7 +1265,11 @@ Parameter ``X``:
     list of x values. (Does not have to be sorted. But must be unique)
 
 Parameter ``Y``:
-    list of corresponding Y values. Must be same size as X)doc";
+    list of corresponding Y values. Must be same size as X
+
+Parameter ``is_sorted``:
+    this indicates that X is already sorted in ascending order.
+    (default: false))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_name = R"doc()doc";
 
