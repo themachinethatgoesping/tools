@@ -40,7 +40,10 @@ class ProgressTqdm
         : pybind11::object(tqdm)
     {
     }
-    ~ProgressTqdm() = default;
+    ~ProgressTqdm()
+    {
+        attr("close")();
+    }
 
   private:
     // ----- I_ProgressBarTimed interface -----
@@ -59,7 +62,6 @@ class ProgressTqdm
     {
         // close the tqdm progressbar
         attr("set_postfix_str")("[" + msg + "]");
-        attr("close")();
     }
 
     void callback_set_progress(double new_progress) override
