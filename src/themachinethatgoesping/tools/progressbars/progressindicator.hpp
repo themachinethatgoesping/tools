@@ -80,6 +80,7 @@ class ProgressIndicator : public I_ProgressBarTimed
     {
         // set the postfix of the indicator progressbar
         _indicator->set_option(indicators::option::PostfixText{ "[" + postfix + "]" });
+        _indicator->set_progress(_indicator->current());
     }
 
     void callback_tick(double increment = 1) override
