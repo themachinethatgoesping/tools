@@ -223,7 +223,7 @@ class Test_tools_vectorinterpolators_all:
             # check of exceptions are raised for inserting items
             with pytest.raises(ValueError):
                 interpolator.insert([11, 12], [-2, -3])
-            assert interpolator == orig_interpolator, interpolator.info_string() +"\n" + orig_interpolator.info_string()
+            assert interpolator == orig_interpolator, interpolator.info_string() + "\n" + orig_interpolator.info_string()
 
             # check of exceptions are raised for inserting items
             with pytest.raises(ValueError):

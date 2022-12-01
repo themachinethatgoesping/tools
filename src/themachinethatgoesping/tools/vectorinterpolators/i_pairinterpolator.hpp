@@ -210,19 +210,24 @@ class I_PairInterpolator : public I_Interpolator<YType>
         }
     }
 
-    void insert(const std::vector<double>& X, const std::vector<YType>& Y, bool is_sorted = false) final
+    void insert(const std::vector<double>& X,
+                const std::vector<YType>&  Y,
+                bool                       is_sorted = false) final
     {
-        if(X.empty())
+        if (X.empty())
             return;
 
-        if (_X.empty()){
+        if (_X.empty())
+        {
             return set_data_XY(X, Y);
         }
 
         // if data is sorted and the first element is larger than the last element of the internal
         // the existing data can be extended, which is faster than inserting
-        if (is_sorted){
-            if (X.front() > _X.back()){
+        if (is_sorted)
+        {
+            if (X.front() > _X.back())
+            {
                 return extend(X, Y);
             }
         }

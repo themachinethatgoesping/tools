@@ -40,10 +40,7 @@ class ProgressTqdm
         : pybind11::object(tqdm)
     {
     }
-    ~ProgressTqdm()
-    {
-        attr("close")();
-    }
+    ~ProgressTqdm() { attr("close")(); }
 
   private:
     // ----- I_ProgressBarTimed interface -----

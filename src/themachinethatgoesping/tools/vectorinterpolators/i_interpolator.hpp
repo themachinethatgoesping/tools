@@ -187,7 +187,9 @@ class I_Interpolator
      * @param Y list of corresponding Y values. Must be same size as X
      * @param is_sorted this indicates that X is already sorted in ascending order. (default: false)
      */
-    virtual void insert(const std::vector<double>& X, const std::vector<YType>& Y, bool is_sorted = false) = 0;
+    virtual void insert(const std::vector<double>& X,
+                        const std::vector<YType>&  Y,
+                        bool                       is_sorted = false) = 0;
 
     /**
      * @brief return a printer object
