@@ -4,8 +4,8 @@
 
 [wrap-git]
 url = https://github.com/fraillt/bitsery.git
-revision = v5.2.2
-directory = bitsery-5.2.2
+revision = v5.2.3
+directory = bitsery-5.2.3
 patch_directory = bitsery
 
 [provide]
