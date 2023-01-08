@@ -375,7 +375,7 @@ class ObjectPrinter
     template<typename t_value>
     void register_value(const std::string& name,
                         t_value            value,
-                        std::string        value_info = "",
+                        std::string_view   value_info = "",
                         int                pos        = -1)
     {
         std::string str;
@@ -421,7 +421,7 @@ class ObjectPrinter
     template<typename t_container>
     void register_container(const std::string& name,
                             const t_container& values,
-                            std::string        value_info = "",
+                            std::string_view   value_info = "",
                             int                pos        = -1)
     {
         static const size_t max_visible_elements = 9; // maximum values to display for a vector
