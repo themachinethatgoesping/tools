@@ -44,12 +44,12 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint);
 
 /**
  * @brief Convert a year, month and day to a unixtime stamp (ref 1970)
- * 
- * @param year 
- * @param month 
- * @param day 
+ *
+ * @param year
+ * @param month
+ * @param day
  * @param micro_seconds microseconds since midnight
- * @return double 
+ * @return double
  */
 double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_seconds = 0);
 

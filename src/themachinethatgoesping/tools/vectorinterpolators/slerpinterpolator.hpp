@@ -391,4 +391,4 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 } // namespace tools
 } // namespace themachinethatgoesping
 
-//#endif
+// #endif

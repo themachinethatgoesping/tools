@@ -14,7 +14,7 @@
 
 #pragma once
 
-//#define _USE_MATH_DEFINES // for C++ // windows // this is not necessary
+// #define _USE_MATH_DEFINES // for C++ // windows // this is not necessary
 #include <cmath>
 
 #include <Eigen/Eigen>

@@ -57,8 +57,10 @@ void init_c_objectprinter(pybind11::module& m)
              py::arg("value_info") = "",
              py::arg("pos")        = -1)
         .def("register_container",
-             py::overload_cast<const std::string&, const std::vector<double>&, std::string_view, int>(
-                 &ObjectPrinter::register_container<std::vector<double>>),
+             py::overload_cast<const std::string&,
+                               const std::vector<double>&,
+                               std::string_view,
+                               int>(&ObjectPrinter::register_container<std::vector<double>>),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_container),
              py::arg("name"),
              py::arg("value"),

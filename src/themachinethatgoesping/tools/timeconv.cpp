@@ -41,9 +41,9 @@ double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
 
 double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_seconds)
 {
-        auto X = date::year{year}/month/day;
-        auto tp = date::sys_days{X} + chrono::microseconds{micro_seconds};
-        return tools::timeconv::timepoint_to_unixtime(tp);
+    auto X  = date::year{ year } / month / day;
+    auto tp = date::sys_days{ X } + chrono::microseconds{ micro_seconds };
+    return tools::timeconv::timepoint_to_unixtime(tp);
 }
 
 double datestring_to_unixtime(const string& DateString, const string& format)

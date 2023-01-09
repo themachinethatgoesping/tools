@@ -59,7 +59,7 @@ void test_interpolator_serialize(t_interpolator& ip)
 
     // same as serialization, but returns deserialization state as a pair
     // first = error code, second = is buffer was successfully read from begin to the end.
-    //#auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
+    // #auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
     // ip2);
     // auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
     auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, ip2);
@@ -296,7 +296,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         std::vector<double>                pitch = { 1, 0, 1, 0, -1 };
         std::vector<double>                roll  = { 1, 0, 1, 0, -1 };
         std::vector<std::array<double, 3>> ypr   = {
-              { 1, 1, 1 }, { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 }
+            { 1, 1, 1 }, { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 }
         };
 
         vectorinterpolators::SlerpInterpolator interpolator(x, yaw, pitch, roll);
