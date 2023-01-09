@@ -20,7 +20,7 @@ class Test_tools_timeconv:
         ) == pytest.approx(unixtime)
 
     # test case 2-0
-    def test_datestring_to_unixtime_shoud_convert_specified_unixtime_to_specified_datestring(
+    def test_datestring_to_unixtime_should_convert_specified_unixtime_to_specified_datestring(
         self,
     ):
         unixtime = 1234567890.123456
@@ -159,3 +159,17 @@ class Test_tools_timeconv:
         assert "+0000__05-06-2017__08:09:12.123456" == timeconv.unixtime_to_datestring(
             unixtime9, 6
         )
+
+    def test_year_month_day_to_unixtime_should_convert_specified_ymd_to_specified_unixtime(
+        self,
+    ):
+        datestring = "+0000__13-02-2009__23:31:30.123456" # to check that the ymd result is equivalent to this datestring
+        unixtime = 1234567890.123456
+
+        y = 2009
+        m = 2
+        d = 13
+        us = 123456 + 1000000 * (30 + 31*60 + 23*3600)
+
+        assert timeconv.datestring_to_unixtime(datestring) == pytest.approx(unixtime)
+        assert timeconv.year_month_day_to_unixtime(y, m, d, us) == pytest.approx(unixtime)

@@ -41,6 +41,14 @@ void init_m_timeconv(py::module& m)
                    py::arg("unixtime"),
                    py::arg("format") = "%z__%d-%m-%Y__%H:%M:%S");
 
+    m_timeconv.def("year_month_day_to_unixtime",
+                   &pingtools::timeconv::year_month_day_to_unixtime,
+                   DOC(themachinethatgoesping, tools, timeconv, year_month_day_to_unixtime),
+                   py::arg("year"),
+                   py::arg("month"),
+                   py::arg("day"),
+                   py::arg("micro_seconds") = 0);
+
     m_timeconv.def("unixtime_to_datestring",
                    &pingtools::timeconv::unixtime_to_datestring,
                    DOC(themachinethatgoesping, tools, timeconv, unixtime_to_datestring),

@@ -1072,6 +1072,20 @@ Parameter ``highDateTime``:
 Returns:
     double)doc";
 
+static const char *__doc_themachinethatgoesping_tools_timeconv_year_month_day_to_unixtime =
+R"doc(Convert a year, month and day to a unixtime stamp (ref 1970)
+
+Parameter ``year``:
+    $Parameter ``month``:
+
+Parameter ``day``:
+    $Parameter ``micro_seconds``:
+
+microseconds since midnight
+
+Returns:
+    double)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator. Note: this interpolator acts as linear
