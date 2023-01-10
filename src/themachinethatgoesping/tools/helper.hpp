@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+// SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
 // SPDX-FileCopyrightText: 2022 Drew Dormann (stackoverflow)
 //
 // SPDX-License-Identifier: MPL-2.0

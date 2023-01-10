@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Peter Urban, Ghent University
+# SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
 # SPDX-FileCopyrightText: 2021 The Meson development team
 #
 # SPDX-License-Identifier: MIT
