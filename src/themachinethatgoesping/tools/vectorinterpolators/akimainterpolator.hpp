@@ -13,6 +13,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/akimainterpolator.doc.hpp"
+
 #include <array>
 #include <boost/math/interpolators/makima.hpp>
 #include <iostream>

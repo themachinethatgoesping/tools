@@ -14,6 +14,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/helper.doc.hpp"
+
 // #define _USE_MATH_DEFINES // for C++ // windows // this is not necessary
 #include <cmath>
 

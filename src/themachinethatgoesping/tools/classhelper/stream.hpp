@@ -11,6 +11,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/stream.doc.hpp"
+
 #include "xxhashhelper.hpp"
 #include <iostream>
 #include <sstream>

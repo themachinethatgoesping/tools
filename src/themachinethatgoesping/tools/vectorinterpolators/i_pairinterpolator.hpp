@@ -16,6 +16,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/i_pairinterpolator.doc.hpp"
+
 #include <algorithm>
 #include <array>
 #include <boost/algorithm/string.hpp>

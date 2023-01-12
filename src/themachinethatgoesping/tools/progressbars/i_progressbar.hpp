@@ -4,6 +4,9 @@
 // SPDX-License-Identifier: MPL-2.0
 
 #pragma once
+
+/* generated doc strings */
+#include ".docstrings/i_progressbar.doc.hpp"
 #include <string>
 
 namespace themachinethatgoesping {

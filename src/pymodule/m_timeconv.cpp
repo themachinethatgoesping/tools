@@ -5,7 +5,7 @@
 
 // -- module header
 #include "m_timeconv.hpp"
-#include "docstrings.hpp" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
+// automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
 #include "../themachinethatgoesping/tools/timeconv.hpp"

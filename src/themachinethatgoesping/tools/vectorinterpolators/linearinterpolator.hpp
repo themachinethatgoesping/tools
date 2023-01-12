@@ -13,6 +13,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/linearinterpolator.doc.hpp"
+
 #include <array>
 #include <iostream>
 #include <unordered_map>

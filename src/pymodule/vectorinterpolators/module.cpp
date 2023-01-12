@@ -10,7 +10,7 @@
 
 #include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
 #include "../../themachinethatgoesping/tools_pybind/enumhelper.hpp"
-#include "../docstrings.hpp"
+
 #include "module.hpp"
 
 namespace py = pybind11;

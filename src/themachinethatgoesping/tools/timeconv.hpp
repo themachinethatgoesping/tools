@@ -13,6 +13,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/timeconv.doc.hpp"
+
 /* std includes */
 #include <chrono>
 #include <cmath>

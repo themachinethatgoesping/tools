@@ -163,7 +163,7 @@ class Test_tools_timeconv:
     def test_year_month_day_to_unixtime_should_convert_specified_ymd_to_specified_unixtime(
         self,
     ):
-        datestring = "+0000__13-02-2009__23:31:30.123456" # to check that the ymd result is equivalent to this datestring
+        datestring = "+0000__13-02-2009__23:31:30.123456"  # to check that the ymd result is equivalent to this datestring
         unixtime = 1234567890.123456
 
         y = 2009

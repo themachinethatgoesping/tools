@@ -9,6 +9,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/xxhashhelper.doc.hpp"
+
 #include <xxhash.hpp>
 
 #define __SLOW_HASH_NOT_CONST__                                                                    \

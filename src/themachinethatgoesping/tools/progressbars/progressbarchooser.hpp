@@ -4,6 +4,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/progressbarchooser.doc.hpp"
+
 #include <variant>
 
 #include "consoleprogressbar.hpp"

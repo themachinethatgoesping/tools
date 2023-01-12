@@ -8,6 +8,12 @@
 // traits helps library to know how to use types correctly,
 // in this case we'll be using vector both, to serialize/deserialize data and to store use as a
 // buffer.
+
+#pragma once
+
+/* generated doc strings */
+#include ".docstrings/nosizevector.doc.hpp"
+
 #include <bitsery/traits/vector.h>
 
 namespace themachinethatgoesping {

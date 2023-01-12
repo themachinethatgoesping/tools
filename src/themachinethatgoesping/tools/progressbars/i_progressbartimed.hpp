@@ -4,6 +4,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/i_progressbartimed.doc.hpp"
+
 #include "i_progressbar.hpp"
 
 #include <iostream>

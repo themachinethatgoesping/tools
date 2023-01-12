@@ -13,6 +13,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/i_interpolator.doc.hpp"
+
 #include <algorithm>
 #include <array>
 #include <boost/algorithm/string.hpp>

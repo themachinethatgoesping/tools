@@ -5,6 +5,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/noindicator.doc.hpp"
+
 #include "i_progressbar.hpp"
 
 namespace themachinethatgoesping {

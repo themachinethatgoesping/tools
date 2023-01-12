@@ -4,6 +4,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/slerpinterpolator.doc.hpp"
+
 #include <Eigen/Eigen>
 #include <Eigen/Geometry>
 #include <array>

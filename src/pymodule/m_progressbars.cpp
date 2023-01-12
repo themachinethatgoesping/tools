@@ -16,7 +16,7 @@
 // -- module header
 #include "../themachinethatgoesping/tools/progressbars.hpp"
 #include "../themachinethatgoesping/tools/progressbars/progresstqdm.hpp"
-#include "docstrings.hpp" //automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
+// automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::progressbars;

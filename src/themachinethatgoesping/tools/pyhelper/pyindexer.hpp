@@ -14,6 +14,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/pyindexer.doc.hpp"
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace pyhelper {

@@ -5,6 +5,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/helper.doc.hpp"
+
 #include <cmath>
 #include <complex>
 #include <string>

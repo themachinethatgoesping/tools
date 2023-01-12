@@ -11,6 +11,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/bitsery.doc.hpp"
+
 #include <iostream>
 
 #include <bitsery/adapter/buffer.h>

@@ -19,6 +19,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/objectprinter.doc.hpp"
+
 #include <algorithm>
 #include <fmt/core.h>
 #include <fmt/format.h>

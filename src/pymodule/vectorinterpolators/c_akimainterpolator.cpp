@@ -11,7 +11,7 @@
 
 #include "../../themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp"
 #include "../../themachinethatgoesping/tools_pybind/classhelper.hpp"
-#include "../docstrings.hpp"
+
 #include "module.hpp"
 
 namespace py = pybind11;

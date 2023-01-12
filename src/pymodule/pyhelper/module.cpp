@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "../../themachinethatgoesping/tools/pyhelper/pyindexer.hpp"
-#include "../docstrings.hpp"
+
 #include "module.hpp"
 
 namespace py = pybind11;

@@ -4,6 +4,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/progressbars.doc.hpp"
+
 #include "progressbars/consoleprogressbar.hpp"
 #include "progressbars/i_progressbar.hpp"
 #include "progressbars/noindicator.hpp"

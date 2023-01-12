@@ -11,6 +11,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/classhelper.doc.hpp"
+
 /**
  * @brief return a copy using the c++ default copy constructor
  *

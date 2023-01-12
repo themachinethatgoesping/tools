@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: MPL-2.0
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/helper.doc.hpp"
+
 // include bitsery
 #include <bitsery/bitsery.h>
 

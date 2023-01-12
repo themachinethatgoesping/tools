@@ -4,6 +4,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/eigen.doc.hpp"
+
 // include bitsery
 #include <bitsery/bitsery.h>
 

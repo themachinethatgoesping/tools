@@ -2,6 +2,11 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
+#pragma once
+
+/* generated doc strings */
+#include ".docstrings/vectorinterpolators.doc.hpp"
+
 #include "vectorinterpolators/akimainterpolator.hpp"
 #include "vectorinterpolators/linearinterpolator.hpp"
 #include "vectorinterpolators/nearestinterpolator.hpp"
