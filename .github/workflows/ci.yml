@@ -126,6 +126,7 @@ jobs:
   build-on-windows:
     name: Build and install with meson on windows
     strategy:
+      fail-fast: false
         matrix:
           boost-version: [1.79.0]
           boost-version_: [1_79_0]
