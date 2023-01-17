@@ -130,11 +130,16 @@ jobs:
           boost-version: [1.79.0]
           boost-version_: [1_79_0]
           boost-modules: [--with-iostreams]
-          toolset: [gcc]
+          toolset: [clang-cl, clang]
           
     env:
       #CC: msvc-14.32
       CC: ${{matrix.toolset}}
+
+    - name: Set up Clang
+      uses: egor-tensin/setup-clang@v1
+      with:
+        version: latest
 
     runs-on: windows-latest
     #container: python:latest #pull directly from dockerhub   
