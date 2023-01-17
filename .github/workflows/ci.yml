@@ -127,11 +127,11 @@ jobs:
     name: Build and install with meson on windows
     strategy:
       fail-fast: false
-        matrix:
-          boost-version: [1.79.0]
-          boost-version_: [1_79_0]
-          boost-modules: [--with-iostreams]
-          toolset: [clang-cl, clang]
+      matrix:
+        boost-version: [1.79.0]
+        boost-version_: [1_79_0]
+        boost-modules: [--with-iostreams]
+        toolset: [clang-cl, clang]
           
     env:
       #CC: msvc-14.32
