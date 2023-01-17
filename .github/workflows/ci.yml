@@ -86,7 +86,7 @@ jobs:
       if: ${{ matrix.ccache }}
       uses: hendrikmuhs/ccache-action@v1.2
       with:
-        key: ci-${{ matrix.container }}  # name for the cache
+        key: super-ci-${{ matrix.container }}  # name for the cache
 
     - name: install dependencies (c++)
       if:  ${{matrix.dep}}
@@ -231,7 +231,7 @@ jobs:
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
-        key: ci-mac  # name for the cache
+        key: super-ci-mac  # name for the cache
         
     # install clang 14
     - run: brew install llvm@14
