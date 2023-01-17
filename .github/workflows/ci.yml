@@ -100,6 +100,7 @@ jobs:
       run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto -Dprefix=/usr/;
       env:
         CC: gcc
+        CXX: gcc
 
     - name: compile project
       run: meson compile -C builddir/
@@ -136,6 +137,7 @@ jobs:
     env:
       #CC: msvc-14.32
       CC: ${{matrix.toolset}}
+      CXX: ${{matrix.toolset}}
 
     runs-on: windows-latest
     #container: python:latest #pull directly from dockerhub   
