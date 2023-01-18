@@ -42,7 +42,7 @@ fmt_dep = subproject('fmt', default_options: 'default_library=static').get_varia
 # indicators for pretty progress bars
 indicators_dep = dependency('indicators', static: true)
 
-#date (to be replaced with c++20 features)
+#date (to be replaced with c++17 features)
 hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #bitsery (for object serialization)
