@@ -4,7 +4,7 @@
 
 project(
     'xtensor-python', ['cpp'],
-    default_options: ['cpp_std=c++17'],
+    default_options: ['cpp_std=c++20'],
     version: '0.26.1',
 )
 
