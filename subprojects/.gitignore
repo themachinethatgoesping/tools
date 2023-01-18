@@ -6,6 +6,7 @@
 packagecache/*
 date*/*
 Catch2*/*
+xxhash*/*
 
 pybind11*/*
 eigen*/*

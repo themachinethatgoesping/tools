@@ -457,7 +457,7 @@ class ObjectPrinter
             if constexpr (std::is_enum<t_value>())
                 str += magic_enum::enum_name(values[i]);
             else
-                str += fmt::format(format, values[i]);
+                str += fmt::vformat(format, fmt::make_format_args(values[i]));
         }
         str += "}";
 
@@ -542,19 +542,22 @@ class ObjectPrinter
                     // -- print statistics 1 --
                     std::string line_format =
                         fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
-                    line_ref.push_back(
-                        fmt::format(line_format, *(minmax.first), *(minmax.second), mean));
+                    line_ref.push_back(fmt::vformat(
+                        line_format,
+                        fmt::make_format_args(*(minmax.first), *(minmax.second), mean)));
 
                     // print median (special case for even numbers)
                     if (v.size() % 2)
                     {
                         std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
                         line_ref.back() +=
-                            fmt::format("| Median: " + format, (v[n_2] + v[n_2 + 1]) / 2);
+                            fmt::vformat("| Median: " + format,
+                                         fmt::make_format_args((v[n_2] + v[n_2 + 1]) / 2));
                     }
                     else
                     {
-                        line_ref.back() += fmt::format(" | Median: " + format, v[n_2]);
+                        line_ref.back() +=
+                            fmt::vformat(" | Median: " + format, fmt::make_format_args(v[n_2]));
                     }
 
                     // -- print statistics 2 --
@@ -749,28 +752,28 @@ class ObjectPrinter
 
                     continue;
                 case t_field::tvalue:
-                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
-                                                    _fields[i] + ':',
-                                                    max_len_field[section_nr],
-                                                    _lines[i][0]));
+                    str_lines.push_back(prefix + fmt::format("- {:<{}} {}",
+                                                             _fields[i] + ':',
+                                                             max_len_field[section_nr],
+                                                             _lines[i][0]));
                     break;
                 case t_field::tstring:
-                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
-                                                    _fields[i] + ':',
-                                                    max_len_field[section_nr],
-                                                    _lines[i][0]));
+                    str_lines.push_back(prefix + fmt::format("- {:<{}} {}",
+                                                             _fields[i] + ':',
+                                                             max_len_field[section_nr],
+                                                             _lines[i][0]));
                     break;
                 case t_field::tenum:
-                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
-                                                    _fields[i] + ':',
-                                                    max_len_field[section_nr],
-                                                    _lines[i][0]));
+                    str_lines.push_back(prefix + fmt::format("- {:<{}} {}",
+                                                             _fields[i] + ':',
+                                                             max_len_field[section_nr],
+                                                             _lines[i][0]));
                     break;
                 case t_field::tcontainer:
-                    str_lines.push_back(fmt::format(prefix + "- {:<{}} {}",
-                                                    _fields[i] + ':',
-                                                    max_len_field[section_nr],
-                                                    _lines[i][0]));
+                    str_lines.push_back(prefix + fmt::format("- {:<{}} {}",
+                                                             _fields[i] + ':',
+                                                             max_len_field[section_nr],
+                                                             _lines[i][0]));
                     break;
 
                 default:
