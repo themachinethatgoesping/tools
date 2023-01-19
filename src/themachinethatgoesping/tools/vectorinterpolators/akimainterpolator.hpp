@@ -25,8 +25,8 @@
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
 
-#include "../classhelper/bitsery.hpp"
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -375,26 +375,29 @@ class AkimaInterpolator : public I_Interpolator<double>
             LinearInterpolator({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
 
-    // serialization support using bitsery
-    friend bitsery::Access;
-    template<typename S>
-    void serialize(S& s)
+  public:
+    static AkimaInterpolator from_stream(std::istream& is)
     {
-        // serialize internal variables and extra _X and _Y
-        s.value4b(_extr_mode);
-        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        using tools::classhelper::stream::container_from_stream;
 
-        // initialize boost akima on read
-        // TODO: this is a hack, think about forking boost makima to get proper access to private X
-        // and Y data structures
-        if (bitsery_helper::is_input(s))
-        {
-            this->set_data_XY(std::move(_X), std::move(_Y));
-        }
+        t_extr_mode extr_mode;
+
+        is.read(reinterpret_cast<char*>(&(extr_mode)), sizeof(extr_mode));
+        auto x = container_from_stream<std::vector<double>>(is);
+        auto y = container_from_stream<std::vector<double>>(is);
+
+        return AkimaInterpolator(std::move(x), std::move(y), extr_mode);
     }
 
-  public:
+    void to_stream(std::ostream& os) const
+    {
+        using tools::classhelper::stream::container_to_stream;
+
+        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
+        container_to_stream(os, _X);
+        container_to_stream(os, _Y);
+    }
+
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
         classhelper::ObjectPrinter printer(this->get_name(), float_precision);
@@ -409,8 +412,8 @@ class AkimaInterpolator : public I_Interpolator<double>
 
   public:
     // -- class helper function macros --
-    // define to_binary and from_binary functions (needs the serialize function)
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
+    // define to_binary and from_binary functions (based on to/from stream)
+    __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(AkimaInterpolator)
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };

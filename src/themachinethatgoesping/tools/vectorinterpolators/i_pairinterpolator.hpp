@@ -27,7 +27,7 @@
 #include <utility>
 #include <vector>
 
-#include "../classhelper/bitsery.hpp"
+#include "../classhelper/stream.hpp"
 #include "i_interpolator.hpp"
 
 namespace themachinethatgoesping {
@@ -73,19 +73,6 @@ class I_PairInterpolator : public I_Interpolator<YType>
          * @return interpolation factor
          */
         double calc_target_x(double target_x) { return (target_x - _xmin) * _xfactor; }
-
-      private:
-        _t_x_pair() = default;
-        friend bitsery::Access;
-        template<typename S>
-        void serialize(S& s)
-        {
-            s.value8b(_xmin_index);
-            s.value8b(_xmax_index);
-            s.value8b(_xmin);
-            s.value8b(_xmax);
-            s.value8b(_xfactor);
-        }
 
     } _last_x_pair; ///< last pair (for faster consecutive searches)
 

@@ -23,8 +23,8 @@
 
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelper/bitsery.hpp"
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -81,16 +81,31 @@ class LinearInterpolator : public I_PairInterpolator<double>
 
     static std::string type_to_string() { return "LinearInterpolator"; }
 
-  private:
-    // serialization support using bitsery
-    friend bitsery::Access;
-    template<typename S>
-    void serialize(S& s)
+    // ----- to/from stream -----
+    static LinearInterpolator from_stream(std::istream& is)
     {
-        s.value4b(_extr_mode);
-        s.object(_last_x_pair);
-        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        using tools::classhelper::stream::container_from_stream;
+
+        LinearInterpolator obj;
+
+        is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
+        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
+
+        obj._X = container_from_stream<std::vector<double>>(is);
+        obj._Y = container_from_stream<std::vector<double>>(is);
+
+        return obj;
+    }
+
+    void to_stream(std::ostream& os) const
+    {
+        using tools::classhelper::stream::container_to_stream;
+
+        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
+        os.write(reinterpret_cast<const char*>(&(_last_x_pair)), sizeof(_last_x_pair));
+
+        container_to_stream(os, _X);
+        container_to_stream(os, _Y);
     }
 
   public:
@@ -108,8 +123,8 @@ class LinearInterpolator : public I_PairInterpolator<double>
 
   public:
     // -- class helper function macros --
-    // define to_binary and from_binary functions (needs the serialize function)
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
+    // define to_binary and from_binary functions (needs to/from stream function)
+    __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(LinearInterpolator)
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };

@@ -18,7 +18,7 @@
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelper/bitsery.hpp"
+#include "../classhelper/stream.hpp"
 #include "../classhelper/objectprinter.hpp"
 #include "../helper.hpp"
 
@@ -342,20 +342,33 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
         return y1.slerp(target_x, y2);
     }
 
-  private:
-    // serialization support using bitsery
-    friend bitsery::Access;
-    template<typename S>
-    void serialize(S& s)
+
+    // ----- to/from stream functions
+
+    static SlerpInterpolator from_stream(std::istream& is)
     {
-        s.value4b(_extr_mode);
-        s.object(_last_x_pair);
-        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container(
-            _Y,
-            SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE); //_Y is eigen quaternion, therefore this call
-                                                    // needs the include of
-                                                    // tools/classhelper/bitsery_helper/eigen.hpp
+        using tools::classhelper::stream::container_from_stream;
+
+        SlerpInterpolator obj;
+
+        is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
+        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
+
+        obj._X = container_from_stream<std::vector<double>>(is);
+        obj._Y = container_from_stream<std::vector<t_quaternion>>(is);
+
+        return obj;
+    }
+
+    void to_stream(std::ostream& os) const
+    {
+        using tools::classhelper::stream::container_to_stream;
+
+        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
+        os.write(reinterpret_cast<const char*>(&(_last_x_pair)), sizeof(_last_x_pair));
+
+        container_to_stream(os, _X);
+        container_to_stream(os, _Y);
     }
 
   public:
@@ -384,8 +397,8 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
 
   public:
     // -- class helper function macros --
-    // define to_binary and from_binary functions (needs the serialize function)
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
+    // define to_binary and from_binary functions (needs to/from stream functionsÍ)
+    __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(SlerpInterpolator)
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };

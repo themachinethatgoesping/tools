@@ -23,8 +23,8 @@
 
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelper/bitsery.hpp"
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -37,7 +37,7 @@ namespace vectorinterpolators {
  */
 class NearestInterpolator : public I_PairInterpolator<double>
 {
-  public:
+    public:
     NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<double>(extrapolation_mode, "NearestInterpolator")
     {
@@ -93,16 +93,30 @@ class NearestInterpolator : public I_PairInterpolator<double>
         return y2;
     }
 
-  private:
-    // serialization support using bitsery
-    friend bitsery::Access;
-    template<typename S>
-    void serialize(S& s)
+    static NearestInterpolator from_stream(std::istream& is)
     {
-        s.value4b(_extr_mode);
-        s.object(_last_x_pair);
-        s.container8b(_X, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
-        s.container8b(_Y, SERIALIZER_DEFAULT_MAX_CONTAINER_SIZE);
+        using tools::classhelper::stream::container_from_stream;
+
+        NearestInterpolator obj;
+
+        is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
+        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
+
+        obj._X = container_from_stream<std::vector<double>>(is);
+        obj._Y = container_from_stream<std::vector<double>>(is);
+
+        return obj;
+    }
+
+    void to_stream(std::ostream& os) const
+    {
+        using tools::classhelper::stream::container_to_stream;
+
+        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
+        os.write(reinterpret_cast<const char*>(&(_last_x_pair)), sizeof(_last_x_pair));
+
+        container_to_stream(os, _X);
+        container_to_stream(os, _Y);
     }
 
   public:
@@ -120,8 +134,8 @@ class NearestInterpolator : public I_PairInterpolator<double>
 
   public:
     // -- class helper function macros --
-    // define to_binary and from_binary functions (needs the serialize function)
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
+    // define to_binary and from_binary functions (needs to/from stream function)
+    __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(NearestInterpolator)
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
