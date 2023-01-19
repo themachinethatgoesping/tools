@@ -63,7 +63,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         indexer.reset(10, 5, 0, -2);
         REQUIRE(indexer.size() == expected_results.size());
 
-        enumerator = expected_results.size() - 1;
+        enumerator = long(expected_results.size() - 1);
         for (const auto i : indexer)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
@@ -539,11 +539,11 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 0, -1);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (size_t enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
+        for (long enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+            REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
         CHECK(indexer(99) == 0);
 
@@ -568,11 +568,11 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 0, -11);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (size_t enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
+        for (long enumerator = 0; enumerator < indexer.size() - 1; ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+            REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
         CHECK(indexer(9) == 0);
 
@@ -652,7 +652,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(indexer(enumerator) == size_t(expected_results.at(enumerator)));
+            REQUIRE(indexer(long(enumerator)) == expected_results.at(enumerator));
         }
         CHECK(indexer(0) == 30);
 
