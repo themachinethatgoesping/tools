@@ -8,11 +8,11 @@
 #include <date/date.h>
 
 #include <boost/algorithm/string.hpp>
+#include <chrono>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <chrono>
 
 using namespace std;
 namespace themachinethatgoesping {
@@ -51,8 +51,12 @@ double datestring_to_unixtime(const string& DateString, const string& format)
 {
     date::sys_time<chrono::microseconds> timePoint;
 
-    //stringstream(DateString) >> date::parse(format, timePoint);
+// TODO: very hacky, will break soon
+#ifdef _WIN32
     stringstream(DateString) >> std::chrono::parse(format, timePoint);
+#else
+    stringstream(DateString) >> date::parse(format, timePoint);
+#endif
 
     return timepoint_to_unixtime(timePoint);
 }
