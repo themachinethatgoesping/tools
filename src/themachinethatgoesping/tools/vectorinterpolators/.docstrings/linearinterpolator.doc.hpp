@@ -1,4 +1,4 @@
-//sourcehash: 2ad0b240d69d84cd36fae006e9c27bed50ca8d4da92868af1e1021a413ed11e3
+//sourcehash: cdbe4b065769e1e41b27346aef3b90543ec569eb87811e71f19bde16fccdde8f
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -72,8 +72,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_slow_hash = R"doc()doc";
 

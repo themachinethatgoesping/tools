@@ -1,4 +1,4 @@
-//sourcehash: d9ad54a51fd9ef27560c3880e190be53ac0fd69ad350f1c3cc9dba94e807536b
+//sourcehash: b79480b9d940b00907fa820e75d00453416ffcf076bf927789ef10591d7a5326
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -230,8 +230,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
 R"doc(change the input data to these X, yaw, pitch, roll vectors (will be

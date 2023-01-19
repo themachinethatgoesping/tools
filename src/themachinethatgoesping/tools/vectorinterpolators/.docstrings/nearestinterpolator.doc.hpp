@@ -1,4 +1,4 @@
-//sourcehash: ff9f3308953ea7243b4ce4f78205e26b45a81c251a2ca0c08d80588dbca1f3b6
+//sourcehash: 90971f72771fbd28b09fb3a29470ccac561e5251b99c27c62cef06a6c2cce681
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -85,8 +85,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Neares
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_slow_hash = R"doc()doc";
 

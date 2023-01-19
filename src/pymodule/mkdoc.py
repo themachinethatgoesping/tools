@@ -8,6 +8,8 @@ from tqdm import tqdm
 from copy import deepcopy
 import hashlib
 
+FORCE_REGENERATE = False
+
 # source: https://www.debugpointer.com/python/create-sha256-hash-of-a-file-in-python
 def get_hash(file_name):
     hash_sha256 = hashlib.sha256()

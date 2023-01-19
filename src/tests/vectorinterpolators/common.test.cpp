@@ -18,14 +18,8 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-#include <bitsery/adapter/buffer.h>
-#include <bitsery/bitsery.h>
-#include <bitsery/traits/vector.h>
-
 // use fixed-size buffer
 using Buffer        = std::vector<uint8_t>;
-using OutputAdapter = bitsery::OutputBufferAdapter<Buffer>;
-using InputAdapter  = bitsery::InputBufferAdapter<Buffer>;
 
 // update the written test data
 #define __UPDATE_TEST_DATA__ false
@@ -37,34 +31,9 @@ template<typename t_interpolator>
 void test_interpolator_serialize(t_interpolator& ip)
 {
     cerr << "test_interpolator_serialize: " << ip.type_to_string() << endl;
-    t_interpolator ip2;
+    t_interpolator ip2(ip);
 
-    // create buffer to store data
-    Buffer buffer;
-    // use quick serialization function,
-    // it will use default configuration to setup all the necessary steps
-    // and serialize data to container
-    auto writtenSize = bitsery::quickSerialization<OutputAdapter>(buffer, ip);
-    bitsery::quickSerialization<OutputAdapter>(buffer, ip);
-    for (unsigned int i = 0; i < 100; ++i)
-    {
-        buffer.push_back(0);
-        buffer.push_back(1);
-        buffer.push_back(1);
-        buffer.push_back(10);
-    }
-
-    // interpolators should not be the same before serialization
-    REQUIRE(ip != ip2);
-
-    // same as serialization, but returns deserialization state as a pair
-    // first = error code, second = is buffer was successfully read from begin to the end.
-    // #auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize },
-    // ip2);
-    // auto state = bitsery::quickDeserialization<InputAdapter>({buffer.begin(), buffer.end()},ip2);
-    auto state = bitsery::quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, ip2);
-    REQUIRE(state.first == bitsery::ReaderError::NoError);
-    REQUIRE(state.second);
+    REQUIRE(ip == ip2);
 
     // test internal to/from binary functions
     auto buffer2 = ip2.to_binary();

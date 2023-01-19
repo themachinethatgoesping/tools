@@ -1,4 +1,4 @@
-//sourcehash: c61cc54876bd8510a009afb75ebe0c9ee30c040cd467988a37f2ba3c436aca3e
+//sourcehash: d852eaca9a1302422d0d4266b8875ab113bf15439d5aeed4b823dc1babe56d68
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -131,8 +131,6 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_serialize = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors

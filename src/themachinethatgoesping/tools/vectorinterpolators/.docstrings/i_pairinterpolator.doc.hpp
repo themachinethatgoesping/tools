@@ -1,4 +1,4 @@
-//sourcehash: 3807dbaeca7f58f908ed431df3e62b1b45080df2eab8eea1749afedac65abe0b
+//sourcehash: d6e642715ac7b37823739ed5b12f215e4683ae3f87181e47eca6c8f9b54f5b39
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -153,11 +153,7 @@ Parameter ``target_x``:
 Returns:
     interpolation factor)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_serialize = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_xfactor = R"doc(< 1/(xmax-xmin))doc";
 
