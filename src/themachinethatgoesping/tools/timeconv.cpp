@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <chrono>
 
 using namespace std;
 namespace themachinethatgoesping {
@@ -50,7 +51,8 @@ double datestring_to_unixtime(const string& DateString, const string& format)
 {
     date::sys_time<chrono::microseconds> timePoint;
 
-    stringstream(DateString) >> date::parse(format, timePoint);
+    //stringstream(DateString) >> date::parse(format, timePoint);
+    stringstream(DateString) >> std::chrono::parse(format, timePoint);
 
     return timepoint_to_unixtime(timePoint);
 }
