@@ -4,7 +4,7 @@
 
 project(
     'bitsery', ['cpp'],
-    default_options: ['cpp_std=c++20'],
+    default_options: ['cpp_std=c++17'],
     version: '5.2.2',
 )
 
