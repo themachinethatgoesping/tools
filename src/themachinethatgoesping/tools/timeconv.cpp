@@ -51,12 +51,7 @@ double datestring_to_unixtime(const string& DateString, const string& format)
 {
     date::sys_time<chrono::microseconds> timePoint;
 
-// TODO: very hacky, will break soon
-#ifdef _WIN32
-    stringstream(DateString) >> std::chrono::parse(format, timePoint);
-#else
     stringstream(DateString) >> date::parse(format, timePoint);
-#endif
 
     return timepoint_to_unixtime(timePoint);
 }
