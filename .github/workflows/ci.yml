@@ -180,7 +180,7 @@ jobs:
       with:
         path: c:\Boost
         #key: windows-msvc-14.32-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
-        key: windows-${{matrix.toolset}}-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
+        key: windows-${{matrix.toolset}}-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}-2
   
     - name: Install dependencies on windows
       if: steps.cache-boost.outputs.cache-hit != 'true'
