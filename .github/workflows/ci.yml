@@ -130,7 +130,7 @@ jobs:
         boost-version_: [1_81_0]
         boost-modules: [--with-iostreams]
         include:
-          - toolset: clang-cl
+          - vc143
             compiler: sccache clang-cl
             cpp_std: c++17
           # - toolset: msvc
@@ -160,7 +160,6 @@ jobs:
     - uses: TheMrMilchmann/setup-msvc-dev@v2
       with:
         arch: x64
-        #toolset: 14.34
 
     - name: checkout main repository
       uses: actions/checkout@v3
