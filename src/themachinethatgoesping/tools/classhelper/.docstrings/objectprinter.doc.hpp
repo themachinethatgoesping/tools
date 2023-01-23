@@ -1,4 +1,4 @@
-//sourcehash: 22d93e014f88a2a5a119a3741479e0e881763f050396692690e565d8fc588d9f
+//sourcehash: 5f717d665c4fb4369f21ce5ae7efed231273d40f83f0ee332a3d4192f497f235
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -163,7 +163,10 @@ Parameter ``value_info``:
 
 Parameter ``pos``:
     position where the value is registers (if negative, the value is
-    appended))doc";
+    appended)
+
+Parameter ``max_visible_elements``:
+    maximum of chars that are printed (if 0, all elements are printed))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_value =
 R"doc(register a single integer of floating point value for printing

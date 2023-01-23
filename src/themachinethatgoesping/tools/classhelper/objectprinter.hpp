@@ -606,14 +606,22 @@ class ObjectPrinter
      * @param value value of the variable
      * @param value_info additional info (is printed in [] behind the variable)
      * @param pos position where the value is registers (if negative, the value is appended)
+     * @param max_visible_elements maximum of chars that are printed (if 0, all elements are
+     * printed)
      */
     void register_string(const std::string& name,
-                         const std::string& value,
-                         std::string        value_info = "",
-                         int                pos        = -1)
+                         std::string        value,
+                         std::string        value_info           = "",
+                         int                pos                  = -1,
+                         size_t             max_visible_elements = 0)
     {
         if (value_info.size() > 0)
             value_info = fmt::format("[{}]", value_info);
+
+        if (max_visible_elements > 0 && value.size() > max_visible_elements)
+        {
+            value = value.substr(0, max_visible_elements) + "...";
+        }
 
         std::vector<std::string> lines;
 
