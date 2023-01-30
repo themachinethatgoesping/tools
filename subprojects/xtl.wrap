@@ -7,10 +7,10 @@
 #patch_url = https://wrapdb.mesonbuild.com/v2/xtl_0.6.12-1/get_patch
 #patch_hash = 36ebfc6656d025143877670dba79fecdece9e97bd8b717fcc44e29ab119eb2cf
 
-directory = xtl-0.7.4
-source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.7.4.tar.gz
-source_filename = xtl-0.7.4.tar.gz
-source_hash = 3c88be0e696b64150c4de7a70f9f09c00a335186b0b0b409771ef9f56bca7d9a
+directory = xtl-0.7.5
+source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.7.5.tar.gz
+source_filename = xtl-0.7.5.tar.gz
+source_hash = 3286fef5fee5d58f82f7b91375cd449c819848584bae9367893501114d923cbe
 
 patch_directory = xtl
 
