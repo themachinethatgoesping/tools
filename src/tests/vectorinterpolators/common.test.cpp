@@ -19,7 +19,7 @@ using namespace themachinethatgoesping::tools;
 #define TESTTAG "[vectorinterpolators]"
 
 // use fixed-size buffer
-using Buffer        = std::vector<uint8_t>;
+using Buffer = std::vector<uint8_t>;
 
 // update the written test data
 #define __UPDATE_TEST_DATA__ false

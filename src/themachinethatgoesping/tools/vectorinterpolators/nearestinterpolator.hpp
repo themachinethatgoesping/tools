@@ -37,7 +37,7 @@ namespace vectorinterpolators {
  */
 class NearestInterpolator : public I_PairInterpolator<double>
 {
-    public:
+  public:
     NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<double>(extrapolation_mode, "NearestInterpolator")
     {

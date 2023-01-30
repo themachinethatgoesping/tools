@@ -81,6 +81,9 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
             }
         }
 
+    if (f1 == f2)
+        return true;
+
     // if the difference between both is smaller than the relative difference factor (compared to
     // the larger float) return true
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
@@ -145,7 +148,7 @@ inline t_float string_to_floattype(std::string_view str)
         return std::numeric_limits<t_float>::quiet_NaN();
 
     t_float result;
-    auto   answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
+    auto    answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
 
     if (answer.ec != std::errc())
         return std::numeric_limits<t_float>::quiet_NaN();
@@ -153,11 +156,10 @@ inline t_float string_to_floattype(std::string_view str)
     return result;
 }
 
-
 template<typename t_float>
 inline std::vector<t_float> string_to_floattype_vector(std::string_view std, char delim = ',')
 {
-    std::vector<t_float>         result;
+    std::vector<t_float>        result;
     std::string_view::size_type pos = 0;
     while (pos != std::string_view::npos)
     {

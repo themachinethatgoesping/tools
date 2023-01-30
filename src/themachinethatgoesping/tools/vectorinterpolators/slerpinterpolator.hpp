@@ -18,8 +18,8 @@
 #include "../rotationfunctions/quaternions.hpp"
 #include "i_pairinterpolator.hpp"
 
-#include "../classhelper/stream.hpp"
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 #include "../helper.hpp"
 
 namespace themachinethatgoesping {
@@ -341,7 +341,6 @@ class SlerpInterpolator : public I_PairInterpolator<t_quaternion>
     {
         return y1.slerp(target_x, y2);
     }
-
 
     // ----- to/from stream functions
 
