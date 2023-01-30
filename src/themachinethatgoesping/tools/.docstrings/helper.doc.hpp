@@ -1,4 +1,4 @@
-//sourcehash: ebdee60888fdb57238343c1cc6f632bfbe2eeddacd6adc824139ea96236a7ff7
+//sourcehash: 9f41e3163032b97c25835a98210c44a6c5832bdeed5a87ecd2d74e210bb1208f
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -63,15 +63,22 @@ static const char *__doc_themachinethatgoesping_tools_helper_approx_container = 
 
 static const char *__doc_themachinethatgoesping_tools_helper_approx_container_complex = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_helper_make_overload = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_make_overload_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_helper_string_to_double =
+static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_string_to_floattype =
 R"doc(convert a string to float using fast_float::from_chars Fast_float
 conforms to std::from_chars (c++17, but not completely implemented in
 clang yet) The conversion is locale independent (. is the decimal
 separator) see also: https://github.com/fastfloat/fast_float
+
+Template parameter ``t_float``:
+    : double or float
 
 Parameter ``str``:
     if empty or non-numeric a NAN is returned

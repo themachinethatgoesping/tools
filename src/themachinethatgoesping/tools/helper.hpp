@@ -134,32 +134,36 @@ bool approx_container_complex(
  * The conversion is locale independent (. is the decimal separator)
  * see also: https://github.com/fastfloat/fast_float
  *
+ * @tparam t_float : double or float
  * @param str if empty or non-numeric a NAN is returned
  * @return double
  */
-inline double string_to_double(std::string_view str)
+template<typename t_float>
+inline t_float string_to_floattype(std::string_view str)
 {
     if (str.empty())
-        return std::numeric_limits<double>::quiet_NaN();
+        return std::numeric_limits<t_float>::quiet_NaN();
 
-    double result;
+    t_float result;
     auto   answer = fast_float::from_chars(str.data(), str.data() + str.size(), result);
 
     if (answer.ec != std::errc())
-        return std::numeric_limits<double>::quiet_NaN();
+        return std::numeric_limits<t_float>::quiet_NaN();
 
     return result;
 }
 
-inline std::vector<double> string_to_double_vector(std::string_view std, char delim = ',')
+
+template<typename t_float>
+inline std::vector<t_float> string_to_floattype_vector(std::string_view std, char delim = ',')
 {
-    std::vector<double>         result;
+    std::vector<t_float>         result;
     std::string_view::size_type pos = 0;
     while (pos != std::string_view::npos)
     {
         auto next_pos = std.find(delim, pos);
         auto str      = std.substr(pos, next_pos - pos);
-        result.push_back(string_to_double(str));
+        result.push_back(string_to_floattype<t_float>(str));
         pos = next_pos;
         if (pos != std::string_view::npos)
             pos++;
