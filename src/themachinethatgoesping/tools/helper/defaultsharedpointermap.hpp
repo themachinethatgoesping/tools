@@ -47,6 +47,17 @@ class DefaultSharedPointerMap : public std::map<t_key, std::shared_ptr<t_value>>
         }
         return it->second;
     }
+
+    // get all keys
+    std::vector<t_key> keys() const
+    {
+        std::vector<t_key> keys;
+        for (const auto& [key, value] : *this)
+        {
+            keys.push_back(key);
+        }
+        return keys;
+    }
 };
 
 }

@@ -1,4 +1,4 @@
-//sourcehash: 78c675c7222bbc74a5ace90455dea02a94d4da5b98056b2e208dbcb453f02d43
+//sourcehash: 621efe12b55267a44ed641901c7e7dcc4e34a3f1f0d340263f0f47e0451ca423
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -47,6 +47,8 @@ static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_at = R"d
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_at_const = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_default_value = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultMap_keys = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
