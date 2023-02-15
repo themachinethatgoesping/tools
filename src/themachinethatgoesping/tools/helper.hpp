@@ -133,7 +133,7 @@ bool approx_container_complex(
 
 /**
  * @brief convert a string to float using fast_float::from_chars
- * Fast_float conforms to std::from_chars (c++17, but not completely implemented in clang yet)
+ * Fast_float conforms to std::from_chars (c++20, but not completely implemented in clang yet)
  * The conversion is locale independent (. is the decimal separator)
  * see also: https://github.com/fastfloat/fast_float
  *
