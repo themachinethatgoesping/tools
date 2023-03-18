@@ -6,6 +6,12 @@
 sources = [
     'themachinethatgoesping/tools_ext/__init__.py',
     'themachinethatgoesping/tools_ext/timeconv_ext.py',
+
+    'themachinethatgoesping/scripts/oceanographic.py',
+    'themachinethatgoesping/scripts/plot_tools.py',
+    'themachinethatgoesping/scripts/read_xcf.py',
+    'themachinethatgoesping/scripts/sbes.py',
+    'themachinethatgoesping/scripts/mbes.py',
 ]
 
 if get_option('build_pythonmodule').enabled()
