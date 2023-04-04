@@ -7,14 +7,10 @@ from math import tan, radians, degrees, sin, asin, cos, pi, sqrt
 import math
 import numpy as np
 from copy import deepcopy
-try:
-    from oceanographic import knots_to_ms
-    from sbes import SBES
-    from plot_tools import prepare_plt
-except:
-    from themachinethatgoesping.scripts.oceanographic import knots_to_ms
-    from themachinethatgoesping.scripts.sbes import SBES
-    from themachinethatgoesping.scripts.plot_tools import prepare_plt
+
+from themachinethatgoesping.scripts.oceanographic import knots_to_ms
+from themachinethatgoesping.scripts.sbes import SBES
+from themachinethatgoesping.scripts.plot_tools import prepare_plt
 
 # @package scipts
 # Simple scripts for calculations with an sbes

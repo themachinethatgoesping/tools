@@ -5,12 +5,9 @@
 
 from math import tan,radians
 from copy import deepcopy
-try:
-    from oceanographic import knots_to_ms
-    from plot_tools import prepare_plt
-except:
-    from themachinethatgoesping.scripts.oceanographic import knots_to_ms
-    from themachinethatgoesping.scripts.plot_tools import prepare_plt
+
+from themachinethatgoesping.scripts.oceanographic import knots_to_ms
+from themachinethatgoesping.scripts.plot_tools import prepare_plt
 
 ## @package scipts
 # Simple scripts for calculations with an sbes
