@@ -5,10 +5,7 @@
 
 import math
 
-try:
-    import mbes
-except:
-    import themachinethatgoesping.scripts.mbes as mbes
+import themachinethatgoesping.scripts.mbes as mbes
 
 #def test_what_ever():
 #    assert 1 == 2

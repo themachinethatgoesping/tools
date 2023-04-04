@@ -3,10 +3,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-try:
-    from oceanographic import knots_to_ms
-except:
-    from themachinethatgoesping.scripts.oceanographic import knots_to_ms
+from themachinethatgoesping.scripts.oceanographic import knots_to_ms
 
 class TestSBES(object):
     def test_knots_to_ms(self):

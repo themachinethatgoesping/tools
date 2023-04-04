@@ -3,10 +3,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-try:
-    import sbes
-except:
-    import themachinethatgoesping.scripts.sbes as sbes
+import themachinethatgoesping.scripts.sbes as sbes
 
 #grouped tests
 class TestSBES(object):
