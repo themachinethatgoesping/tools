@@ -14,28 +14,27 @@ class TestSBES(object):
         s = sbes.SBES(7)
 
         assert s.calc_footprint(100)    == approx(12.232524030096862)
-        assert s.calc_footprint(100,10) == 17.497732705184802
-
+        assert s.calc_footprint(100,10) == approx(17.497732705184802)
 
     def test_calc_overlap_pingrate(self):
         s = sbes.SBES(1)
 
-        assert s.calc_overlap_pingrate(5,100) == 1.473724629313051
+        assert s.calc_overlap_pingrate(5,100) == approx(1.473724629313051)
 
     def test_beam_xlimits(self):
         s = sbes.SBES(7)
 
-        assert s.get_beam_xmin(100) == -6.116262015048431
-        assert s.get_beam_xmax(100) ==  6.116262015048431
+        assert s.get_beam_xmin(100) == approx(-6.116262015048431)
+        assert s.get_beam_xmax(100) ==  approx(6.116262015048431)
 
         s.x=10
-        assert s.get_beam_xmin(100) ==  3.883737984951569
-        assert s.get_beam_xmax(100) == 16.116262015048431
+        assert s.get_beam_xmin(100) ==  approx(3.883737984951569)
+        assert s.get_beam_xmax(100) == approx(16.116262015048431)
 
         s.x =10
         s.z =10
-        assert s.get_beam_xmin(110) ==  3.883737984951569
-        assert s.get_beam_xmax(110) == 16.116262015048431
+        assert s.get_beam_xmin(110) ==  approx(3.883737984951569)
+        assert s.get_beam_xmax(110) == approx(16.116262015048431)
 
     def test_calculations(self):
         s = sbes.SBES(7)

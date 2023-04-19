@@ -18,15 +18,15 @@ class TestMBES(object):
     def test_calc_footprint(self):
         m = mbes.MBES(120,1,2,seafloor_alpha=0)
 
-        assert m.calc_footprint_along(100)    == 1.7453735581517578
-        assert m.calc_footprint_across(100)   == 3.491012985643517
-        assert m.calc_swathwidth(100)         == 346.41016151377534
+        assert m.calc_footprint_along(100)    == approx(1.7453735581517578)
+        assert m.calc_footprint_across(100)   == approx(3.491012985643517)
+        assert m.calc_swathwidth(100)         == approx(346.41016151377534)
 
 
     def test_calc_overlap_pingrate(self):
         m = mbes.MBES(120,1,2,seafloor_alpha=0)
 
-        assert m.calc_along_overlap_pingrate(5,100) == 1.473724629313051
+        assert m.calc_along_overlap_pingrate(5,100) == approx(1.473724629313051)
 
     def test_swath_xlimits(self):
         m = mbes.MBES(120,1,2,seafloor_alpha=0)
@@ -64,25 +64,25 @@ class TestMBES(object):
         m = mbes.MBES(120,7,2,seafloor_alpha=0)
 
         assert m.calc_along_overlap_pingrate(4,100)           == approx(0.1682203930224943)
-        assert m.calc_along_overlap_depth_for_pingrate(4,0.5) == 33.644078604498866
-        assert m.calc_along_overlap_depth(10)     == 81.74927738049836
-        assert m.calc_along_pingdistance(4,1.25)  == 1.6462080000000001
+        assert m.calc_along_overlap_depth_for_pingrate(4,0.5) == approx(33.644078604498866)
+        assert m.calc_along_overlap_depth(10)     == approx(81.74927738049836)
+        assert m.calc_along_pingdistance(4,1.25)  == approx(1.6462080000000001)
 
     def test_linespacing(self):
         m = mbes.MBES(120,1,2,seafloor_alpha=0)
 
-        assert m.calc_linespacing(100,10) == 43.58898943540674 * 2
-        assert m.calc_linespacing(100,20) == 60 * 2
-        assert m.calc_linespacing(100,2) == 19.8997487421324 * 2
+        assert m.calc_linespacing(100,10) == approx(43.58898943540674 * 2)
+        assert m.calc_linespacing(100,20) == approx(60 * 2)
+        assert m.calc_linespacing(100,2) == approx(19.8997487421324 * 2)
 
         assert m.calc_linespacing(200, 40,
                                   min_minslant_visible_distance=50,
                                   max_flare_height=80) \
-               == 210.71307505705477
+               == approx(210.71307505705477)
         assert m.calc_linespacing(200, 40,
                                   min_minslant_visible_distance=50,
                                   max_flare_height=70) \
-               == 174.35595774162695
+               == approx(174.35595774162695)
 
 
     def test_seafloor_depth(self):
@@ -116,14 +116,14 @@ class TestMBES(object):
 
 
         m.seafloor_alpha = 5
-        assert m.get_seafloor_depth(100,y= 10,x=0 )     == 99.12511336474076
+        assert m.get_seafloor_depth(100,y= 10,x=0 )     == approx(99.12511336474076)
 
         m.seafloor_alpha = 45
-        assert m.get_seafloor_depth(100,y= 10,x=0 )     == 90
+        assert m.get_seafloor_depth(100,y= 10,x=0 )     == approx(90)
 
 
         m.seafloor_alpha = 70
-        assert m.get_seafloor_depth(100,y=10, x=0 )     == 72.52522580545379
+        assert m.get_seafloor_depth(100,y=10, x=0 )     == approx(72.52522580545379)
 
         m.seafloor_alpha = 80
         assert m.get_seafloor_depth(100,y=10, x=0 )     == approx(43.28718180382293)
@@ -142,24 +142,24 @@ class TestMBES(object):
         for beamangle in range(-150,150,5):
             assert round(m.get_seafloor_y_distance(100,-beamangle),10) == -round(m.get_seafloor_y_distance(100, beamangle),10)
 
-        assert m.get_seafloor_y_distance(100, 60) == 173.20508075688767
+        assert m.get_seafloor_y_distance(100, 60) == approx(173.20508075688767)
 
 
         m.seafloor_alpha = 5
-        assert m.get_seafloor_y_distance(100, 60)  ==  150.41237069488048
-        assert m.get_seafloor_y_distance(100, -60) == -204.13928922743875
+        assert m.get_seafloor_y_distance(100, 60)  ==  approx(150.41237069488048)
+        assert m.get_seafloor_y_distance(100, -60) == approx(-204.13928922743875)
 
         m.seafloor_alpha = -5
-        assert m.get_seafloor_y_distance(100, 60)  ==  204.13928922743875
-        assert m.get_seafloor_y_distance(100, -60) == -150.41237069488048
+        assert m.get_seafloor_y_distance(100, 60)  ==  approx(204.13928922743875)
+        assert m.get_seafloor_y_distance(100, -60) == approx(-150.41237069488048)
 
         m2.seafloor_alpha = 45
-        assert m2.get_seafloor_y_distance(110, 60)  ==  57.05771365940052
+        assert m2.get_seafloor_y_distance(110, 60)  ==  approx(57.05771365940052)
         assert math.isnan(m2.get_seafloor_y_distance(110, -60))
 
         m2.seafloor_alpha = -45
         assert math.isnan(m2.get_seafloor_y_distance(110, 60))
-        assert m2.get_seafloor_y_distance(110, -60) == -69.73720558371176
+        assert m2.get_seafloor_y_distance(110, -60) == approx(-69.73720558371176)
 
     def test_minslant_range(self):
         m=mbes.MBES(120,1,2)
@@ -170,25 +170,25 @@ class TestMBES(object):
 
         m.seafloor_alpha = 10
         m2.seafloor_alpha = 10
-        assert m.get_minslant_range(100)  == 98.4807753012208
-        assert m2.get_minslant_range(100) == 86.89621599442941
+        assert m.get_minslant_range(100)  == approx(98.4807753012208)
+        assert m2.get_minslant_range(100) == approx(86.89621599442941)
 
         m.seafloor_alpha  = 45
         m2.seafloor_alpha = 45
-        assert m.get_minslant_range(100)  == 70.71067811865476
-        assert m2.get_minslant_range(100) == 56.568542494923804
+        assert m.get_minslant_range(100)  == approx(70.71067811865476)
+        assert m2.get_minslant_range(100) == approx(56.568542494923804)
 
         m.seafloor_alpha  = -45
         m2.seafloor_alpha = -45
-        assert m.get_minslant_range(100)  == 70.71067811865476
-        assert m2.get_minslant_range(100) == 70.71067811865476
+        assert m.get_minslant_range(100)  == approx(70.71067811865476)
+        assert m2.get_minslant_range(100) == approx(70.71067811865476)
 
         m.seafloor_alpha  = 60
         m2.seafloor_alpha = 60
-        assert round(m.get_minslant_range(100),10)  == 50
-        assert m2.get_minslant_range(100)           == 36.339745962155625
+        assert round(m.get_minslant_range(100),10)  == approx(50)
+        assert m2.get_minslant_range(100)           == approx(36.339745962155625)
 
         m.seafloor_alpha  = -60
         m2.seafloor_alpha = -60
-        assert round(m.get_minslant_range(100),10)  == 50
-        assert m2.get_minslant_range(100)           == 53.660254037844396
+        assert round(m.get_minslant_range(100),10)  == approx(50)
+        assert m2.get_minslant_range(100)           == approx(53.660254037844396)
