@@ -7,6 +7,8 @@ import math
 
 import themachinethatgoesping.scripts.mbes as mbes
 
+from pytest import approx
+
 #def test_what_ever():
 #    assert 1 == 2
 
@@ -61,7 +63,7 @@ class TestMBES(object):
     def test_calculations(self):
         m = mbes.MBES(120,7,2,seafloor_alpha=0)
 
-        assert m.calc_along_overlap_pingrate(4,100)           == 0.1682203930224943
+        assert m.calc_along_overlap_pingrate(4,100)           == approx(0.1682203930224943)
         assert m.calc_along_overlap_depth_for_pingrate(4,0.5) == 33.644078604498866
         assert m.calc_along_overlap_depth(10)     == 81.74927738049836
         assert m.calc_along_pingdistance(4,1.25)  == 1.6462080000000001
@@ -124,7 +126,7 @@ class TestMBES(object):
         assert m.get_seafloor_depth(100,y=10, x=0 )     == 72.52522580545379
 
         m.seafloor_alpha = 80
-        assert m.get_seafloor_depth(100,y=10, x=0 )     == 43.28718180382293
+        assert m.get_seafloor_depth(100,y=10, x=0 )     == approx(43.28718180382293)
 
 
     def test_seafloor_y_distace(self):
