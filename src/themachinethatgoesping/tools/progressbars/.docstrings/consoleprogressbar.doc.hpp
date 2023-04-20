@@ -1,4 +1,4 @@
-//sourcehash: e99c45a864f2b43d056c61e4ccdb607865805bc04e8c3a0ee07599f986684b03
+//sourcehash: f8d7d0d207cbcac28741886879117831cf297c31f96dd7ff6a92d21fc826fcdd
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -54,6 +54,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgre
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_callback_init = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_callback_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_callback_set_prefix = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_callback_set_progress = R"doc()doc";
 

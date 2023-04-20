@@ -1,4 +1,4 @@
-//sourcehash: df7125001a6475cc8e623703d07cbb0c15575ff4328aaa1eddf6c54b6abc54a7
+//sourcehash: 57d930bdf436f31e77f6ae12f303ffacdb5fd3e57eb0295b157505af9a71f217
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -55,6 +55,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_i
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_is_initialized = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_prefix = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_NoIndicator_set_progress = R"doc()doc";
 

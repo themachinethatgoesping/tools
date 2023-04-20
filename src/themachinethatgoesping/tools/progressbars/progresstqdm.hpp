@@ -70,10 +70,17 @@ class ProgressTqdm
         double increment = new_progress - _first - pybind11::cast<double>(attr("n")());
         attr("update")(increment);
     }
+
     void callback_set_postfix(const std::string& postfix) override
     {
         // set the postfix of the tqdm progressbar
         attr("set_postfix_str")("[" + postfix + "]");
+    }
+
+    void callback_set_prefix(const std::string& prefix) override
+    {
+        // set the prefix of the tqdm progressbar
+        attr("set_description")("[" + prefix + "]");
     }
 
     void callback_tick(double increment = 1) override

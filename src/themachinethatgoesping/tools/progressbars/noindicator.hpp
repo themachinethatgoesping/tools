@@ -40,6 +40,7 @@ class NoIndicator : public I_ProgressBar
 
     void set_progress([[maybe_unused]] double new_progress) override {}
     void set_postfix([[maybe_unused]] const std::string& postfix) override{};
+    void set_prefix([[maybe_unused]] const std::string& prefix) override{};
 
     void tick([[maybe_unused]] double increment = 1) override {}
 

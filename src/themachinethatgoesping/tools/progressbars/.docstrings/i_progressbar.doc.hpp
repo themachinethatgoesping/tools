@@ -1,4 +1,4 @@
-//sourcehash: 5c4368431f742ecc3b061c4fbb9a61cc90d200e4e8d3c71ddf7f68d942323cd0
+//sourcehash: 42bb1daef51f858cf875fd5881d993988745221fe5cba56e4633464d2ef9a1c0
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -81,6 +81,12 @@ R"doc(Append a postfix message to the progressbar
 
 Parameter ``postfix``:
     postfix message)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_prefix =
+R"doc(Append a prefix message to the progressbar
+
+Parameter ``prefix``:
+    prefix message)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar_set_progress =
 R"doc(Set the progress state to the given value. Note some implementations

@@ -37,6 +37,9 @@ class tqdm_wrapper(prg.I_ProgressBarTimed):
     def callback_set_postfix(self, postfix):
         self.tqdm.set_postfix_str("[" + postfix + "]")
 
+    def callback_set_prefix(self, prefix):
+        self.tqdm.set_prefix_str("[" + prefix + "]")
+
     def callback_tick(self, increment=1):
         self.tqdm.update(increment)
 

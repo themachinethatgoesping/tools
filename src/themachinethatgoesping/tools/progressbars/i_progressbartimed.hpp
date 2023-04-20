@@ -56,6 +56,7 @@ class I_ProgressBarTimed : public I_ProgressBar
     double      _state_progress  = 0.0; ///< internal state for the skipped progress
     double      _state_increment = 0.0; ///< internal counter for the skipped increments
     std::string _state_postfix   = "";  ///< internal state for the skipped postfix
+    std::string _state_prefix    = "";  ///< internal state for the skipped prefix
 
     int _skips                  = 0; ///< number of skipped progressbar updates (set in apply_state)
     int _check_timer_every_step = 1; ///< check the timer every n steps (set in apply_state)
@@ -109,6 +110,17 @@ class I_ProgressBarTimed : public I_ProgressBar
     virtual void callback_set_progress(double new_progress) = 0;
 
     /**
+     * @brief Set the prefix message to the progressbar
+     *
+     * This callback is guarded by a timer (100ms). If skipped, the prefix is stored to
+     * the internal state and will be applied with the next successful call to set_progress(),
+     * tick() or set_prefix().
+     *
+     * @param prefix prefix message
+     */
+    virtual void callback_set_prefix(const std::string& prefix) = 0;
+
+    /**
      * @brief Append a postfix message to the progressbar
      *
      * This callback is guarded by a timer (100ms). If skipped, the postfix is stored to
@@ -149,6 +161,7 @@ class I_ProgressBarTimed : public I_ProgressBar
 
         _state_increment = 0.0;
         _state_postfix   = "";
+        _state_prefix   = "";
         callback_init(first, last, name);
         _initialized = true;
     }
@@ -220,6 +233,21 @@ class I_ProgressBarTimed : public I_ProgressBar
         apply_state();
     }
 
+
+    /**
+     * @brief Append a prefix message to the progressbar
+     *
+     * This function is guarded a timer. Calls that happen more
+     * frequent than 100ms are added to the internal state, but not to the progressbar.
+     *
+     * @param prefix prefix message
+     */
+    void set_prefix(const std::string& prefix) final
+    {
+        _state_prefix = prefix;
+        apply_state();
+    }
+
     /**
      * @brief Get the current progress state
      *
@@ -281,6 +309,12 @@ class I_ProgressBarTimed : public I_ProgressBar
         {
             callback_set_postfix(_state_postfix);
             _state_postfix = "";
+        }
+
+        if (!_state_prefix.empty())
+        {
+            callback_set_prefix(_state_prefix);
+            _state_prefix = "";
         }
     }
     //

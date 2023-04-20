@@ -132,6 +132,7 @@ class ConsoleProgressBar : public I_ProgressBarTimed
         }
     }
     void callback_set_postfix([[maybe_unused]] const std::string& postfix) override{};
+    void callback_set_prefix([[maybe_unused]] const std::string& prefix) override{};
 
     void callback_tick(double increment = 1) override
     {

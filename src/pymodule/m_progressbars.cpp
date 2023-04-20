@@ -16,7 +16,7 @@
 // -- module header
 #include "../themachinethatgoesping/tools/progressbars.hpp"
 #include "../themachinethatgoesping/tools/progressbars/progresstqdm.hpp"
-// automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
+// automatically generated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::progressbars;
@@ -83,6 +83,15 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
                                I_ProgressBar, /* Parent class */
                                set_postfix,   /* Name of function in C++ (must match Python name) */
                                postfix        /* Argument(s) */
+        );
+    }
+
+    void set_prefix(const std::string& prefix) override
+    {
+        PYBIND11_OVERRIDE_PURE(void,          /* Return type */
+                               I_ProgressBar, /* Parent class */
+                               set_prefix,   /* Name of function in C++ (must match Python name) */
+                               prefix        /* Argument(s) */
         );
     }
 
@@ -155,6 +164,16 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
         );
     }
 
+    void callback_set_prefix(const std::string& prefix) override
+    {
+        PYBIND11_OVERRIDE_PURE(
+            void,                 /* Return type */
+            I_ProgressBarTimed,   /* Parent class */
+            callback_set_prefix, /* Name of function in C++ (must match Python name) */
+            prefix               /* Argument(s) */
+        );
+    }
+
     double callback_current() const override
     {
         PYBIND11_OVERRIDE_PURE(
@@ -222,6 +241,11 @@ void init_m_progressbars(py::module& m)
              py::call_guard<py::scoped_ostream_redirect>(),
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_postfix),
              py::arg("postfix"))
+        .def("set_prefix",
+             &I_ProgressBar::set_prefix,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_prefix),
+             py::arg("prefix"))
         .def("current",
              &I_ProgressBar::current,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, current))
@@ -274,6 +298,15 @@ void init_m_progressbars(py::module& m)
                  I_ProgressBarTimed,
                  callback_set_postfix),
              py::arg("postfix"))
+        .def("callback_set_prefix",
+             &I_ProgressBarTimed::callback_set_prefix,
+             py::call_guard<py::scoped_ostream_redirect>(),
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 I_ProgressBarTimed,
+                 callback_set_prefix),
+             py::arg("prefix"))
         .def("callback_current",
              &I_ProgressBarTimed::callback_current,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_current))

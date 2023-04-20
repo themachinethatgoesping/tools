@@ -1,4 +1,4 @@
-//sourcehash: db95e5b1d18f55308b63cb75187b03dd26d2e45bcbae1f690308579861b704a2
+//sourcehash: a5a395facae50f839cea3a5702ac7a05d6008032a1809f2c37aa8a8b943e4566
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -96,6 +96,16 @@ successful call to set_progress(), tick() or set_postfix().
 Parameter ``postfix``:
     postfix message)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_prefix =
+R"doc(Set the prefix message to the progressbar
+
+This callback is guarded by a timer (100ms). If skipped, the prefix is
+stored to the internal state and will be applied with the next
+successful call to set_progress(), tick() or set_prefix().
+
+Parameter ``prefix``:
+    prefix message)doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_progress =
 R"doc(Set the progress state to the given value. Note some implementations
 may require the new_progress to be higher than the current progress!
@@ -158,6 +168,15 @@ This function is guarded a timer. Calls that happen more frequent than
 Parameter ``postfix``:
     postfix message)doc";
 
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_prefix =
+R"doc(Append a prefix message to the progressbar
+
+This function is guarded a timer. Calls that happen more frequent than
+100ms are added to the internal state, but not to the progressbar.
+
+Parameter ``prefix``:
+    prefix message)doc";
+
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress =
 R"doc(Set the progress state to the given value. Note some implementations
 may require the new_progress to be higher than the current progress!
@@ -176,6 +195,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBar
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc(< internal counter for the skipped increments)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_postfix = R"doc(< internal state for the skipped postfix)doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_prefix = R"doc(< internal state for the skipped prefix)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_progress = R"doc(< internal state for the skipped progress)doc";
 

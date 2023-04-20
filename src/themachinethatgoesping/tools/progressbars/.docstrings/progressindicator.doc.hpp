@@ -1,4 +1,4 @@
-//sourcehash: 1da9a449be50b18381c8fce5b7df4f2f5c9c7fac70fd20defea5ab379987e361
+//sourcehash: 89ff22b9e30b2cdeb29932b07fb96a19816e2359496e5f26e9dde020b295ab6a
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -54,6 +54,8 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndic
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_init = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_set_postfix = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_set_prefix = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_set_progress = R"doc()doc";
 

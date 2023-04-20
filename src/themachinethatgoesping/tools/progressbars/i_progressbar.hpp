@@ -74,6 +74,13 @@ class I_ProgressBar
     virtual void set_postfix(const std::string& postfix) = 0;
 
     /**
+     * @brief Append a prefix message to the progressbar
+     *
+     * @param prefix prefix message
+     */
+    virtual void set_prefix(const std::string& prefix) = 0;
+
+    /**
      * @brief Get the current progress state
      *
      * @return progress state
