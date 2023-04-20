@@ -26,20 +26,20 @@ sources = [
 py_tools = pymod.extension_module(
     module_name,
     sources: sources,
-    dependencies : [
+    dependencies: [
         tools_dep,
         tools_pybind_dep,
         pybind11_dep,
         python3_dep],
     #link_with : [tools],
-    link_language : 'cpp',
+    link_language: 'cpp',
     override_options: [
         #'cpp_rtti=true',
     ],
-    cpp_args : ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
-    install : true,
-    install_dir : pythoninstallpath,
-    install_tag : 'python-runtime'
+    cpp_args: ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
+    install: true,
+    subdir: projectnamespace,
+    install_tag: 'python-runtime'
 )
 
 
