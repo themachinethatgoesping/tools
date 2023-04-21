@@ -126,7 +126,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
         if (_X.size() == 0)
             throw(std::domain_error(
-                "ERROR[Interpolator::operator()]: data vectors are not initialized!"));
+                "ERROR[AkimaInterpolator::operator()]: data vectors are not initialized!"));
 
         // if size of _X is 1, return _Y[0]
         if (_X.size() == 1)
