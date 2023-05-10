@@ -27,6 +27,9 @@ else
   omp_dep = dependency('openmp')
 endif
 
+# extra compiler args when for the tools target
+tools_compile_args = ['-D_USE_MATH_DEFINES']
+
 # # boost
 boost_version = '>=1.73'
 boost_modules = dependency('boost', modules: ['iostreams'], static: true, version: boost_version)
@@ -50,6 +53,7 @@ bitsery_dep = dependency('bitsery')
 
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum')
+tools_compile_args += '-DMAGIC_ENUM_ENABLE_HASH' #reduce complexity of enum_name and enum_switch at the price of increased memory and compilation time
 
 #xtensor (for numpy array support)
 xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabled'])

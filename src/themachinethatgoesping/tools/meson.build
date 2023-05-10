@@ -99,7 +99,7 @@ tools_dep = declare_dependency(
     xxhash_cpp_dep
   ],
   link_with : [tools_lib],
-  compile_args : ['-D_USE_MATH_DEFINES'],
+  compile_args : tools_compile_args,
   include_directories : ['../../']
   )
 
