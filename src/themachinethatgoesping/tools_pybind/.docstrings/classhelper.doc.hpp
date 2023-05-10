@@ -1,4 +1,4 @@
-//sourcehash: 3a9a38e132c0850338ac3883700a93625e47227203a9d9e82b3996b281caf44e
+//sourcehash: 0d7182b643adca89afb3e84c33ed2607de7fa4193e5e0f0aa79c6a26900c9786
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -32,14 +32,3 @@
 #define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
 #endif // NEW_DOC_HEADER_HPP
-#if defined(__GNUG__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
-
-#if defined(__GNUG__)
-#pragma GCC diagnostic pop
-#endif
-
-

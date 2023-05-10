@@ -107,6 +107,56 @@ inline T_container container_from_stream(std::istream& is)
     return container;
 }
 
+template<unsigned int level, typename T_container>
+inline void container_container_to_stream(std::ostream& os, const T_container& container)
+{
+    size_t size = container.size();
+    os.write(reinterpret_cast<const char*>(&size), sizeof(size_t));
+
+    if constexpr (level > 1)
+    {
+        for (const auto& sub_container : container)
+        {
+            container_container_to_stream<level - 1, typename T_container::value_type>(
+                os, sub_container);
+        }
+    }
+    else
+    {
+        for (const auto& sub_container : container)
+        {
+            container_to_stream(os, sub_container);
+        }
+    }
+}
+
+template<unsigned int level, typename T_container>
+inline T_container container_container_from_stream(std::istream& is)
+{
+    T_container container;
+    size_t      size;
+    is.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+    container.resize(size);
+
+    if constexpr (level > 1)
+    {
+        for (auto& sub_container : container)
+        {
+            sub_container =
+                container_container_from_stream<level - 1, typename T_container::value_type>(is);
+        }
+    }
+    else
+    {
+        for (auto& sub_container : container)
+        {
+            sub_container = container_from_stream<typename T_container::value_type>(is);
+        }
+    }
+
+    return container;
+}
+
 } // stream
 } // classhelper
 } // tools

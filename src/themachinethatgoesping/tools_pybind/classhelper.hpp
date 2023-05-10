@@ -34,8 +34,7 @@
 //     "memo"_a);
 
 // --- pickle and binary support --
-// this requires to_binary and from_binary functions implemented in
-// bitsery_helper/classfunctions.hpp
+// this requires to_binary and from_binary functions to be implemented
 
 #define __PYCLASS_DEFAULT_BINARY__(T_CLASS)                                                        \
     __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                         \

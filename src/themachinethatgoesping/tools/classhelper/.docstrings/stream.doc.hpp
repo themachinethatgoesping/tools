@@ -1,4 +1,4 @@
-//sourcehash: 1d768a4ddc0004686b8f48fa15e64211b31123c17ae4e8586f5400178499a638
+//sourcehash: 47060b5290c19aaeef09bee4d1f97839a986c25e3d4ef9509b8854dcd3228a6d
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -32,18 +32,3 @@
 #define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
 #endif // NEW_DOC_HEADER_HPP
-#if defined(__GNUG__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
-
-#if defined(__GNUG__)
-#pragma GCC diagnostic pop
-#endif
-
-

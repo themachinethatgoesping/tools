@@ -11,7 +11,6 @@ sources = [
     'timeconv.test.cpp',
     'pyhelper/pyindexer.test.cpp',
     'helper/defaultsharedpointermap.test.cpp',
-    'bitsery_helper/custom_types.test.cpp',
     'rotationfunctions/helper.test.cpp',
     'rotationfunctions/quaternions.test.cpp',
     'vectorinterpolators/common.test.cpp',

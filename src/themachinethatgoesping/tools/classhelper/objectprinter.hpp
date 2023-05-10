@@ -23,6 +23,7 @@
 #include ".docstrings/objectprinter.doc.hpp"
 
 #include <algorithm>
+#include <complex>
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -30,8 +31,7 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
-#include "../classhelper/bitsery.hpp"
-#include <bitsery/traits/string.h>
+#include "stream.hpp"
 
 // source https://gitlab.com/tesch1/cppduals/blob/master/duals/dual#L1379-1452
 /// std::complex<> Formatter for libfmt https://github.com/fmtlib/fmt
@@ -152,7 +152,8 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
     }
 
 #define __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__                                                 \
-    __CLASSHELPER_PRINTER_INFO_STRING__ __CLASSHELPER_PRINTER_PRINT__
+    __CLASSHELPER_PRINTER_INFO_STRING__                                                            \
+    __CLASSHELPER_PRINTER_PRINT__
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -195,7 +196,6 @@ class ObjectPrinter
 
     unsigned int _float_precision = 2;
 
-    // serialization support using bitsery
     /**
      * @brief Construct a new Object Printer object
      *
@@ -203,25 +203,42 @@ class ObjectPrinter
      */
     ObjectPrinter() = default;
 
-    friend bitsery::Access;
-
-    template<typename S>
-    void serialize(S& s)
+  public:
+    // serialization support
+    static ObjectPrinter from_stream(std::istream& is)
     {
-        s.text1b(_name, 100);
-        s.container(_fields, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
-        s.container4b(_field_types, 1000);
-        s.container(_lines, 1000, [](S& s_, std::vector<std::string>& str_vec) {
-            s_.container(str_vec, 1000, [](S& s__, std::string& str) { s__.text1b(str, 100); });
-        });
-        s.container(_value_infos, 1000, [](S& s_, std::string& str) { s_.text1b(str, 100); });
-        s.container1b(_section_underliner, 1000);
-        s.value4b(_float_precision);
+        using namespace stream;
+
+        ObjectPrinter printer;
+        printer._name        = container_from_stream<decltype(printer._name)>(is);
+        printer._fields      = container_container_from_stream<1, decltype(printer._fields)>(is);
+        printer._field_types = container_from_stream<decltype(printer._field_types)>(is);
+        printer._lines       = container_container_from_stream<2, decltype(printer._lines)>(is);
+        printer._value_infos =
+            container_container_from_stream<1, decltype(printer._value_infos)>(is);
+        printer._section_underliner =
+            container_from_stream<decltype(printer._section_underliner)>(is);
+
+        is.read(reinterpret_cast<char*>(&printer._float_precision),
+                sizeof(printer._float_precision));
+
+        return printer;
     }
 
-  public:
-    __BITSERY_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
-    __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
+    void to_stream(std::ostream& os) const
+    {
+        using namespace stream;
+
+        container_to_stream(os, _name);
+        container_container_to_stream<1>(os, _fields);
+        container_to_stream(os, _field_types);
+        container_container_to_stream<2>(os, _lines);
+        container_container_to_stream<1>(os, _value_infos);
+        container_to_stream(os, _section_underliner);
+
+        os.write(reinterpret_cast<const char*>(&_float_precision), sizeof(_float_precision));
+    }
+
 
     ObjectPrinter __printer__(unsigned int float_precision) const
     {
@@ -252,6 +269,9 @@ class ObjectPrinter
 
         return printer;
     }
+
+    __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(ObjectPrinter)
+    __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 
   public:
     /**

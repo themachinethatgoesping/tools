@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.17.0',
+  version: '0.18.0',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=1.0' #last meson version that was tested
 )
@@ -47,9 +47,6 @@ indicators_dep = dependency('indicators', static: true)
 
 #date (to be replaced with c++17 features)
 hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
-
-#bitsery (for object serialization)
-bitsery_dep = dependency('bitsery')
 
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum')

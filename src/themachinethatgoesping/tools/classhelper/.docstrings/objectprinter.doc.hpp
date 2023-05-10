@@ -1,4 +1,4 @@
-//sourcehash: 5f717d665c4fb4369f21ce5ae7efed231273d40f83f0ee332a3d4192f497f235
+//sourcehash: d78fb25ecdbe2e42a5d9e1b095e6d8053d5430bb193fa49900394ab118d20236
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,6 +38,43 @@
 #endif
 
 
+static const char *__doc_formatter =
+R"doc(std::complex<> Formatter for libfmt https://github.com/fmtlib/fmt
+
+libfmt does not provide a formatter for std::complex<>, although one
+is proposed for c++20. Anyway, at the expense of a k or two, you can
+define CPPDUALS_LIBFMT_COMPLEX and get this one.
+
+The standard iostreams formatting of complex numbers is (a,b), where a
+and b are the real and imaginary parts. This formats a complex number
+(a+bi) as (a+bi), offering the same formatting options as the
+underlying type - with the addition of three optional format options,
+only one of which may appear directly after the ':' in the format spec
+(before any fill or align): '$' (the default if no flag is specified),
+'*', and ','. The '*' flag adds a * before the 'i', producing (a+b*i),
+where a and b are the formatted value_type values. The ',' flag simply
+prints the real and complex parts separated by a comma (same as
+iostreams' format). As a concrete exmple, this formatter can produce
+either (3+5.4i) or (3+5.4*i) or (3,5.4) for a complex<double> using
+the specs {:g} | {:$g}, {:*g}, or {:,g}, respectively. (this
+implementation is a bit hacky - glad for cleanups).)doc";
+
+static const char *__doc_formatter_format = R"doc()doc";
+
+static const char *__doc_formatter_parse = R"doc()doc";
+
+static const char *__doc_formatter_specs = R"doc()doc";
+
+static const char *__doc_formatter_style = R"doc()doc";
+
+static const char *__doc_formatter_style_2 = R"doc()doc";
+
+static const char *__doc_formatter_style_expr = R"doc()doc";
+
+static const char *__doc_formatter_style_pair = R"doc()doc";
+
+static const char *__doc_formatter_style_star = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter =
 R"doc(Class that allows for easy pretty printing of class members usage: 1.
 Implement a __printer__ function as public class member this function
@@ -74,9 +111,9 @@ R"doc(Create an info_string from the registered values/sections
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_field_types = R"doc(< variable types)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_field_types = R"doc(variable types)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_fields = R"doc(< variable names)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_fields = R"doc(variable names)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_float_precision = R"doc()doc";
 
@@ -92,7 +129,7 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(< name of the class that is to be printed)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(name of the class that is to be printed)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print = R"doc()doc";
 
@@ -189,9 +226,7 @@ Parameter ``pos``:
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_remove_sections = R"doc(Remove all existing sections)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_serialize = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(additional info (printed in []))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash = R"doc()doc";
 
@@ -199,15 +234,15 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer = R"doc(< 1D container (floating point or integer))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer = R"doc(1D container (floating point or integer))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum = R"doc(< enumerator)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum = R"doc(enumerator)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection = R"doc(< section break)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection = R"doc(section break)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring = R"doc(< formatted string field)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring = R"doc(formatted string field)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(< double or integer)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(double or integer)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_binary = R"doc()doc";
 
@@ -222,7 +257,7 @@ Parameter ``line``:
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_value_infos = R"doc(< additional info (printed in []))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_value_infos = R"doc(additional info (printed in []))doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
