@@ -111,9 +111,9 @@ R"doc(Create an info_string from the registered values/sections
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_field_types = R"doc(variable types)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_field_types = R"doc(< variable types)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_fields = R"doc(variable names)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_fields = R"doc(< variable names)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_float_precision = R"doc()doc";
 
@@ -129,7 +129,7 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(name of the class that is to be printed)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(< name of the class that is to be printed)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print = R"doc()doc";
 
@@ -226,7 +226,7 @@ Parameter ``pos``:
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_remove_sections = R"doc(Remove all existing sections)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(additional info (printed in []))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash = R"doc()doc";
 
@@ -234,15 +234,15 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 R"doc(internal, describe the value type for implementing different printing
 strategies)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer = R"doc(1D container (floating point or integer))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tcontainer = R"doc(< 1D container (floating point or integer))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum = R"doc(enumerator)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tenum = R"doc(< enumerator)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection = R"doc(section break)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection = R"doc(< section break)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring = R"doc(formatted string field)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring = R"doc(< formatted string field)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(double or integer)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(< double or integer)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_binary = R"doc()doc";
 
@@ -257,7 +257,7 @@ Parameter ``line``:
 Returns:
     std::string)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_value_infos = R"doc(additional info (printed in []))doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_value_infos = R"doc(< additional info (printed in []))doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

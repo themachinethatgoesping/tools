@@ -32,3 +32,22 @@
 #define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
 #endif // NEW_DOC_HEADER_HPP
+#if defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_container_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_container_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
+
+#if defined(__GNUG__)
+#pragma GCC diagnostic pop
+#endif
+
+
