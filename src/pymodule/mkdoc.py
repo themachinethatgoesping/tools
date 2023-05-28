@@ -8,7 +8,15 @@ from tqdm import tqdm
 from copy import deepcopy
 import hashlib
 
-FORCE_REGENERATE = False
+# --arguments
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--regenerate", help="Regenerate all docstrings", action="store_true")
+parser.add_argument("--renew", help="Delete all docstring folders first", action="store_true")
+args = parser.parse_args()
+
+FORCE_REGENERATE = args.regenerate
+FORCE_RENEW = args.renew
 
 # source: https://www.debugpointer.com/python/create-sha256-hash-of-a-file-in-python
 def get_hash(file_name):
@@ -122,7 +130,7 @@ with open('mkdoc_log.log', 'w', encoding="utf-8") as ofi_log:
         output_path = "/".join(header.split("/")[:-1]) + "/.docstrings/" + \
             filename.replace(filename.split('.')[-1], "doc.hpp")
 
-        if False:
+        if FORCE_RENEW:
             shutil.rmtree("/".join(output_path.split('/')[:-1]))
         os.makedirs("/".join(output_path.split('/')[:-1]), exist_ok=True)
 
@@ -131,7 +139,7 @@ with open('mkdoc_log.log', 'w', encoding="utf-8") as ofi_log:
         # get file hash
         hash_new = get_hash(header)
 
-        if not FORCE_REGENERATE:  # False means: ignore hash and force update
+        if not FORCE_REGENERATE and not FORCE_RENEW:  # False means: ignore hash and force update
             # check old hash (written into doc file)
             if os.path.exists(output_path):
                 hash_old = "INVALID"

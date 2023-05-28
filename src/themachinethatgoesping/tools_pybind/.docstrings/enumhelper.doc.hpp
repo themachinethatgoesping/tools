@@ -32,3 +32,29 @@
 #define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
 #endif // NEW_DOC_HEADER_HPP
+#if defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
+
+static const char *__doc_themachinethatgoesping_tools_pybind_helper_add_string_to_enum_conversion =
+R"doc(Convert a string to an enum using magic_enum
+
+Template parameter ``T_ENUM``:
+    enum type
+
+Template parameter ``T_PYBIND_ENUM``:
+    pybind11::enum_<T_ENUM>
+
+Parameter ``self``:
+    enum class that is to be changes
+
+Parameter ``str``:
+    string that is to be converted)doc";
+
+#if defined(__GNUG__)
+#pragma GCC diagnostic pop
+#endif
+
+
