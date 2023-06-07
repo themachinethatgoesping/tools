@@ -32,7 +32,7 @@ tools_compile_args = ['-D_USE_MATH_DEFINES']
 
 # # boost
 boost_version = '>=1.73'
-boost_modules = dependency('boost', modules: ['iostreams'], static: true, version: boost_version)
+boost_modules = dependency('boost', modules: ['iostreams'], static: get_option('dynamic_boost').disabled(), version: boost_version)
 boost_dep     = dependency('boost', version: boost_version)
 
 # eigen 3
