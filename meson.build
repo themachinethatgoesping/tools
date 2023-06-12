@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.18.1',
+  version: '0.18.2',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++17'],
   meson_version: '>=1.0' #last meson version that was tested
 )
@@ -39,7 +39,7 @@ boost_dep     = dependency('boost', version: boost_version)
 eigen3_dep = dependency('eigen3')
 
 # fmt for pretty printing
-#fmt_dep = dependency('fmt', static: true)
+#fmt_dep = dependency('fmt', static: true, version: 10.0)
 fmt_dep = subproject('fmt', default_options: 'default_library=static').get_variable('fmt_dep')
 
 # indicators for pretty progress bars
