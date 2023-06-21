@@ -15,7 +15,7 @@ option('only_c_locale', type: 'boolean', value: false,
        description: 'Use built-in date and time formatting facets (implemented only for C locale)')
 
 option('string_view', type: 'boolean', value: true,
-       description: 'Use string_view on compilers with C++17 support')
+       description: 'Use string_view on compilers with c++20 support')
 
 option('header_only', type: 'boolean', value: true,
        description: 'Do not build libraries (this will only work with date_dep but not with tz_dep)!')

@@ -1,4 +1,4 @@
-//sourcehash: 6112bc0ff0b90f336c6c6c3e559f49538ffee253c5772dc1c7b377966dc23723
+//sourcehash: 7a59ffd6dd8dea7e9a41d0b55be79ff9b8e96f43001b0f2f2aebf83987ed09e4
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -73,7 +73,7 @@ static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"d
 
 static const char *__doc_themachinethatgoesping_tools_helper_string_to_floattype =
 R"doc(convert a string to float using fast_float::from_chars Fast_float
-conforms to std::from_chars (c++17, but not completely implemented in
+conforms to std::from_chars (c++20, but not completely implemented in
 clang yet) The conversion is locale independent (. is the decimal
 separator) see also: https://github.com/fastfloat/fast_float
 
