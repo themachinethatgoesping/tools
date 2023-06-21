@@ -14,27 +14,27 @@
 #include <iostream>
 #include <sstream>
 
-using namespace std;
+//using namespace std;
 namespace themachinethatgoesping {
 
 namespace tools {
 
 namespace timeconv {
 
-chrono::system_clock::time_point unixtime_to_timepoint(double unixtime)
+std::chrono::system_clock::time_point unixtime_to_timepoint(double unixtime)
 {
 
-    chrono::duration<double> time_since_epoch(unixtime);
+    std::chrono::duration<double> time_since_epoch(unixtime);
 
-    return (chrono::system_clock::time_point(
-        chrono::duration_cast<chrono::microseconds>(time_since_epoch)));
+    return (std::chrono::system_clock::time_point(
+        std::chrono::duration_cast<std::chrono::microseconds>(time_since_epoch)));
 }
 
-double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
+double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint)
 {
 
-    chrono::microseconds us =
-        chrono::duration_cast<chrono::microseconds>(TimePoint.time_since_epoch());
+    std::chrono::microseconds us =
+        std::chrono::duration_cast<std::chrono::microseconds>(TimePoint.time_since_epoch());
 
     auto timeUSec = static_cast<unsigned long long>(us.count());
     return ((double)timeUSec) / 1000000.0;
@@ -43,22 +43,22 @@ double timepoint_to_unixtime(chrono::system_clock::time_point TimePoint)
 double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_seconds)
 {
     auto X  = date::year{ year } / month / day;
-    auto tp = date::sys_days{ X } + chrono::microseconds{ micro_seconds };
+    auto tp = date::sys_days{ X } + std::chrono::microseconds{ micro_seconds };
     return tools::timeconv::timepoint_to_unixtime(tp);
 }
 
-double datestring_to_unixtime(const string& DateString, const string& format)
+double datestring_to_unixtime(const std::string& DateString, const std::string& format)
 {
-    date::sys_time<chrono::microseconds> timePoint;
+    date::sys_time<std::chrono::microseconds> timePoint;
 
-    stringstream(DateString) >> date::parse(format, timePoint);
+    std::stringstream(DateString) >> date::parse(format, timePoint);
 
     return timepoint_to_unixtime(timePoint);
 }
 
-string unixtime_to_datestring(double        unixtime,
+std::string unixtime_to_datestring(double        unixtime,
                               unsigned int  fractionalSecondsDigits,
-                              const string& format)
+                              const std::string& format)
 {
     if (!std::isfinite(unixtime))
         return "NaN_time_string";
@@ -77,7 +77,7 @@ string unixtime_to_datestring(double        unixtime,
     auto datestring = date::format(format, time);
 
     /* remove fractional seconds digits */
-    if (auto pos = datestring.find_last_of('.'); pos != string::npos)
+    if (auto pos = datestring.find_last_of('.'); pos != std::string::npos)
     {
         if (fractionalSecondsDigits == 0)
         {
