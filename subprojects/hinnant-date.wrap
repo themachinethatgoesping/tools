@@ -3,11 +3,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-[wrap-file]
-source_url = https://github.com/HowardHinnant/date/archive/v3.0.1.tar.gz
-source_filename = date-3.0.1.tar.gz
-source_hash = 7a390f200f0ccd207e8cff6757e04817c1a0aec3e327b006b7eb451c57ee3538
-directory = date-3.0.1
+[wrap-git]
+url = https://github.com/HowardHinnant/date.git
+revision = cc4685a
+directory = date-21062023-3
 patch_directory = hinnant-date
 
 [provide]
