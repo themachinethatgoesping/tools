@@ -200,6 +200,9 @@ jobs:
     - name: install dependencies (meson & python)
       run: pip install meson meson-python ninja pytest numpy conan
 
+    - name: initialize conan
+      run: conan profile detect --force 
+
     - name: install dependencies (run conan)
       run: conan install . --output-folder=conanlibs --build=missing -s compiler.cppstd=20
 
