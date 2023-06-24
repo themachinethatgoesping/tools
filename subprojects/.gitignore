@@ -4,7 +4,7 @@
 
 #folders
 packagecache/*
-date*/*
+date*
 Catch2*/*
 xxhash*/*
 

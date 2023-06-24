@@ -8,9 +8,10 @@
 *.user
 
 #build dirs
-*/build/*
-*/builddir/*
+*build/*
+*builddir/*
 *.vscode/*
+*conanlibs/**
 
 # Prerequisites
 *.d
