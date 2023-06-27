@@ -130,6 +130,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        boost-version: [1.82.0]
+        boost-version_: [1_82_0]
+        boost-modules: [--with-iostreams]
         include:
           - toolset: vc143
             compiler: clang-cl
@@ -183,7 +186,7 @@ jobs:
         path: c:\Boost
         #key: windows-msvc-14.32-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
         key: windows-${{matrix.toolset}}-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
-  
+
     - name: Install dependencies on windows
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
