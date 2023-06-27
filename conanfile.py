@@ -12,7 +12,7 @@ class Recipe(ConanFile):
     generators = "PkgConfigDeps"
 
     def requirements(self):
-        self.requires("boost/[>=1.75]")
+        self.requires("proj/[>=9.1]")
 
 
     # def build_requirements(self):
