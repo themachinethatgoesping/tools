@@ -199,19 +199,12 @@ jobs:
         #rm -rv boost*
 
     # same as for linux
-
     - name: install dependencies (meson & python)
-      run: pip install meson meson-python ninja pytest numpy conan
-
-    - name: initialize conan
-      run: conan profile detect --force 
-
-    - name: install dependencies (run conan)
-      run: conan install . --output-folder=conanlibs --build=missing #-s compiler.cppstd=20
+      run: pip install meson meson-python ninja pytest numpy
 
     - name: configure meson
       run: |
-        meson setup builddir/ -D"python.install_env=auto" -Ddefault_library=static -D"python.install_env=auto" -Dcpp_std=${{matrix.cpp_std}} --native-file=conanlibs/conan_meson_native.ini
+        meson setup builddir/ -D"python.install_env=auto" -Ddefault_library=static -Dcpp_std=${{matrix.cpp_std}}
 
     - name: compile project
       run: meson compile -C builddir/
