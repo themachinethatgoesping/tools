@@ -450,23 +450,25 @@ class ObjectPrinter
 
         // add values to {} list
         str = "{";
-        for (size_t i = 0; i < values.size(); ++i)
+        int64_t i = -1;
+        for (const auto& value : values)
         {
+            ++i;
             if (i != 0)
                 str += ", ";
 
             // don't print entire list of > max_visible_elements in vector
             if (values.size() > max_visible_elements)
-                if (i == size_t(max_visible_elements / 2) - 1)
+                if (i == int64_t(max_visible_elements / 2) - 1)
                 {
                     str += "..., ..., ...";
-                    i = values.size() - size_t(max_visible_elements / 2);
+                    i = values.size() - int64_t(max_visible_elements / 2);
                     continue;
                 }
             if constexpr (std::is_enum<t_value>())
-                str += magic_enum::enum_name(values[i]);
+                str += magic_enum::enum_name(value);
             else
-                str += fmt::vformat(format, fmt::make_format_args(values[i]));
+                str += fmt::vformat(format, fmt::make_format_args(value));
         }
         str += "}";
 
