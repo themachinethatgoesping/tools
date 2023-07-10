@@ -39,7 +39,7 @@
 // ///
 // // A formatter specialization for natively supported types.
 template<typename T, typename Char>
-struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T,Char>
+struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
 {
   private:
     typedef fmt::formatter<T, Char> base;
@@ -436,7 +436,7 @@ class ObjectPrinter
                             std::string_view   value_info = "",
                             int                pos        = -1)
     {
-        static const size_t max_visible_elements = 9; // maximum values to display for a vector
+        static const size_t max_visible_elements = 7; // maximum values to display for a vector
         std::string         str, format;
         using t_value = typename t_container::value_type;
 
@@ -449,9 +449,9 @@ class ObjectPrinter
             format = "{}";
 
         // add values to {} list
-        str = "{";
+        str       = "{";
         int64_t i = -1;
-        for (const auto& value : values)
+        for (auto value_it = values.begin(); value_it != values.end(); ++value_it)
         {
             ++i;
             if (i != 0)
@@ -459,16 +459,17 @@ class ObjectPrinter
 
             // don't print entire list of > max_visible_elements in vector
             if (values.size() > max_visible_elements)
-                if (i == int64_t(max_visible_elements / 2) - 1)
+                if (i == int64_t(max_visible_elements / 2))
                 {
-                    str += "..., ..., ...";
+                    str += "...";
+                    std::advance(value_it, values.size() - int64_t(max_visible_elements / 2) - i - 1);
                     i = values.size() - int64_t(max_visible_elements / 2);
                     continue;
                 }
             if constexpr (std::is_enum<t_value>())
-                str += magic_enum::enum_name(value);
+                str += magic_enum::enum_name(*value_it);
             else
-                str += fmt::vformat(format, fmt::make_format_args(value));
+                str += fmt::vformat(format, fmt::make_format_args(*value_it));
         }
         str += "}";
 
