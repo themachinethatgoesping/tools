@@ -17,6 +17,7 @@
 #include "xxhashhelper.hpp"
 #include <iostream>
 #include <sstream>
+#include <optional>
 
 #define __STREAM_DEFAULT_TO_BINARY__                                                               \
     /** @brief convert object to vector of bytes                                                   \
@@ -155,6 +156,36 @@ inline T_container container_container_from_stream(std::istream& is)
     }
 
     return container;
+}
+
+template<typename T_optional>
+inline void optional_to_stream(std::ostream& os, const std::optional<T_optional>& optional)
+{
+    bool has_value = optional.has_value();
+    os.write(reinterpret_cast<const char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        os.write(reinterpret_cast<const char*>(&optional.value()), sizeof(T_optional));
+    }
+}
+
+template<typename T_optional>
+inline std::optional<T_optional> optional_from_stream(std::istream& is)
+{
+    bool has_value;
+    is.read(reinterpret_cast<char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        T_optional value;
+        is.read(reinterpret_cast<char*>(&value), sizeof(T_optional));
+        return value;
+    }
+    else
+    {
+        return std::nullopt;
+    }
 }
 
 } // stream
