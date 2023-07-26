@@ -17,6 +17,7 @@
 #include "xxhashhelper.hpp"
 #include <iostream>
 #include <optional>
+#include <set>
 #include <sstream>
 
 #define __STREAM_DEFAULT_TO_BINARY__                                                               \
@@ -108,6 +109,33 @@ inline T_container container_from_stream(std::istream& is)
     return container;
 }
 
+template<typename T_set_value>
+inline void set_to_stream(std::ostream& os, const std::set<T_set_value>& set)
+{
+    size_t size = set.size();
+    os.write(reinterpret_cast<const char*>(&size), sizeof(size_t));
+    for (const auto& value : set)
+    {
+        os.write(reinterpret_cast<const char*>(&value), sizeof(T_set_value));
+    }
+}
+
+template<typename T_set_value>
+inline std::set<T_set_value> set_from_stream(std::istream& is)
+{
+    std::set<T_set_value> set;
+    size_t                size;
+    is.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+    for (size_t i = 0; i < size; ++i)
+    {
+        T_set_value value;
+        is.read(reinterpret_cast<char*>(&value), sizeof(T_set_value));
+        set.insert(value);
+    }
+
+    return set;
+}
+
 template<unsigned int level, typename T_container>
 inline void container_container_to_stream(std::ostream& os, const T_container& container)
 {
@@ -181,6 +209,66 @@ inline std::optional<T_optional> optional_from_stream(std::istream& is)
         T_optional value;
         is.read(reinterpret_cast<char*>(&value), sizeof(T_optional));
         return value;
+    }
+    else
+    {
+        return std::nullopt;
+    }
+}
+
+template<typename T_optional>
+inline void optional_container_to_stream(std::ostream&                    os,
+                                         const std::optional<T_optional>& optional)
+{
+
+    bool has_value = optional.has_value();
+    os.write(reinterpret_cast<const char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        container_to_stream(os, optional.value());
+    }
+}
+
+template<typename T_optional>
+inline std::optional<T_optional> optional_container_from_stream(std::istream& is)
+{
+    bool has_value;
+    is.read(reinterpret_cast<char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        return container_from_stream<T_optional>(is);
+    }
+    else
+    {
+        return std::nullopt;
+    }
+}
+
+template<typename T_optional_set_value>
+inline void optional_set_to_stream(std::ostream&                                        os,
+                                   const std::optional<std::set<T_optional_set_value>>& optional)
+{
+
+    bool has_value = optional.has_value();
+    os.write(reinterpret_cast<const char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        set_to_stream(os, optional.value());
+    }
+}
+
+template<typename T_optional_set_value>
+inline std::optional<std::set<T_optional_set_value>> optional_set_from_stream(std::istream& is)
+{
+    bool has_value;
+    is.read(reinterpret_cast<char*>(&has_value), sizeof(bool));
+
+    if (has_value)
+    {
+        return set_from_stream<T_optional_set_value>(is);
     }
     else
     {

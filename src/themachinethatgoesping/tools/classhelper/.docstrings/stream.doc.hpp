@@ -1,4 +1,4 @@
-//sourcehash: 14ff0f3e424f9b764b4be3e8448556fb11d664ddd3bf374fdd65f0d4ca2601c8
+//sourcehash: 1efbce40d8363e240c8a87147a85eb981022599631dd49a5754d37dab7243088
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -46,9 +46,21 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_stream_contain
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_container_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_container_to_stream = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_from_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_set_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_set_to_stream = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_set_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_set_to_stream = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
