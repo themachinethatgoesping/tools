@@ -16,8 +16,8 @@
 
 #include "xxhashhelper.hpp"
 #include <iostream>
-#include <sstream>
 #include <optional>
+#include <sstream>
 
 #define __STREAM_DEFAULT_TO_BINARY__                                                               \
     /** @brief convert object to vector of bytes                                                   \
