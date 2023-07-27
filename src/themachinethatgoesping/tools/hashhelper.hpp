@@ -1,0 +1,32 @@
+// SPDX-FileCopyrightText: 2023 Peter Urban, Ghent University
+//
+// SPDX-License-Identifier: MPL-2.0
+
+#include <xtensor/xtensor.hpp>
+#include <xxhash.hpp>
+
+/**
+ * @brief boost hash specializations for some types
+ * 
+ */
+
+/**
+ * @brief boost hash function for xt arrays
+ *
+ */
+namespace xt {
+/**
+ * @brief Boost hash function for xt tensors
+ *
+ * @tparam T
+ * @param b
+ * @return std::size_t
+ */
+template<typename T, size_t d>
+std::size_t hash_value(const xt::xtensor<T, d>& array)
+{
+    return xxh::xxhash3<64>(array.data(), array.size() * sizeof(T));
+}
+
+}
+
