@@ -14,7 +14,7 @@
 #include <iostream>
 #include <sstream>
 
-//using namespace std;
+// using namespace std;
 namespace themachinethatgoesping {
 
 namespace tools {
@@ -56,9 +56,9 @@ double datestring_to_unixtime(const std::string& DateString, const std::string& 
     return timepoint_to_unixtime(timePoint);
 }
 
-std::string unixtime_to_datestring(double        unixtime,
-                              unsigned int  fractionalSecondsDigits,
-                              const std::string& format)
+std::string unixtime_to_datestring(double             unixtime,
+                                   unsigned int       fractionalSecondsDigits,
+                                   const std::string& format)
 {
     if (!std::isfinite(unixtime))
         return "NaN_time_string";

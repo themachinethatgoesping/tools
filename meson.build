@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.18.9',
+  version: '0.18.10',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
   meson_version: '>=1.1' #last meson version that was tested
 )

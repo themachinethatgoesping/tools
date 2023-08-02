@@ -90,8 +90,8 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
     {
         PYBIND11_OVERRIDE_PURE(void,          /* Return type */
                                I_ProgressBar, /* Parent class */
-                               set_prefix,   /* Name of function in C++ (must match Python name) */
-                               prefix        /* Argument(s) */
+                               set_prefix,    /* Name of function in C++ (must match Python name) */
+                               prefix         /* Argument(s) */
         );
     }
 
@@ -167,8 +167,8 @@ class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
     void callback_set_prefix(const std::string& prefix) override
     {
         PYBIND11_OVERRIDE_PURE(
-            void,                 /* Return type */
-            I_ProgressBarTimed,   /* Parent class */
+            void,                /* Return type */
+            I_ProgressBarTimed,  /* Parent class */
             callback_set_prefix, /* Name of function in C++ (must match Python name) */
             prefix               /* Argument(s) */
         );

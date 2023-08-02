@@ -1,4 +1,4 @@
-//sourcehash: ad6a439816dde28febc9289fd20e95168c6fe0f8d22e2e11fa583795cbdefee3
+//sourcehash: af360cf252f37f5146e07ed5ece5947b9ee865c9292be66d660ff70e6c3fa478
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -118,8 +118,6 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_i
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_operator_eq = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_operator_ne = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_print = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_printer = R"doc()doc";
@@ -188,8 +186,6 @@ Returns:
     size_t)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_operator_eq = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_operator_ne = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_print = R"doc()doc";
 

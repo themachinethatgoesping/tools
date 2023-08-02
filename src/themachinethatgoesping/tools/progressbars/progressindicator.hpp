@@ -79,7 +79,7 @@ class ProgressIndicator : public I_ProgressBarTimed
         // set the progress of the indicator progressbar
         _indicator->set_progress(size_t(new_progress - _first));
     }
-    
+
     void callback_set_postfix(const std::string& postfix) override
     {
         // set the postfix of the indicator progressbar

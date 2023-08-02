@@ -70,11 +70,7 @@ class PyIndexer
         }
 
         // operators
-        bool operator==(const Slice& other) const
-        {
-            return start == other.start && stop == other.stop && step == other.step;
-        }
-        bool operator!=(const Slice& other) const { return !(*this == other); }
+        bool operator==(const Slice& other) const = default;
 
         classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
         {
@@ -403,29 +399,7 @@ class PyIndexer
     size_t size() const { return _slice_size; }
 
     // ----- operators (common) -----
-    bool operator!=(const PyIndexer& rhs) const { return !(rhs == *this); }
-    bool operator==(const PyIndexer& rhs) const
-    {
-        // compare data
-        if (_vector_size != rhs._vector_size)
-            return false;
-        if (_is_slice != rhs._is_slice)
-            return false;
-        if (_index_start != rhs._index_start)
-            return false;
-        if (_index_stop != rhs._index_stop)
-            return false;
-        if (_index_min != rhs._index_min)
-            return false;
-        if (_index_max != rhs._index_max)
-            return false;
-        if (_index_step != rhs._index_step)
-            return false;
-        if (_slice_size != rhs._slice_size)
-            return false;
-
-        return true;
-    }
+    bool operator==(const PyIndexer& rhs) const = default;
 
     // ----- operators (iteration) -----
     /**

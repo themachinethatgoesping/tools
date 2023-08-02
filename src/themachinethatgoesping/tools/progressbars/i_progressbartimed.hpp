@@ -161,7 +161,7 @@ class I_ProgressBarTimed : public I_ProgressBar
 
         _state_increment = 0.0;
         _state_postfix   = "";
-        _state_prefix   = "";
+        _state_prefix    = "";
         callback_init(first, last, name);
         _initialized = true;
     }
@@ -232,7 +232,6 @@ class I_ProgressBarTimed : public I_ProgressBar
         _state_postfix = postfix;
         apply_state();
     }
-
 
     /**
      * @brief Append a prefix message to the progressbar

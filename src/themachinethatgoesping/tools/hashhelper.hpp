@@ -7,7 +7,7 @@
 
 /**
  * @brief boost hash specializations for some types
- * 
+ *
  */
 
 /**
@@ -29,4 +29,3 @@ std::size_t hash_value(const xt::xtensor<T, d>& array)
 }
 
 }
-

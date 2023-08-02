@@ -462,7 +462,8 @@ class ObjectPrinter
                 if (i == int64_t(max_visible_elements / 2))
                 {
                     str += "...";
-                    std::advance(value_it, values.size() - int64_t(max_visible_elements / 2) - i - 1);
+                    std::advance(value_it,
+                                 values.size() - int64_t(max_visible_elements / 2) - i - 1);
                     i = values.size() - int64_t(max_visible_elements / 2);
                     continue;
                 }
