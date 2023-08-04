@@ -186,7 +186,7 @@ jobs:
         path: c:\Boost
         #key: windows-msvc-14.32-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
         key: windows-${{matrix.toolset}}-boost-${{matrix.boost-version}}-${{matrix.boost-modules}}
-
+  
     - name: Install dependencies on windows
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
@@ -199,12 +199,13 @@ jobs:
         #rm -rv boost*
 
     # same as for linux
+
     - name: install dependencies (meson & python)
       run: pip install meson meson-python ninja pytest numpy
 
     - name: configure meson
       run: |
-        meson setup builddir/ -D"python.install_env=auto" -Ddefault_library=static -Dcpp_std=${{matrix.cpp_std}}
+        meson setup builddir/ -D"python.install_env=auto" -Ddefault_library=static -D"python.install_env=auto" -Dcpp_std=${{matrix.cpp_std}}
 
     - name: compile project
       run: meson compile -C builddir/
@@ -230,6 +231,14 @@ jobs:
   macos:
     name: ci on macOS
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cxx_compiler: ["$(brew --prefix llvm@16)/bin/clang++"]            
+    
+    # env does not work here because is resolved as string and not command 
+    # env:
+    #   CXX: ${{ matrix.cxx_compiler }}
       
     steps:
     
@@ -248,15 +257,15 @@ jobs:
       with:
         key: super-ci-mac  # name for the cache
         
-    # install clang 16
-    - run: brew install llvm@16
+    # install clang 15
+    - run: brew install coreutils llvm@16
         
     - run: brew install libomp boost
     
     - run: pip install meson meson-python ninja pytest numpy
     
     - name: configure meson
-      run: meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+      run: CXX=${{ matrix.cxx_compiler }} meson setup builddir/; meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
