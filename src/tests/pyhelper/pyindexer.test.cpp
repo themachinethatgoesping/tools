@@ -31,10 +31,6 @@ void test_reversed(const PyIndexer& indexer)
     }
 }
 
-// conversions
-// static const double to_rad     = M_PI / 180;
-// static const double to_degrees = 1 / to_rad;
-
 TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 {
     SECTION("Support basic loop iteration")

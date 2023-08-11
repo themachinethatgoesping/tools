@@ -1,4 +1,4 @@
-//sourcehash: 27f8b9c78f7dc8532ebca214b8a213647c33761b0ac75b69ab94e17b77678a85
+//sourcehash: 9a3031c06211e8e119daa8d4dadae9542c701d1ff13f5a42acd515e36f7c5443
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -59,7 +59,7 @@ R"doc(Shift angles into specified angular range: yaw [0°,359.99°], pitch
 [-90°, 90°], roll [-180¶, 179.99°]
 
 Template parameter ``floattype``:
-    double or gloat
+    double or float
 
 Parameter ``ypr``:
     Matrix with yaw, pitch and roll value in °
@@ -69,11 +69,11 @@ Returns:
     °))doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_normalize_angles_rad =
-R"doc(Shift angles into specified angular range: yaw [0,2pi], pitch [-p/2°,
+R"doc(Shift angles into specified angular range: yaw [0,_2PI], pitch [-p/2°,
 p/2°], roll [-pi, pi]
 
 Template parameter ``floattype``:
-    double or gloat
+    double or float
 
 Parameter ``ypr``:
     Matrix with yaw, pitch and roll value in rad

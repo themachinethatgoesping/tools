@@ -4,10 +4,13 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
 #include <chrono>
+#include <fmt/core.h>
+#include <numbers>
 
 #include "../../themachinethatgoesping/tools/rotationfunctions/quaternions.hpp"
 
@@ -18,21 +21,21 @@ using namespace themachinethatgoesping::tools;
 #define TESTTAG "[rotationfunctions]"
 
 // conversions
-static const double to_rad     = M_PI / 180;
-static const double to_degrees = 1 / to_rad;
+static const float to_rad     = std::numbers::pi / 180.;
+static const float to_degrees = 1 / to_rad;
 
 TEST_CASE("compute_heading should return correct heading", TESTTAG)
 {
     // degrees
-    REQUIRE(rotationfunctions::compute_heading(0., 0.) == Catch::Approx(0.));    // edge case
-    REQUIRE(rotationfunctions::compute_heading(1., 0.) == Catch::Approx(0.));    // north
-    REQUIRE(rotationfunctions::compute_heading(1., 1.) == Catch::Approx(45.));   // north east
-    REQUIRE(rotationfunctions::compute_heading(0., 1.) == Catch::Approx(90.));   // east
-    REQUIRE(rotationfunctions::compute_heading(-1, 1.) == Catch::Approx(135.));  // south east
-    REQUIRE(rotationfunctions::compute_heading(-1, 0.) == Catch::Approx(180.));  // south
-    REQUIRE(rotationfunctions::compute_heading(-1, -1.) == Catch::Approx(225.)); // south west
-    REQUIRE(rotationfunctions::compute_heading(0, -1.) == Catch::Approx(270.));  // west
-    REQUIRE(rotationfunctions::compute_heading(1, -1.) == Catch::Approx(315.));  // north west
+    REQUIRE(rotationfunctions::compute_heading(0., 0.) == Catch::Approx(0.));     // edge case
+    REQUIRE(rotationfunctions::compute_heading(1., 0.) == Catch::Approx(0.));     // north
+    REQUIRE(rotationfunctions::compute_heading(1., 1.) == Catch::Approx(45.));    // north east
+    REQUIRE(rotationfunctions::compute_heading(0., 1.) == Catch::Approx(90.));    // east
+    REQUIRE(rotationfunctions::compute_heading(-1., 1.) == Catch::Approx(135.));  // south east
+    REQUIRE(rotationfunctions::compute_heading(-1., 0.) == Catch::Approx(180.));  // south
+    REQUIRE(rotationfunctions::compute_heading(-1., -1.) == Catch::Approx(225.)); // south west
+    REQUIRE(rotationfunctions::compute_heading(0., -1.) == Catch::Approx(270.));  // west
+    REQUIRE(rotationfunctions::compute_heading(1., -1.) == Catch::Approx(315.));  // north west
 
     // radians
     REQUIRE(rotationfunctions::compute_heading(0., 0., true) == Catch::Approx(0.)); // edge case
@@ -40,14 +43,14 @@ TEST_CASE("compute_heading should return correct heading", TESTTAG)
     REQUIRE(rotationfunctions::compute_heading(1., 1., true) ==
             Catch::Approx(M_PI / 4)); // north east
     REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Catch::Approx(M_PI / 2)); // east
-    REQUIRE(rotationfunctions::compute_heading(-1, 1., true) ==
-            Catch::Approx(M_PI * 3 / 4));                                             // south east
-    REQUIRE(rotationfunctions::compute_heading(-1, 0., true) == Catch::Approx(M_PI)); // south
-    REQUIRE(rotationfunctions::compute_heading(-1, -1., true) ==
+    REQUIRE(rotationfunctions::compute_heading(-1., 1., true) ==
+            Catch::Approx(M_PI * 3 / 4));                                              // south east
+    REQUIRE(rotationfunctions::compute_heading(-1., 0., true) == Catch::Approx(M_PI)); // south
+    REQUIRE(rotationfunctions::compute_heading(-1., -1., true) ==
             Catch::Approx(M_PI * 5 / 4)); // south west
-    REQUIRE(rotationfunctions::compute_heading(0, -1., true) ==
+    REQUIRE(rotationfunctions::compute_heading(0., -1., true) ==
             Catch::Approx(M_PI * 6 / 4)); // west
-    REQUIRE(rotationfunctions::compute_heading(1, -1., true) ==
+    REQUIRE(rotationfunctions::compute_heading(1., -1., true) ==
             Catch::Approx(M_PI * 7 / 4)); // north west
 }
 
@@ -58,9 +61,9 @@ TEST_CASE("normalize_angles", TESTTAG)
         // random generator. Use fixed seed to ensure repeatable results
         boost::random::mt19937 gen(1234567);
 
-        boost::random::uniform_real_distribution<double> yaw_dist(-1000., 1000);
-        boost::random::uniform_real_distribution<double> pitch_dist(-1000., 1000.);
-        boost::random::uniform_real_distribution<double> roll_dist(-1000., 1000);
+        boost::random::uniform_real_distribution<float> yaw_dist(-1000., 1000);
+        boost::random::uniform_real_distribution<float> pitch_dist(-1000., 1000.);
+        boost::random::uniform_real_distribution<float> roll_dist(-1000., 1000);
 
         for (unsigned int c = 0; c < 1000; ++c)
         {
@@ -68,14 +71,19 @@ TEST_CASE("normalize_angles", TESTTAG)
             auto pitch = pitch_dist(gen);
             auto roll  = roll_dist(gen);
 
-            std::array<double, 3> ypr_deg = { yaw, pitch, roll };
-            std::array<double, 3> ypr_rad = { to_rad * yaw, to_rad * pitch, to_rad * roll };
+            std::array<float, 3> ypr_deg = { yaw, pitch, roll };
+            std::array<float, 3> ypr_rad = { to_rad * yaw, to_rad * pitch, to_rad * roll };
 
             auto ypr_deg_result = rotationfunctions::normalize_angles_degrees(ypr_deg);
-            auto ypr_rad_result = rotationfunctions::normalize_angles_rad(ypr_rad);
+            auto ypr_rad_result = rotationfunctions::normalize_angles_rad<float>(ypr_rad);
 
             for (unsigned int i = 0; i < 3; ++i)
-                CHECK(ypr_deg_result[i] == Catch::Approx(ypr_rad_result[i] * to_degrees));
+            {
+                INFO(fmt::format("i {} y {} p {} r {}", i, yaw, pitch, roll));
+                REQUIRE_THAT(
+                    ypr_deg_result[i],
+                    Catch::Matchers::WithinAbs(ypr_rad_result[i] * to_degrees, 0.001)); // fails
+            }
         }
     }
 
@@ -121,7 +129,7 @@ TEST_CASE("normalize_angles", TESTTAG)
             {
                 INFO("value: " << c << '/' << i << " / " << ypr[i] << " / " << ypr_new[i] << " / "
                                << e[i]);
-                CHECK(ypr_new[i] == Catch::Approx(e[i]).scale(1));
+                REQUIRE(ypr_new[i] == Catch::Approx(e[i]).scale(1));
             }
         }
     }
