@@ -563,9 +563,10 @@ class ObjectPrinter
                     if (v.size() % 2)
                     {
                         std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
+                        auto median = (v[n_2] + v[n_2 + 1]) / 2;
                         line_ref.back() +=
                             fmt::vformat("| Median: " + format,
-                                         fmt::make_format_args((v[n_2] + v[n_2 + 1]) / 2));
+                                         fmt::make_format_args(median));
                     }
                     else
                     {

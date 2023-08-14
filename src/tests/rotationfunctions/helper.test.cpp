@@ -82,7 +82,7 @@ TEST_CASE("normalize_angles", TESTTAG)
                 INFO(fmt::format("i {} y {} p {} r {}", i, yaw, pitch, roll));
                 REQUIRE_THAT(
                     ypr_deg_result[i],
-                    Catch::Matchers::WithinAbs(ypr_rad_result[i] * to_degrees, 0.001)); // fails
+                    Catch::Matchers::WithinAbs(ypr_rad_result[i] * to_degrees, 0.001));
             }
         }
     }
