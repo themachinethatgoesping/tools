@@ -109,6 +109,66 @@ inline T_container container_from_stream(std::istream& is)
     return container;
 }
 
+template<typename t_map>
+inline void map_to_stream(std::ostream& os, const t_map& map)
+{
+    size_t size = map.size();
+    os.write(reinterpret_cast<const char*>(&size), sizeof(size_t));
+    for (const auto& [key, value] : map)
+    {
+        os.write(reinterpret_cast<const char*>(&key), sizeof(typename t_map::key_type));
+        os.write(reinterpret_cast<const char*>(&value), sizeof(typename t_map::mapped_type));
+    }
+}
+
+template<typename t_map>
+inline t_map map_from_stream(std::istream& is)
+{
+    t_map  map;
+    size_t size;
+    is.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+    for (size_t i = 0; i < size; ++i)
+    {
+        typename t_map::key_type    key;
+        typename t_map::mapped_type value;
+        is.read(reinterpret_cast<char*>(&key), sizeof(typename t_map::key_type));
+        is.read(reinterpret_cast<char*>(&value), sizeof(typename t_map::mapped_type));
+        map[key] = value;
+    }
+
+    return map;
+}
+
+template<typename t_map>
+inline void map_container_to_stream(std::ostream& os, const t_map& map)
+{
+    size_t size = map.size();
+    os.write(reinterpret_cast<const char*>(&size), sizeof(size_t));
+    for (const auto& [key, value] : map)
+    {
+        os.write(reinterpret_cast<const char*>(&key), sizeof(typename t_map::key_type));
+        container_to_stream(os, value);
+    }
+}
+
+template<typename t_map>
+inline t_map map_container_from_stream(std::istream& is)
+{
+    t_map  map;
+    size_t size;
+    is.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+    for (size_t i = 0; i < size; ++i)
+    {
+        typename t_map::key_type    key;
+        typename t_map::mapped_type value;
+        is.read(reinterpret_cast<char*>(&key), sizeof(typename t_map::key_type));
+        value               = container_from_stream<typename t_map::mapped_type>(is);
+        map[std::move(key)] = std::move(value);
+    }
+
+    return map;
+}
+
 template<typename T_set_value>
 inline void set_to_stream(std::ostream& os, const std::set<T_set_value>& set)
 {

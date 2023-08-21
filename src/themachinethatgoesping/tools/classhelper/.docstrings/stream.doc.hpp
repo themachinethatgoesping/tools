@@ -1,4 +1,4 @@
-//sourcehash: 1efbce40d8363e240c8a87147a85eb981022599631dd49a5754d37dab7243088
+//sourcehash: 13b438a19797dccd28c8f7ed1375e8939b70983bebc983d4e984a01ce1b908dc
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -45,6 +45,14 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_stream_contain
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_container_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_container_to_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_from_stream = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_to_stream = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_container_from_stream = R"doc()doc";
 
