@@ -1,6 +1,10 @@
 // SPDX-FileCopyrightText: 2023 Peter Urban, Ghent University
 //
 // SPDX-License-Identifier: MPL-2.0
+#pragma once
+
+/* generated doc strings */
+#include ".docstrings/hashhelper.doc.hpp"
 
 #include <xtensor/xtensor.hpp>
 #include <xxhash.hpp>
