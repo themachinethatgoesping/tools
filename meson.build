@@ -19,7 +19,11 @@ projectnamespace = 'themachinethatgoesping'
 # --- dependencies ---
 
 # system
-omp_dep = dependency('openmp')
+if meson.get_compiler('cpp').get_id() == 'clang-cl'
+  omp_dep = declare_dependency()
+else
+  omp_dep = dependency('openmp')
+endif
 
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES']
