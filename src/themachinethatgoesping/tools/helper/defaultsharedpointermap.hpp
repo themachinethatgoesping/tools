@@ -19,16 +19,22 @@ template<typename t_key, typename t_value>
 class DefaultSharedPointerMap : public std::map<t_key, std::shared_ptr<t_value>>
 {
   public:
+    using t_base = std::map<t_key, std::shared_ptr<t_value>>;
+
     // use all constructors of the base class
     DefaultSharedPointerMap() = default;
 
-    std::shared_ptr<t_value>& at(const t_key& key)
+    // use operators of the base class
+
+    const std::shared_ptr<t_value>& operator[](const t_key& key) { return this->at(key); }
+
+    const std::shared_ptr<t_value>& at(const t_key& key)
     {
         auto it = this->find(key);
 
         if (it == this->end())
         {
-            this->operator[](key) = std::make_shared<t_value>();
+            t_base::operator[](key) = std::make_shared<t_value>();
 
             return this->operator[](key);
         }

@@ -1,4 +1,4 @@
-//sourcehash: dbb3b71003b01f654aeb13eeadd041f61f680c93d57d174ecc935bba14435f22
+//sourcehash: df0bfa1548ed1340c05fe75bac35bef3042a63f5581d0d7850a7037c98b17783
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -47,6 +47,8 @@ static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointe
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointerMap_at_const = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointerMap_keys = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_DefaultSharedPointerMap_operator_array = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
