@@ -1,4 +1,4 @@
-//sourcehash: 7a59ffd6dd8dea7e9a41d0b55be79ff9b8e96f43001b0f2f2aebf83987ed09e4
+//sourcehash: 13db47dacdc8daeed2c691d1f653fb1ca27c93650f4a5680556ef76529418097
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -62,6 +62,8 @@ static const char *__doc_themachinethatgoesping_tools_helper_approx_complex = R"
 static const char *__doc_themachinethatgoesping_tools_helper_approx_container = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_approx_container_complex = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_compare_containers = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"doc()doc";
 

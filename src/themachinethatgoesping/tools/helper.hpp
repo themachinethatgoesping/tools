@@ -191,6 +191,18 @@ inline int_type string_as_int(std::string_view value)
     return valueAsFourByteInt;
 }
 
+template<typename t_container1, typename t_container2>
+inline bool compare_containers(const t_container1& c1, const t_container2& c2)
+{
+    if (c1.size() != c2.size())
+        return false;
+
+    // comparison that also works for non random access containers
+    for (auto it1 = c1.begin(), it2 = c2.begin(); it1 != c1.end(); ++it1, ++it2)
+        if (*it1 != *it2)
+            return false;
+}
+
 } // namespace helper
 } // namespace tools
 } // namespace themachinethatgoesping
