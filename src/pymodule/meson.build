@@ -33,6 +33,7 @@ py_tools = pymod.extension_module(
         python3_dep],
     #link_with : [tools],
     link_language: 'cpp',
+    cpp_pch : 'pch/pch.hpp',
     override_options: [
         #'cpp_rtti=true',
     ],
