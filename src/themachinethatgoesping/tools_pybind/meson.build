@@ -28,7 +28,7 @@ if build_machine.system() != 'linux'
                         override_options: [
                           'b_lundef=false'
                       ],
-                        cpp_pch : 'pch/pch.hpp',
+                        # cpp_pch : 'pch/pch.hpp',
                         install : true
                         )
 else  
@@ -42,7 +42,7 @@ else
                         override_options: [
                           'b_lundef=false'
                       ],
-                        cpp_pch : 'pch/pch.hpp',
+                        # cpp_pch : 'pch/pch.hpp',
                         install : true
                         )
 endif
