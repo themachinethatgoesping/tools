@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-project('fmt', 'cpp', version: '10.1.0', license: 'BSD', default_options: ['cpp_std=c++14'])
+project('fmt', 'cpp', version: '10.1.1', license: 'BSD', default_options: ['cpp_std=c++14'])
 
 fmt_private_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1']   # I don't know where this must go, so it is set for both
 fmt_interface_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1'] # I don't know where this must go, so it is set for both
