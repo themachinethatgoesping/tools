@@ -186,7 +186,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
 
         try
         {
-            for (unsigned int i = 0; i < X.size(); ++i)
+            for (size_t i = 0; i < X.size(); ++i)
             {
                 append(X[i], Y[i]);
             }
@@ -229,11 +229,11 @@ class I_PairInterpolator : public I_Interpolator<YType>
         XY.reserve(_X.size() + X.size());
 
         // sort _X and _Y by _X (ascending)
-        for (unsigned int i = 0; i < _X.size(); ++i)
+        for (size_t i = 0; i < _X.size(); ++i)
         {
             XY.push_back(std::pair<double, YType>(_X[i], _Y[i]));
         }
-        for (unsigned int i = 0; i < X.size(); ++i)
+        for (size_t i = 0; i < X.size(); ++i)
         {
             XY.push_back(std::pair<double, YType>(X[i], Y[i]));
         }
@@ -246,7 +246,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         std::vector<YType>  Y_new;
         X_new.resize(XY.size());
         Y_new.resize(XY.size());
-        for (unsigned int i = 0; i < XY.size(); ++i)
+        for (size_t i = 0; i < XY.size(); ++i)
         {
             X_new[i] = XY[i].first;
             Y_new[i] = XY[i].second;

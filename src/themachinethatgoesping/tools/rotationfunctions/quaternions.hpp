@@ -184,7 +184,7 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(const std::vector<
 
     std::vector<Eigen::Quaternion<floattype>> Q;
     Q.reserve(yaw.size());
-    for (unsigned int i = 0; i < yaw.size(); ++i)
+    for (size_t i = 0; i < yaw.size(); ++i)
     {
         Q.push_back(quaternion_from_ypr(yaw[i], pitch[i], roll[i], input_in_degrees));
     }

@@ -41,7 +41,7 @@ void add_string_to_enum_conversion(T_PYBIND_ENUM& t_enum)
 
                        constexpr auto enum_values = magic_enum::enum_names<T_ENUM>();
                        std::string    enum_info;
-                       for (unsigned int i = 0; i < enum_values.size(); ++i)
+                       for (size_t i = 0; i < enum_values.size(); ++i)
                        {
                            if (i != 0)
                                enum_info += ", ";
