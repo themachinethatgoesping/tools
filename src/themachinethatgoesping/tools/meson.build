@@ -51,6 +51,7 @@ if build_machine.system() != 'linux'
                           magic_enum_dep,
                           xtensor_dep,
                           fast_float_dep,
+                          frozen_dep,
                           xxhash_cpp_dep],
                         override_options: [
                           'b_lundef=false'
@@ -70,6 +71,7 @@ else
                           magic_enum_dep,
                           xtensor_dep,
                           fast_float_dep,
+                          frozen_dep,
                           xxhash_cpp_dep],
                         override_options: [
                           'b_lundef=false'
@@ -92,6 +94,7 @@ tools_dep = declare_dependency(
     magic_enum_dep,
     xtensor_dep,
     fast_float_dep,
+    frozen_dep,
     xxhash_cpp_dep
   ],
   link_with : [tools_lib],
