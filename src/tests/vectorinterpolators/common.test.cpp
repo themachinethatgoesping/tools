@@ -413,10 +413,10 @@ TEST_CASE("VectorInterpolators should hashable", TESTTAG)
     vectorinterpolators::AkimaInterpolator   aip(x, y);
     vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
 
-    REQUIRE(lip.slow_hash() != 0);
-    REQUIRE(nip.slow_hash() != 0);
-    REQUIRE(aip.slow_hash() != 0);
-    REQUIRE(slerp.slow_hash() != 0);
+    REQUIRE(lip.binary_hash() != 0);
+    REQUIRE(nip.binary_hash() != 0);
+    REQUIRE(aip.binary_hash() != 0);
+    REQUIRE(slerp.binary_hash() != 0);
 
     // test_interpolator_serialize(nip);
     // test_interpolator_serialize(lip);

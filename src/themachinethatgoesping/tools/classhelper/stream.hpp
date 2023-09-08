@@ -74,13 +74,13 @@
 #define __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(T_CLASS)                                        \
     __STREAM_DEFAULT_TO_BINARY__                                                                   \
     __STREAM_DEFAULT_FROM_BINARY__(T_CLASS)                                                        \
-    __SLOW_HASH__
+    __BINARY_HASH__
 
 // this assumes that T_CLASS has from_stream and to_stream functions
 #define __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS_NOT_CONST__(T_CLASS)                              \
     __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                         \
     __STREAM_DEFAULT_FROM_BINARY__(T_CLASS)                                                        \
-    __SLOW_HASH_NOT_CONST__
+    __BINARY_HASH_NOT_CONST__
 
 namespace themachinethatgoesping {
 namespace tools {

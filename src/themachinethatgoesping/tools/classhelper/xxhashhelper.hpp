@@ -12,21 +12,69 @@
 /* generated doc strings */
 #include ".docstrings/xxhashhelper.doc.hpp"
 
+#include <boost/iostreams/concepts.hpp> // sink
+#include <boost/iostreams/stream.hpp>
 #include <xxhash.hpp>
 
+class XXHashSink : public boost::iostreams::sink
+{
+    xxh::hash3_state_t<64>& _hash_state;
+
+  public:
+    XXHashSink(xxh::hash3_state_t<64>& hash_state)
+        : _hash_state(hash_state)
+    {
+    }
+
+    std::streamsize write(const char* s, std::streamsize n)
+    {
+        _hash_state.update(s, n);
+        return n;
+    }
+
+    xxh::hash_t<64> hash() { return _hash_state.digest(); }
+};
+
+#define __BINARY_HASH_NOT_CONST__                                                                  \
+    /** @brief compute a 64 bit hash of the object using xxhash and the to_binary function.        \
+     * This function is called binary because the to_binary function object is used                \
+     */                                                                                            \
+    xxh::hash_t<64> binary_hash()                                                                  \
+    {                                                                                              \
+        xxh::hash3_state_t<64>               hash;                                                 \
+        boost::iostreams::stream<XXHashSink> stream(hash);                                         \
+        this->to_stream(stream);                                                                   \
+        stream.flush();                                                                            \
+        return hash.digest();                                                                      \
+    }                                                                                              \
+    __SLOW_HASH_NOT_CONST__
+
+#define __BINARY_HASH__  /** @brief compute a 64 bit hash of the object using xxhash and the       \
+                          * to_binary function. This  function is called binary because the        \
+                          * to_binary  function of the object is used */                           \
+    xxh::hash_t<64> binary_hash() const                                                            \
+    {                                                                                              \
+        xxh::hash3_state_t<64>               hash;                                                 \
+        boost::iostreams::stream<XXHashSink> stream(hash);                                         \
+        this->to_stream(stream);                                                                   \
+        stream.flush();                                                                            \
+        return hash.digest();                                                                      \
+    }                                                                                              \
+    __SLOW_HASH__
+
 #define __SLOW_HASH_NOT_CONST__                                                                    \
-    /** @brief compute a 64 bit hash of the object using xxhash and the to_binary function. This   \
-     * function is called slow because the to_binary function creates an unnecessary copy of the   \
-     * object */                                                                                   \
+    /** @brief compute a 64 bit hash of the object using xxhash and the to_binary function.        \
+     * This function is called slow because the to_binary function creates a copy                  \
+     */                                                                                            \
     xxh::hash_t<64> slow_hash()                                                                    \
     {                                                                                              \
         return xxh::xxhash3<64>(this->to_binary());                                                \
     }
 
 #define __SLOW_HASH__                                                                              \
-    /** @brief compute a 64 bit hash of the object using xxhash and the to_binary function. This   \
-     * function is called slow because the to_binary function creates an unnecessary copy of the   \
-     * object */                                                                                   \
+    /** @brief compute a 64 bit hash of the object using xxhash and the                            \
+     * to_binary function. This  function is called binary because the to_binary function creates  \
+     * a copy    */                                                                                \
     xxh::hash_t<64> slow_hash() const                                                              \
     {                                                                                              \
         return xxh::xxhash3<64>(this->to_binary());                                                \
@@ -39,6 +87,6 @@
 //     operator()(themachinethatgoesping::echosounders::simrad::datagrams::xml_datagrams::XML_Parameter_Channel
 //     & arg) const
 //     {
-//         return arg.slow_hash();
+//         return arg.binary_hash();
 //     }
 //   };

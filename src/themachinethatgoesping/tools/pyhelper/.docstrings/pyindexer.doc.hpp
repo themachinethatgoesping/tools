@@ -122,7 +122,7 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_p
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_printer = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_binary_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_start = R"doc(< the start index of the slice (None if not sliced))doc";
 
@@ -257,7 +257,7 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_size = 
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slice_size = R"doc(< the size of the slice (_vector_size if not sliced))doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_binary_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_binary = R"doc()doc";
 

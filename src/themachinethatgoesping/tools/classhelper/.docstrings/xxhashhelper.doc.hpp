@@ -1,4 +1,4 @@
-//sourcehash: 000a4dce621f0fa9a79cd5d6bb3a041b3429a483a32ab908dd261c60ce6ed969
+//sourcehash: 5a8c19f49bdad7b8ecd07795eab8de5983169fbf33e12a9faad734564e69caec
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,16 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_XXHashSink = R"doc()doc";
+
+static const char *__doc_XXHashSink_XXHashSink = R"doc()doc";
+
+static const char *__doc_XXHashSink_hash = R"doc()doc";
+
+static const char *__doc_XXHashSink_hash_state = R"doc()doc";
+
+static const char *__doc_XXHashSink_write = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
