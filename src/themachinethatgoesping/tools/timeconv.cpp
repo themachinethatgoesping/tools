@@ -36,7 +36,7 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint)
     std::chrono::microseconds us =
         std::chrono::duration_cast<std::chrono::microseconds>(TimePoint.time_since_epoch());
 
-    auto timeUSec = static_cast<unsigned uint64_t>(us.count());
+    auto timeUSec = static_cast<uint64_t>(us.count());
     return ((double)timeUSec) / 1000000.0;
 }
 
