@@ -57,6 +57,8 @@ Parameter ``Y``:
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_binary_hash = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_binary = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_stream = R"doc()doc";
@@ -86,7 +88,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Neares
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_printer = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_slow_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_binary = R"doc()doc";
 
