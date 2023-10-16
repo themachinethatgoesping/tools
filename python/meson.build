@@ -4,8 +4,8 @@
 
 # -- python sources --
 sources = [
-    'themachinethatgoesping/tools_ext/__init__.py',
-    'themachinethatgoesping/tools_ext/timeconv_ext.py',
+    'themachinethatgoesping/tools/__init__.py',
+    'themachinethatgoesping/tools/timeconv.py',
 
     'themachinethatgoesping/scripts/oceanographic.py',
     'themachinethatgoesping/scripts/plot_tools.py',

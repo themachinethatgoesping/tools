@@ -2,14 +2,14 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-from themachinethatgoesping.tools_ext import timeconv
+from themachinethatgoesping.tools import timeconv
 
 from datetime import datetime
 
 # import time
 # import pytest
 
-# This tests the python extensions in tools_ext (timeconv_ext)
+# This tests the python extensions in tools (timeconv_ext)
 
 # define class for grouping (test sections)
 
