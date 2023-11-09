@@ -1,14 +1,8 @@
-#[wrap-file]
-#directory = xsimd-9.0.1
-#source_url = https://github.com/xtensor-stack/xsimd/archive/refs/tags/9.0.1.tar.gz
-#source_filename = xsimd-9.0.1.tar.gz
-#source_hash = b1bb5f92167fd3a4f25749db0be7e61ed37e0a5d943490f3accdcd2cd2918cc0
-
 [wrap-file]
-directory = xsimd-11.1.0
-source_url = https://github.com/xtensor-stack/xsimd/archive/refs/tags/11.1.0.tar.gz
-source_filename = xsimd-11.1.0.tar.gz
-source_hash = aa54dba8daade472656eba0d27154f072fec06ee3831aefcac69a5f6c7dbbae7
+directory = xsimd-11.2.0
+source_url = https://github.com/xtensor-stack/xsimd/archive/refs/tags/11.2.0.tar.gz
+source_filename = xsimd-11.2.0.tar.gz
+source_hash = 509bbfe12e78ee1a0e81711019e7c7a372dabcff566dbf15b95cc94339443242
 
 #[wrap-git]
 #url = https://github.com/xtensor-stack/xsimd.git
