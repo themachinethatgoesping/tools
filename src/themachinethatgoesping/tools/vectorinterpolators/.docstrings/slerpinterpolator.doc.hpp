@@ -125,6 +125,8 @@ Parameter ``ypr``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_binary_hash = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_extend =
 R"doc(append data with lists of x, yaw, pitch, roll data (vectorized call)
 
@@ -275,7 +277,7 @@ Parameter ``roll``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_slow_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary = R"doc()doc";
 

@@ -44,6 +44,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator_2 = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_binary_hash = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_binary = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_stream = R"doc()doc";
@@ -73,7 +75,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_printer = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_slow_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_to_binary = R"doc()doc";
 

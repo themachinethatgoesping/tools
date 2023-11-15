@@ -72,6 +72,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
@@ -141,7 +143,7 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_slow_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary = R"doc()doc";
 

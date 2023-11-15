@@ -86,6 +86,8 @@ R"doc(Append the fields of an existing object printer
 Parameter ``printer``:
     printer to be appended)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_binary_hash = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_create_str =
 R"doc(Create an info_string from the registered values/sections
 
@@ -209,7 +211,7 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing

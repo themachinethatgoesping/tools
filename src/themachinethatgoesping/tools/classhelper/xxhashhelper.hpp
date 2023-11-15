@@ -79,14 +79,3 @@ class XXHashSink : public boost::iostreams::sink
     {                                                                                              \
         return xxh::xxhash3<64>(this->to_binary());                                                \
     }
-
-// // inject object.hash() into namespace std
-//   template <> struct std::hash<>
-//   {
-//     size_t
-//     operator()(themachinethatgoesping::echosounders::simrad::datagrams::xml_datagrams::XML_Parameter_Channel
-//     & arg) const
-//     {
-//         return arg.binary_hash();
-//     }
-//   };
