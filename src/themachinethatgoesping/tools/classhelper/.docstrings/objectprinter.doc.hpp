@@ -1,4 +1,4 @@
-//sourcehash: 5ef5adf85401ee8342d9c02f856cd50df61b17a9d1e8b27ad29252de1a7ea7e4
+//sourcehash: 21ac1b502975a84923873a6e55da4615dd15a1bdaab0f43c479a8c4b9771e5f7
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -88,6 +88,12 @@ Parameter ``printer``:
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_binary_hash = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_class_name =
+R"doc(Get the registered name of the object
+
+Returns:
+    std::string)doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_create_str =
 R"doc(Create an info_string from the registered values/sections
 
@@ -103,12 +109,6 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_binary = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_get_name =
-R"doc(Get the registered name of the object
-
-Returns:
-    std::string)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string = R"doc()doc";
 

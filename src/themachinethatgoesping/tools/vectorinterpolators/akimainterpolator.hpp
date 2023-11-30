@@ -400,7 +400,7 @@ class AkimaInterpolator : public I_Interpolator<double>
 
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
-        classhelper::ObjectPrinter printer(this->get_name(), float_precision);
+        classhelper::ObjectPrinter printer(this->class_name(), float_precision);
 
         printer.register_enum("extr_mode", _extr_mode);
         printer.register_section("data lists");

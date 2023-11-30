@@ -716,7 +716,7 @@ class ObjectPrinter
      *
      * @return std::string
      */
-    std::string get_name() const { return _name; }
+    std::string class_name() const { return _name; }
 
     /**
      * @brief Create an info_string from the registered values/sections

@@ -3,8 +3,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-
-
 #include <pybind11/stl.h>
 
 #include <sstream>
@@ -28,9 +26,9 @@ void init_c_objectprinter(pybind11::module& m)
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),
              py::arg("name"),
              py::arg("float_precission"))
-        .def("get_name",
-             &ObjectPrinter::get_name,
-             DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, get_name))
+        .def("class_name",
+             &ObjectPrinter::class_name,
+             DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, class_name))
         .def("create_str",
              &ObjectPrinter::create_str,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, create_str))

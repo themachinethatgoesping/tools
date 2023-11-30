@@ -81,7 +81,7 @@ class I_Interpolator
      *
      * @return std::string_view
      */
-    std::string_view get_name() const { return _name; }
+    std::string_view class_name() const { return _name; }
 
     /**
      * @brief change the input data to these X and Y vectors

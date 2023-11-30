@@ -1,4 +1,4 @@
-//sourcehash: 4898b28f0a841a8580f9a4870a778ebcde5ac588c1d9e9e3a08c0ac00a6887e9
+//sourcehash: d10755fc9deda8b22dcbf62a05935f421ea58e304e0e93891b1ccfe556301a7d
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -67,6 +67,12 @@ Parameter ``y``:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_class_name =
+R"doc(Get the interpolator name (for debugging)
+
+Returns:
+    std::string_view)doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
 R"doc(append x and y value lists to the interpolator data (vectorized call)
 Exception: raises domain error, strong exception guarantee
@@ -99,12 +105,6 @@ Returns:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_name =
-R"doc(Get the interpolator name (for debugging)
-
-Returns:
-    std::string_view)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string = R"doc()doc";
 

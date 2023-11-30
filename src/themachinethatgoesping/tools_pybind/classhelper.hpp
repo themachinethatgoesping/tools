@@ -87,7 +87,7 @@
         "Return object information as string")                                                     \
         .def(                                                                                      \
             "__repr__",                                                                            \
-            [](T_CLASS& self) { return self.__printer__(2).get_name(); },                          \
+            [](T_CLASS& self) { return self.__printer__(2).class_name(); },                          \
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
