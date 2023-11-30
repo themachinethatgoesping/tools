@@ -13,7 +13,7 @@ json_dep = dependency('nlohmann_json',
 xsimd_dep = dependency('xsimd',
     #required: get_option('xsimd'),
     required: true,
-    version: ['>=10.0.0']
+    version: ['>=12.0.0']
     )
 
 
