@@ -1,8 +1,8 @@
 [wrap-file]
-directory = xtl-0.7.5
-source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.7.5.tar.gz
-source_filename = xtl-0.7.5.tar.gz
-source_hash = 3286fef5fee5d58f82f7b91375cd449c819848584bae9367893501114d923cbe
+directory = xtl-0.7.6
+source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.7.6.tar.gz
+source_filename = xtl-0.7.6.tar.gz
+source_hash = dda442dc81f390f77561913062471c39b6ef19ffc6f64d3cd12b5c4b4607c957
 patch_directory = xtl
 
 [provide]
