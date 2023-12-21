@@ -38,6 +38,42 @@
 #endif
 
 
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector =
+R"doc(---- untested ////
+
+get_quaternion_from_vector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``x:``:
+    x as double or float
+
+Parameter ``y:``:
+    y as double or float
+
+Parameter ``z:``:
+    z as double or float
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector_2 =
+R"doc(get_quaternion_from_vector: creates a Quaternion that holds the passed
+parameters x,y,z as a Vector
+
+Parameter ``xyz:``:
+    x, y, z as Array<floattype, 3>
+
+Parameter ``w:``:
+    w as double or float with the default value 0.0
+
+Returns:
+    returns the Quaternion that holds a vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr =
 R"doc(create an eigen quaternion by rotating yaw (z axis), pitch (y axis)
 and roll (x axis)
@@ -74,6 +110,20 @@ Parameter ``input_in_degrees``:
 
 Returns:
     Eigen::Quaternion<floattype>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion =
+R"doc(Convert quaternions to yaw, pitch and roll values (vectorized call)
+
+Template parameter ``floattype``:
+    $Parameter ``Q``:
+
+vector of quaternions
+
+Parameter ``output_to_degrees``:
+    if true, yaw pitch and roll input values are in ° otherwise rad
+
+Returns:
+    std::vector<std::array<floattype, 3>>)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

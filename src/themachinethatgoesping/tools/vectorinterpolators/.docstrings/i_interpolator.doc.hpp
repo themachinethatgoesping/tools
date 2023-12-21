@@ -106,7 +106,14 @@ Returns:
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_insert =
 R"doc(append x and y value lists to the interpolator data (vectorized call)
@@ -145,7 +152,14 @@ Parameter ``targets_x``:
 Returns:
     corresponding y value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_printer =
 R"doc(return a printer object

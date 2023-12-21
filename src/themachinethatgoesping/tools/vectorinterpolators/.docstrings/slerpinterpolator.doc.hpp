@@ -125,7 +125,10 @@ Parameter ``ypr``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_extend =
 R"doc(append data with lists of x, yaw, pitch, roll data (vectorized call)
@@ -161,7 +164,14 @@ Parameter ``ypr``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_stream = R"doc()doc";
 
@@ -174,7 +184,14 @@ Parameter ``output_in_degrees``:
 Returns:
     std::vector<std::array<3, double>> YPR)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_insert =
 R"doc(append data with lists of x, yaw, pitch, roll data (vectorized call)
@@ -229,7 +246,14 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_ne = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
 
@@ -277,9 +301,19 @@ Parameter ``roll``:
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_stream = R"doc()doc";
 

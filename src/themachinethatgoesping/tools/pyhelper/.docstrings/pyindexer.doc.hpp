@@ -110,21 +110,48 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_S
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_Slice_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_from_stream = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_operator_eq = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_printer = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_start = R"doc(< the start index of the slice (None if not sliced))doc";
 
@@ -134,7 +161,14 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_s
 R"doc(< the stop index of the slice (None if not sliced) < (stop is
 exclusive))doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_to_stream = R"doc()doc";
 
@@ -144,7 +178,10 @@ R"doc(Get the begin iterator (for range-based for loops)
 Returns:
     PyRangeIterator)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_end =
 R"doc(Get the stop iterator (for range-based for loops)
@@ -152,7 +189,14 @@ R"doc(Get the stop iterator (for range-based for loops)
 Returns:
     PyRangeIterator)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_from_stream =
 R"doc(Return a PyIndexer read from a binary stream
@@ -176,7 +220,14 @@ R"doc(< the stop index of the slice (_vector_size if not sliced) < (stop is
 exclusive) (long because can be negative under some < circumstances
 (see below) this index is used for out of bounds)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_is_slice = R"doc(< is this a slice?)doc";
 
@@ -191,7 +242,14 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_operator_eq = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_printer =
 R"doc(Print function, needs __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__ macro
@@ -261,9 +319,19 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_size = 
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slice_size = R"doc(< the size of the slice (_vector_size if not sliced))doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_slice = R"doc()doc";
 

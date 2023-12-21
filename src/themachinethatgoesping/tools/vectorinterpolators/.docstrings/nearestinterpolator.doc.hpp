@@ -57,13 +57,30 @@ Parameter ``Y``:
 Parameter ``extrapolation_mode``:
     extrapolation mode (nearest or fail))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_stream = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_interpolate_pair =
 R"doc(Interpolate interpolation between two values
@@ -84,13 +101,30 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Neares
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_operator_ne = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_printer = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_stream = R"doc()doc";
 

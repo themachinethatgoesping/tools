@@ -86,7 +86,10 @@ R"doc(Append the fields of an existing object printer
 Parameter ``printer``:
     printer to be appended)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_class_name =
 R"doc(Get the registered name of the object
@@ -106,15 +109,36 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_float_precision = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_from_stream = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(< name of the class that is to be printed)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_printer = R"doc()doc";
 
@@ -211,7 +235,10 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing
@@ -227,7 +254,14 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(< double or integer)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_to_stream = R"doc()doc";
 

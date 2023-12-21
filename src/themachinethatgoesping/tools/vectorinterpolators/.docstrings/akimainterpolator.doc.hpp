@@ -72,13 +72,23 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the \ to_binary
+function of the object is used)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``check_buffer_is_read_completely``:
+    variable for interface compatibility, does not do \ anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_stream = R"doc()doc";
 
@@ -94,7 +104,14 @@ R"doc(return the y component of the internal data vector
 Returns:
     std::vector<YType>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_info_string = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_info_string =
+R"doc(\ return an info string using the class __printer__ object \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \
+
+Returns:
+    std::string \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
 R"doc(internal function to initialize the linear extrapolation objects _X,
@@ -130,7 +147,14 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_ne = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_print = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_print =
+R"doc(\ print the object information to the given outpustream \ \
+
+Parameter ``os``:
+    output stream, e.g. file stream or std::out or std::cerr \
+
+Parameter ``float_precision``:
+    number of digits for floating point values \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_printer = R"doc()doc";
 
@@ -143,9 +167,19 @@ Parameter ``X:``:
 Parameter ``Y:``:
     y vector (must be same size))doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_slow_hash = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_slow_hash =
+R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
+function. This function is called binary because the to_binary
+function creates \ a copy)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary =
+R"doc(convert object to vector of bytes \ \
+
+Parameter ``resize_buffer``:
+    variable for interface compatibility, does not do anything \ \
+
+Returns:
+    vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_stream = R"doc()doc";
 
