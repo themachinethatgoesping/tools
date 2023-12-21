@@ -8,7 +8,7 @@ This module extends the tools.timeconv with some functions implemented in pure p
 """
 
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, timezone
 
 # import c++ module
 from themachinethatgoesping.tools_cppy.timeconv import *  # # flake8: noqa
@@ -70,4 +70,4 @@ def datestring_to_datetime(
     datetime
         python datetime object
     """
-    return datetime.fromtimestamp(datestring_to_unixtime(datestring, format=format))
+    return datetime.fromtimestamp(datestring_to_unixtime(datestring, format=format), tz=timezone.utc)

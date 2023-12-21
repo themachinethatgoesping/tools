@@ -4,7 +4,7 @@
 
 from themachinethatgoesping.tools import timeconv
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 # import time
 # import pytest
@@ -18,7 +18,7 @@ class Test_tools_timeconv_ext:
     # define actual tests (must start with "test_"
     # test case 1
     def test_datetime_to_datestring_should_be_reversible(self):
-        dt = datetime.now()
+        dt = datetime.now(timezone.utc)
 
         assert (
             timeconv.datestring_to_datetime(

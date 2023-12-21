@@ -13,6 +13,7 @@ sources = [
 headers = [
   'classhelper.hpp',
   'enumhelper.hpp',
+  'datetime.hpp',
 ]
 
 # -- targets --

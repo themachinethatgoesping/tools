@@ -19,8 +19,11 @@
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 
+#include "../themachinethatgoesping/tools_pybind/datetime.hpp"
+
 namespace py        = pybind11;
 namespace pingtools = themachinethatgoesping::tools;
+namespace pypingtools = pingtools::pybind_helper;
 
 void init_m_timeconv(py::module& m)
 {
@@ -57,4 +60,15 @@ void init_m_timeconv(py::module& m)
                    py::arg("unixtime"),
                    py::arg("fractionalSecondsDigits") = 0,
                    py::arg("format")                  = "%z__%d-%m-%Y__%H:%M:%S");
+
+    m_timeconv.def("unixtime_to_datetime",
+                   &pypingtools::unixtime_to_datetime,
+                   DOC(themachinethatgoesping, tools, pybind_helper, unixtime_to_datetime),
+                   py::arg("unixtime"),
+                   py::arg("timezone_offset_hours") = 0.);
+
+    m_timeconv.def("datetime_to_unixtime",
+                   &pypingtools::datetime_to_unixtime,
+                   DOC(themachinethatgoesping, tools, pybind_helper, datetime_to_unixtime),
+                   py::arg("datetime"));
 }
