@@ -1,4 +1,4 @@
-//sourcehash: 1548241a49e4a967ed3750bb5530f2c154f3c2ec0efd704313978e0cda40ba90
+//sourcehash: eb7c5ff83f7bcd90f2225fccde31361d11bb7bdedcb7e133f54b1a24b91b6c42
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,9 +38,26 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_pybind_helper_datetime_to_unixtime = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_pybind_helper_datetime_to_unixtime =
+R"doc(Converts a Python datetime object to a Unix timestamp.
 
-static const char *__doc_themachinethatgoesping_tools_pybind_helper_unixtime_to_datetime = R"doc()doc";
+Parameter ``datetimeObject``:
+    The Python datetime object to convert.
+
+Returns:
+    The Unix timestamp representing the given datetime.)doc";
+
+static const char *__doc_themachinethatgoesping_tools_pybind_helper_unixtime_to_datetime =
+R"doc(Converts a Unix timestamp to a Python datetime object.
+
+Parameter ``timestamp``:
+    The Unix timestamp to convert.
+
+Parameter ``timezone_offset_hours``:
+    The timezone offset in hours (default: 0).
+
+Returns:
+    The Python datetime object representing the given timestamp.)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

@@ -26,7 +26,15 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace pybind_helper {
 
-pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.)
+
+/**
+ * @brief Converts a Unix timestamp to a Python datetime object.
+ *
+ * @param timestamp The Unix timestamp to convert.
+ * @param timezone_offset_hours The timezone offset in hours (default: 0).
+ * @return The Python datetime object representing the given timestamp.
+ */
+inline pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.)
 {
     namespace py = pybind11;
 
@@ -41,7 +49,13 @@ pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_h
     return datetimeObject;
 }
 
-double datetime_to_unixtime(const pybind11::handle& datetimeObject)
+/**
+ * @brief Converts a Python datetime object to a Unix timestamp.
+ *
+ * @param datetimeObject The Python datetime object to convert.
+ * @return The Unix timestamp representing the given datetime.
+ */
+inline double datetime_to_unixtime(const pybind11::handle& datetimeObject)
 {
     return pybind11::cast<double>(datetimeObject.attr("timestamp")());
 }
