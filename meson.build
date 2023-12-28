@@ -20,8 +20,9 @@ projectnamespace = 'themachinethatgoesping'
 
 # system
 if meson.get_compiler('cpp').get_id() == 'clang-cl'
-  omp = meson.get_compiler('cpp').find_library('omp')
-  omp_dep = declare_dependency(link_with: omp)
+  # omp = meson.get_compiler('cpp').find_library('omp')
+  # omp_dep = declare_dependency(link_with: omp)
+  omp_dep = dependency('openmp')
 else
   omp_dep = dependency('openmp')
 endif
