@@ -23,8 +23,8 @@ if meson.get_compiler('cpp').get_id() == 'clang-cl'
   omp = dependency('openmp')
   libomp = meson.get_compiler('cpp').find_library('libomp')
   omp_dep = declare_dependency(
-  dependencies : [omp],
-  link_with : [libomp]
+  dependencies : [omp, libomp],
+  #link_with : [libomp]
   )
 else
   omp_dep = dependency('openmp')
