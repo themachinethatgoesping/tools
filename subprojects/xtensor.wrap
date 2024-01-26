@@ -1,8 +1,8 @@
 [wrap-file]
-directory = xtensor-0.24.7
-source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.24.7.tar.gz
-source_filename = xtensor-0.24.7.tar.gz
-source_hash = 0fbbd524dde2199b731b6af99b16063780de6cf1d0d6cb1f3f4d4ceb318f3106
+directory = xtensor-0.25.0
+source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.25.0.tar.gz
+source_filename = xtensor-0.25.0.tar.gz
+source_hash = 32d5d9fd23998c57e746c375a544edf544b74f0a18ad6bc3c38cbba968d5e6c7
 patch_directory = xtensor
 
 [provide]
