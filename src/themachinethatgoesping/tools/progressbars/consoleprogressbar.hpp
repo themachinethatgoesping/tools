@@ -33,7 +33,7 @@ class ConsoleProgressBar : public I_ProgressBarTimed
 
     const unsigned int _numOf_steps = 50; ///< steps till 100% (equals linesize)
 
-    bool _initialized = false; ///< flag to control if the progressbar is initialized
+    bool _is_initialized = false; ///< flag to control if the progressbar is is_initialized
 
   public:
     ConsoleProgressBar(std::ostream& os = std::cout)
@@ -45,11 +45,11 @@ class ConsoleProgressBar : public I_ProgressBarTimed
     // ----- I_ProgressBarTimed interface -----
     void callback_init(double first, double last, const std::string& name = "process") override
     {
-        /* check if _initialized already */
-        if (_initialized)
+        /* check if is_nitialized already */
+        if (_is_initialized)
             I_ProgressBarTimed::close();
         // throw(std::runtime_error("ERROR[ConsoleProgressBar]: Can't start StatusBar! StatusBar "
-        //                          "is already _initialized!"));
+        //                          "is already _is_initialized!"));
 
         /* check conditions */
         if (first > last)
@@ -59,7 +59,7 @@ class ConsoleProgressBar : public I_ProgressBarTimed
         _first       = first;
         _last        = last;
         _current     = first;
-        _initialized = true;
+        _is_initialized = true;
         _currentStep = 0;
 
         std::string out;
@@ -77,27 +77,27 @@ class ConsoleProgressBar : public I_ProgressBarTimed
 
     void callback_close(const std::string& msg = "done") override
     {
-        /* check if _initialized already */
-        if (!_initialized)
+        /* check if _is_initialized already */
+        if (!_is_initialized)
             throw(
                 std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::last))]: Can't "
-                                   "stop StatusBar! StatusBar is not _initialized yet!"));
+                                   "stop StatusBar! StatusBar is not _is_initialized yet!"));
 
         for (unsigned int i = 1; i < _numOf_steps - _currentStep; i++)
             _os << "\\" << std::flush;
 
         _os << "| [ " << msg << " ]" << std::endl;
 
-        _initialized = false;
+        _is_initialized = false;
     }
 
     void callback_set_progress(double new_progress) override
     {
-        /* check if _initialized already */
-        if (!_initialized)
+        /* check if _is_initialized already */
+        if (!_is_initialized)
             throw(
                 std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update))]: Not "
-                                   "possible to call update! StatusBar is not _initialized yet!"));
+                                   "possible to call update! StatusBar is not _is_initialized yet!"));
 
         if (new_progress < _current)
             // throw(std::runtime_error("ERROR[DSMToolsLib::Status::ConsoleProgressBar::update]: new

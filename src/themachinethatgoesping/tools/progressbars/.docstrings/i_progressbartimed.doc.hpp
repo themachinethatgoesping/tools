@@ -1,4 +1,4 @@
-//sourcehash: 6197a6129fb0018cd3204a20fe3341241bf60c6c1acfd00c4bffa1966df7d2cf
+//sourcehash: 7751e3b6c9c3ad3f94cfe9d3d61512a4eed38a01094ecfd049e023ce9493e9c2
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -153,9 +153,9 @@ Parameter ``last``:
 Parameter ``process_name``:
     Name of the progress)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_initialized = R"doc()doc";
-
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_max_skips = R"doc()doc";
 

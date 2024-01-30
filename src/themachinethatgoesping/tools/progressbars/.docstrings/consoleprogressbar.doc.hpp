@@ -1,4 +1,4 @@
-//sourcehash: f8d7d0d207cbcac28741886879117831cf297c31f96dd7ff6a92d21fc826fcdd
+//sourcehash: 173777c44cce0e0c9d8c00bed0a52631e8a089676f58c5b2b83e80539d2dad16
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -67,7 +67,7 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgre
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_first = R"doc(< starting value)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_initialized = R"doc(< flag to control if the progressbar is initialized)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_is_initialized = R"doc(< flag to control if the progressbar is is_initialized)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ConsoleProgressBar_last = R"doc(< ending value)doc";
 

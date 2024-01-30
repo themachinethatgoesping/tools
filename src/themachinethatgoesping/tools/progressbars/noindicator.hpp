@@ -20,23 +20,23 @@ namespace progressbars {
  */
 class NoIndicator : public I_ProgressBar
 {
-    bool _initialized = false;
+    bool _is_initialized = false;
 
   public:
     NoIndicator() = default;
 
     // ----- I_ProgressBar interface -----
     // (all functions simply do nothing)
-    bool is_initialized() const override { return _initialized; }
+    bool is_initialized() const override { return _is_initialized; }
 
     void init([[maybe_unused]] double             first,
               [[maybe_unused]] double             last,
               [[maybe_unused]] const std::string& name = "process") override
     {
-        _initialized = true;
+        _is_initialized = true;
     }
 
-    void close([[maybe_unused]] const std::string& msg = "done") override { _initialized = false; }
+    void close([[maybe_unused]] const std::string& msg = "done") override { _is_initialized = false; }
 
     void set_progress([[maybe_unused]] double new_progress) override {}
     void set_postfix([[maybe_unused]] const std::string& postfix) override{};
