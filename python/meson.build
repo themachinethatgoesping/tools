@@ -4,15 +4,15 @@
 
 # -- python sources --
 sources = [
-    'themachinethatgoesping/tools/__init__.py',
-    'themachinethatgoesping/tools/timeconv.py',
+  'themachinethatgoesping/tools/__init__.py',
+  'themachinethatgoesping/tools/timeconv.py',
 
-    'themachinethatgoesping/scripts/__init__.py',
-    'themachinethatgoesping/scripts/oceanographic.py',
-    'themachinethatgoesping/scripts/plot_tools.py',
-    'themachinethatgoesping/scripts/read_xcf.py',
-    'themachinethatgoesping/scripts/sbes.py',
-    'themachinethatgoesping/scripts/mbes.py',
+  'themachinethatgoesping/scripts/__init__.py',
+  'themachinethatgoesping/scripts/mbes.py',
+  'themachinethatgoesping/scripts/oceanographic.py',
+  'themachinethatgoesping/scripts/plot_tools.py',
+  'themachinethatgoesping/scripts/read_xcf.py',
+  'themachinethatgoesping/scripts/sbes.py',
 ]
 
 init_configuration = configuration_data({
