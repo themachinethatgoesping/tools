@@ -6,7 +6,6 @@
 sources = [
   'themachinethatgoesping/tools/__init__.py',
   'themachinethatgoesping/tools/timeconv.py',
-
   'themachinethatgoesping/scripts/__init__.py',
   'themachinethatgoesping/scripts/mbes.py',
   'themachinethatgoesping/scripts/oceanographic.py',

@@ -7,19 +7,19 @@ module_name = 'tools_cppy'
         
 # -- sources
 sources = [
-    'module.cpp',
-    'm_timeconv.cpp',
-    'm_helper.cpp',
-    'm_progressbars.cpp',
-    'vectorinterpolators/module.cpp',
-    'vectorinterpolators/c_nearestinterpolator.cpp',
-    'vectorinterpolators/c_linearinterpolator.cpp',
-    'vectorinterpolators/c_akimainterpolator.cpp',
-    'vectorinterpolators/c_slerpinterpolator.cpp',
-    'classhelper/module.cpp',
-    'classhelper/c_objectprinter.cpp',
-    'pyhelper/module.cpp',
-    'pyhelper/c_pyindexer.cpp'
+  'm_helper.cpp',
+  'm_progressbars.cpp',
+  'm_timeconv.cpp',
+  'module.cpp',
+  'classhelper/c_objectprinter.cpp',
+  'classhelper/module.cpp',
+  'vectorinterpolators/c_akimainterpolator.cpp',
+  'vectorinterpolators/c_linearinterpolator.cpp',
+  'vectorinterpolators/c_nearestinterpolator.cpp',
+  'vectorinterpolators/c_slerpinterpolator.cpp',
+  'vectorinterpolators/module.cpp',
+  'pyhelper/c_pyindexer.cpp',
+  'pyhelper/module.cpp',
 ]
 
 # define python module

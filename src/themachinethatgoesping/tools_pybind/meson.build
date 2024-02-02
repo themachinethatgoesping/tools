@@ -12,8 +12,12 @@ sources = [
 
 headers = [
   'classhelper.hpp',
-  'enumhelper.hpp',
   'datetime.hpp',
+  'enumhelper.hpp',
+  '.docstrings/classhelper.doc.hpp',
+  '.docstrings/datetime.doc.hpp',
+  '.docstrings/enumhelper.doc.hpp',
+  'pch/pch.hpp',
 ]
 
 # -- targets --

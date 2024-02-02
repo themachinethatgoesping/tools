@@ -7,17 +7,17 @@
 testcomponent = 'tools'
 
 sources = [
-    'tutorial.test.cpp',
-    'timeconv.test.cpp',
-    'pyhelper/pyindexer.test.cpp',
-    'helper/defaultsharedpointermap.test.cpp',
-    'rotationfunctions/helper.test.cpp',
-    'rotationfunctions/quaternions.test.cpp',
-    'vectorinterpolators/common.test.cpp',
-    'vectorinterpolators/nearest.test.cpp',
-    'vectorinterpolators/linear.test.cpp',
-    'vectorinterpolators/akima.test.cpp',
-    'vectorinterpolators/slerp.test.cpp'
+  'timeconv.test.cpp',
+  'tutorial.test.cpp',
+  'vectorinterpolators/akima.test.cpp',
+  'vectorinterpolators/common.test.cpp',
+  'vectorinterpolators/linear.test.cpp',
+  'vectorinterpolators/nearest.test.cpp',
+  'vectorinterpolators/slerp.test.cpp',
+  'rotationfunctions/helper.test.cpp',
+  'rotationfunctions/quaternions.test.cpp',
+  'pyhelper/pyindexer.test.cpp',
+  'helper/defaultsharedpointermap.test.cpp',
 ]
 
 foreach source : sources
