@@ -422,6 +422,27 @@ class ObjectPrinter
     }
 
     /**
+     * @brief register a single integer of floating point value for printing
+     * The value is assumed to be in bytes. It will be converted to bytes, KB, MB, GB
+     *
+     * @param name name of the variable
+     * @param value value of the variable in bytes
+     * @param pos position where the value is registers (if negative, the value is appended)
+     */
+    void register_value_bytes(const std::string& name, size_t value, int pos = -1)
+    {
+
+        if (value < 1024)
+            register_value(name, value, "bytes", pos);
+        else if (value < 1024 * 1024)
+            register_value(name, double(value) / 1024., "KB", pos);
+        else if (value < 1024 * 1024 * 1024)
+            register_value(name, double(value) / 1024. / 1024., "MB", pos);
+        else
+            register_value(name, double(value) / 1024. / 1024. / 1024., "GB", pos);
+    }
+
+    /**
      * @brief register a 1D container for printing
      *
      * @tparam t_value integer or floating point
@@ -565,8 +586,7 @@ class ObjectPrinter
                         std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
                         auto median = (v[n_2] + v[n_2 + 1]) / 2;
                         line_ref.back() +=
-                            fmt::vformat("| Median: " + format,
-                                         fmt::make_format_args(median));
+                            fmt::vformat("| Median: " + format, fmt::make_format_args(median));
                     }
                     else
                     {

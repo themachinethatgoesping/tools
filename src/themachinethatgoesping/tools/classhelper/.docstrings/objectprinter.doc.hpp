@@ -1,4 +1,4 @@
-//sourcehash: 21ac1b502975a84923873a6e55da4615dd15a1bdaab0f43c479a8c4b9771e5f7
+//sourcehash: 048241da6fe8441a95df757711f56cd4084ccc80ab52a305db6bab7e13070a99
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -226,6 +226,21 @@ Parameter ``value``:
 
 Parameter ``value_info``:
     additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_value_bytes =
+R"doc(register a single integer of floating point value for printing The
+value is assumed to be in bytes. It will be converted to bytes, KB,
+MB, GB
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable in bytes
 
 Parameter ``pos``:
     position where the value is registers (if negative, the value is
