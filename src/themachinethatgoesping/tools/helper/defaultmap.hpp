@@ -15,6 +15,8 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
 
+    
+
 template<typename t_key, typename t_value>
 class DefaultMap : public std::map<t_key, t_value>
 {
