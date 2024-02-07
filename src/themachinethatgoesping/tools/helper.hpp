@@ -42,7 +42,7 @@ decltype(auto) visit_variant(Variant&& variant, Alternatives&&... alternatives)
 // source https://stackoverflow.com/a/33799784
 // map get with default
 template<template<class, class, class...> class C, typename K, typename V, typename... Args>
-V get_with_default(const C<K, V, Args...>& m, K const& key, const V& defval)
+V get_from_map_with_default(const C<K, V, Args...>& m, K const& key, const V& defval)
 {
     typename C<K, V, Args...>::const_iterator it = m.find(key);
     if (it == m.end())
