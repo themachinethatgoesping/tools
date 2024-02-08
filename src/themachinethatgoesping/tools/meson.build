@@ -17,6 +17,8 @@ headers = [
   'progressbars.hpp',
   'timeconv.hpp',
   'vectorinterpolators.hpp',
+  'exceptions/version_error.hpp',
+  'exceptions/.docstrings/version_error.doc.hpp',
   'classhelper/objectprinter.hpp',
   'classhelper/stream.hpp',
   'classhelper/xxhashhelper.hpp',
