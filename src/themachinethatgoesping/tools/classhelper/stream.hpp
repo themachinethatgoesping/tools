@@ -20,6 +20,8 @@
 #include <set>
 #include <sstream>
 
+#include "../helper/isviewstream.hpp"
+
 #define __STREAM_DEFAULT_TO_BINARY__                                                               \
     /** @brief convert object to vector of bytes                                                   \
      *                                                                                             \
@@ -61,7 +63,7 @@
     static T_CLASS from_binary(std::string_view      buffer,                                       \
                                [[maybe_unused]] bool check_buffer_is_read_completely = false)      \
     {                                                                                              \
-        std::stringstream buffer_stream{ std::string(buffer) };                                    \
+        themachinethatgoesping::tools::helper::isviewstream buffer_stream{ buffer };               \
                                                                                                    \
         return from_stream(buffer_stream);                                                         \
     };

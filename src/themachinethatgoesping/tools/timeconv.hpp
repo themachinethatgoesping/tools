@@ -68,7 +68,7 @@ double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_s
         https://themachinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.html#format-string
  * @return unixtime as double (seconds since 01.01.1970)
  */
-double datestring_to_unixtime(const std::string& DateString,
+double datestring_to_unixtime(std::string_view   DateString,
                               const std::string& format = "%z__%d-%m-%Y__%H:%M:%S");
 
 /**

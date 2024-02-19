@@ -49,11 +49,13 @@ double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_s
     return tools::timeconv::timepoint_to_unixtime(tp);
 }
 
-double datestring_to_unixtime(const std::string& DateString, const std::string& format)
+double datestring_to_unixtime(std::string_view DateString, const std::string& format)
 {
     date::sys_time<std::chrono::microseconds> timePoint;
 
-    std::stringstream(DateString) >> date::parse(format, timePoint);
+    helper::isviewstream is {DateString};
+
+    is >> date::parse(format, timePoint);
 
     return timepoint_to_unixtime(timePoint);
 }

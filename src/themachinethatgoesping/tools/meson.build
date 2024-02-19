@@ -65,8 +65,10 @@ headers = [
   'progressbars/.docstrings/progresstqdm.doc.hpp',
   'helper/defaultmap.hpp',
   'helper/defaultsharedpointermap.hpp',
+  'helper/isviewstream.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
+  'helper/.docstrings/isviewstream.doc.hpp',
 ]
 
 # -- targets --

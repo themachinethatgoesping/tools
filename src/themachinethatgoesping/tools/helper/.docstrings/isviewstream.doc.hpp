@@ -1,4 +1,4 @@
-//sourcehash: 9e5d6ce662235816f6b7e54776df0f3c361089b79d9cb27fa37dbf580d0d163f
+//sourcehash: a919ba2cb70aa9b315c02caec39b75fe8cd05fb559f127a3b1d9218914583951
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,7 +38,7 @@
 #endif
 
 
-static const char *__doc_isviewstream =
+static const char *__doc_themachinethatgoesping_tools_helper_isviewstream =
 R"doc(A std::stringstream analog for string_view. Implements a string_view-
 based input stream based on stackoverflow discussions.
 
@@ -53,9 +53,9 @@ See also:
 See also:
     https://stackoverflow.com/a/46069245)doc";
 
-static const char *__doc_isviewstream_isviewstream = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_isviewstream_isviewstream = R"doc()doc";
 
-static const char *__doc_sviewbuf =
+static const char *__doc_themachinethatgoesping_tools_helper_sviewbuf =
 R"doc(string_view-compatible buffer for reading read-only characters from
 memory. Implements a buffer based on stackoverflow discussions.
 Written to be used via isviewstream.
@@ -70,13 +70,13 @@ See also:
 See also:
     https://stackoverflow.com/a/46069245)doc";
 
-static const char *__doc_sviewbuf_seekoff = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_sviewbuf_seekoff = R"doc()doc";
 
-static const char *__doc_sviewbuf_seekpos = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_sviewbuf_seekpos = R"doc()doc";
 
-static const char *__doc_sviewbuf_sviewbuf = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_sviewbuf_sviewbuf = R"doc()doc";
 
-static const char *__doc_sviewbuf_sviewbuf_2 = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_sviewbuf_sviewbuf_2 = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
