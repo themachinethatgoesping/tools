@@ -14,6 +14,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "helper/isviewstream.hpp"
+
 // using namespace std;
 namespace themachinethatgoesping {
 

@@ -1,4 +1,4 @@
-//sourcehash: 5838f2808fbe1baebe7d5e3ca40ddc833d88a1415a42555895ccd16792cc52ef
+//sourcehash: 9f2879b584e4bfb300551b9ca3ab8460dcc2c30a83d73fcd28eaa700d25d89e4
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -91,6 +91,8 @@ Returns:
     double)doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_visit_variant = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_visit_variant_no_return = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

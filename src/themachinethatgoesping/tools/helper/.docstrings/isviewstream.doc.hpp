@@ -1,4 +1,4 @@
-//sourcehash: 50ca1f81d80eddef1322482837fab54e67ac0a46616214da89494ee8e312a9ff
+//sourcehash: 9e5d6ce662235816f6b7e54776df0f3c361089b79d9cb27fa37dbf580d0d163f
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,37 +38,45 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_container_from_stream = R"doc()doc";
+static const char *__doc_isviewstream =
+R"doc(A std::stringstream analog for string_view. Implements a string_view-
+based input stream based on stackoverflow discussions.
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_container_to_stream = R"doc()doc";
+.. warning::
+    isviewstream does not own memory. If the lifetime of the string
+    ends before this stream, reading from it invokes undefined
+    behavior.
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream = R"doc()doc";
+See also:
+    https://stackoverflow.com/a/13059195
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
+See also:
+    https://stackoverflow.com/a/46069245)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_container_from_stream = R"doc()doc";
+static const char *__doc_isviewstream_isviewstream = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_container_to_stream = R"doc()doc";
+static const char *__doc_sviewbuf =
+R"doc(string_view-compatible buffer for reading read-only characters from
+memory. Implements a buffer based on stackoverflow discussions.
+Written to be used via isviewstream.
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_from_stream = R"doc()doc";
+.. warning::
+    sviewbuf does not own memory. If the lifetime of the string ends
+    before this buffer, reading from it invokes undefined behavior.
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_map_to_stream = R"doc()doc";
+See also:
+    https://stackoverflow.com/a/13059195
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_container_from_stream = R"doc()doc";
+See also:
+    https://stackoverflow.com/a/46069245)doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_container_to_stream = R"doc()doc";
+static const char *__doc_sviewbuf_seekoff = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_from_stream = R"doc()doc";
+static const char *__doc_sviewbuf_seekpos = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_set_from_stream = R"doc()doc";
+static const char *__doc_sviewbuf_sviewbuf = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_set_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_optional_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_set_from_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_classhelper_stream_set_to_stream = R"doc()doc";
+static const char *__doc_sviewbuf_sviewbuf_2 = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

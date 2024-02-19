@@ -39,6 +39,13 @@ decltype(auto) visit_variant(Variant&& variant, Alternatives&&... alternatives)
                       std::forward<Variant>(variant));
 }
 
+template<typename Variant, typename... Alternatives>
+decltype(auto) visit_variant_no_return(Variant&& variant, Alternatives&&... alternatives)
+{
+    std::visit(make_overload{ std::forward<Alternatives>(alternatives)... },
+               std::forward<Variant>(variant));
+}
+
 // source https://stackoverflow.com/a/33799784
 // map get with default
 template<template<class, class, class...> class C, typename K, typename V, typename... Args>

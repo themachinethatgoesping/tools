@@ -58,10 +58,10 @@
      *                                                                                             \
      * @return vector of bytes                                                                     \
      * */                                                                                          \
-    static T_CLASS from_binary(const std::string&    buffer,                                       \
+    static T_CLASS from_binary(std::string_view      buffer,                                       \
                                [[maybe_unused]] bool check_buffer_is_read_completely = false)      \
     {                                                                                              \
-        std::stringstream buffer_stream{ buffer };                                                 \
+        std::stringstream buffer_stream{ std::string(buffer) };                                    \
                                                                                                    \
         return from_stream(buffer_stream);                                                         \
     };
