@@ -63,7 +63,7 @@
     static T_CLASS from_binary(std::string_view      buffer,                                       \
                                [[maybe_unused]] bool check_buffer_is_read_completely = false)      \
     {                                                                                              \
-        themachinethatgoesping::tools::helper::isviewstream buffer_stream{ buffer };               \
+        themachinethatgoesping::tools::helper::isviewstream buffer_stream(buffer);                 \
                                                                                                    \
         return from_stream(buffer_stream);                                                         \
     };

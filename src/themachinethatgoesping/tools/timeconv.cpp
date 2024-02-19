@@ -53,7 +53,7 @@ double datestring_to_unixtime(std::string_view DateString, const std::string& fo
 {
     date::sys_time<std::chrono::microseconds> timePoint;
 
-    helper::isviewstream is {DateString};
+    helper::isviewstream is(DateString);
 
     is >> date::parse(format, timePoint);
 
