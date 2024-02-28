@@ -839,8 +839,17 @@ class ObjectPrinter
                 section_nr += 1;
             }
 
-            str += fmt::format(
-                "\n{:<{}} {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);
+            if (max_len_value[section_nr] + _value_infos[i].size() <= 150)
+            {
+                str += fmt::format(
+                    "\n{:<{}} {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);
+            }
+            else
+            {
+                // put value info in the next line if line with value info is > 150 characters
+                str += fmt::format("\n{:<{}}", str_lines[i], max_len_value[section_nr]);
+                str += fmt::format("\n{:<{}}   {}", "", max_len_field[section_nr], _value_infos[i]);
+            }
 
             for (size_t j = 1; j < _lines[i].size(); ++j)
                 // str += fmt::format("\n  {}", _lines[i][j]);
