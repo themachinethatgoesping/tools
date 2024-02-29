@@ -1,4 +1,4 @@
-//sourcehash: 047ef9561f853e59802018c30dfadceccca51039a070b1f3c9fc85872ba8e441
+//sourcehash: efa1351b8bc729862f840966bee5553a54ac6b75c8a155374a6e734d320121b7
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -74,6 +74,43 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy =
+R"doc(create an eigen quaternion by rotating roll (x axis), pitch (y axis)
+and yaw (z axis)
+
+Template parameter ``floattype``:
+    $Parameter ``rpy``:
+
+array that contains roll, pitch and yaw value
+
+Parameter ``input_in_degrees``:
+    if true, roll, pitch and roll input values are in ° otherwise rad
+
+Returns:
+    Eigen::Quaternion<floattype>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 =
+R"doc(create an eigen quaternion by rotating roll (x axis), pitch (y axis)
+and yaw (z axis)
+
+Template parameter ``floattype``:
+    floating point value
+
+Parameter ``roll``:
+    rotation around x axis [° or rad]
+
+Parameter ``pitch``:
+    rotation around y axis [° or rad]
+
+Parameter ``yaw``:
+    rotation around z axis [° or rad]
+
+Parameter ``input_in_degrees``:
+    if true, roll, pitch and roll input values are in ° otherwise rad
+
+Returns:
+    Eigen::Quaternion<floattype>)doc";
+
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr =
 R"doc(create an eigen quaternion by rotating yaw (z axis), pitch (y axis)
 and roll (x axis)
@@ -84,7 +121,7 @@ Template parameter ``floattype``:
 array that contains yaw, pitch and roll value
 
 Parameter ``input_in_degrees``:
-    if true, yaw pitch and roll input values are in ° otherwise rad
+    if true, yaw, pitch and roll input values are in ° otherwise rad
 
 Returns:
     Eigen::Quaternion<floattype>)doc";
@@ -106,10 +143,24 @@ Parameter ``roll``:
     rotation around x axis [° or rad]
 
 Parameter ``input_in_degrees``:
-    if true, yaw pitch and roll input values are in ° otherwise rad
+    if true, yaw, pitch and roll input values are in ° otherwise rad
 
 Returns:
     Eigen::Quaternion<floattype>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion =
+R"doc(Convert quaternions to roll, pitch and yaw values (vectorized call)
+
+Template parameter ``floattype``:
+    $Parameter ``Q``:
+
+vector of quaternions
+
+Parameter ``output_to_degrees``:
+    if true, roll, pitch and yaw input values are in ° otherwise rad
+
+Returns:
+    std::vector<std::array<floattype, 3>>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion =
 R"doc(Convert quaternions to yaw, pitch and roll values (vectorized call)
@@ -120,7 +171,7 @@ Template parameter ``floattype``:
 vector of quaternions
 
 Parameter ``output_to_degrees``:
-    if true, yaw pitch and roll input values are in ° otherwise rad
+    if true, yaw, pitch and roll input values are in ° otherwise rad
 
 Returns:
     std::vector<std::array<floattype, 3>>)doc";

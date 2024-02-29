@@ -839,7 +839,8 @@ class ObjectPrinter
                 section_nr += 1;
             }
 
-            if (max_len_value[section_nr] + _value_infos[i].size() <= 150)
+            if ((_value_infos[i].size() > 0) &&
+                (max_len_value[section_nr] + _value_infos[i].size() <= 150))
             {
                 str += fmt::format(
                     "\n{:<{}} {}", str_lines[i], max_len_value[section_nr], _value_infos[i]);

@@ -40,7 +40,7 @@ namespace rotationfunctions {
  *
  * @tparam floattype
  * @param ypr array that contains yaw, pitch and roll value
- * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param input_in_degrees if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return Eigen::Quaternion<floattype>
  */
 template<typename floattype>
@@ -77,13 +77,54 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(std::array<floattype, 3> ypr,
 }
 
 /**
+ * @brief create an eigen quaternion by rotating roll (x axis), pitch (y axis) and yaw (z axis)
+ *
+ * @tparam floattype
+ * @param rpy array that contains roll, pitch and yaw value
+ * @param input_in_degrees if true, roll, pitch and roll input values are in ° otherwise rad
+ * @return Eigen::Quaternion<floattype>
+ */
+template<typename floattype>
+Eigen::Quaternion<floattype> quaternion_from_rpy(std::array<floattype, 3> rpy,
+                                                 bool                     input_in_degrees = true)
+{
+    static const floattype _quaternion_from_rpy_to_rad = M_PI / 180.;
+
+    // check if values are valid
+    if (!std::isfinite(rpy[0]) || !std::isfinite(rpy[1]) || !std::isfinite(rpy[2]))
+    {
+        throw std::invalid_argument(
+            "ERROR[quaternion_from_rpy]: NAN or INFINITY yaw, pitch or roll value!");
+    }
+
+    // convert to rad
+    if (input_in_degrees)
+    {
+        rpy[0] *= _quaternion_from_rpy_to_rad;
+        rpy[1] *= _quaternion_from_rpy_to_rad;
+        rpy[2] *= _quaternion_from_rpy_to_rad;
+    }
+
+    // create quaternion by rotating around axes first, yaw, then pitch, then roll
+    Eigen::Quaternion<floattype> q =
+        Eigen::AngleAxis<floattype>(rpy[0], Eigen::Matrix<floattype, 1, 3>::UnitX()) *
+        Eigen::AngleAxis<floattype>(rpy[1], Eigen::Matrix<floattype, 1, 3>::UnitY()) *
+        Eigen::AngleAxis<floattype>(rpy[2], Eigen::Matrix<floattype, 1, 3>::UnitZ());
+
+    // normalize quaternion
+    q.normalize();
+
+    return q;
+}
+
+/**
  * @brief create an eigen quaternion by rotating yaw (z axis), pitch (y axis) and roll (x axis)
  *
  * @tparam floattype floating point value
  * @param yaw rotation around z axis [° or rad]
  * @param pitch rotation around y axis [° or rad]
  * @param roll rotation around x axis [° or rad]
- * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param input_in_degrees if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return Eigen::Quaternion<floattype>
  */
 template<typename floattype>
@@ -98,11 +139,32 @@ Eigen::Quaternion<floattype> quaternion_from_ypr(floattype yaw,
 }
 
 /**
+ * @brief create an eigen quaternion by rotating roll (x axis), pitch (y axis) and yaw (z axis)
+ *
+ * @tparam floattype floating point value
+ * @param roll rotation around x axis [° or rad]
+ * @param pitch rotation around y axis [° or rad]
+ * @param yaw rotation around z axis [° or rad]
+ * @param input_in_degrees if true, roll, pitch and roll input values are in ° otherwise rad
+ * @return Eigen::Quaternion<floattype>
+ */
+template<typename floattype>
+Eigen::Quaternion<floattype> quaternion_from_rpy(floattype roll,
+                                                 floattype pitch,
+                                                 floattype yaw,
+                                                 bool      input_in_degrees = true)
+{
+    std::array<floattype, 3> rpy = { roll, pitch, yaw };
+
+    return quaternion_from_rpy(std::move(rpy), input_in_degrees);
+}
+
+/**
  * @brief Convert quaternion to yaw, pitch and roll
  *
  * @tparam floattype
  * @param q quaternion
- * @param output_to_degrees  if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param output_to_degrees  if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return std::array<floattype, 3> yaw, pitch and roll
  */
 template<typename floattype>
@@ -132,6 +194,40 @@ std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
     return ypr;
 }
 
+/**
+ * @brief Convert quaternion to roll, pitch and yaw
+ *
+ * @tparam floattype
+ * @param q quaternion
+ * @param output_to_degrees  if true, roll, pitch and yaw input values are in ° otherwise rad
+ * @return std::array<floattype, 3> roll, pitch and yaw
+ */
+template<typename floattype>
+std::array<floattype, 3> rpy_from_quaternion(Eigen::Quaternion<floattype> q,
+                                             bool                         output_to_degrees = true)
+{
+    q.normalize();
+
+    auto                     Me  = q.toRotationMatrix().eulerAngles(0, 1, 2);
+    std::array<floattype, 3> rpy = { Me[0], Me[1], Me[2] };
+
+    /* pitch is constrained to -90° -> 89.9999°
+     * otherwise there is two possibilities to reach every point.
+     * because: rotate(yaw,pitch,roll) == rotate(yaw+pi,pi-pitch,roll+pi)
+     * Also note: pitch = 90 degrees leads to a gimbal lock situation
+     */
+    rpy = normalize_angles_rad(rpy);
+
+    static const floattype _rpy_from_quaternion_to_degrees = 180 / M_PI;
+    if (output_to_degrees)
+    {
+        rpy[0] *= _rpy_from_quaternion_to_degrees;
+        rpy[1] *= _rpy_from_quaternion_to_degrees;
+        rpy[2] *= _rpy_from_quaternion_to_degrees;
+    }
+
+    return rpy;
+}
 // --- vectorized calls ---
 
 /**
@@ -140,7 +236,7 @@ std::array<floattype, 3> ypr_from_quaternion(Eigen::Quaternion<floattype> q,
  *
  * @tparam floattype floating point value
  * @param YPR vector of yaw, pitch and roll rotation values [° or rad]
- * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param input_in_degrees if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return std::vector<Eigen::Quaternion<floattype>>
  */
 template<typename floattype>
@@ -159,6 +255,30 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(
 }
 
 /**
+ * @brief create eigen quaternions by rotating roll (x axis), pitch (y axis) and yaw (z axis) values
+ * (vectorized call)
+ *
+ * @tparam floattype floating point value
+ * @param RPY vector of roll, pitch and yaw rotation values [° or rad]
+ * @param input_in_degrees if true, roll, pitch and yaw input values are in ° otherwise rad
+ * @return std::vector<Eigen::Quaternion<floattype>>
+ */
+template<typename floattype>
+std::vector<Eigen::Quaternion<floattype>> quaternion_from_rpy(
+    const std::vector<std::array<floattype, 3>>& RPY,
+    bool                                         input_in_degrees = true)
+{
+    std::vector<Eigen::Quaternion<floattype>> Q;
+    Q.reserve(RPY.size());
+    for (const auto rpy : RPY)
+    {
+        Q.push_back(quaternion_from_rpy(rpy, input_in_degrees));
+    }
+
+    return Q;
+}
+
+/**
  * @brief create eigen quaternions by rotating yaw (z axis), pitch (y axis) and roll (x axis) values
  * (vectorized call)
  *
@@ -167,7 +287,7 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(
  * @param yaw vector of rotation values around the z axis [° or rad]
  * @param pitch vector of rotation values the y axis [° or rad]
  * @param roll of rotation values the x axis [° or rad]
- * @param input_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param input_in_degrees if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return std::vector<Eigen::Quaternion<floattype>>
  */
 template<typename floattype>
@@ -193,11 +313,45 @@ std::vector<Eigen::Quaternion<floattype>> quaternion_from_ypr(const std::vector<
 }
 
 /**
+ * @brief create eigen quaternions by rotating roll (x axis), pitch (y axis) and yaw (z axis) values
+ * (vectorized call)
+ *
+ * @tparam floattype
+ * @tparam floattype floating point value
+ * @param roll of rotation values the x axis [° or rad]
+ * @param pitch vector of rotation values the y axis [° or rad]
+ * @param yaw vector of rotation values around the z axis [° or rad]
+ * @param input_in_degrees if true, roll, pitch and yaw input values are in ° otherwise rad
+ * @return std::vector<Eigen::Quaternion<floattype>>
+ */
+template<typename floattype>
+std::vector<Eigen::Quaternion<floattype>> quaternion_from_rpy(const std::vector<floattype>& roll,
+                                                              const std::vector<floattype>& pitch,
+                                                              const std::vector<floattype>& yaw,
+                                                              bool input_in_degrees = true)
+{
+    if (yaw.size() != pitch.size() || yaw.size() != roll.size())
+    {
+        throw std::invalid_argument(
+            "ERROR[quaternion_from_rpy]: input vectors must have the same size!");
+    }
+
+    std::vector<Eigen::Quaternion<floattype>> Q;
+    Q.reserve(yaw.size());
+    for (size_t i = 0; i < yaw.size(); ++i)
+    {
+        Q.push_back(quaternion_from_rpy(roll[i], pitch[i], yaw[i], input_in_degrees));
+    }
+
+    return Q;
+}
+
+/**
  * @brief Convert quaternions to yaw, pitch and roll values (vectorized call)
  *
  * @tparam floattype
  * @param Q vector of quaternions
- * @param output_to_degrees  if true, yaw pitch and roll input values are in ° otherwise rad
+ * @param output_to_degrees  if true, yaw, pitch and roll input values are in ° otherwise rad
  * @return std::vector<std::array<floattype, 3>>
  */
 template<typename floattype>
@@ -214,6 +368,30 @@ std::vector<std::array<floattype, 3>> ypr_from_quaternion(
     }
 
     return YPR;
+}
+
+/**
+ * @brief Convert quaternions to roll, pitch and yaw values (vectorized call)
+ *
+ * @tparam floattype
+ * @param Q vector of quaternions
+ * @param output_to_degrees  if true, roll, pitch and yaw input values are in ° otherwise rad
+ * @return std::vector<std::array<floattype, 3>>
+ */
+template<typename floattype>
+std::vector<std::array<floattype, 3>> rpy_from_quaternion(
+    const std::vector<Eigen::Quaternion<floattype>>& Q,
+    bool                                             output_to_degrees = true)
+{
+    std::vector<std::array<floattype, 3>> RPY;
+    RPY.resize(Q.size());
+
+    for (unsigned int i = 0; i < Q.size(); ++i)
+    {
+        RPY[i] = rpy_from_quaternion(Q[i], output_to_degrees);
+    }
+
+    return RPY;
 }
 
 /// ---- untested ////
