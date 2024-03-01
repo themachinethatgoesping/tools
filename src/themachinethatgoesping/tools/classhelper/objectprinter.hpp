@@ -839,7 +839,7 @@ class ObjectPrinter
                 section_nr += 1;
             }
 
-            if ((_value_infos[i].size() > 0) &&
+            if ((_value_infos[i].empty()) ||
                 (max_len_value[section_nr] + _value_infos[i].size() <= 150))
             {
                 str += fmt::format(
