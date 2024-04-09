@@ -158,11 +158,11 @@ class Test_tools_vectorinterpolators_all:
             # check of exception is raised on x nan
             with pytest.raises(ValueError):
                 interpolatorType(X_nan, Y)
-            continue
 
             # check of exception is raised on x nan
             with pytest.raises(ValueError):
                 interpolatorType(Y, Y_nan)
+            continue
 
             # should not throw
             interpolator = interpolatorType(X, Y)
