@@ -147,11 +147,11 @@ class Test_tools_vectorinterpolators_all:
             vip.LinearInterpolator,
             vip.AkimaInterpolator,
         ]:
-            continue
-
             # check of exceptions is raised on wrong order
             with pytest.raises(ValueError):
                 interpolatorType(X_wrong_order, Y_wrong_order)
+                
+            continue
 
             # check of exception is raised on duplicates
             with pytest.raises(ValueError):
