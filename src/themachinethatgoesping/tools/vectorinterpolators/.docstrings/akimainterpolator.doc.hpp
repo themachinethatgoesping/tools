@@ -1,4 +1,4 @@
-//sourcehash: 3e50b69d5ead5ba84b88fadcc2fb47c5c35a1a86df543cbc12ca1088d81a4a3d
+//sourcehash: 760427aeecedcdd579430f85b29cbde99dd1cd423d4608138b027a6ed8f8e82c
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,7 +41,10 @@
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator =
 R"doc(Interpolator class to perform a (modified) akima interpolation. Uses
 boost makima interpolator. Note: this interpolator acts as linear
-interpolator if less than 4 values are stored.)doc";
+interpolator if less than 4 values are stored.
+
+Template parameter ``XYType:``:
+    type of the x and y values (must be floating point)))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc(Construct a new (uninitialized) Akima Interpolator object)doc";
 
@@ -96,13 +99,13 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(return the x component of the internal data vector
 
 Returns:
-    std::vector<double>)doc";
+    std::vector<XYType>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_Y =
 R"doc(return the y component of the internal data vector
 
 Returns:
-    std::vector<YType>)doc";
+    std::vector<XYType>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_info_string =
 R"doc(\ return an info string using the class __printer__ object \

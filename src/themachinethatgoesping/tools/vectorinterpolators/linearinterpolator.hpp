@@ -34,33 +34,36 @@ namespace vectorinterpolators {
 /**
  * @brief Find linear interpolated values within vector data
  *
+ * @tparam XType: type of the x values (must be floating point)
+ * @tparam YType: type of the y values (must be floating point)
  */
-class LinearInterpolator : public I_PairInterpolator<double>
+template<std::floating_point XType, typename YType>
+class LinearInterpolator : public I_PairInterpolator<XType, YType>
 {
   public:
     LinearInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(extrapolation_mode, "LinearInterpolator")
+        : I_PairInterpolator<XType, YType>(extrapolation_mode, "LinearInterpolator")
     {
     }
 
-    LinearInterpolator(const std::vector<double>& X,
-                       const std::vector<double>& Y,
+    LinearInterpolator(const std::vector<XType>& X,
+                       const std::vector<YType>& Y,
                        t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(X, Y, extrapolation_mode, "LinearInterpolator")
+        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode, "LinearInterpolator")
     {
     }
 
-    bool operator!=(const LinearInterpolator& rhs) const { return !(rhs == *this); }
-    bool operator==(const LinearInterpolator& rhs) const
+    bool operator!=(const LinearInterpolator<XType, YType>& rhs) const { return !(rhs == *this); }
+    bool operator==(const LinearInterpolator<XType, YType>& rhs) const
     {
         // compare extrapolation mode
-        if (_extr_mode != rhs.get_extrapolation_mode())
+        if (this->_extr_mode != rhs.get_extrapolation_mode())
             return false;
 
         // compare data
-        if (!helper::approx_container(_X, rhs._X))
+        if (!helper::approx_container(this->_X, rhs._X))
             return false;
-        if (!helper::approx_container(_Y, rhs._Y))
+        if (!helper::approx_container(this->_Y, rhs._Y))
             return false;
 
         return true;
@@ -74,25 +77,25 @@ class LinearInterpolator : public I_PairInterpolator<double>
      * between)
      * @return Interpolated value for target position
      */
-    double interpolate_pair(double target_x, double y1, double y2) const final
+    YType interpolate_pair(XType target_x, YType y1, YType y2) const final
     {
-        return (double)(target_x * (y2) + (double(1.0) - target_x) * (y1));
+        return (YType)(target_x * (y2) + (YType(1.0) - target_x) * (y1));
     }
 
     static std::string type_to_string() { return "LinearInterpolator"; }
 
     // ----- to/from stream -----
-    static LinearInterpolator from_stream(std::istream& is)
+    static LinearInterpolator<XType, YType> from_stream(std::istream& is)
     {
         using tools::classhelper::stream::container_from_stream;
 
-        LinearInterpolator obj;
+        LinearInterpolator<XType, YType> obj;
 
         is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
         is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
 
-        obj._X = container_from_stream<std::vector<double>>(is);
-        obj._Y = container_from_stream<std::vector<double>>(is);
+        obj._X = container_from_stream<std::vector<XType>>(is);
+        obj._Y = container_from_stream<std::vector<YType>>(is);
 
         return obj;
     }
@@ -101,11 +104,11 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         using tools::classhelper::stream::container_to_stream;
 
-        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
-        os.write(reinterpret_cast<const char*>(&(_last_x_pair)), sizeof(_last_x_pair));
+        os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
+        os.write(reinterpret_cast<const char*>(&(this->_last_x_pair)), sizeof(this->_last_x_pair));
 
-        container_to_stream(os, _X);
-        container_to_stream(os, _Y);
+        container_to_stream(os, this->_X);
+        container_to_stream(os, this->_Y);
     }
 
   public:
@@ -113,10 +116,10 @@ class LinearInterpolator : public I_PairInterpolator<double>
     {
         classhelper::ObjectPrinter printer(this->class_name(), float_precision);
 
-        printer.register_enum("extr_mode", _extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode);
         printer.register_section("data lists");
-        printer.register_container("X", _X);
-        printer.register_container("Y", _Y);
+        printer.register_container("X", this->_X);
+        printer.register_container("Y", this->_Y);
 
         return printer;
     }

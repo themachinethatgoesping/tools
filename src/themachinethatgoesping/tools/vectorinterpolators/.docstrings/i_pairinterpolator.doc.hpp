@@ -1,4 +1,4 @@
-//sourcehash: c60488d29d84552134f21c72c4391b7d1e2527f765e654370c49293ef4f8713b
+//sourcehash: 8355284fc40c74ad31f4ccffc94a9e6a5c6942b6d588b02fea7146d14ca36b5e
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -47,9 +47,12 @@ x interpolation value (target_x) Then it call the __call__ functions
 of the implementation classes that use this interface to interpolate
 between these pairs.
 
+Template parameter ``XType:``:
+    type of the x values (must be floating point)
+
 Template parameter ``YType:``:
-    type of the y values (typically double, but will be a vector for
-    the slerp interpolator class))doc";
+    type of the y values (typically double or float, but will be a
+    vector for the slerp interpolator class))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator =
 R"doc(Construct a new Interpolator object from a vector of pairs usage:
@@ -84,7 +87,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 R"doc(return the x component of the internal data vector
 
 Returns:
-    std::vector<double>)doc";
+    std::vector<XType>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
 R"doc(return the y component of the internal data vector

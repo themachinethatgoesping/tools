@@ -42,22 +42,23 @@ namespace vectorinterpolators {
  * functions of the implementation classes that use this interface to interpolate between these
  * pairs.
  *
- * @tparam YType: type of the y values (typically double, but will be a vector
+ * @tparam XType: type of the x values (must be floating point)
+ * @tparam YType: type of the y values (typically double or float, but will be a vector
  * for the slerp interpolator class)
  */
-template<typename YType>
-class I_PairInterpolator : public I_Interpolator<YType>
+template<std::floating_point XType, typename YType>
+class I_PairInterpolator : public I_Interpolator<XType, YType>
 {
   protected:
     struct _t_x_pair
     {
         size_t _xmin_index; ///< index of the smaller x value (in the internal vector)
         size_t _xmax_index; ///< index of the larger x value (in the internal vector)
-        double _xmin;       ///< smaller xvalue
-        double _xmax;       ///< larger xvalue
-        double _xfactor;    ///< 1/(xmax-xmin)
+        XType  _xmin;       ///< smaller xvalue
+        XType  _xmax;       ///< larger xvalue
+        XType  _xfactor;    ///< 1/(xmax-xmin)
 
-        _t_x_pair(size_t xmin_index, size_t xmax_index, double xmin, double xmax)
+        _t_x_pair(size_t xmin_index, size_t xmax_index, XType xmin, XType xmax)
             : _xmin_index(xmin_index)
             , _xmax_index(xmax_index)
             , _xmin(xmin)
@@ -72,7 +73,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
          * @param target_x x value for which we want to know the interpolation factor
          * @return interpolation factor
          */
-        double calc_target_x(double target_x) { return (target_x - _xmin) * _xfactor; }
+        XType calc_target_x(XType target_x) { return (target_x - _xmin) * _xfactor; }
 
     } _last_x_pair; ///< last pair (for faster consecutive searches)
 
@@ -80,8 +81,8 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @brief extrapolation mode type.
      *
      */
-    std::vector<double> _X; ///< main data vector containing pairs of corresponding x datapoints
-    std::vector<YType>  _Y; ///< main data vector containing pairs of corresponding y datapoints
+    std::vector<XType> _X; ///< main data vector containing pairs of corresponding x datapoints
+    std::vector<YType> _Y; ///< main data vector containing pairs of corresponding y datapoints
 
   public:
     /**
@@ -94,11 +95,11 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the
      * extrapolation mode
      */
-    I_PairInterpolator(std::vector<double> X,
-                       std::vector<YType>  Y,
-                       t_extr_mode         extrapolation_mode = t_extr_mode::extrapolate,
-                       std::string_view    name               = "I_PairInterpolator")
-        : I_Interpolator<YType>(extrapolation_mode, name)
+    I_PairInterpolator(std::vector<XType> X,
+                       std::vector<YType> Y,
+                       t_extr_mode        extrapolation_mode = t_extr_mode::extrapolate,
+                       std::string_view   name               = "I_PairInterpolator")
+        : I_Interpolator<XType, YType>(extrapolation_mode, name)
         , _last_x_pair(0, 1, 0, 1)
     {
         set_data_XY(std::move(X), std::move(Y));
@@ -106,7 +107,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
 
     I_PairInterpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate,
                        std::string_view name               = "I_PairInterpolator")
-        : I_Interpolator<YType>(extrapolation_mode, name)
+        : I_Interpolator<XType, YType>(extrapolation_mode, name)
         , _last_x_pair(0, 1, 0, 1)
     {
     }
@@ -125,12 +126,12 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param X: x vector (must be same size, must be sorted in ascending order)
      * @param Y: y vector (must be same size)
      */
-    void set_data_XY(std::vector<double> X, std::vector<YType> Y) final
+    void set_data_XY(std::vector<XType> X, std::vector<YType> Y) final
     {
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolation::set_data_XY]: list sizes do not match"));
 
-        I_Interpolator<YType>::_check_XY(X, Y);
+        I_Interpolator<XType, YType>::_check_XY(X, Y);
 
         _X = std::move(X);
         _Y = std::move(Y);
@@ -142,7 +143,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
     // -----------------------
     // append/extend functions
     // -----------------------
-    void append(double x, YType y) final
+    void append(XType x, YType y) final
     {
         if (_X.size() > 0)
             if (x <= _X.back())
@@ -162,7 +163,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         // if the internal data is one element, call set data to initialize _last_x_pair
         if (_X.size() == 1)
         {
-            set_data_XY(std::vector<double>{ _X[0], x }, std::vector<YType>{ _Y[0], y });
+            set_data_XY(std::vector<XType>{ _X[0], x }, std::vector<YType>{ _Y[0], y });
             return;
         }
 
@@ -170,7 +171,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
         _Y.push_back(y);
     }
 
-    void extend(const std::vector<double>& X, const std::vector<YType>& Y) final
+    void extend(const std::vector<XType>& X, const std::vector<YType>& Y) final
     {
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::extend]: list sizes do not match"));
@@ -200,9 +201,9 @@ class I_PairInterpolator : public I_Interpolator<YType>
         }
     }
 
-    void insert(const std::vector<double>& X,
-                const std::vector<YType>&  Y,
-                bool                       is_sorted = false) final
+    void insert(const std::vector<XType>& X,
+                const std::vector<YType>& Y,
+                bool                      is_sorted = false) final
     {
         if (X.empty())
             return;
@@ -225,25 +226,25 @@ class I_PairInterpolator : public I_Interpolator<YType>
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::insert]: list sizes do not match"));
 
-        std::vector<std::pair<double, YType>> XY;
+        std::vector<std::pair<XType, YType>> XY;
         XY.reserve(_X.size() + X.size());
 
         // sort _X and _Y by _X (ascending)
         for (size_t i = 0; i < _X.size(); ++i)
         {
-            XY.push_back(std::pair<double, YType>(_X[i], _Y[i]));
+            XY.push_back(std::pair<XType, YType>(_X[i], _Y[i]));
         }
         for (size_t i = 0; i < X.size(); ++i)
         {
-            XY.push_back(std::pair<double, YType>(X[i], Y[i]));
+            XY.push_back(std::pair<XType, YType>(X[i], Y[i]));
         }
 
         std::sort(
             XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
 
         // copy back to _X and _Y
-        std::vector<double> X_new;
-        std::vector<YType>  Y_new;
+        std::vector<XType> X_new;
+        std::vector<YType> Y_new;
         X_new.resize(XY.size());
         Y_new.resize(XY.size());
         for (size_t i = 0; i < XY.size(); ++i)
@@ -261,9 +262,9 @@ class I_PairInterpolator : public I_Interpolator<YType>
     /**
      * @brief return the x component of the internal data vector
      *
-     * @return std::vector<double>
+     * @return std::vector<XType>
      */
-    const std::vector<double>& get_data_X() const final { return _X; }
+    const std::vector<XType>& get_data_X() const final { return _X; }
 
     /**
      * @brief return the y component of the internal data vector
@@ -282,7 +283,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    YType operator()(double target_x) final
+    YType operator()(XType target_x) final
     {
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
         if (_X.size() == 0)
@@ -308,7 +309,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
                 if (size_t last = _X.size() - 1; i > last)
                 {
                     // set the new last pair (will be used for interpolation)
-                    switch (I_Interpolator<YType>::_extr_mode)
+                    switch (I_Interpolator<XType, YType>::_extr_mode)
                     {
                         case t_extr_mode::fail: {
                             std::string msg;
@@ -353,7 +354,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
                 {
 
                     // set the new last pair (will be used for interpolation)
-                    switch (I_Interpolator<YType>::_extr_mode)
+                    switch (I_Interpolator<XType, YType>::_extr_mode)
                     {
                         case t_extr_mode::fail: {
                             std::string msg;
@@ -398,9 +399,9 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
-    std::vector<YType> operator()(const std::vector<double>& targetsX)
+    std::vector<YType> operator()(const std::vector<XType>& targetsX)
     {
-        return I_Interpolator<YType>::operator()(targetsX);
+        return I_Interpolator<XType, YType>::operator()(targetsX);
     }
 
     //--------------------------------
@@ -417,7 +418,7 @@ class I_PairInterpolator : public I_Interpolator<YType>
      * @param y1 larger y value
      * @return interpolated y value
      */
-    virtual YType interpolate_pair(double target_x, YType y1, YType y2) const = 0;
+    virtual YType interpolate_pair(XType target_x, YType y1, YType y2) const = 0;
 };
 
 } // namespace interpolation

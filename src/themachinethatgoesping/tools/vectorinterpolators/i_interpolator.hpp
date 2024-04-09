@@ -23,6 +23,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <concepts>
 
 #include "../classhelper/objectprinter.hpp"
 
@@ -51,10 +52,11 @@ static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapo
  * must be sorted and no duplicates are allowed. then call interpolator(new
  * x value) to get a corresponding y value at this x position.
  *
- * @tparam YType: type of the y values (typically double, but will be a vector
+ * @tparam XType: type of the x values (must be floating point)
+ * @tparam YType: type of the y values (typically double or float, but will be a vector
  * for the slerp interpolator class)
  */
-template<typename YType>
+template<std::floating_point XType, typename YType>
 class I_Interpolator
 {
   protected:
@@ -89,7 +91,7 @@ class I_Interpolator
      * @param X: x vector (must be same size, must be sorted in ascending order)
      * @param Y: y vector (must be same size)
      */
-    virtual void set_data_XY(std::vector<double> X, std::vector<YType> Y) = 0;
+    virtual void set_data_XY(std::vector<XType> X, std::vector<YType> Y) = 0;
 
     // -----------------------
     // getter functions
@@ -97,9 +99,9 @@ class I_Interpolator
     /**
      * @brief return the x component of the internal data vector
      *
-     * @return std::vector<double>
+     * @return std::vector<XType>
      */
-    virtual const std::vector<double>& get_data_X() const = 0;
+    virtual const std::vector<XType>& get_data_X() const = 0;
 
     /**
      * @brief return the y component of the internal data vector
@@ -142,7 +144,7 @@ class I_Interpolator
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    virtual YType operator()(double target_x) = 0;
+    virtual YType operator()(XType target_x) = 0;
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)
@@ -150,7 +152,7 @@ class I_Interpolator
      * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
-    std::vector<YType> operator()(const std::vector<double>& targetsX)
+    std::vector<YType> operator()(const std::vector<XType>& targetsX)
     {
         std::vector<YType> y_values;
         y_values.reserve(targetsX.size());
@@ -169,7 +171,7 @@ class I_Interpolator
      * @param x value, must be > than all existing x values
      * @param y corresponding y value
      */
-    virtual void append(double x, YType y) = 0;
+    virtual void append(XType x, YType y) = 0;
 
     /**
      * @brief append x and y value lists to the interpolator data (vectorized call)
@@ -179,7 +181,7 @@ class I_Interpolator
      * than the largest x value in the interpolator data.
      * @param Y list of corresponding Y values. Must be same size as X
      */
-    virtual void extend(const std::vector<double>& X, const std::vector<YType>& Y) = 0;
+    virtual void extend(const std::vector<XType>& X, const std::vector<YType>& Y) = 0;
 
     /**
      * @brief append x and y value lists to the interpolator data (vectorized call)
@@ -190,7 +192,7 @@ class I_Interpolator
      * @param Y list of corresponding Y values. Must be same size as X
      * @param is_sorted this indicates that X is already sorted in ascending order. (default: false)
      */
-    virtual void insert(const std::vector<double>& X,
+    virtual void insert(const std::vector<XType>& X,
                         const std::vector<YType>&  Y,
                         bool                       is_sorted = false) = 0;
 
@@ -210,7 +212,7 @@ class I_Interpolator
      * @brief check if input data is valid (e.g. sorted, no duplicated x values)
      *
      */
-    static void _check_XY(const std::vector<double>& X, const std::vector<YType>& Y)
+    static void _check_XY(const std::vector<XType>& X, const std::vector<YType>& Y)
     {
         // if (X.size() < 2)
         //     throw(std::domain_error("ERROR[Interpolation::_check_XY]: list size is < 2!"));
@@ -224,7 +226,7 @@ class I_Interpolator
             {
                 if (X[i] == X[i + 1])
                     throw(std::domain_error(
-                        "ERROR[Interpolation::_check_XY]: X list contains double x values!"));
+                        "ERROR[Interpolation::_check_XY]: X list contains XType x values!"));
 
                 if (X[i] > X[i + 1])
                     throw(std::domain_error("ERROR[Interpolation::_check_XY]: X list is not "

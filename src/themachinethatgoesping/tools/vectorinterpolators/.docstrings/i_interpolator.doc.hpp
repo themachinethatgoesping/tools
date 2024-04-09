@@ -1,4 +1,4 @@
-//sourcehash: d10755fc9deda8b22dcbf62a05935f421ea58e304e0e93891b1ccfe556301a7d
+//sourcehash: 1d3134dd7a3a390a51520c72de3ff5cf4412e4f8f827aa8c1f47a29d02af4909
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -44,9 +44,12 @@ by providing vectors for x and y (same size). X must be sorted and no
 duplicates are allowed. then call interpolator(new x value) to get a
 corresponding y value at this x position.
 
+Template parameter ``XType:``:
+    type of the x values (must be floating point)
+
 Template parameter ``YType:``:
-    type of the y values (typically double, but will be a vector for
-    the slerp interpolator class))doc";
+    type of the y values (typically double or float, but will be a
+    vector for the slerp interpolator class))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_I_Interpolator =
 R"doc(Construct a new Interpolator object from two vectors usage:
@@ -90,7 +93,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Inte
 R"doc(return the x component of the internal data vector
 
 Returns:
-    std::vector<double>)doc";
+    std::vector<XType>)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_data_Y =
 R"doc(return the y component of the internal data vector

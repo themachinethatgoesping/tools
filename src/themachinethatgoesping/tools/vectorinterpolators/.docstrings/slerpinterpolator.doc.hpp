@@ -1,4 +1,4 @@
-//sourcehash: 130bb68a276ce1a6bbc26e4948501639f3f876f66331f4f620a2db9208a7705f
+//sourcehash: 5b50da36ef4671cb0c2f6f30af1c58cc299e950538d97b66b8957e5abd2a3932
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -43,7 +43,14 @@ R"doc(Class that implements a slerp interpolation for vectors. Data is
 internally represented in quaternions using lib eigen. Interfaces to
 represent the data in yaw, pitch, roll angles are provided. the
 __call__ equivalent to get interpolated yaw pitch roll is the ypr
-function)doc";
+function
+
+Template parameter ``XType:``:
+    type of the x values (must be floating point)
+
+Template parameter ``YType:``:
+    floating point type of the y quaternion values (must be floating
+    point))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (necessary?))doc";
 
@@ -182,7 +189,7 @@ Parameter ``output_in_degrees``:
     convert yaw, pitch and roll to degrees (default = True)
 
 Returns:
-    std::vector<std::array<3, double>> YPR)doc";
+    std::vector<std::array<3, YType>> YPR)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_info_string =
 R"doc(\ return an info string using the class __printer__ object \

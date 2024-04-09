@@ -113,10 +113,10 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
     std::vector<double> pitch = { 1, 0, 1, 0, -1 };
     std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-    vectorinterpolators::LinearInterpolator  lip(x, y);
-    vectorinterpolators::NearestInterpolator nip(x, y);
-    vectorinterpolators::AkimaInterpolator   aip(x, y);
-    vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
+    vectorinterpolators::LinearInterpolator<double, double>  lip(x, y);
+    vectorinterpolators::NearestInterpolator<double, double> nip(x, y);
+    vectorinterpolators::AkimaInterpolator<double>           aip(x, y);
+    vectorinterpolators::SlerpInterpolator                   slerp(x, yaw, pitch, roll);
 
     // copy operator
     auto t1 = lip;
@@ -125,9 +125,9 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
     auto t4 = slerp;
 
     // copy initialization
-    auto tlip   = vectorinterpolators::LinearInterpolator(t1);
-    auto tnip   = vectorinterpolators::NearestInterpolator(t2);
-    auto taip   = vectorinterpolators::AkimaInterpolator(t3);
+    auto tlip   = vectorinterpolators::LinearInterpolator<double, double>(t1);
+    auto tnip   = vectorinterpolators::NearestInterpolator<double, double>(t2);
+    auto taip   = vectorinterpolators::AkimaInterpolator<double>(t3);
     auto tslerp = vectorinterpolators::SlerpInterpolator(t4);
 
     // check if copies are correct
@@ -165,10 +165,14 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         std::vector<double> x = { -10, -5, 0, 6, 12 };
         std::vector<double> y = { 1, 0, 1, 0, -1 };
 
-        std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double>>> interpolators;
-        interpolators.push_back(std::make_shared<vectorinterpolators::LinearInterpolator>(x, y));
-        interpolators.push_back(std::make_shared<vectorinterpolators::NearestInterpolator>(x, y));
-        interpolators.push_back(std::make_shared<vectorinterpolators::AkimaInterpolator>(x, y));
+        std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double, double>>>
+            interpolators;
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::LinearInterpolator<double, double>>(x, y));
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::NearestInterpolator<double, double>>(x, y));
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::AkimaInterpolator<double>>(x, y));
 
         for (auto interpolator : interpolators)
         {
@@ -334,10 +338,10 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     // std::vector<double> pitch = { 1, 0, 1, 0, -1 };
     // std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-    vectorinterpolators::LinearInterpolator  lip;
-    vectorinterpolators::NearestInterpolator nip;
-    vectorinterpolators::AkimaInterpolator   aip;
-    vectorinterpolators::SlerpInterpolator   slerp;
+    vectorinterpolators::LinearInterpolator<double, double>  lip;
+    vectorinterpolators::NearestInterpolator<double, double> nip;
+    vectorinterpolators::AkimaInterpolator<double>           aip;
+    vectorinterpolators::SlerpInterpolator<double, double>   slerp;
 
     // interpolators should fail if they are not initialized
     REQUIRE_THROWS_AS(lip(0), std::domain_error);

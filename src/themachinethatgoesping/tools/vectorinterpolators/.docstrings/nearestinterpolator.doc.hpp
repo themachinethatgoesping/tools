@@ -1,4 +1,4 @@
-//sourcehash: 77264426a13ce049d175a6507a4d0630be6cd1a22853347fdb213168d49529ed
+//sourcehash: 4ca2ffbe64c1ba85d613f3cd9a2138f885ef8ce80b22af7c14d272a479dbabd0
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,7 +38,14 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator = R"doc(Interpolator class to find nearest neighbors within vector data)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator =
+R"doc(Interpolator class to find nearest neighbors within vector data
+
+Template parameter ``XType:``:
+    type of the x values (must be floating point)
+
+Template parameter ``YType:``:
+    type of the y values (must be floating point))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_NearestInterpolator = R"doc()doc";
 

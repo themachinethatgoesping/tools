@@ -1,4 +1,4 @@
-//sourcehash: 8992f05794d5534cd0b7ff7981633d3be35a814459989d08d213595c75517d10
+//sourcehash: b08f4169dfe127cf9c09784762cfb181b70fcb875d187ad3d6ab45cb8c1d4b19
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,7 +38,14 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator = R"doc(Find linear interpolated values within vector data)doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator =
+R"doc(Find linear interpolated values within vector data
+
+Template parameter ``XType:``:
+    type of the x values (must be floating point)
+
+Template parameter ``YType:``:
+    type of the y values (must be floating point))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_LinearInterpolator = R"doc()doc";
 

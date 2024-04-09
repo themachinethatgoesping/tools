@@ -21,6 +21,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <fmt/core.h>
+
 #include "i_pairinterpolator.hpp"
 
 #include "../classhelper/objectprinter.hpp"
@@ -34,12 +36,15 @@ namespace vectorinterpolators {
 /**
  * @brief Interpolator class to find nearest neighbors within vector data
  *
+ * @tparam XType: type of the x values (must be floating point)
+ * @tparam YType: type of the y values (must be floating point)
  */
-class NearestInterpolator : public I_PairInterpolator<double>
+template<std::floating_point XType, typename YType>
+class NearestInterpolator : public I_PairInterpolator<XType, YType>
 {
   public:
     NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(extrapolation_mode, "NearestInterpolator")
+        : I_PairInterpolator<XType, YType>(extrapolation_mode, "NearestInterpolator")
     {
     }
 
@@ -51,28 +56,37 @@ class NearestInterpolator : public I_PairInterpolator<double>
      * @param Y Y vector; must be unique and sorted in ascending order. same size as X!
      * @param extrapolation_mode extrapolation mode (nearest or fail)
      */
-    NearestInterpolator(const std::vector<double>& X,
-                        const std::vector<double>& Y,
-                        t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<double>(X, Y, extrapolation_mode, "NearestInterpolator")
+    NearestInterpolator(const std::vector<XType>& X,
+                        const std::vector<YType>& Y,
+                        t_extr_mode               extrapolation_mode = t_extr_mode::extrapolate)
+        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode, "NearestInterpolator")
     {
     }
     ~NearestInterpolator() = default;
 
     static std::string type_to_string() { return "NearestInterpolator"; }
 
-    bool operator!=(const NearestInterpolator& rhs) const { return !(rhs == *this); }
-    bool operator==(const NearestInterpolator& rhs) const
+    bool operator!=(const NearestInterpolator<XType, YType>& rhs) const { return !(rhs == *this); }
+    bool operator==(const NearestInterpolator<XType, YType>& rhs) const
     {
         // compare extrapolation mode
-        if (_extr_mode != rhs.get_extrapolation_mode())
+        if (this->_extr_mode != rhs.get_extrapolation_mode())
             return false;
 
         // compare data
-        if (!helper::approx_container(_X, rhs._X))
+        if (!helper::approx_container(this->_X, rhs._X))
             return false;
-        if (!helper::approx_container(_Y, rhs._Y))
-            return false;
+
+        if constexpr (std::is_floating_point_v<YType>)
+        {
+            if (!helper::approx_container(this->_Y, rhs._Y))
+                return false;
+        }
+        else
+        {
+            if (this->_Y != rhs._Y)
+                return false;
+        }
 
         return true;
     }
@@ -85,7 +99,7 @@ class NearestInterpolator : public I_PairInterpolator<double>
      * between)
      * @return Interpolated value for target position
      */
-    double interpolate_pair(double target_x, double y1, double y2) const final
+    YType interpolate_pair(XType target_x, YType y1, YType y2) const final
     {
         if (target_x < 0.5)
             return y1;
@@ -93,17 +107,17 @@ class NearestInterpolator : public I_PairInterpolator<double>
         return y2;
     }
 
-    static NearestInterpolator from_stream(std::istream& is)
+    static NearestInterpolator<XType, YType> from_stream(std::istream& is)
     {
         using tools::classhelper::stream::container_from_stream;
 
-        NearestInterpolator obj;
+        NearestInterpolator<XType, YType> obj;
 
         is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
         is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
 
-        obj._X = container_from_stream<std::vector<double>>(is);
-        obj._Y = container_from_stream<std::vector<double>>(is);
+        obj._X = container_from_stream<std::vector<XType>>(is);
+        obj._Y = container_from_stream<std::vector<YType>>(is);
 
         return obj;
     }
@@ -112,11 +126,11 @@ class NearestInterpolator : public I_PairInterpolator<double>
     {
         using tools::classhelper::stream::container_to_stream;
 
-        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
-        os.write(reinterpret_cast<const char*>(&(_last_x_pair)), sizeof(_last_x_pair));
+        os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
+        os.write(reinterpret_cast<const char*>(&(this->_last_x_pair)), sizeof(this->_last_x_pair));
 
-        container_to_stream(os, _X);
-        container_to_stream(os, _Y);
+        container_to_stream(os, this->_X);
+        container_to_stream(os, this->_Y);
     }
 
   public:
@@ -124,10 +138,14 @@ class NearestInterpolator : public I_PairInterpolator<double>
     {
         classhelper::ObjectPrinter printer(this->class_name(), float_precision);
 
-        printer.register_enum("extr_mode", _extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode);
         printer.register_section("data lists");
-        printer.register_container("X", _X);
-        printer.register_container("Y", _Y);
+        printer.register_container("X", this->_X);
+
+        if constexpr (fmt::is_formattable<YType>::value)
+            printer.register_container("Y", this->_Y);
+        else
+            printer.register_value("Y elements", this->_Y.size(), "not printable");
 
         return printer;
     }

@@ -38,20 +38,26 @@ namespace vectorinterpolators {
  * boost makima interpolator. Note: this interpolator acts as linear interpolator if less than 4
  * values are stored.
  *
+ * @tparam XYType: type of the x and y values (must be floating point))
+ *
  */
-class AkimaInterpolator : public I_Interpolator<double>
+
+template<std::floating_point XYType>
+class AkimaInterpolator : public I_Interpolator<XYType, XYType>
 {
     // boost akima spline currently does not allow for accessing the internal data
     // therefore we need to keep synchronized copies of the data here as well to allow get_X and
     // get_Y functions
-    std::vector<double> _X;
-    std::vector<double> _Y;
+    std::vector<XYType> _X;
+    std::vector<XYType> _Y;
 
     // initialize these interpolators with non-sense (will be initialized by calling set_data_XY)
-    LinearInterpolator _min_linearextrapolator = LinearInterpolator();
-    LinearInterpolator _max_linearextrapolator = LinearInterpolator();
-    boost::math::interpolators::makima<std::vector<double>> _akima_spline =
-        boost::math::interpolators::makima<std::vector<double>>({ 0, 1, 2, 3 }, { 0, 0, 0, 0 });
+    LinearInterpolator<XYType, XYType> _min_linearextrapolator =
+        LinearInterpolator<XYType, XYType>();
+    LinearInterpolator<XYType, XYType> _max_linearextrapolator =
+        LinearInterpolator<XYType, XYType>();
+    boost::math::interpolators::makima<std::vector<XYType>> _akima_spline =
+        boost::math::interpolators::makima<std::vector<XYType>>({ 0, 1, 2, 3 }, { 0, 0, 0, 0 });
 
   public:
     /**
@@ -59,7 +65,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      *
      */
     AkimaInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<double>(extrapolation_mode, "AkimaInterpolator")
+        : I_Interpolator<XYType, XYType>(extrapolation_mode, "AkimaInterpolator")
     {
         // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
     }
@@ -78,10 +84,10 @@ class AkimaInterpolator : public I_Interpolator<double>
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object
      * that describes the extrapolation mode
      */
-    AkimaInterpolator(std::vector<double> X,
-                      std::vector<double> Y,
+    AkimaInterpolator(std::vector<XYType> X,
+                      std::vector<XYType> Y,
                       t_extr_mode         extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<double>(extrapolation_mode, "AkimaInterpolator")
+        : I_Interpolator<XYType, XYType>(extrapolation_mode, "AkimaInterpolator")
     {
         set_data_XY(std::move(X), std::move(Y));
     }
@@ -95,17 +101,17 @@ class AkimaInterpolator : public I_Interpolator<double>
     static std::string type_to_string() { return "AkimaInterpolator"; }
 
     // -- convenience functions --
-    bool operator!=(const AkimaInterpolator& rhs) const { return !(rhs == *this); }
-    bool operator==(const AkimaInterpolator& rhs) const
+    bool operator!=(const AkimaInterpolator<XYType>& rhs) const { return !(rhs == *this); }
+    bool operator==(const AkimaInterpolator<XYType>& rhs) const
     {
         // compare extrapolation mode
-        if (_extr_mode != rhs.get_extrapolation_mode())
+        if (this->_extr_mode != rhs.get_extrapolation_mode())
             return false;
 
         // compare data
-        if (!helper::approx_container(_X, rhs._X))
+        if (!helper::approx_container(this->_X, rhs._X))
             return false;
-        if (!helper::approx_container(_Y, rhs._Y))
+        if (!helper::approx_container(this->_Y, rhs._Y))
             return false;
 
         return true;
@@ -117,7 +123,7 @@ class AkimaInterpolator : public I_Interpolator<double>
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    double operator()(double target_x) final
+    XYType operator()(XYType target_x) final
     {
         // if less than 4 values are present, act as linear interpolator
         if (_X.size() < 4)
@@ -134,7 +140,7 @@ class AkimaInterpolator : public I_Interpolator<double>
 
         if (target_x < _X[0])
         {
-            switch (I_Interpolator::_extr_mode)
+            switch (I_Interpolator<XYType,XYType>::_extr_mode)
             {
                 case t_extr_mode::nearest:
                     return _Y[0];
@@ -152,7 +158,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
         else if (target_x > _X.back())
         {
-            switch (I_Interpolator::_extr_mode)
+            switch (I_Interpolator<XYType,XYType>::_extr_mode)
             {
                 case t_extr_mode::nearest:
                     return _Y.back();
@@ -179,9 +185,9 @@ class AkimaInterpolator : public I_Interpolator<double>
      * corrsponding y value
      * @return corresponding y value
      */
-    std::vector<double> operator()(const std::vector<double>& targetsX)
+    std::vector<XYType> operator()(const std::vector<XYType>& targetsX)
     {
-        return I_Interpolator<double>::operator()(targetsX);
+        return I_Interpolator<XYType, XYType>::operator()(targetsX);
     }
 
     /**
@@ -190,10 +196,10 @@ class AkimaInterpolator : public I_Interpolator<double>
      * @param X: x vector (must be same size)
      * @param Y: y vector (must be same size)
      */
-    void set_data_XY(std::vector<double> X, std::vector<double> Y) final
+    void set_data_XY(std::vector<XYType> X, std::vector<XYType> Y) final
     {
         // check if X and Y are valid
-        I_Interpolator<double>::_check_XY(X, Y);
+        I_Interpolator<XYType, XYType>::_check_XY(X, Y);
 
         // copy data to allow get_X and get_Y functions
         _X = X;
@@ -202,7 +208,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         if (_X.size() >= 4) // default case
         {
             _akima_spline =
-                boost::math::interpolators::makima<std::vector<double>>(std::move(X), std::move(Y));
+                boost::math::interpolators::makima<std::vector<XYType>>(std::move(X), std::move(Y));
 
             _init_linearextrapolators();
         }
@@ -212,7 +218,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
     }
 
-    void append(double x, double y) final
+    void append(XYType x, XYType y) final
     {
         if (_X.size() > 0)
             if (x <= _X.back())
@@ -243,7 +249,7 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
     }
 
-    void extend(const std::vector<double>& X, const std::vector<double>& Y) final
+    void extend(const std::vector<XYType>& X, const std::vector<XYType>& Y) final
     {
         if (X.size() != Y.size())
             throw(std::invalid_argument("ERROR[Interpolator::extend]: list sizes do not match"));
@@ -284,8 +290,8 @@ class AkimaInterpolator : public I_Interpolator<double>
         }
     }
 
-    void insert(const std::vector<double>& X,
-                const std::vector<double>& Y,
+    void insert(const std::vector<XYType>& X,
+                const std::vector<XYType>& Y,
                 bool                       is_sorted = false) final
     {
         if (X.empty())
@@ -309,25 +315,25 @@ class AkimaInterpolator : public I_Interpolator<double>
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::insert]: list sizes do not match"));
 
-        std::vector<std::pair<double, double>> XY;
+        std::vector<std::pair<XYType, XYType>> XY;
         XY.reserve(_X.size() + X.size());
 
         // sort _X and _Y by _X (ascending)
         for (size_t i = 0; i < _X.size(); ++i)
         {
-            XY.push_back(std::pair<double, double>(_X[i], _Y[i]));
+            XY.push_back(std::pair<XYType, XYType>(_X[i], _Y[i]));
         }
         for (size_t i = 0; i < X.size(); ++i)
         {
-            XY.push_back(std::pair<double, double>(X[i], Y[i]));
+            XY.push_back(std::pair<XYType, XYType>(X[i], Y[i]));
         }
 
         std::sort(
             XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
 
         // copy back to _X and _Y
-        std::vector<double> X_new;
-        std::vector<double> Y_new;
+        std::vector<XYType> X_new;
+        std::vector<XYType> Y_new;
         X_new.resize(XY.size());
         Y_new.resize(XY.size());
         for (size_t i = 0; i < XY.size(); ++i)
@@ -345,16 +351,16 @@ class AkimaInterpolator : public I_Interpolator<double>
     /**
      * @brief return the x component of the internal data vector
      *
-     * @return std::vector<double>
+     * @return std::vector<XYType>
      */
-    const std::vector<double>& get_data_X() const final { return _X; }
+    const std::vector<XYType>& get_data_X() const final { return _X; }
 
     /**
      * @brief return the y component of the internal data vector
      *
-     * @return std::vector<YType>
+     * @return std::vector<XYType>
      */
-    const std::vector<double>& get_data_Y() const final { return _Y; }
+    const std::vector<XYType>& get_data_Y() const final { return _Y; }
 
   private:
     /**
@@ -366,13 +372,13 @@ class AkimaInterpolator : public I_Interpolator<double>
     void _init_linearextrapolators()
     {
         // interpolated elements just (1%) before the min/max xvalue
-        double min_x_dx = _X[0] + (_X[1] - _X[0]) * 0.01;
-        double max_x_dx = _X.back() - (_X.back() - _X[_X.size() - 2]) * 0.01;
+        XYType min_x_dx = _X[0] + (_X[1] - _X[0]) * 0.01;
+        XYType max_x_dx = _X.back() - (_X.back() - _X[_X.size() - 2]) * 0.01;
 
         _min_linearextrapolator =
-            LinearInterpolator({ _X[0], min_x_dx }, { _Y[0], _akima_spline(min_x_dx) });
+            LinearInterpolator<XYType,XYType>({ _X[0], min_x_dx }, { _Y[0], _akima_spline(min_x_dx) });
         _max_linearextrapolator =
-            LinearInterpolator({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
+            LinearInterpolator<XYType,XYType>({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
 
   public:
@@ -383,8 +389,8 @@ class AkimaInterpolator : public I_Interpolator<double>
         t_extr_mode extr_mode;
 
         is.read(reinterpret_cast<char*>(&(extr_mode)), sizeof(extr_mode));
-        auto x = container_from_stream<std::vector<double>>(is);
-        auto y = container_from_stream<std::vector<double>>(is);
+        auto x = container_from_stream<std::vector<XYType>>(is);
+        auto y = container_from_stream<std::vector<XYType>>(is);
 
         return AkimaInterpolator(std::move(x), std::move(y), extr_mode);
     }
@@ -393,19 +399,19 @@ class AkimaInterpolator : public I_Interpolator<double>
     {
         using tools::classhelper::stream::container_to_stream;
 
-        os.write(reinterpret_cast<const char*>(&(_extr_mode)), sizeof(_extr_mode));
-        container_to_stream(os, _X);
-        container_to_stream(os, _Y);
+        os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
+        container_to_stream(os, this->_X);
+        container_to_stream(os, this->_Y);
     }
 
     classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
     {
         classhelper::ObjectPrinter printer(this->class_name(), float_precision);
 
-        printer.register_enum("extr_mode", _extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode);
         printer.register_section("data lists");
-        printer.register_container("X", _X);
-        printer.register_container("Y", _Y);
+        printer.register_container("X", this->_X);
+        printer.register_container("Y", this->_Y);
 
         return printer;
     }
