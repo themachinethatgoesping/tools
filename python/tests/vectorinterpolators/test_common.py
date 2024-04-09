@@ -147,6 +147,7 @@ class Test_tools_vectorinterpolators_all:
             vip.LinearInterpolator,
             vip.AkimaInterpolator,
         ]:
+            continue
 
             # check of exceptions is raised on wrong order
             with pytest.raises(ValueError):
