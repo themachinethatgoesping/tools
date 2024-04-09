@@ -154,11 +154,11 @@ class Test_tools_vectorinterpolators_all:
             # check of exception is raised on duplicates
             with pytest.raises(ValueError):
                 interpolatorType(X_duplicates, Y_duplicates)
-            continue
 
             # check of exception is raised on x nan
             with pytest.raises(ValueError):
                 interpolatorType(X_nan, Y)
+            continue
 
             # check of exception is raised on x nan
             with pytest.raises(ValueError):
