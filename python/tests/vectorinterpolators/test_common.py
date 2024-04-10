@@ -261,7 +261,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [np.inf, -1])
             assert interpolator == orig_interpolator
-            continue # test 13
+            #continue # test 13
 
             # should not throw
             interpolator = interpolatorType(X, Y)
