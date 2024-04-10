@@ -239,7 +239,7 @@ class Test_tools_vectorinterpolators_all:
             assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
             assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1, 1])
             assert interpolator != orig_interpolator
-            continue # test 12
+            #continue # test 12
 
             # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
@@ -261,6 +261,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.insert([13, 14], [np.inf, -1])
             assert interpolator == orig_interpolator
+            continue # test 13
 
             # should not throw
             interpolator = interpolatorType(X, Y)
