@@ -198,7 +198,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.extend([14, 13], [-1, -1])
             assert interpolator == orig_interpolator
-            continue
+            #continue test 8
 
             # check of exceptions are raised for extending nan x values
             with pytest.raises(ValueError):
@@ -209,6 +209,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [-1, np.nan])
             assert interpolator == orig_interpolator
+            continue 
 
             # check of exceptions are raised for extending inf x values
             with pytest.raises(ValueError):
