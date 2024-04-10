@@ -232,13 +232,14 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.insert([12, 13], [-1, -1])
             assert interpolator == orig_interpolator
-            continue # test 11
+            #continue # test 11
 
             # check of exceptions are raised for inserting items
             interpolator.insert([14, 13], [1, -1])
             assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
             assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1, 1])
             assert interpolator != orig_interpolator
+            continue # test 12
 
             # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
