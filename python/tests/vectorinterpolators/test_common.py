@@ -171,13 +171,13 @@ class Test_tools_vectorinterpolators_all:
             assert interpolator == orig_interpolator
             interpolator.append(13, -1)
             assert interpolator != orig_interpolator
-            continue
 
             # check of exceptions are raised for appending items
             interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.append(12, -1)
             assert interpolator == orig_interpolator
+            continue
 
             # check of exceptions are raised for appending items
             with pytest.raises(ValueError):
