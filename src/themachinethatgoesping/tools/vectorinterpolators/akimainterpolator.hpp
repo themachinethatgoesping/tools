@@ -140,7 +140,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
 
         if (target_x < _X[0])
         {
-            switch (I_Interpolator<XYType,XYType>::_extr_mode)
+            switch (I_Interpolator<XYType, XYType>::_extr_mode)
             {
                 case t_extr_mode::nearest:
                     return _Y[0];
@@ -158,7 +158,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         }
         else if (target_x > _X.back())
         {
-            switch (I_Interpolator<XYType,XYType>::_extr_mode)
+            switch (I_Interpolator<XYType, XYType>::_extr_mode)
             {
                 case t_extr_mode::nearest:
                     return _Y.back();
@@ -268,6 +268,9 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                 return;
             }
 
+            // check if X and Y are valid
+            // this must be done, because the internal data is updated in the loop
+            I_Interpolator<XYType, XYType>::_check_XY(X, Y);
             for (size_t i = 0; i < X.size(); ++i)
             {
                 _akima_spline.push_back(X[i], Y[i]);
@@ -375,10 +378,10 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         XYType min_x_dx = _X[0] + (_X[1] - _X[0]) * 0.01;
         XYType max_x_dx = _X.back() - (_X.back() - _X[_X.size() - 2]) * 0.01;
 
-        _min_linearextrapolator =
-            LinearInterpolator<XYType,XYType>({ _X[0], min_x_dx }, { _Y[0], _akima_spline(min_x_dx) });
-        _max_linearextrapolator =
-            LinearInterpolator<XYType,XYType>({ max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
+        _min_linearextrapolator = LinearInterpolator<XYType, XYType>(
+            { _X[0], min_x_dx }, { _Y[0], _akima_spline(min_x_dx) });
+        _max_linearextrapolator = LinearInterpolator<XYType, XYType>(
+            { max_x_dx, _X.back() }, { _akima_spline(max_x_dx), _Y.back() });
     }
 
   public:
