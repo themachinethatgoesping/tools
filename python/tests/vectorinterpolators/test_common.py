@@ -177,12 +177,12 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.append(12, -1)
             assert interpolator == orig_interpolator
-            continue
 
             # check of exceptions are raised for appending items
             with pytest.raises(ValueError):
                 interpolator.append(11, -1)
             assert interpolator == orig_interpolator
+            continue
 
             # check of exceptions are raised for extending items
             with pytest.raises(ValueError):
