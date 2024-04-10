@@ -209,7 +209,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [-1, np.nan])
             assert interpolator == orig_interpolator
-            continue 
+            #continue  test 9
 
             # check of exceptions are raised for extending inf x values
             with pytest.raises(ValueError):
@@ -220,6 +220,7 @@ class Test_tools_vectorinterpolators_all:
             with pytest.raises(ValueError):
                 interpolator.extend([13, 14], [np.inf, -1])
             assert interpolator == orig_interpolator
+            continue # test 10
 
             # --- inserting --- (like extending but does not have to be sorted)
             # check of exceptions are raised for inserting items
