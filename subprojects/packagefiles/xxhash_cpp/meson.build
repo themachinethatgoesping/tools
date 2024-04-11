@@ -20,7 +20,6 @@ xxhash_cpp_dep = declare_dependency(
 
 # list and install headers
 headers = [
-    'include/fast_float/ascii_number.h',
     ]
 
 #install_headers(headers, preserve_path: false)
