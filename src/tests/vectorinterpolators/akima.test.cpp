@@ -49,7 +49,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         CHECK(interpolator(9.0) == Catch::Approx(-1. / 2.));
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
-    return; //test 5
 
     SECTION("preset value vectors should be interpolated correctly")
     {
@@ -61,6 +60,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         for (unsigned int i = 0; i < targets_x.size(); ++i)
             REQUIRE(comp_y[i] == Catch::Approx(expected_y[i]));
     }
+    return; //test 6
 
     SECTION("extrapolation mode should cause:")
     {
