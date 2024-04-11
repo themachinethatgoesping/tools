@@ -60,7 +60,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         for (unsigned int i = 0; i < targets_x.size(); ++i)
             REQUIRE(comp_y[i] == Catch::Approx(expected_y[i]));
     }
-    return; //test 6
 
     SECTION("extrapolation mode should cause:")
     {
