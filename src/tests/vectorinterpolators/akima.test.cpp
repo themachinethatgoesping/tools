@@ -72,7 +72,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        return; // test 9
+                        //return; // test 10
                         REQUIRE_THROWS_AS(interpolator(-11) == Catch::Approx(1), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13) == Catch::Approx(-1), std::out_of_range);
                     }
@@ -81,14 +81,14 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearest when set")
                     {
-                        return; // test 9
+                        return; // test 10
                         REQUIRE(interpolator(-11) == Catch::Approx(1));
                         REQUIRE(interpolator(13) == Catch::Approx(-1));
                     }
                     break;
 
                 default:
-                    return; // test 9
+                    return; // test 10
                     SECTION(" - extrapolation in all other cases")
                     CHECK(interpolator(-100) == Catch::Approx(28.0618464789));
                     CHECK(interpolator(100) == Catch::Approx(-15 - 2 / 3.));
