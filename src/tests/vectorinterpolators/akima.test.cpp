@@ -38,7 +38,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
 
         REQUIRE(interpolator(x_append) == y_append);
     }
-    return; //test 4
 
     SECTION("preset values should be interpolated correctly")
     {
@@ -50,6 +49,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         CHECK(interpolator(9.0) == Catch::Approx(-1. / 2.));
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
+    return; //test 5
 
     SECTION("preset value vectors should be interpolated correctly")
     {
