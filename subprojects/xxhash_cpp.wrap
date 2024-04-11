@@ -12,7 +12,7 @@
 [wrap-git]
 url =https://github.com/RedSpah/xxhash_cpp.git
 revision = master
-directory = xxhash_cpp-git
+directory = xxhash_cpp-git-master
 patch_directory = xxhash_cpp
 
 [provide]

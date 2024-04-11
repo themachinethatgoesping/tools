@@ -9,10 +9,13 @@ project(
     version: '0.9.dev0',
 )
 
+sse2neon_dep = dependency('sse2neon')
+
 xxhash_cpp_include = include_directories('include')
 
 xxhash_cpp_dep = declare_dependency(
     include_directories: xxhash_cpp_include,
+    dependencies: [sse2neon_dep],
 )
 
 # list and install headers
