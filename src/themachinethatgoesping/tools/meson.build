@@ -46,7 +46,6 @@ headers = [
   'rotationfunctions/quaternions.hpp',
   'rotationfunctions/.docstrings/helper.doc.hpp',
   'rotationfunctions/.docstrings/quaternions.doc.hpp',
-  'pch/pch.hpp',
   'pyhelper/pyindexer.hpp',
   'pyhelper/.docstrings/pyindexer.doc.hpp',
   'progressbars/consoleprogressbar.hpp',

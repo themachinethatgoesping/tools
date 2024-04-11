@@ -17,7 +17,6 @@ headers = [
   '.docstrings/classhelper.doc.hpp',
   '.docstrings/datetime.doc.hpp',
   '.docstrings/enumhelper.doc.hpp',
-  'pch/pch.hpp',
 ]
 
 # -- targets --

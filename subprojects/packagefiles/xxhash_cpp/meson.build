@@ -6,7 +6,7 @@
 project(
     'xxhash_cpp', ['cpp'],
     default_options: ['cpp_std=c++20'],
-    version: '0.8.1',
+    version: '0.9.dev0',
 )
 
 xxhash_cpp_include = include_directories('include')

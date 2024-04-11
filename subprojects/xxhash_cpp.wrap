@@ -2,11 +2,17 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
-[wrap-file]
-source_url = https://github.com/RedSpah/xxhash_cpp/archive/refs/tags/0.8.1.tar.gz
-source_filename = xxhash_cpp-0.8.1.tar.gz
-source_hash = 321c28968b073db97e9aa8f69121d286038c2cfa41f448bc1c6940479b171eb1
-directory = xxhash_cpp-0.8.1
+# [wrap-file]
+# source_url = https://github.com/RedSpah/xxhash_cpp/archive/refs/tags/0.8.1.tar.gz
+# source_filename = xxhash_cpp-0.8.1.tar.gz
+# source_hash = 321c28968b073db97e9aa8f69121d286038c2cfa41f448bc1c6940479b171eb1
+# directory = xxhash_cpp-0.8.1
+# patch_directory = xxhash_cpp
+
+[wrap-git]
+url =https://github.com/RedSpah/xxhash_cpp.git
+revision = master
+directory = xxhash_cpp-git
 patch_directory = xxhash_cpp
 
 [provide]
