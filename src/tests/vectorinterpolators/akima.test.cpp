@@ -30,7 +30,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
 
     // append some data
     interpolator.append(x_append, y_append);
-    return; //test 3
 
     SECTION("existing values should be looked up correctly")
     {
@@ -39,6 +38,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
 
         REQUIRE(interpolator(x_append) == y_append);
     }
+    return; //test 4
 
     SECTION("preset values should be interpolated correctly")
     {
