@@ -27,10 +27,10 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
     double              y_append = -1;
 
     vectorinterpolators::AkimaInterpolator interpolator(x, y);
-    return; //test 2
 
     // append some data
     interpolator.append(x_append, y_append);
+    return; //test 3
 
     SECTION("existing values should be looked up correctly")
     {
