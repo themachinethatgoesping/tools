@@ -26,7 +26,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
     double              x_append = 12;
     double              y_append = -1;
 
-    vectorinterpolators::AkimaInterpolator interpolator(x, y);
+    vectorinterpolators::AkimaInterpolator<double> interpolator(x, y);
 
     // append some data
     interpolator.append(x_append, y_append);
@@ -70,7 +70,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
             switch (mode)
             {
                 case vectorinterpolators::t_extr_mode::fail:
-                    break; // test 16
                     SECTION(" - fail when set to fail")
                     {
                         REQUIRE_THROWS_AS(interpolator(-11) == Catch::Approx(1), std::out_of_range);
@@ -79,7 +78,6 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                     break;
 
                 case vectorinterpolators::t_extr_mode::nearest:
-                    break; // test 16
                     SECTION(" - extrapolate nearest when set")
                     {
                         REQUIRE(interpolator(-11) == Catch::Approx(1));
@@ -88,11 +86,11 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                     break;
 
                 default:
-                    //break; // test 16
                     SECTION(" - extrapolation in all other cases")
-                    CHECK(interpolator(-100) == Catch::Approx(28.0618464789));
-                    CHECK(interpolator(100) == Catch::Approx(-15 - 2 / 3.));
-
+                    {
+                        CHECK(interpolator(-100) == Catch::Approx(28.0618464789));
+                        CHECK(interpolator(100) == Catch::Approx(-15 - 2 / 3.));
+                    }
                     break;
             }
         }
