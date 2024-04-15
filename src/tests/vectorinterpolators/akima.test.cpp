@@ -73,6 +73,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                     SECTION(" - fail when set to fail")
                     {
                         std::string a = fmt::format("test");
+                        std::runtime_error e(a);
                         //REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         //REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
                     }
