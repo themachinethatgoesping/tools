@@ -148,10 +148,10 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "
                         "(and fail on extrapolate was set)",
-                        target_x,
+                        //target_x,
                         //_X[0],
                         //_X.back()
-                        0,0
+                        0,0,0
                         ));
             }
         }
@@ -169,10 +169,10 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too large)({}/{})! "
                         "(and fail on extrapolate was set)",
-                        target_x,
+                        //target_x,
                         //_X[0],
                         //_X.back()
-                        0,0
+                        0,0,0
                         ));
             }
         }
