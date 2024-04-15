@@ -53,6 +53,8 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
     {
     }
 
+    virtual ~LinearInterpolator() = default;
+
     bool operator!=(const LinearInterpolator<XType, YType>& rhs) const { return !(rhs == *this); }
     bool operator==(const LinearInterpolator<XType, YType>& rhs) const
     {

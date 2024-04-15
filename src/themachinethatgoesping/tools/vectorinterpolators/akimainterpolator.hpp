@@ -91,7 +91,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
     {
         set_data_XY(std::move(X), std::move(Y));
     }
-    ~AkimaInterpolator() = default;
+    virtual ~AkimaInterpolator() = default;
 
     /**
      * @brief check if the interpolator contains data
