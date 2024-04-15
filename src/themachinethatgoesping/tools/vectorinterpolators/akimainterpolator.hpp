@@ -130,13 +130,9 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
             return _min_linearextrapolator(target_x);
 
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
-        if (_X.size() == 0)
+        if (_X.size() != _Y.size())
             throw(std::domain_error(
                 "ERROR[AkimaInterpolator::operator()]: data vectors are not initialized!"));
-
-        // if size of _X is 1, return _Y[0]
-        if (_X.size() == 1)
-            return _Y[0];
 
         if (target_x < _X[0])
         {
@@ -153,8 +149,10 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "
                         "(and fail on extrapolate was set)",
                         target_x,
-                        _X[0],
-                        _X.back()));
+                        //_X[0],
+                        //_X.back()
+                        0,0
+                        ));
             }
         }
         else if (target_x > _X.back())
@@ -172,8 +170,9 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too large)({}/{})! "
                         "(and fail on extrapolate was set)",
                         target_x,
-                        _X[0],
-                        _X.back()   //
+                        //_X[0],
+                        //_X.back()
+                        0,0
                         ));
             }
         }
