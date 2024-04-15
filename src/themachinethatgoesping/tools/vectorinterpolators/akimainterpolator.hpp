@@ -149,7 +149,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _min_linearextrapolator(target_x);
 
                 default: // fail
-                    return _min_linearextrapolator(target_x);
+                    throw std::out_of_range("test 1");
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                            "] is out of range (too small)(" + std::to_string(_X[0]) + "/" +
@@ -168,7 +168,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _max_linearextrapolator(target_x);
 
                 default: // fail
-                    return _min_linearextrapolator(target_x);
+                    throw std::out_of_range("test 1");
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                            "] is out of range  (too large)(" + std::to_string(_X[0]) + "/" +
