@@ -149,13 +149,12 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _min_linearextrapolator(target_x);
 
                 default: // fail
-                {
-                    std::string msg;
-                    msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
-                           "] is out of range (too small)(" + std::to_string(_X[0]) + "/" +
-                           std::to_string(_X.back()) + ")! (and fail on extrapolate was set)";
-                    throw std::runtime_error(msg);
-                }
+                    throw std::out_of_range(fmt::format(
+                        "ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "
+                        "(and fail on extrapolate was set)",
+                        target_x,
+                        _X[0],
+                        _X.back()));
             }
         }
         else if (target_x > _X.back())
@@ -169,13 +168,13 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _max_linearextrapolator(target_x);
 
                 default: // fail
-                {
-                    std::string msg;
-                    msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
-                           "] is out of range  (too large)(" + std::to_string(_X[0]) + "/" +
-                           std::to_string(_X.back()) + ")! (and fail on extrapolate was set)";
-                    throw std::runtime_error(msg);
-                }
+                    throw std::out_of_range(fmt::format(
+                        "ERROR[INTERPOLATE]: x value [{}] is out of range (too large)({}/{})! "
+                        "(and fail on extrapolate was set)",
+                        target_x,
+                        _X[0],
+                        _X.back()   //
+                        ));
             }
         }
 
