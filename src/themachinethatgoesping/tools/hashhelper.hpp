@@ -7,7 +7,9 @@
 /* generated doc strings */
 #include ".docstrings/hashhelper.doc.hpp"
 
-#include <xtensor/xtensor.hpp>
+#ifdef __arm__
+    #define XXH_VECTOR 0
+#endif
 #include <xxhash.hpp>
 
 /**

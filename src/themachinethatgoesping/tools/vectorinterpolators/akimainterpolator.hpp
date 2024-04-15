@@ -145,7 +145,6 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _min_linearextrapolator(target_x);
 
                 default: // fail
-                    throw std::out_of_range(fmt::format("ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "), 0, 0);
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "
                         "(and fail on extrapolate was set)",
@@ -166,7 +165,6 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _max_linearextrapolator(target_x);
 
                 default: // fail
-                    throw std::out_of_range(fmt::format("ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "), 0, 0);
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too large)({}/{})! "
                         "(and fail on extrapolate was set)",

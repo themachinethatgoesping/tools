@@ -14,6 +14,10 @@
 
 #include <boost/iostreams/concepts.hpp> // sink
 #include <boost/iostreams/stream.hpp>
+
+#ifdef __arm__
+    #define XXH_VECTOR 0
+#endif
 #include <xxhash.hpp>
 
 class XXHashSink : public boost::iostreams::sink
