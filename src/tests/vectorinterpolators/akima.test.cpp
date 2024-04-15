@@ -72,6 +72,7 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
+                        interpolator(-11);
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
                     }
