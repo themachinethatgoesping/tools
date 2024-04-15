@@ -42,11 +42,7 @@ You can contact the author at :
 /* Intrinsics
 * Sadly has to be included in the global namespace or literally everything breaks
 */
-#ifdef __arm__
-    #define XXH_VECTOR 0
-#else
-	#include <immintrin.h>
-#endif
+#define XXH_VECTOR 0
 
 namespace xxh
 {
