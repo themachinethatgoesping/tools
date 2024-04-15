@@ -243,7 +243,7 @@ jobs:
 
   macos:
     name: ci on macOS
-    runs-on: macos-14
+    runs-on: macos-12
     strategy:
       fail-fast: false
       matrix:
