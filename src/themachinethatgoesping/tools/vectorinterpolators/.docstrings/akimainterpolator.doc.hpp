@@ -1,4 +1,4 @@
-//sourcehash: 9ec32b7debf69a1f882c66a4f2080bc3b69855bcb7e5c3cf4e03c92ff731fbd3
+//sourcehash: c88597aa8b5c2e0bca95ec3f824e5da573df684c0750302b964635c4744e8e41
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -106,6 +106,8 @@ R"doc(return the y component of the internal data vector
 
 Returns:
     std::vector<XYType>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_y_const = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_info_string =
 R"doc(\ return an info string using the class __printer__ object \

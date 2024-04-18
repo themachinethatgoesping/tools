@@ -1,4 +1,4 @@
-//sourcehash: 8355284fc40c74ad31f4ccffc94a9e6a5c6942b6d588b02fea7146d14ca36b5e
+//sourcehash: 634f4591d00881e82a5c150d8b39144981ba0f7b039ce63ff97944d6e8a4fffa
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -94,6 +94,8 @@ R"doc(return the y component of the internal data vector
 
 Returns:
     std::vector<YType>)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_y_const = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_insert = R"doc()doc";
 

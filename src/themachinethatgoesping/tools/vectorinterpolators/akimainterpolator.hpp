@@ -117,17 +117,11 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         return true;
     }
 
-    /**
-     * @brief get the interpolated y value for given x target
-     *
-     * @param target_x find the corresponding y value for this x value
-     * @return corresponding y value
-     */
-    XYType operator()(XYType target_x) final
+    XYType get_y_const(XYType target_x) const
     {
         // if less than 4 values are present, act as linear interpolator
         if (_X.size() < 4)
-            return _min_linearextrapolator(target_x);
+            return _min_linearextrapolator.get_y_const(target_x);
 
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
         if (_X.size() != _Y.size())
@@ -142,7 +136,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _Y[0];
 
                 case t_extr_mode::extrapolate:
-                    return _min_linearextrapolator(target_x);
+                    return _min_linearextrapolator.get_y_const(target_x);
 
                 default: // fail
                     throw std::out_of_range("test");
@@ -151,8 +145,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                         "(and fail on extrapolate was set)",
                         target_x,
                         _X[0],
-                        _X.back()
-                        ));
+                        _X.back()));
             }
         }
         else if (target_x > _X.back())
@@ -163,7 +156,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _Y.back();
 
                 case t_extr_mode::extrapolate:
-                    return _max_linearextrapolator(target_x);
+                    return _max_linearextrapolator.get_y_const(target_x);
 
                 default: // fail
                     throw std::out_of_range("test");
@@ -172,13 +165,20 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                         "(and fail on extrapolate was set)",
                         target_x,
                         _X[0],
-                        _X.back()
-                        ));
+                        _X.back()));
             }
         }
 
         return _akima_spline(target_x);
     }
+
+    /**
+     * @brief get the interpolated y value for given x target
+     *
+     * @param target_x find the corresponding y value for this x value
+     * @return corresponding y value
+     */
+    XYType operator()(XYType target_x) final { return get_y_const(target_x); }
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)

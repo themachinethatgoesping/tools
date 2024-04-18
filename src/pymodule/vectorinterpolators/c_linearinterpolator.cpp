@@ -41,6 +41,10 @@ void init_linearinterpolator(pybind11::module& m, const std::string& name)
              py::overload_cast<XType>(&t_LinearInterpolator::operator()),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              py::arg("target_x"))
+        .def("get_y_const",
+             py::overload_cast<XType>(&t_LinearInterpolator::get_y_const, py::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_y_const),
+             py::arg("target_x"))
         .def("__call__",
              py::overload_cast<const std::vector<XType>&>(&t_LinearInterpolator::operator()),
              DOC(themachinethatgoesping,

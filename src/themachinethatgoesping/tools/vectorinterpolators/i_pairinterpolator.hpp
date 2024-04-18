@@ -277,6 +277,72 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
     // interpolation functions
     //-------------------------
 
+    YType get_y_const(XType target_x) const
+    {
+        // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
+        if (_X.size() == 0)
+            throw(std::domain_error(
+                "ERROR[PairInterpolator::operator()]: data vectors are not initialized!"));
+
+        // if size of _X is 1, return _Y[0]
+        if (_X.size() == 1)
+            return _Y[0];
+
+        auto it = lower_bound(_X.begin(), _X.end(), target_x);
+
+        // interpolation pair
+        std::unique_ptr<_t_x_pair> pair;
+
+        if (it == _X.begin())
+        {
+            switch (I_Interpolator<XType, YType>::_extr_mode)
+            {
+                case t_extr_mode::fail: {
+                    std::string msg;
+                    msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
+                           "] is out of range (too small)(" + std::to_string(_X.front()) +
+                           ")! (and fail on extrapolate was set)";
+                    throw(std::out_of_range(msg));
+                }
+                case t_extr_mode::nearest:
+                    return _Y[0];
+                default:
+                    pair = std::make_unique<_t_x_pair>(0, 1, _X[0], _X[1]);
+                    break;
+            }
+        }
+        else if (it == _X.end())
+        {
+            size_t last = _X.size() - 1;
+
+            switch (I_Interpolator<XType, YType>::_extr_mode)
+            {
+                case t_extr_mode::fail: {
+                    std::string msg;
+                    msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
+                           "] is out of range  (too large)(" + std::to_string(_X.front()) +
+                           ")! (and fail on extrapolate was set)";
+                    throw(std::out_of_range(msg));
+                }
+
+                case t_extr_mode::nearest:
+                    return _Y[last];
+
+                default:
+                    pair = std::make_unique<_t_x_pair>(last - 1, last, _X[last - 1], _X[last]);
+                    break;
+            }
+        }
+        else
+        {
+            auto i = it - _X.begin();
+            pair   = std::make_unique<_t_x_pair>(i - 1, i, _X[i - 1], _X[i]);
+        }
+
+        return interpolate_pair(
+            pair->calc_target_x(target_x), _Y[pair->_xmin_index], _Y[pair->_xmax_index]);
+    }
+
     /**
      * @brief get the interpolated y value for given x target
      *
