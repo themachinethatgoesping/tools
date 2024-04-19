@@ -422,6 +422,11 @@ TEST_CASE("VectorInterpolators should hashable", TESTTAG)
     REQUIRE(aip.binary_hash() != 0);
     REQUIRE(slerp.binary_hash() != 0);
 
+    REQUIRE(lip.binary_hash() == 12663595233414360043ULL);
+    REQUIRE(nip.binary_hash() == 12663595233414360043ULL);
+    REQUIRE(aip.binary_hash() == 7504722842580537146ULL);
+    REQUIRE(slerp.binary_hash() == 18251942753496897247ULL);
+
     // test_interpolator_serialize(nip);
     // test_interpolator_serialize(lip);
     // test_interpolator_serialize(aip);
