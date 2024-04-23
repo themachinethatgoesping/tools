@@ -65,7 +65,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
      *
      */
     AkimaInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<XYType, XYType>(extrapolation_mode, "AkimaInterpolator")
+        : I_Interpolator<XYType, XYType>(extrapolation_mode)
     {
         // set_data_XY({ 0, 1, 2, 3 }, { 0, 1, 2, 3 });
     }
@@ -87,7 +87,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
     AkimaInterpolator(std::vector<XYType> X,
                       std::vector<XYType> Y,
                       t_extr_mode         extrapolation_mode = t_extr_mode::extrapolate)
-        : I_Interpolator<XYType, XYType>(extrapolation_mode, "AkimaInterpolator")
+        : I_Interpolator<XYType, XYType>(extrapolation_mode)
     {
         set_data_XY(std::move(X), std::move(Y));
     }
@@ -98,7 +98,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
      */
     bool empty() const { return _X.empty(); }
 
-    static std::string type_to_string() { return "AkimaInterpolator"; }
+    std::string class_name() const override { return "AkimaInterpolator"; }
 
     // -- convenience functions --
     bool operator!=(const AkimaInterpolator<XYType>& rhs) const { return !(rhs == *this); }

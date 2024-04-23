@@ -1,4 +1,4 @@
-//sourcehash: 4ca2ffbe64c1ba85d613f3cd9a2138f885ef8ce80b22af7c14d272a479dbabd0
+//sourcehash: b197b5e4dfdc934f168dee4f4551b91dea06e427cdff66627ce5f6a16989eecb
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -69,6 +69,8 @@ R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
 function. This function is called binary because the \ to_binary
 function of the object is used)doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_class_name = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_from_binary =
 R"doc(convert object to vector of bytes \ \
 
@@ -134,8 +136,6 @@ Returns:
     vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_NearestInterpolator_type_to_string = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

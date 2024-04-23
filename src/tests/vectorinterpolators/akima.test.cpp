@@ -31,6 +31,9 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
     // append some data
     interpolator.append(x_append, y_append);
 
+    // hashing should stay stable
+    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL);
+
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
@@ -38,6 +41,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
 
         REQUIRE(interpolator(x_append) == y_append);
     }
+
+    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("preset values should be interpolated correctly")
     {
@@ -50,6 +55,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
+    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
+
     SECTION("preset value vectors should be interpolated correctly")
     {
         std::vector<double> targets_x  = { -7.5, -2.6, 3.0, 8, 9.0, 10 };
@@ -60,6 +67,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         for (unsigned int i = 0; i < targets_x.size(); ++i)
             REQUIRE(comp_y[i] == Catch::Approx(expected_y[i]));
     }
+
+    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("extrapolation mode should cause:")
     {

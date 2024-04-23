@@ -97,17 +97,15 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
      */
     I_PairInterpolator(std::vector<XType> X,
                        std::vector<YType> Y,
-                       t_extr_mode        extrapolation_mode = t_extr_mode::extrapolate,
-                       std::string_view   name               = "I_PairInterpolator")
-        : I_Interpolator<XType, YType>(extrapolation_mode, name)
+                       t_extr_mode        extrapolation_mode = t_extr_mode::extrapolate)
+        : I_Interpolator<XType, YType>(extrapolation_mode)
         , _last_x_pair(0, 1, 0, 1)
     {
         set_data_XY(std::move(X), std::move(Y));
     }
 
-    I_PairInterpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate,
-                       std::string_view name               = "I_PairInterpolator")
-        : I_Interpolator<XType, YType>(extrapolation_mode, name)
+    I_PairInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+        : I_Interpolator<XType, YType>(extrapolation_mode)
         , _last_x_pair(0, 1, 0, 1)
     {
     }
@@ -473,6 +471,8 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
     //--------------------------------
     // virtual (interface) functions
     //--------------------------------
+
+    std::string class_name() const override { return "I_PairInterpolator"; }
 
     /**
      * @brief Interface for implementing an interpolation between two y values

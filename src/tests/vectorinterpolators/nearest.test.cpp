@@ -25,8 +25,12 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
 
     vectorinterpolators::NearestInterpolator interpolator(x, y);
 
+    // hashing should stay stable
+    REQUIRE(interpolator.binary_hash() == 14894304295739877660ULL);
+
     // append some data
     interpolator.append(x_append, y_append);
+    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL);
 
     SECTION("existing values should be looked up correctly")
     {
@@ -35,12 +39,16 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
 
         REQUIRE(interpolator(x_append) == Catch::Approx(y_append));
     }
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("const interpolation should produce the same results as classic interpolation")
     {
         for (double x_val = -10; x_val <= 12; x_val += 0.1)
             REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
     }
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("preset values should be interpolated correctly")
     {
@@ -61,6 +69,8 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
         REQUIRE(interpolator(9.0) == Catch::Approx(-1));
         REQUIRE(interpolator(9.1) == Catch::Approx(-1));
     }
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("preset value vectors should be interpolated correctly")
     {
@@ -69,6 +79,8 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
 
         REQUIRE(interpolator(targets_x) == expected_y);
     }
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("extrapolation mode should cause:")
     {
@@ -94,7 +106,6 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
                     REQUIRE(interpolator(13) == Catch::Approx(y_append));
                     REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1));
                     REQUIRE(interpolator.get_y_const(13) == Catch::Approx(y_append));
-
                     break;
             }
         }

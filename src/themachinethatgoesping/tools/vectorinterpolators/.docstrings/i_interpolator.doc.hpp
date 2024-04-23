@@ -1,4 +1,4 @@
-//sourcehash: 1d3134dd7a3a390a51520c72de3ff5cf4412e4f8f827aa8c1f47a29d02af4909
+//sourcehash: 4e8ba09631ed5558634c14f7cd603301b9a90a6769da8c09c05140343749a297
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -133,8 +133,6 @@ Parameter ``Y``:
 Parameter ``is_sorted``:
     this indicates that X is already sorted in ascending order.
     (default: false))doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call =
 R"doc(get the interpolated y value for given x target

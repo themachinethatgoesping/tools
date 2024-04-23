@@ -1,4 +1,4 @@
-//sourcehash: 5b50da36ef4671cb0c2f6f30af1c58cc299e950538d97b66b8957e5abd2a3932
+//sourcehash: 806981daac7f82395a86aea9b4f1046d975b547a87e304614341e98c9bb51436
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -136,6 +136,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpI
 R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
 function. This function is called binary because the \ to_binary
 function of the object is used)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_class_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_extend =
 R"doc(append data with lists of x, yaw, pitch, roll data (vectorized call)
@@ -323,8 +325,6 @@ Returns:
     vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_type_to_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr =
 R"doc(get the interpolated yaw, pitch and roll values for given x target

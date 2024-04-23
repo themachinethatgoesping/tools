@@ -1,4 +1,4 @@
-//sourcehash: c88597aa8b5c2e0bca95ec3f824e5da573df684c0750302b964635c4744e8e41
+//sourcehash: 0178dbb6f458920c2421bead0d91650e40d07add6cf6a2098ae2d67509336339
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -79,6 +79,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaI
 R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
 function. This function is called binary because the \ to_binary
 function of the object is used)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_class_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
@@ -187,8 +189,6 @@ Returns:
     vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_type_to_string = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

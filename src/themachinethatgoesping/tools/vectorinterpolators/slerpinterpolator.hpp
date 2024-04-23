@@ -51,14 +51,14 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
      * @brief Constructor to make default initialization possible (necessary?)
      */
     SlerpInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, t_quaternion>(extrapolation_mode, "SlerpInterpolator")
+        : I_PairInterpolator<XType, t_quaternion>(extrapolation_mode)
     {
     }
 
     SlerpInterpolator(const std::vector<XType>&        X,
                       const std::vector<t_quaternion>& Y,
                       t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, t_quaternion>(X, Y, extrapolation_mode, "SlerpInterpolator")
+        : I_PairInterpolator<XType, t_quaternion>(X, Y, extrapolation_mode)
     {
     }
 
@@ -83,8 +83,7 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         : I_PairInterpolator<XType, t_quaternion>(
               X,
               rotationfunctions::quaternion_from_ypr(Yaw, Pitch, Roll, input_in_degrees),
-              extrapolation_mode,
-              "SlerpInterpolator")
+              extrapolation_mode)
     {
     }
 
@@ -105,12 +104,11 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         : I_PairInterpolator<XType, t_quaternion>(
               X,
               rotationfunctions::quaternion_from_ypr(YPR, input_in_degrees),
-              extrapolation_mode,
-              "SlerpInterpolator")
+              extrapolation_mode)
     {
     }
 
-    static std::string type_to_string() { return "SlerpInterpolator"; }
+    std::string class_name() const override { return "SlerpInterpolator"; }
 
     bool operator!=(const SlerpInterpolator<XType, YType>& rhs) const { return !(rhs == *this); }
     bool operator==(const SlerpInterpolator<XType, YType>& rhs) const
@@ -354,7 +352,6 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         SlerpInterpolator obj;
 
         is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
-        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
 
         obj._X = container_from_stream<std::vector<XType>>(is);
         obj._Y = container_from_stream<std::vector<t_quaternion>>(is);
@@ -367,7 +364,6 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         using tools::classhelper::stream::container_to_stream;
 
         os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
-        os.write(reinterpret_cast<const char*>(&(this->_last_x_pair)), sizeof(this->_last_x_pair));
 
         container_to_stream(os, this->_X);
         container_to_stream(os, this->_Y);

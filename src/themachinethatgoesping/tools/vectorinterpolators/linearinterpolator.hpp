@@ -40,16 +40,17 @@ namespace vectorinterpolators {
 template<std::floating_point XType, typename YType>
 class LinearInterpolator : public I_PairInterpolator<XType, YType>
 {
+
   public:
     LinearInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, YType>(extrapolation_mode, "LinearInterpolator")
+        : I_PairInterpolator<XType, YType>(extrapolation_mode)
     {
     }
 
     LinearInterpolator(const std::vector<XType>& X,
                        const std::vector<YType>& Y,
-                       t_extr_mode                extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode, "LinearInterpolator")
+                       t_extr_mode               extrapolation_mode = t_extr_mode::extrapolate)
+        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode)
     {
     }
 
@@ -84,7 +85,7 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
         return (YType)(target_x * (y2) + (YType(1.0) - target_x) * (y1));
     }
 
-    static std::string type_to_string() { return "LinearInterpolator"; }
+    std::string class_name() const override { return "LinearInterpolator"; }
 
     // ----- to/from stream -----
     static LinearInterpolator<XType, YType> from_stream(std::istream& is)
@@ -94,7 +95,6 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
         LinearInterpolator<XType, YType> obj;
 
         is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
-        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
 
         obj._X = container_from_stream<std::vector<XType>>(is);
         obj._Y = container_from_stream<std::vector<YType>>(is);
@@ -107,7 +107,6 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
         using tools::classhelper::stream::container_to_stream;
 
         os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
-        os.write(reinterpret_cast<const char*>(&(this->_last_x_pair)), sizeof(this->_last_x_pair));
 
         container_to_stream(os, this->_X);
         container_to_stream(os, this->_Y);

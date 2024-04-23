@@ -1,4 +1,4 @@
-//sourcehash: 819741020ec3f8758497423016487dc3e54ef9117186a39cc79d1d05b7478b7c
+//sourcehash: 8021d63d9fadfdc593e81c23601eee9860f3d31130419fdf17145a5fe2676951
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -55,6 +55,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_Linear
 R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
 function. This function is called binary because the \ to_binary
 function of the object is used)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_class_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_from_binary =
 R"doc(convert object to vector of bytes \ \
@@ -121,8 +123,6 @@ Returns:
     vector of bytes \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_to_stream = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_type_to_string = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

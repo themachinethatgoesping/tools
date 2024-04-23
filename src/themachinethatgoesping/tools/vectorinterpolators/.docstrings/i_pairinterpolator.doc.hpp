@@ -1,4 +1,4 @@
-//sourcehash: 634f4591d00881e82a5c150d8b39144981ba0f7b039ce63ff97944d6e8a4fffa
+//sourcehash: f8a9c17e0ebaf2a6da00bf6080b7b08aced8c7017ad492503d2549b3f95a567e
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -78,6 +78,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Pair
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(< main data vector containing pairs of corresponding y datapoints)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_class_name = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 

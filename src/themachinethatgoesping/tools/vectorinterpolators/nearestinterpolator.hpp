@@ -42,9 +42,10 @@ namespace vectorinterpolators {
 template<std::floating_point XType, typename YType>
 class NearestInterpolator : public I_PairInterpolator<XType, YType>
 {
+
   public:
     NearestInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, YType>(extrapolation_mode, "NearestInterpolator")
+        : I_PairInterpolator<XType, YType>(extrapolation_mode)
     {
     }
 
@@ -59,12 +60,12 @@ class NearestInterpolator : public I_PairInterpolator<XType, YType>
     NearestInterpolator(const std::vector<XType>& X,
                         const std::vector<YType>& Y,
                         t_extr_mode               extrapolation_mode = t_extr_mode::extrapolate)
-        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode, "NearestInterpolator")
+        : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode)
     {
     }
     ~NearestInterpolator() = default;
 
-    static std::string type_to_string() { return "NearestInterpolator"; }
+    std::string class_name() const override { return "NearestInterpolator"; }
 
     bool operator!=(const NearestInterpolator<XType, YType>& rhs) const { return !(rhs == *this); }
     bool operator==(const NearestInterpolator<XType, YType>& rhs) const
@@ -114,7 +115,6 @@ class NearestInterpolator : public I_PairInterpolator<XType, YType>
         NearestInterpolator<XType, YType> obj;
 
         is.read(reinterpret_cast<char*>(&(obj._extr_mode)), sizeof(obj._extr_mode));
-        is.read(reinterpret_cast<char*>(&(obj._last_x_pair)), sizeof(obj._last_x_pair));
 
         obj._X = container_from_stream<std::vector<XType>>(is);
         obj._Y = container_from_stream<std::vector<YType>>(is);
@@ -127,7 +127,6 @@ class NearestInterpolator : public I_PairInterpolator<XType, YType>
         using tools::classhelper::stream::container_to_stream;
 
         os.write(reinterpret_cast<const char*>(&(this->_extr_mode)), sizeof(this->_extr_mode));
-        os.write(reinterpret_cast<const char*>(&(this->_last_x_pair)), sizeof(this->_last_x_pair));
 
         container_to_stream(os, this->_X);
         container_to_stream(os, this->_Y);

@@ -35,7 +35,7 @@ namespace vectorinterpolators {
  * @brief extrapolation mode type.
  *
  */
-enum class t_extr_mode
+enum class t_extr_mode: uint8_t
 {
     extrapolate = 0, ///< interpolate using the closest value pair in the internal x vector
     fail    = 1, ///< throw out_of_range exception if x value exceeds boundaries of internal vector
@@ -60,7 +60,6 @@ template<std::floating_point XType, typename YType>
 class I_Interpolator
 {
   protected:
-    std::string_view _name;
     t_extr_mode      _extr_mode; ///< extrapolation mode
 
   public:
@@ -70,10 +69,8 @@ class I_Interpolator
      *
      * @param extrapolation_mode extrapolation mode (nearest or fail)
      */
-    I_Interpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate,
-                   std::string_view name               = "I_Interpolator")
-        : _name(name)
-        , _extr_mode(extrapolation_mode)
+    I_Interpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate)
+        : _extr_mode(extrapolation_mode)
     {
     }
     virtual ~I_Interpolator() = default;
@@ -83,7 +80,7 @@ class I_Interpolator
      *
      * @return std::string_view
      */
-    std::string_view class_name() const { return _name; }
+    virtual std::string class_name() const { return "I_Interpolator"; }
 
     /**
      * @brief change the input data to these X and Y vectors

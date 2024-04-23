@@ -30,7 +30,7 @@ const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 template<typename t_interpolator>
 void test_interpolator_serialize(t_interpolator& ip)
 {
-    cerr << "test_interpolator_serialize: " << ip.type_to_string() << endl;
+    cerr << "test_interpolator_serialize: " << ip.class_name() << endl;
     t_interpolator ip2(ip);
 
     REQUIRE(ip == ip2);
@@ -44,7 +44,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     ip3.to_stream(ofs);
     ofs.close();
     // write file if it does not exist or is only an empty reference
-    auto test_file = TESTDIR + "vectorinterpolators/" + ip3.type_to_string() + ".binary";
+    auto test_file = TESTDIR + "vectorinterpolators/" + ip3.class_name() + ".binary";
 
     std::filesystem::create_directories(TESTDIR + "vectorinterpolators/");
     bool recreate_test_file = false;
@@ -422,10 +422,10 @@ TEST_CASE("VectorInterpolators should hashable", TESTTAG)
     REQUIRE(aip.binary_hash() != 0);
     REQUIRE(slerp.binary_hash() != 0);
 
-    REQUIRE(lip.binary_hash() == 12663595233414360043ULL);
-    REQUIRE(nip.binary_hash() == 12663595233414360043ULL);
-    REQUIRE(aip.binary_hash() == 7504722842580537146ULL);
-    REQUIRE(slerp.binary_hash() == 18251942753496897247ULL);
+    CHECK(lip.binary_hash() == 10074301266414863605ULL);
+    CHECK(nip.binary_hash() == 10074301266414863605ULL);
+    CHECK(aip.binary_hash() == 10074301266414863605ULL);
+    CHECK(slerp.binary_hash() == 5661085787625436237ULL);
 
     // test_interpolator_serialize(nip);
     // test_interpolator_serialize(lip);
