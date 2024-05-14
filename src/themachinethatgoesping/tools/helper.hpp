@@ -221,6 +221,13 @@ inline bool compare_containers(const t_container1& c1, const t_container2& c2)
             return false;
 }
 
+template<typename t_float>
+bool float_equals(t_float a, t_float b, t_float epsilon = 0.0001)
+{
+    return std::abs(a - b) < epsilon || (std::isnan(a) && std::isnan(b)) ||
+           (std::isinf(a) && std::isinf(b));
+}
+
 } // namespace helper
 } // namespace tools
 } // namespace themachinethatgoesping
