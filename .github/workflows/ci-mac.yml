@@ -55,7 +55,7 @@ concurrency:
   
 jobs:
   macos:
-    name: ci on macOS
+    name: CI ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -93,7 +93,7 @@ jobs:
     
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
-      run: BOOST=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.cxx_compiler }} meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+      run: BOOST_ROOT=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.cxx_compiler }} meson setup builddir/; meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
