@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.24.0',
+  version: '0.24.1',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
   meson_version: '>=1.3.2' #first version with  clang-cl openmp support
 )
@@ -67,6 +67,9 @@ xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabl
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
+
+#fast_float (for fast locale independent float parsing)
+flat_map_dep = dependency('flat_map')
 
 #xxhash_cpp (for fast hashing of classes/buffers)
 xxhash_cpp_dep = dependency('xxhash_cpp')

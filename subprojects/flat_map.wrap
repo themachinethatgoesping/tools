@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[wrap-git]
+url = https://github.com/Flast/flat_map.git
+revision = master
+directory = flat_map-master
+patch_directory = flat_map
+
+[provide]
+flat_map = flat_map_dep
+
+
