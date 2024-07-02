@@ -194,7 +194,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
                 std::cerr << "extend 4 " << i << std::endl;
             }
         }
-        catch (std::domain_error &e)
+        catch (std::exception& e)
         {
             std::cerr << "extend 7 " << std::endl;
             std::cerr << e.what() << std::endl;
