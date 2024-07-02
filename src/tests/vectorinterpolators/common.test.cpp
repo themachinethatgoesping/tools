@@ -204,29 +204,29 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             REQUIRE(interpolator->get_data_Y() != y);
             interpolator->set_data_XY(x, y);
 
-            // // same for inserting lists (does not have to be sorted, but must be unique)
-            // REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // interpolator->insert({ 11, 13 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() ==
-            //         std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
-            // REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-            //     interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
-            // interpolator->set_data_XY(x, y);
-            // interpolator->insert({ 14, 13 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() ==
-            //         std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
-            // REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-            //     interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
-            // interpolator->set_data_XY(x, y);
-            // REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // interpolator->insert({ 13, 14 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() != x);
-            // REQUIRE(interpolator->get_data_Y() != y);
-            // interpolator->set_data_XY(x, y);
+            // same for inserting lists (does not have to be sorted, but must be unique)
+            REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            interpolator->insert({ 11, 13 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() ==
+                    std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
+            REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+                interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
+            interpolator->set_data_XY(x, y);
+            interpolator->insert({ 14, 13 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() ==
+                    std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
+            REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+                interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
+            interpolator->set_data_XY(x, y);
+            REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            interpolator->insert({ 13, 14 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() != x);
+            REQUIRE(interpolator->get_data_Y() != y);
+            interpolator->set_data_XY(x, y);
 
             // // initialize test data (wrong order)
             // std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
