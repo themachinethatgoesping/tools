@@ -189,9 +189,9 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 
             // interpolator should fail if double x elements are appended
             REQUIRE_THROWS(interpolator->append(12, -1));
-            continue;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            continue;
             REQUIRE_THROWS(interpolator->append(11, -1));
             interpolator->append(13, -1);
             interpolator->set_data_XY(x, y);
