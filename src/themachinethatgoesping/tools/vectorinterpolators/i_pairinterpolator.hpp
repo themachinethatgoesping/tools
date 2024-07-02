@@ -143,7 +143,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
     // -----------------------
     void append(XType x, YType y) final
     {
-        if (_X.size() > 0)
+        if (!_X.empty())
             if (x <= _X.back())
             {
                 throw(std::domain_error("ERROR[Interpolation::append]: appended x value is not "
@@ -171,9 +171,11 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
 
     void extend(const std::vector<XType>& X, const std::vector<YType>& Y) final
     {
+        std::cerr << "extend 1" << std::endl;
         if (X.size() != Y.size())
             throw(std::domain_error("ERROR[Interpolator::extend]: list sizes do not match"));
 
+        std::cerr << "extend 2" << std::endl;
         // if no internal data yet, just set the data
         if (_X.size() == 0)
         {
@@ -181,6 +183,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             return;
         }
 
+        std::cerr << "extend 3" << std::endl;
         size_t orig_size = _X.size();
 
         try
@@ -188,10 +191,12 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             for (size_t i = 0; i < X.size(); ++i)
             {
                 append(X[i], Y[i]);
+                std::cerr << "extend 4 " << i << std::endl;
             }
         }
         catch (...)
         {
+            std::cerr << "extend 5 " << std::endl;
             // restore original size if something went wrong
             _X.resize(orig_size);
             _Y.resize(orig_size);
