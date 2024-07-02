@@ -224,12 +224,15 @@ class PyIndexer
             _index_stop  = _index_start + long(_slice_size) * _index_step;
 
             if (_index_start >= long(_vector_size))
+            {
+                throw std::out_of_range("failure");
                 throw(std::out_of_range(fmt::format(
                     "PyIndexer({}, {}, {}): index_start is out of bounds!\n--- indexer ---\n{}",
                     start,
                     stop,
                     step,
                     info_string())));
+            }
         }
         else if (start > stop && step < 0)
         {
@@ -259,6 +262,7 @@ class PyIndexer
             _index_step  = step;
             _slice_size  = 0;
 
+            throw std::out_of_range("failure");
             throw(std::out_of_range(
                 fmt::format("PyIndexer({}, {}, {}): Slice with zero size!\n--- indexer ---\n{}",
                             start,
@@ -270,19 +274,25 @@ class PyIndexer
         _index_min = std::min(_index_start, _index_stop - _index_step);
         _index_max = std::max(_index_start, _index_stop - _index_step);
         if (_index_min >= _vector_size)
+        {
+            throw std::out_of_range("failure");
             throw(std::out_of_range(fmt::format(
                 "PyIndexer({}, {}, {}): _index_min is out of bounds!\n--- indexer ---\n{}",
                 start,
                 stop,
                 step,
                 info_string())));
+        }
         if (_index_max >= _vector_size)
+        {
+            throw std::out_of_range("failure");
             throw(std::out_of_range(fmt::format(
                 "PyIndexer({}, {}, {}): _index_max is out of bounds!\n--- indexer ---\n{}",
                 start,
                 stop,
                 step,
                 info_string())));
+        }
     }
 
     /**
@@ -370,12 +380,15 @@ class PyIndexer
 
             // TODO: fix error messages
             if (index > long(_index_max))
+            {
+                throw std::out_of_range("failure");
                 throw std::out_of_range(fmt::format("index[{} + ({} * {}) = {}] is >= max ({})! ",
                                                     _index_start,
                                                     (index - _index_start) / _index_step,
                                                     _index_step,
                                                     index,
                                                     _index_max));
+            }
         }
         else
         {
@@ -385,12 +398,18 @@ class PyIndexer
             // index = python_index < 0 ? _vector_size + python_index : python_index;
 
             if (size_t(index) >= _vector_size)
+            {
+                throw std::out_of_range("failure");
                 throw std::out_of_range(
                     fmt::format("Index [{}] is >= max [{}]! ", index, _vector_size));
+            }
         }
 
         if (index < long(_index_min))
+        {
+            throw std::out_of_range("failure");
             throw std::out_of_range(fmt::format("Index [{}] is < min [{}]! ", index, _index_min));
+        }
 
         return size_t(index);
     }
