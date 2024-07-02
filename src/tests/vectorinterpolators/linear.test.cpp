@@ -37,8 +37,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
 
         REQUIRE(interpolator(x_append) == Catch::Approx(y_append));
     }
-
-    return; // test 3
     
     INFO("Peter 2");
     SECTION("const interpolation should produce the same results as classic interpolation")
@@ -47,6 +45,8 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
             REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
     }
 
+
+    return; // test 3
     INFO("Peter 3");
     SECTION("preset values should be interpolated correctly")
     {
