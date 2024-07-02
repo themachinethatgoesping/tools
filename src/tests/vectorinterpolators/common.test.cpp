@@ -325,84 +325,84 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
 //     }
 // }
 
-// /**
-//  * @brief This test is more of a compile time check actually, it makes sure that the interpolators
-//  * implement all virtual functions such that they can actually be copied (had problems with this)
-//  *
-//  */
-// TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", TESTTAG)
-// {
-//     // std::vector<double> x     = { -10, -5, 0, 6, 12 };
-//     // std::vector<double> y     = { 1, 0, 1, 0, -1 };
-//     // std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
-//     // std::vector<double> pitch = { 1, 0, 1, 0, -1 };
-//     // std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+/**
+ * @brief This test is more of a compile time check actually, it makes sure that the interpolators
+ * implement all virtual functions such that they can actually be copied (had problems with this)
+ *
+ */
+TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", TESTTAG)
+{
+    // std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    // std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    // std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    // std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    // std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-//     vectorinterpolators::LinearInterpolator<double, double>  lip;
-//     vectorinterpolators::NearestInterpolator<double, double> nip;
-//     vectorinterpolators::AkimaInterpolator<double>           aip;
-//     vectorinterpolators::SlerpInterpolator<double, double>   slerp;
+    vectorinterpolators::LinearInterpolator<double, double>  lip;
+    vectorinterpolators::NearestInterpolator<double, double> nip;
+    vectorinterpolators::AkimaInterpolator<double>           aip;
+    vectorinterpolators::SlerpInterpolator<double, double>   slerp;
 
-//     // interpolators should fail if they are not initialized
-//     REQUIRE_THROWS_AS(lip(0), std::domain_error);
-//     REQUIRE_THROWS_AS(nip(0), std::domain_error);
-//     REQUIRE_THROWS_AS(aip(0), std::domain_error);
-//     REQUIRE_THROWS_AS(slerp(0), std::domain_error);
+    // interpolators should fail if they are not initialized
+    REQUIRE_THROWS_AS(lip(0), std::domain_error);
+    REQUIRE_THROWS_AS(nip(0), std::domain_error);
+    REQUIRE_THROWS_AS(aip(0), std::domain_error);
+    REQUIRE_THROWS_AS(slerp(0), std::domain_error);
 
-//     // interpolators should indicate that they are not initialized
-//     REQUIRE(lip.empty());
-//     REQUIRE(nip.empty());
-//     REQUIRE(aip.empty());
-//     REQUIRE(slerp.empty());
+    // interpolators should indicate that they are not initialized
+    REQUIRE(lip.empty());
+    REQUIRE(nip.empty());
+    REQUIRE(aip.empty());
+    REQUIRE(slerp.empty());
 
-//     // interpolators should return single value if they are initialized with a single value
-//     lip.append(10, 20);
-//     nip.append(10, 20);
-//     aip.append(10, 20);
-//     slerp.append(10, 20, 30, 40);
+    // interpolators should return single value if they are initialized with a single value
+    lip.append(10, 20);
+    nip.append(10, 20);
+    aip.append(10, 20);
+    slerp.append(10, 20, 30, 40);
 
-//     // interpolators should indicate that they are initialized
-//     REQUIRE(!lip.empty());
-//     REQUIRE(!nip.empty());
-//     REQUIRE(!aip.empty());
-//     REQUIRE(!slerp.empty());
+    // interpolators should indicate that they are initialized
+    REQUIRE(!lip.empty());
+    REQUIRE(!nip.empty());
+    REQUIRE(!aip.empty());
+    REQUIRE(!slerp.empty());
 
-//     REQUIRE(lip(-10) == 20);
-//     REQUIRE(nip(100) == 20);
-//     REQUIRE(aip(10) == 20);
-//     REQUIRE(slerp.ypr(10)[0] == Catch::Approx(20));
-//     REQUIRE(slerp.ypr(10)[1] == Catch::Approx(30));
-//     REQUIRE(slerp.ypr(10)[2] == Catch::Approx(40));
+    REQUIRE(lip(-10) == 20);
+    REQUIRE(nip(100) == 20);
+    REQUIRE(aip(10) == 20);
+    REQUIRE(slerp.ypr(10)[0] == Catch::Approx(20));
+    REQUIRE(slerp.ypr(10)[1] == Catch::Approx(30));
+    REQUIRE(slerp.ypr(10)[2] == Catch::Approx(40));
 
-//     // lip, nip and slerp interpolators should act normally if they are initialized with multiple
-//     // values
-//     lip.append(20, 30);
-//     nip.append(20, 30);
-//     slerp.append(20, 30, 40, 50);
-//     REQUIRE(lip(15) == 25);
-//     REQUIRE(lip(25) == 35);
-//     REQUIRE(nip(14) == 20);
-//     REQUIRE(nip(16) == 30);
-//     REQUIRE(slerp.ypr(15)[0] == Catch::Approx(24.579580303));
-//     REQUIRE(slerp.ypr(15)[1] == Catch::Approx(35.1774819807));
-//     REQUIRE(slerp.ypr(15)[2] == Catch::Approx(44.579580303));
+    // lip, nip and slerp interpolators should act normally if they are initialized with multiple
+    // values
+    lip.append(20, 30);
+    nip.append(20, 30);
+    slerp.append(20, 30, 40, 50);
+    REQUIRE(lip(15) == 25);
+    REQUIRE(lip(25) == 35);
+    REQUIRE(nip(14) == 20);
+    REQUIRE(nip(16) == 30);
+    REQUIRE(slerp.ypr(15)[0] == Catch::Approx(24.579580303));
+    REQUIRE(slerp.ypr(15)[1] == Catch::Approx(35.1774819807));
+    REQUIRE(slerp.ypr(15)[2] == Catch::Approx(44.579580303));
 
-//     // aip should act as linear interpolator when initialized with 2 values
-//     aip.append(20, 30);
-//     REQUIRE(aip(15) == 25);
+    // aip should act as linear interpolator when initialized with 2 values
+    aip.append(20, 30);
+    REQUIRE(aip(15) == 25);
 
-//     // aip should act as linear interpolator when initialized with 3 values
-//     aip.append(30, 50);
-//     REQUIRE(aip(25) == 40);
-//     REQUIRE(aip(35) == 60);
-//     REQUIRE(aip(15) == 25);
+    // aip should act as linear interpolator when initialized with 3 values
+    aip.append(30, 50);
+    REQUIRE(aip(25) == 40);
+    REQUIRE(aip(35) == 60);
+    REQUIRE(aip(15) == 25);
 
-//     // aip should act as akima interpolator when initialized with 4 values
-//     aip.append(40, 60);
-//     CHECK(aip(25) == 40);
-//     CHECK(aip(35) == Catch::Approx(56.25));
-//     REQUIRE(aip(15) == Catch::Approx(23.75));
-// }
+    // aip should act as akima interpolator when initialized with 4 values
+    aip.append(40, 60);
+    CHECK(aip(25) == 40);
+    CHECK(aip(35) == Catch::Approx(56.25));
+    REQUIRE(aip(15) == Catch::Approx(23.75));
+}
 
 // TEST_CASE("VectorInterpolators should hashable", TESTTAG)
 // {
