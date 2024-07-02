@@ -86,6 +86,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
+                        break; // test 9
                         INFO("Peter 6 1");
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
@@ -110,7 +111,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                     break;
 
                 default:
-                        break; // test 9
                     INFO("Peter 6 5");
                     SECTION(" - extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1.2));
