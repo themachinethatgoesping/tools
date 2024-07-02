@@ -100,59 +100,59 @@ TEST_CASE("VectorInterpolators should serializable", TESTTAG)
     test_interpolator_serialize(slerp);
 }
 
-// /**
-//  * @brief This test is more of a compile time check actually, it makes sure that the interpolators
-//  * implement all virtual functions such that they can actually be copied (had problems with this)
-//  *
-//  */
-// TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
-// {
-//     std::vector<double> x     = { -10, -5, 0, 6, 12 };
-//     std::vector<double> y     = { 1, 0, 1, 0, -1 };
-//     std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
-//     std::vector<double> pitch = { 1, 0, 1, 0, -1 };
-//     std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+/**
+ * @brief This test is more of a compile time check actually, it makes sure that the interpolators
+ * implement all virtual functions such that they can actually be copied (had problems with this)
+ *
+ */
+TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
+{
+    std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-//     vectorinterpolators::LinearInterpolator<double, double>  lip(x, y);
-//     vectorinterpolators::NearestInterpolator<double, double> nip(x, y);
-//     vectorinterpolators::AkimaInterpolator<double>           aip(x, y);
-//     vectorinterpolators::SlerpInterpolator                   slerp(x, yaw, pitch, roll);
+    vectorinterpolators::LinearInterpolator<double, double>  lip(x, y);
+    vectorinterpolators::NearestInterpolator<double, double> nip(x, y);
+    vectorinterpolators::AkimaInterpolator<double>           aip(x, y);
+    vectorinterpolators::SlerpInterpolator                   slerp(x, yaw, pitch, roll);
 
-//     // copy operator
-//     auto t1 = lip;
-//     auto t2 = nip;
-//     auto t3 = aip;
-//     auto t4 = slerp;
+    // copy operator
+    auto t1 = lip;
+    auto t2 = nip;
+    auto t3 = aip;
+    auto t4 = slerp;
 
-//     // copy initialization
-//     auto tlip   = vectorinterpolators::LinearInterpolator<double, double>(t1);
-//     auto tnip   = vectorinterpolators::NearestInterpolator<double, double>(t2);
-//     auto taip   = vectorinterpolators::AkimaInterpolator<double>(t3);
-//     auto tslerp = vectorinterpolators::SlerpInterpolator(t4);
+    // copy initialization
+    auto tlip   = vectorinterpolators::LinearInterpolator<double, double>(t1);
+    auto tnip   = vectorinterpolators::NearestInterpolator<double, double>(t2);
+    auto taip   = vectorinterpolators::AkimaInterpolator<double>(t3);
+    auto tslerp = vectorinterpolators::SlerpInterpolator(t4);
 
-//     // check if copies are correct
-//     REQUIRE(t1 == lip);
-//     REQUIRE(t2 == nip);
-//     REQUIRE(t3 == aip);
-//     REQUIRE(t4 == slerp);
-//     REQUIRE(t1 == tlip);
-//     REQUIRE(t2 == tnip);
-//     REQUIRE(t3 == taip);
-//     REQUIRE(t4 == tslerp);
+    // check if copies are correct
+    REQUIRE(t1 == lip);
+    REQUIRE(t2 == nip);
+    REQUIRE(t3 == aip);
+    REQUIRE(t4 == slerp);
+    REQUIRE(t1 == tlip);
+    REQUIRE(t2 == tnip);
+    REQUIRE(t3 == taip);
+    REQUIRE(t4 == tslerp);
 
-//     // check that common printing operations do not crash or produce empty strings
-//     REQUIRE(lip.info_string().size() > 1);
-//     REQUIRE(nip.info_string().size() > 1);
-//     REQUIRE(aip.info_string().size() > 1);
-//     REQUIRE(slerp.info_string().size() > 1);
+    // check that common printing operations do not crash or produce empty strings
+    REQUIRE(lip.info_string().size() > 1);
+    REQUIRE(nip.info_string().size() > 1);
+    REQUIRE(aip.info_string().size() > 1);
+    REQUIRE(slerp.info_string().size() > 1);
 
-//     // check that printing to stream does not crash
-//     std::stringstream ss;
-//     lip.print(ss);
-//     nip.print(ss);
-//     aip.print(ss);
-//     slerp.print(ss);
-// }
+    // check that printing to stream does not crash
+    std::stringstream ss;
+    lip.print(ss);
+    nip.print(ss);
+    aip.print(ss);
+    slerp.print(ss);
+}
 
 // /**
 //  * @brief Test that the interpolators throw expected exceptions
