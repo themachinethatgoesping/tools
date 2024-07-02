@@ -177,6 +177,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         for (auto interpolator : interpolators)
         {
             INFO("Interpolator:" << interpolator->info_string());
+            cerr << "test_interpolator_single_value: " << interpolator.class_name() << endl;
 
             // interpolator should fail if double x elements are appended
             REQUIRE_THROWS(interpolator->append(12, -1));
