@@ -160,107 +160,107 @@ TEST_CASE("VectorInterpolators should support common operations", TESTTAG)
  */
 TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {
-    // SECTION("single value interpolators")
-    // { // initialize test data (correct order)
-    //     std::vector<double> x = { -10, -5, 0, 6, 12 };
-    //     std::vector<double> y = { 1, 0, 1, 0, -1 };
+    SECTION("single value interpolators")
+    { // initialize test data (correct order)
+        std::vector<double> x = { -10, -5, 0, 6, 12 };
+        std::vector<double> y = { 1, 0, 1, 0, -1 };
 
-    //     std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double, double>>>
-    //         interpolators;
-    //     interpolators.push_back(
-    //         std::make_shared<vectorinterpolators::LinearInterpolator<double, double>>(x, y));
-    //     interpolators.push_back(
-    //         std::make_shared<vectorinterpolators::NearestInterpolator<double, double>>(x, y));
-    //     interpolators.push_back(
-    //         std::make_shared<vectorinterpolators::AkimaInterpolator<double>>(x, y));
+        std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double, double>>>
+            interpolators;
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::LinearInterpolator<double, double>>(x, y));
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::NearestInterpolator<double, double>>(x, y));
+        interpolators.push_back(
+            std::make_shared<vectorinterpolators::AkimaInterpolator<double>>(x, y));
 
-    //     for (auto interpolator : interpolators)
-    //     {
-    //         INFO("Interpolator:" << interpolator->info_string());
+        // for (auto interpolator : interpolators)
+        // {
+        //     INFO("Interpolator:" << interpolator->info_string());
 
-    //         // interpolator should fail if double x elements are appended
-    //         REQUIRE_THROWS(interpolator->append(12, -1));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         REQUIRE_THROWS(interpolator->append(11, -1));
-    //         interpolator->append(13, -1);
-    //         interpolator->set_data_XY(x, y);
+        //     // interpolator should fail if double x elements are appended
+        //     REQUIRE_THROWS(interpolator->append(12, -1));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     REQUIRE_THROWS(interpolator->append(11, -1));
+        //     interpolator->append(13, -1);
+        //     interpolator->set_data_XY(x, y);
 
-    //         // same for extending lists
-    //         REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         REQUIRE_THROWS(interpolator->extend({ 11, 13 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         REQUIRE_THROWS(interpolator->extend({ 14, 13 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         REQUIRE_THROWS(interpolator->extend({ 14, 14 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         interpolator->extend({ 13, 14 }, { -1, 1 });
-    //         REQUIRE(interpolator->get_data_X() != x);
-    //         REQUIRE(interpolator->get_data_Y() != y);
-    //         interpolator->set_data_XY(x, y);
+        //     // same for extending lists
+        //     REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     REQUIRE_THROWS(interpolator->extend({ 11, 13 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     REQUIRE_THROWS(interpolator->extend({ 14, 13 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     REQUIRE_THROWS(interpolator->extend({ 14, 14 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     interpolator->extend({ 13, 14 }, { -1, 1 });
+        //     REQUIRE(interpolator->get_data_X() != x);
+        //     REQUIRE(interpolator->get_data_Y() != y);
+        //     interpolator->set_data_XY(x, y);
 
-    //         // same for inserting lists (does not have to be sorted, but must be unique)
-    //         REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         interpolator->insert({ 11, 13 }, { -1, 1 });
-    //         REQUIRE(interpolator->get_data_X() ==
-    //                 std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
-    //         REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-    //             interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
-    //         interpolator->set_data_XY(x, y);
-    //         interpolator->insert({ 14, 13 }, { -1, 1 });
-    //         REQUIRE(interpolator->get_data_X() ==
-    //                 std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
-    //         REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-    //             interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
-    //         interpolator->set_data_XY(x, y);
-    //         REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //         interpolator->insert({ 13, 14 }, { -1, 1 });
-    //         REQUIRE(interpolator->get_data_X() != x);
-    //         REQUIRE(interpolator->get_data_Y() != y);
-    //         interpolator->set_data_XY(x, y);
+        //     // same for inserting lists (does not have to be sorted, but must be unique)
+        //     REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     interpolator->insert({ 11, 13 }, { -1, 1 });
+        //     REQUIRE(interpolator->get_data_X() ==
+        //             std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
+        //     REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+        //         interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
+        //     interpolator->set_data_XY(x, y);
+        //     interpolator->insert({ 14, 13 }, { -1, 1 });
+        //     REQUIRE(interpolator->get_data_X() ==
+        //             std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
+        //     REQUIRE(themachinethatgoesping::tools::helper::approx_container(
+        //         interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
+        //     interpolator->set_data_XY(x, y);
+        //     REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     interpolator->insert({ 13, 14 }, { -1, 1 });
+        //     REQUIRE(interpolator->get_data_X() != x);
+        //     REQUIRE(interpolator->get_data_Y() != y);
+        //     interpolator->set_data_XY(x, y);
 
-    //         // initialize test data (wrong order)
-    //         std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
+        //     // initialize test data (wrong order)
+        //     std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
 
-    //         // throw because x is not sorted
-    //         REQUIRE_THROWS(interpolator->set_data_XY(x_wrong_order_, y));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        //     // throw because x is not sorted
+        //     REQUIRE_THROWS(interpolator->set_data_XY(x_wrong_order_, y));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
 
-    //         // initialize test data (duplicates)
-    //         std::vector<double> x_duplicates_ = { -5, -10, 0, 0, 6, 12 };
+        //     // initialize test data (duplicates)
+        //     std::vector<double> x_duplicates_ = { -5, -10, 0, 0, 6, 12 };
 
-    //         // interpolator should fail if there is a double x element!
-    //         REQUIRE_THROWS(interpolator->set_data_XY(x_duplicates_, y));
-    //         REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-    //         REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-    //     }
+        //     // interpolator should fail if there is a double x element!
+        //     REQUIRE_THROWS(interpolator->set_data_XY(x_duplicates_, y));
+        //     REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+        //     REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+        // }
 
-    //     // initialize test data (wrong order)
-    //     std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
+        // // initialize test data (wrong order)
+        // std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
 
-    //     // throw because x is not sorted
-    //     REQUIRE_THROWS(vectorinterpolators::LinearInterpolator(x_wrong_order, y));
-    //     REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_wrong_order, y));
-    //     REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_wrong_order, y));
+        // // throw because x is not sorted
+        // REQUIRE_THROWS(vectorinterpolators::LinearInterpolator(x_wrong_order, y));
+        // REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_wrong_order, y));
+        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_wrong_order, y));
 
-    //     // initialize test data (duplicates)
-    //     std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
+        // // initialize test data (duplicates)
+        // std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
 
-    //     // interpolator should fail if there is a double x element!
-    //     REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
-    //     REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_duplicates, y));
-    //     REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
-    // }
+        // // interpolator should fail if there is a double x element!
+        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
+        // REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_duplicates, y));
+        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
+    }
 
     // SECTION("slerp interpolator")
     // { // initialize test data (correct order)
