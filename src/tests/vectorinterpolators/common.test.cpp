@@ -262,8 +262,6 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
     }
 
-    return;
-
     SECTION("slerp interpolator")
     { // initialize test data (correct order)
         std::vector<double>                x     = { -10, -5, 0, 6, 12 };
@@ -273,6 +271,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         std::vector<std::array<double, 3>> ypr   = {
             { 1, 1, 1 }, { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 }
         };
+    return;
 
         vectorinterpolators::SlerpInterpolator interpolator(x, yaw, pitch, roll);
         auto                                   orig_interpolator = interpolator;
