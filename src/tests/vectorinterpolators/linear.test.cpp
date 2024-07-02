@@ -65,7 +65,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
-    return; // test 5
     INFO("Peter 4");
     SECTION("preset value vectors should be interpolated correctly")
     {
@@ -75,6 +74,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         REQUIRE(interpolator(targets_x) == expected_y);
     }
 
+    return; // test 6
     INFO("Peter 5");
     SECTION("extrapolation mode should cause:")
     {
