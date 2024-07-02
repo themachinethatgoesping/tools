@@ -202,17 +202,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             _X.resize(orig_size);
             _Y.resize(orig_size);
             std::cerr << "extend 8 " << std::endl;
-            throw;
-
-        }
-        catch (...)
-        {
-            std::cerr << "extend 5 " << std::endl;
-            // restore original size if something went wrong
-            _X.resize(orig_size);
-            _Y.resize(orig_size);
-            std::cerr << "extend 6 " << std::endl;
-            throw;
+            throw e;
         }
     }
 
