@@ -196,24 +196,33 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
             interpolator->append(13, -1);
             interpolator->set_data_XY(x, y);
-            continue;
 
             // same for extending lists
             REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
+            cerr << "same for extending lists: 1" << endl;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            cerr << "same for extending lists: 2" << endl;
             REQUIRE_THROWS(interpolator->extend({ 11, 13 }, { -1, 1 }));
+            cerr << "same for extending lists: 3" << endl;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            cerr << "same for extending lists: 4" << endl;
             REQUIRE_THROWS(interpolator->extend({ 14, 13 }, { -1, 1 }));
+            cerr << "same for extending lists: 5" << endl;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            cerr << "same for extending lists: 6" << endl;
             REQUIRE_THROWS(interpolator->extend({ 14, 14 }, { -1, 1 }));
+            cerr << "same for extending lists: 7" << endl;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            cerr << "same for extending lists: 8" << endl;
             interpolator->extend({ 13, 14 }, { -1, 1 });
+            cerr << "same for extending lists: 9" << endl;
             REQUIRE(interpolator->get_data_X() != x);
             REQUIRE(interpolator->get_data_Y() != y);
+            cerr << "same for extending lists: 10" << endl;
             interpolator->set_data_XY(x, y);
 
             // // same for inserting lists (does not have to be sorted, but must be unique)
