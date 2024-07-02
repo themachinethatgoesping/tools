@@ -194,12 +194,24 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
                 std::cerr << "extend 4 " << i << std::endl;
             }
         }
+        catch (std::domain_error &e)
+        {
+            std::cerr << "extend 7 " << std::endl;
+            std::cerr << e.what() << std::endl;
+            // restore original size if something went wrong
+            _X.resize(orig_size);
+            _Y.resize(orig_size);
+            std::cerr << "extend 8 " << std::endl;
+            throw;
+
+        }
         catch (...)
         {
             std::cerr << "extend 5 " << std::endl;
             // restore original size if something went wrong
             _X.resize(orig_size);
             _Y.resize(orig_size);
+            std::cerr << "extend 6 " << std::endl;
             throw;
         }
     }

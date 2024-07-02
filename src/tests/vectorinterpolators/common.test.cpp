@@ -198,6 +198,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             interpolator->set_data_XY(x, y);
 
             // same for extending lists
+            cerr << "same for extending lists: 0" << endl;
             REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
             cerr << "same for extending lists: 1" << endl;
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
