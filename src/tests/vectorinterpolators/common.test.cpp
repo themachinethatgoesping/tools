@@ -236,13 +236,13 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
 
-            // // initialize test data (duplicates)
-            // std::vector<double> x_duplicates_ = { -5, -10, 0, 0, 6, 12 };
+            // initialize test data (duplicates)
+            std::vector<double> x_duplicates_ = { -5, -10, 0, 0, 6, 12 };
 
-            // // interpolator should fail if there is a double x element!
-            // REQUIRE_THROWS(interpolator->set_data_XY(x_duplicates_, y));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            // interpolator should fail if there is a double x element!
+            REQUIRE_THROWS(interpolator->set_data_XY(x_duplicates_, y));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
         }
 
         // // initialize test data (wrong order)
