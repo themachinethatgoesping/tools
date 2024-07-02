@@ -45,8 +45,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
             REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
     }
 
-
-    return; // test 3
     INFO("Peter 3");
     SECTION("preset values should be interpolated correctly")
     {
@@ -67,6 +65,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
+    return; // test 5
     INFO("Peter 4");
     SECTION("preset value vectors should be interpolated correctly")
     {
