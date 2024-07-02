@@ -274,7 +274,6 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 
         vectorinterpolators::SlerpInterpolator interpolator(x, yaw, pitch, roll);
         auto                                   orig_interpolator = interpolator;
-    return;
         // interpolator should fail if double x elements are appended
         REQUIRE_THROWS(interpolator.append(12, { -1, -1, -1 }));
         REQUIRE(interpolator == orig_interpolator); // strong exception guarantee
@@ -284,6 +283,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE(interpolator != orig_interpolator); // strong exception guarantee
         interpolator.set_data_XYPR(x, yaw, pitch, roll);
 
+    return;
         // same for extending lists
         REQUIRE_THROWS(interpolator.extend({ 12, 13 }, { { -1, -1, -1 }, { 1, 1, 1 } }));
         REQUIRE(interpolator == orig_interpolator); // strong exception guarantee
