@@ -296,6 +296,8 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             switch (I_Interpolator<XType, YType>::_extr_mode)
             {
                 case t_extr_mode::fail: {
+                    throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too small), "
+                                            "while fail on extrapolate was set!");
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                            "] is out of range (too small)(" + std::to_string(_X.front()) +
@@ -316,6 +318,8 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             switch (I_Interpolator<XType, YType>::_extr_mode)
             {
                 case t_extr_mode::fail: {
+                    throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too large), "
+                                            "while fail on extrapolate was set!");
                     std::string msg;
                     msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                            "] is out of range  (too large)(" + std::to_string(_X.front()) +
@@ -376,6 +380,8 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
                     switch (I_Interpolator<XType, YType>::_extr_mode)
                     {
                         case t_extr_mode::fail: {
+                            throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too "
+                                                    "large), while fail on extrapolate was set!");
                             std::string msg;
                             msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                                    "] is out of range  (too large)(" + std::to_string(_X.front()) +
@@ -421,6 +427,8 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
                     switch (I_Interpolator<XType, YType>::_extr_mode)
                     {
                         case t_extr_mode::fail: {
+                            throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too "
+                                                    "small), while fail on extrapolate was set!");
                             std::string msg;
                             msg += "ERROR[INTERPOLATE]: x value [" + std::to_string(target_x) +
                                    "] is out of range (too small)(" + std::to_string(_X.front()) +
