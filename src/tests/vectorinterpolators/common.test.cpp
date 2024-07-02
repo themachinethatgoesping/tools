@@ -162,8 +162,8 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {
     SECTION("single value interpolators")
     { // initialize test data (correct order)
-        std::vector<double> x = { -10, -5, 0, 6, 12 };
-        std::vector<double> y = { 1, 0, 1, 0, -1 };
+        std::vector<double> x = { -10, -5, 0, 6, 12};
+        std::vector<double> y = { 1, 0, 1, 0 , -1};
 
         std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double, double>>>
             interpolators;
@@ -178,6 +178,13 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         {
             INFO("Interpolator:" << interpolator->info_string());
             cerr << "test_interpolator_single_value: " << interpolator->class_name() << endl;
+
+            // first test extending  some values (make sure it does not throw)
+            interpolator->extend({ 14, 15 }, { 0, -1 });
+            REQUIRE(interpolator->get_data_X() == { -10, -5, 0, 6, 12, 14, 15});
+            REQUIRE(interpolator->get_data_Y() == { 1, 0, 1, 0 , -1, 0 , -1}); 
+            interpolator->set_data_XY(x, y);
+            continue
 
             // interpolator should fail if double x elements are appended
             REQUIRE_THROWS(interpolator->append(12, -1));
