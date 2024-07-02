@@ -33,10 +33,16 @@ projectnamespace = 'themachinethatgoesping'
 #   omp_dep = dependency('openmp')
 # endif
 
+
 omp_dep = dependency('openmp')
 
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
+
+# seems to be missing?
+if  meson.get_compiler('cpp').get_id() == 'clang'
+  tools_compile_args += ['-D__clang__']
+endif
 
 # # boost
 boost_version = '>=1.73'
