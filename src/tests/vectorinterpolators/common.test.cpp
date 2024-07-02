@@ -228,13 +228,13 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             REQUIRE(interpolator->get_data_Y() != y);
             interpolator->set_data_XY(x, y);
 
-            // // initialize test data (wrong order)
-            // std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
+            // initialize test data (wrong order)
+            std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
 
-            // // throw because x is not sorted
-            // REQUIRE_THROWS(interpolator->set_data_XY(x_wrong_order_, y));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            // throw because x is not sorted
+            REQUIRE_THROWS(interpolator->set_data_XY(x_wrong_order_, y));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
 
             // // initialize test data (duplicates)
             // std::vector<double> x_duplicates_ = { -5, -10, 0, 0, 6, 12 };
