@@ -315,7 +315,6 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE_THROWS(vectorinterpolators::SlerpInterpolator(x_wrong_order, yaw, pitch, roll));
         REQUIRE_THROWS(interpolator.set_data_XYPR(x_wrong_order, yaw, pitch, roll));
 
-    return;
         // initialize test data (duplicates)
         std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
 
