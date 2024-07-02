@@ -245,21 +245,21 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
         }
 
-        // // initialize test data (wrong order)
-        // std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
+        // initialize test data (wrong order)
+        std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
 
-        // // throw because x is not sorted
-        // REQUIRE_THROWS(vectorinterpolators::LinearInterpolator(x_wrong_order, y));
-        // REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_wrong_order, y));
-        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_wrong_order, y));
+        // throw because x is not sorted
+        REQUIRE_THROWS(vectorinterpolators::LinearInterpolator(x_wrong_order, y));
+        REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_wrong_order, y));
+        REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_wrong_order, y));
 
-        // // initialize test data (duplicates)
-        // std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
+        // initialize test data (duplicates)
+        std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
 
-        // // interpolator should fail if there is a double x element!
-        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
-        // REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_duplicates, y));
-        // REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
+        // interpolator should fail if there is a double x element!
+        REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
+        REQUIRE_THROWS(vectorinterpolators::NearestInterpolator(x_duplicates, y));
+        REQUIRE_THROWS(vectorinterpolators::AkimaInterpolator(x_duplicates, y));
     }
 
     SECTION("slerp interpolator")
