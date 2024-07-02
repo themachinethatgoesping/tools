@@ -86,7 +86,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        return; // test 7
                         INFO("Peter 6 1");
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
@@ -100,7 +99,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearest when set")
                     {
-                        return; // test 7
+                        return; // test 8
                         INFO("Peter 6 3");
                         REQUIRE(interpolator(-11) == Catch::Approx(1));
                         REQUIRE(interpolator(13) == Catch::Approx(y_append));
@@ -111,6 +110,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                     break;
 
                 default:
+                        return; // test 8
                     INFO("Peter 6 5");
                     SECTION(" - extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1.2));
