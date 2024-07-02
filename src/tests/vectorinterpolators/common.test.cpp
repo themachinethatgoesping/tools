@@ -404,31 +404,31 @@ TEST_CASE("VectorInterpolators should react correctly to beeing uninitialized", 
     REQUIRE(aip(15) == Catch::Approx(23.75));
 }
 
-// TEST_CASE("VectorInterpolators should hashable", TESTTAG)
-// {
-//     std::vector<double> x     = { -10, -5, 0, 6, 12 };
-//     std::vector<double> y     = { 1, 0, 1, 0, -1 };
-//     std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
-//     std::vector<double> pitch = { 1, 0, 1, 0, -1 };
-//     std::vector<double> roll  = { 1, 0, 1, 0, -1 };
+TEST_CASE("VectorInterpolators should hashable", TESTTAG)
+{
+    std::vector<double> x     = { -10, -5, 0, 6, 12 };
+    std::vector<double> y     = { 1, 0, 1, 0, -1 };
+    std::vector<double> yaw   = { 1, 0, 1, 0, -1 };
+    std::vector<double> pitch = { 1, 0, 1, 0, -1 };
+    std::vector<double> roll  = { 1, 0, 1, 0, -1 };
 
-//     vectorinterpolators::LinearInterpolator  lip(x, y);
-//     vectorinterpolators::NearestInterpolator nip(x, y);
-//     vectorinterpolators::AkimaInterpolator   aip(x, y);
-//     vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
+    vectorinterpolators::LinearInterpolator  lip(x, y);
+    vectorinterpolators::NearestInterpolator nip(x, y);
+    vectorinterpolators::AkimaInterpolator   aip(x, y);
+    vectorinterpolators::SlerpInterpolator   slerp(x, yaw, pitch, roll);
 
-//     REQUIRE(lip.binary_hash() != 0);
-//     REQUIRE(nip.binary_hash() != 0);
-//     REQUIRE(aip.binary_hash() != 0);
-//     REQUIRE(slerp.binary_hash() != 0);
+    REQUIRE(lip.binary_hash() != 0);
+    REQUIRE(nip.binary_hash() != 0);
+    REQUIRE(aip.binary_hash() != 0);
+    REQUIRE(slerp.binary_hash() != 0);
 
-//     CHECK(lip.binary_hash() == 10074301266414863605ULL);
-//     CHECK(nip.binary_hash() == 10074301266414863605ULL);
-//     CHECK(aip.binary_hash() == 10074301266414863605ULL);
-//     CHECK(slerp.binary_hash() == 5661085787625436237ULL);
+    CHECK(lip.binary_hash() == 10074301266414863605ULL);
+    CHECK(nip.binary_hash() == 10074301266414863605ULL);
+    CHECK(aip.binary_hash() == 10074301266414863605ULL);
+    CHECK(slerp.binary_hash() == 5661085787625436237ULL);
 
-//     // test_interpolator_serialize(nip);
-//     // test_interpolator_serialize(lip);
-//     // test_interpolator_serialize(aip);
-//     // test_interpolator_serialize(slerp);
-// }
+    // test_interpolator_serialize(nip);
+    // test_interpolator_serialize(lip);
+    // test_interpolator_serialize(aip);
+    // test_interpolator_serialize(slerp);
+}
