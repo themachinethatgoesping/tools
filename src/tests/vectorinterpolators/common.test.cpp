@@ -308,7 +308,6 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE_THROWS(interpolator.insert({ 14, 14 }, { { -1, -1, -1 }, { 1, 1, 1 } }));
         REQUIRE(interpolator == orig_interpolator); // strong exception guarantees
 
-    return;
         // initialize test data (wrong order)
         std::vector<double> x_wrong_order = { -5, -10, 0, 6, 12 };
 
@@ -316,6 +315,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
         REQUIRE_THROWS(vectorinterpolators::SlerpInterpolator(x_wrong_order, yaw, pitch, roll));
         REQUIRE_THROWS(interpolator.set_data_XYPR(x_wrong_order, yaw, pitch, roll));
 
+    return;
         // initialize test data (duplicates)
         std::vector<double> x_duplicates = { -5, -10, 0, 0, 6, 12 };
 
