@@ -23,13 +23,11 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
     double              x_append = 12;
     double              y_append = -1;
 
-    INFO("Peter 0");
     vectorinterpolators::LinearInterpolator interpolator(x, y);
 
     // append some data
     interpolator.append(x_append, y_append);
 
-    INFO("Peter 1");
     SECTION("existing values should be looked up correctly")
     {
         for (unsigned int i = 0; i < x.size(); ++i)
@@ -38,14 +36,12 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         REQUIRE(interpolator(x_append) == Catch::Approx(y_append));
     }
 
-    INFO("Peter 2");
     SECTION("const interpolation should produce the same results as classic interpolation")
     {
         for (double x_val = -10; x_val <= 12; x_val += 0.1)
             REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
     }
 
-    INFO("Peter 3");
     SECTION("preset values should be interpolated correctly")
     {
         CHECK(interpolator(-7.6) == Catch::Approx(0.52));
@@ -65,7 +61,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
-    INFO("Peter 4");
     SECTION("preset value vectors should be interpolated correctly")
     {
         std::vector<double> targets_x  = { -2.6, -2.5, -2.4 };
@@ -74,7 +69,6 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
         REQUIRE(interpolator(targets_x) == expected_y);
     }
 
-    INFO("Peter 5");
     SECTION("extrapolation mode should cause:")
     {
         for (auto mode : vectorinterpolators::t_extr_mode_all)
@@ -86,38 +80,29 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        break; // test 9
-                        INFO("Peter 6 1");
-                        REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
-
-                        INFO("Peter 6 2");
+                        //REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
+                        //REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
+                        //REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
+                        //REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
                     }
                     break;
 
                 case vectorinterpolators::t_extr_mode::nearest:
                     SECTION(" - extrapolate nearest when set")
                     {
-                        break; // test 9
-                        INFO("Peter 6 3");
                         REQUIRE(interpolator(-11) == Catch::Approx(1));
                         REQUIRE(interpolator(13) == Catch::Approx(y_append));
                         REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1));
                         REQUIRE(interpolator.get_y_const(13) == Catch::Approx(y_append));
-                        INFO("Peter 6 4");
                     }
                     break;
 
                 default:
-                    INFO("Peter 6 5");
                     SECTION(" - extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1.2));
                     REQUIRE(interpolator(14) == Catch::Approx(-4 / 3.));
                     REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1.2));
                     REQUIRE(interpolator.get_y_const(14) == Catch::Approx(-4 / 3.));
-                    INFO("Peter 6 6");
 
                     break;
             }
