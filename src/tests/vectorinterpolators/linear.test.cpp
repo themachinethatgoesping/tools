@@ -80,7 +80,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                 case vectorinterpolators::t_extr_mode::fail:
                     SECTION(" - fail when set to fail")
                     {
-                        //REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         //REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
                         //REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
                         //REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
