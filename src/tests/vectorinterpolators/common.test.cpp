@@ -186,23 +186,23 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             interpolator->append(13, -1);
             interpolator->set_data_XY(x, y);
 
-            // // same for extending lists
-            // REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // REQUIRE_THROWS(interpolator->extend({ 11, 13 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // REQUIRE_THROWS(interpolator->extend({ 14, 13 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // REQUIRE_THROWS(interpolator->extend({ 14, 14 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // interpolator->extend({ 13, 14 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() != x);
-            // REQUIRE(interpolator->get_data_Y() != y);
-            // interpolator->set_data_XY(x, y);
+            // same for extending lists
+            REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            REQUIRE_THROWS(interpolator->extend({ 11, 13 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            REQUIRE_THROWS(interpolator->extend({ 14, 13 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            REQUIRE_THROWS(interpolator->extend({ 14, 14 }, { -1, 1 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+            interpolator->extend({ 13, 14 }, { -1, 1 });
+            REQUIRE(interpolator->get_data_X() != x);
+            REQUIRE(interpolator->get_data_Y() != y);
+            interpolator->set_data_XY(x, y);
 
             // // same for inserting lists (does not have to be sorted, but must be unique)
             // REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
