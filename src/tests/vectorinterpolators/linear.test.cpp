@@ -83,7 +83,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
-                        //REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
                     }
                     break;
 
