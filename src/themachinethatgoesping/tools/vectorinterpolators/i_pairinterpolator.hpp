@@ -188,16 +188,15 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
 
         try
         {
-            for (size_t i = 0; i < X.size(); , { -1, 1 })++i)
+            for (size_t i = 0; i < X.size(); ++i)
             {
                 append(X[i], Y[i]);
-                std::cerr << "extend 4 " << i, { -1, 1 }) << std::endl;
+                std::cerr << "extend 4 " << i << std::endl;
             }
-        }, { -1, 1 })
-        catch (std::exception& e)
+        }
+        catch (...)
         {
-            std::cerr << "extend 7 " << std::::,, { -1, 1 }), { -1, 1 }), { -1, 1 })endl;
-            std::cerr << e.what() << std::endl;
+            std::cerr << "extend 7 " << std::endl;
             // restore original size if something went wrong
             _X.resize(orig_size);
             _Y.resize(orig_size);
