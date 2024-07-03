@@ -84,7 +84,9 @@ jobs:
       with:
         key: super-ci-mac  # name for the cache
         
-    # install clang 15
+    # uninstall clang 15
+    - run: brew uninstall llvm@15
+
     - run: brew install coreutils llvm@18
         
     - run: brew install libomp boost
@@ -93,7 +95,13 @@ jobs:
     
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
-      run: BOOST_ROOT=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.cxx_compiler }} meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+      run: |
+        BOOST_ROOT=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.cxx_compiler }} 
+        LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/libomp/lib -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+        CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/libomp/include"
+        CXX=/opt/homebrew/opt/llvm/bin/clang++
+        meson setup builddir/; 
+        meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
