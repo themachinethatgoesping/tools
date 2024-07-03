@@ -60,8 +60,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cxx_compiler: ["$(brew --prefix llvm@16)/bin/clang++"] 
-        llvm: ["$(brew --prefix llvm@16)"]
+        cxx_compiler: ["$(brew --prefix llvm@18)/bin/clang++"] 
+        llvm: ["$(brew --prefix llvm@18)"]
         boost: ["$(brew --prefix boost)"]
         libomp: ["$(brew --prefix libomp)"]
         os: ["macos-14", "macos-12", "macos-13"] 
@@ -90,7 +90,7 @@ jobs:
     # uninstall clang 15
     - run: brew uninstall llvm@15
 
-    - run: brew install coreutils llvm@16
+    - run: brew install coreutils llvm@18
         
     - run: brew install libomp boost
     
@@ -102,19 +102,19 @@ jobs:
         BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -undefined dynamic_lookup -Wl,-no_fixup_chains -Wl,-dead_strip -Wl,-rpath, ${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" meson setup builddir/; meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
-      run: meson compile -C builddir/
+      run: BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -undefined dynamic_lookup -Wl,-no_fixup_chains -Wl,-dead_strip -Wl,-rpath, ${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" meson compile -C builddir/
 
     - name: test (cpp)
-      run: meson test -C builddir/ --print-errorlogs
+      run: BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -undefined dynamic_lookup -Wl,-no_fixup_chains -Wl,-dead_strip -Wl,-rpath, ${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" meson test -C builddir/ --print-errorlogs
 
     - name: install project
-      run: sudo meson install -C builddir/
+      run: BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -undefined dynamic_lookup -Wl,-no_fixup_chains -Wl,-dead_strip -Wl,-rpath, ${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" sudo meson install -C builddir/
 
     - name: install pip requirements
       run: pip install -r requirements.txt
 
     - name: test (pytest)
-      run: pytest -v
+      run: BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -undefined dynamic_lookup -Wl,-no_fixup_chains -Wl,-dead_strip -Wl,-rpath, ${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" pytest -v
       
     - name: 'Upload error log'
       uses: actions/upload-artifact@v4
