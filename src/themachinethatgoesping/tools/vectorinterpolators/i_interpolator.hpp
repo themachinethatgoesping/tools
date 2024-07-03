@@ -24,6 +24,7 @@
 #include <utility>
 #include <vector>
 #include <concepts>
+#include <stdexcept>
 
 #include "../classhelper/objectprinter.hpp"
 
