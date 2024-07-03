@@ -11,7 +11,7 @@ project(
 
   version: '0.24.2',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
-  meson_version: '>=1.3.2' #first version with  clang-cl openmp support
+  meson_version: '>=1.3.2' #first version with  clang-cl openmp support,
 )
 
 projectnamespace = 'themachinethatgoesping'
@@ -33,21 +33,29 @@ projectnamespace = 'themachinethatgoesping'
 #   omp_dep = dependency('openmp')
 # endif
 
-
-omp_dep = dependency('openmp', static: true)
+if meson.get_compiler('cpp').get_id() == 'clang-cl'
+  omp_dep = declare_dependency()
+else
+  omp_dep = dependency('openmp')
+endif
 
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
 
 # seems to be missing?
-if  meson.get_compiler('cpp').get_id() == 'clang'
+if meson.get_compiler('cpp').get_id() == 'clang'
   tools_compile_args += ['-D__clang__']
 endif
 
 # # boost
 boost_version = '>=1.73'
-boost_modules = dependency('boost', modules: ['iostreams'], static: get_option('dynamic_boost').disabled(), version: boost_version)
-boost_dep     = dependency('boost', version: boost_version)
+boost_modules = dependency(
+  'boost',
+  modules: ['iostreams'],
+  static: get_option('dynamic_boost').disabled(),
+  version: boost_version,
+)
+boost_dep = dependency('boost', version: boost_version)
 
 # eigen 3
 eigen3_dep = dependency('eigen3')
@@ -95,19 +103,22 @@ if get_option('build_pythonmodule').enabled()
   #numpy (copied from https://github.com/mesonbuild/meson/issues/9598)
   # NumPy include directory - needed in all submodules
   py3 = find_program('python3', 'python')
-  incdir_numpy = run_command(py3,
-  [
-      '-c',
-      'import os; os.chdir(".."); import numpy; print(numpy.get_include())'
-  ],
-  check: true
+  incdir_numpy = run_command(
+    py3,
+    [
+      '-c', 'import os; os.chdir(".."); import numpy; print(numpy.get_include())',
+    ],
+    check: true,
   ).stdout().strip()
 
   inc_np = include_directories(incdir_numpy)
   numpy_dep = declare_dependency(include_directories: inc_np)
 
   # set path where to install sources (pythonpath/site-packages/projectnamespace)
-  message('python module install directory:', pymod.get_install_dir(subdir: projectnamespace))
+  message(
+    'python module install directory:',
+    pymod.get_install_dir(subdir: projectnamespace),
+  )
 endif
 
 #themachinethatgoesping meta info
@@ -118,7 +129,6 @@ test_data_path = '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/
 
 # add c++ src
 subdir('src')
- 
+
 # add python src
 subdir('python')
-
