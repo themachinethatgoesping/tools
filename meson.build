@@ -34,7 +34,7 @@ projectnamespace = 'themachinethatgoesping'
 # endif
 
 
-omp_dep = dependency('openmp')
+omp_dep = dependency('openmp', static: true)
 
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
