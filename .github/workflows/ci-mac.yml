@@ -97,7 +97,19 @@ jobs:
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
       run: |
-        BOOST_ROOT=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L/opt/homebrew/opt/libomp/lib -Wl,-rpath,${{ matrix.llvm }}/lib/c++" CPPFLAGS="-I${{ matrix.llvm }}/include -I/opt/homebrew/opt/libomp/include" meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+        BOOST_ROOT=/opt/homebrew/Cellar/boost/1.85.0 CXX=${{ matrix.llvm }}/bin/clang++  
+        LDFLAGS="
+          -L${{ matrix.llvm }}/lib/c++
+          -L${{ matrix.llvm }}/lib
+          -L/opt/homebrew/opt/libomp/lib
+          -undefined dynamic_lookup 
+          -Wl,-no_fixup_chains 
+          -Wl,-dead_strip
+          -Wl,-rpath,
+          ${{ matrix.llvm }}/lib/c++" 
+        CPPFLAGS="-I${{ matrix.llvm }}/include -I/opt/homebrew/opt/libomp/include" 
+        meson setup builddir/; 
+        meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
