@@ -66,6 +66,7 @@ headers = [
   'helper/defaultsharedpointermap.hpp',
   'helper/enum.hpp',
   'helper/isviewstream.hpp',
+  'helper/omp_helper.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
   'helper/.docstrings/enum.doc.hpp',
