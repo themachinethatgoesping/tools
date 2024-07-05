@@ -10,7 +10,7 @@ project(
   license: 'MPL-2.0',
 
   version: '0.24.2',
-  default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
+  default_options: ['warning_level=1', 'buildtype=release', 'cpp_std=c++20'],
   meson_version: '>=1.3.2' #first version with  clang-cl openmp support,
 )
 
@@ -28,6 +28,7 @@ endif
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
 
+
 # # boost
 boost_version = '>=1.73'
 boost_modules = dependency(
@@ -35,11 +36,12 @@ boost_modules = dependency(
   modules: ['iostreams'],
   static: get_option('dynamic_boost').disabled(),
   version: boost_version,
+  include_type: 'system'
 )
-boost_dep = dependency('boost', version: boost_version)
+boost_dep = dependency('boost', version: boost_version, include_type: 'system')
 
 # eigen 3
-eigen3_dep = dependency('eigen3')
+eigen3_dep = dependency('eigen3', include_type: 'system')
 
 # fmt for pretty printing
 #fmt_dep = dependency('fmt', static: true, version: 10.0)
@@ -60,7 +62,7 @@ magic_enum_dep = dependency('magic_enum')
 tools_compile_args += '-DMAGIC_ENUM_ENABLE_HASH' #reduce complexity of enum_name and enum_switch at the price of increased memory and compilation time
 
 #xtensor (for numpy array support)
-xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabled'])
+xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabled']).as_system('system')
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
@@ -78,7 +80,7 @@ if get_option('build_pythonmodule').enabled()
 
   python3_dep = pymod.dependency()
   pybind11_dep = dependency('pybind11')
-  xtensor_python_dep = dependency('xtensor-python', static: true)
+  xtensor_python_dep = dependency('xtensor-python', static: true).as_system('system')
 
   # -- numpy (necessary for xtensor_python) --
   #numpy (copied from https://github.com/mesonbuild/meson/issues/9598)
