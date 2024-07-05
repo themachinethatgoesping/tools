@@ -411,7 +411,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         container_to_stream(os, this->_Y);
     }
 
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const override
     {
         classhelper::ObjectPrinter printer(this->class_name(), float_precision);
 

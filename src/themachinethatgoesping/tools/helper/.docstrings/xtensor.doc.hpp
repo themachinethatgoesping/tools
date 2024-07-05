@@ -1,4 +1,4 @@
-//sourcehash: c8f61022b9a099f0db955db9fcbf9fb15f6391b47c566a52597b4227e797c900
+//sourcehash: f846bcaf4a095bae3a7af48998653e36c522d4b2376064d57db25535bb0c2d44
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,15 +37,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
-
-static const char *__doc_xt_hash_value =
-R"doc(Boost hash function for xt tensors
-
-Template parameter ``T``:
-    $Parameter ``b``:
-
-Returns:
-    std::size_t)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

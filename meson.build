@@ -10,7 +10,7 @@ project(
   license: 'MPL-2.0',
 
   version: '0.24.2',
-  default_options: ['warning_level=1', 'buildtype=release', 'cpp_std=c++20'],
+  default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
   meson_version: '>=1.3.2' #first version with  clang-cl openmp support,
 )
 
@@ -28,6 +28,14 @@ endif
 # extra compiler args when for the tools target
 tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
 
+
+if meson.get_compiler('cpp').get_id() == 'clang' or meson.get_compiler('cpp').get_id() == 'gcc'
+  # TODO: find a way to include these warnings again
+  # these are generated in xtensor and I don't know how to deal with them ...
+  tools_compile_args += '-Wno-array-bounds'
+  tools_compile_args += '-Wno-maybe-uninitialized'
+  tools_compile_args += '-Wno-stringop-overflow'
+endif
 
 # # boost
 boost_version = '>=1.73'
