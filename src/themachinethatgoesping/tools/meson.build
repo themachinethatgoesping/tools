@@ -71,6 +71,7 @@ headers = [
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
   'helper/.docstrings/enum.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
+  'helper/.docstrings/omp_helper.doc.hpp',
 ]
 
 # -- targets --
