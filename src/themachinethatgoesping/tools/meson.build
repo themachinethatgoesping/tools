@@ -73,6 +73,7 @@ headers = [
   'helper/.docstrings/enum.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
   'helper/.docstrings/omp_helper.doc.hpp',
+  'helper/.docstrings/xtensor.doc.hpp',
 ]
 
 # -- targets --

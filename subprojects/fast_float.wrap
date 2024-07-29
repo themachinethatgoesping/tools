@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: CC0-1.0
 
 [wrap-file]
-source_url = https://github.com/fastfloat/fast_float/archive/refs/tags/v6.1.1.tar.gz
-source_filename = fast_float-v6.1.1.tar.gz
-source_hash = 10159a4a58ba95fe9389c3c97fe7de9a543622aa0dcc12dd9356d755e9a94cb4
-directory = fast_float-6.1.1
+source_url = https://github.com/fastfloat/fast_float/archive/refs/tags/v6.1.3.tar.gz
+source_filename = fast_float-v6.1.3.tar.gz
+source_hash = 7dd99cc2ff44e07dc2a42bed0c6b8c4a8ee4e3b1c330f77073b6cfdb48724c8e
+directory = fast_float-6.1.3
 patch_directory = fast_float
 
 [provide]
