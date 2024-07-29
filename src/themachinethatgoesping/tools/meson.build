@@ -19,6 +19,7 @@ headers = [
   'vectorinterpolators.hpp',
   'exceptions/version_error.hpp',
   'exceptions/.docstrings/version_error.doc.hpp',
+  'classhelper/classversion.hpp',
   'classhelper/objectprinter.hpp',
   'classhelper/stream.hpp',
   'classhelper/xxhashhelper.hpp',
