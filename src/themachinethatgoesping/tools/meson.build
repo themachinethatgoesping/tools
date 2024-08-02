@@ -23,6 +23,7 @@ headers = [
   'classhelper/objectprinter.hpp',
   'classhelper/stream.hpp',
   'classhelper/xxhashhelper.hpp',
+  'classhelper/.docstrings/classversion.doc.hpp',
   'classhelper/.docstrings/objectprinter.doc.hpp',
   'classhelper/.docstrings/stream.doc.hpp',
   'classhelper/.docstrings/xxhashhelper.doc.hpp',
