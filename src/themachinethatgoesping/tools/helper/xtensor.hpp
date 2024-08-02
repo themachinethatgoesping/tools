@@ -2,7 +2,10 @@
 // SPDX-FileCopyrightText: 2023 Peter Urban, Ghent University
 //
 // SPDX-License-Identifier: MPL-2.0
+#pragma once
 
+/* generated doc strings */
+#include ".docstrings/xtensor.doc.hpp"
 #include <xtensor/xcontainer.hpp>
 
 namespace themachinethatgoesping {
