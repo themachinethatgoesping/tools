@@ -47,8 +47,7 @@ class XXHashSink : public boost::iostreams::sink
         this->to_stream(stream);                                                                   \
         stream.flush();                                                                            \
         return hash.digest();                                                                      \
-    }                                                                                              \
-    __SLOW_HASH_NOT_CONST__
+    }                        
 
 #define __BINARY_HASH__  /** @brief compute a 64 bit hash of the object using xxhash and the       \
                           * to_binary function. This  function is called binary because the        \
@@ -61,22 +60,4 @@ class XXHashSink : public boost::iostreams::sink
         stream.flush();                                                                            \
         return hash.digest();                                                                      \
     }                                                                                              \
-    __SLOW_HASH__
 
-#define __SLOW_HASH_NOT_CONST__                                                                    \
-    /** @brief compute a 64 bit hash of the object using xxhash and the to_binary function.        \
-     * This function is called slow because the to_binary function creates a copy                  \
-     */                                                                                            \
-    xxh::hash_t<64> slow_hash()                                                                    \
-    {                                                                                              \
-        return xxh::xxhash3<64>(this->to_binary());                                                \
-    }
-
-#define __SLOW_HASH__                                                                              \
-    /** @brief compute a 64 bit hash of the object using xxhash and the                            \
-     * to_binary function. This  function is called binary because the to_binary function creates  \
-     * a copy    */                                                                                \
-    xxh::hash_t<64> slow_hash() const                                                              \
-    {                                                                                              \
-        return xxh::xxhash3<64>(this->to_binary());                                                \
-    }

@@ -51,10 +51,6 @@
             "hash",                                                                                \
             [](T_CLASS& self) { return self.binary_hash(); },                                      \
             "hash function implemented using binary_hash")                                         \
-        .def(                                                                                      \
-            "slow_hash",                                                                           \
-            [](T_CLASS& self) { return self.slow_hash(); },                                        \
-            "hash function implemented using slow_hash")
 
 #define __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                     \
     .def(                                                                                          \
