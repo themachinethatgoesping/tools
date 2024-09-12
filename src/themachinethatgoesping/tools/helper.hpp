@@ -23,6 +23,12 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
 
+template <typename t_out, typename t_in1, typename t_in2>
+inline t_out substract_set_zero_if_negative(t_in1 a, t_in2 b)
+{
+    return a > b ? a - b : 0;
+}
+
 // source https://gist.github.com/s3rvac/d1f30364ce1f732d75ef0c89a1c8c1ef
 template<typename... Ts>
 struct make_overload : Ts...

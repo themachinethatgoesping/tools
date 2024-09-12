@@ -1,4 +1,4 @@
-//sourcehash: 8fbf31d3b83d1642941424adcb4a58ae322f9a64011c8fa9efc314f19b215d9d
+//sourcehash: c10033c746c08995b3cc73b4e3a6ca5535af9fff92a9e4064818334037d0a889
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -91,6 +91,8 @@ Parameter ``str``:
 
 Returns:
     double)doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_substract_set_zero_if_negative = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_visit_variant = R"doc()doc";
 
