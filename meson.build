@@ -75,9 +75,6 @@ xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabl
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
 
-#fast_float (for fast locale independent float parsing)
-flat_map_dep = dependency('flat_map')
-
 #xxhash_cpp (for fast hashing of classes/buffers)
 xxhash_cpp_dep = dependency('xxhash_cpp')
 
