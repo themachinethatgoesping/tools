@@ -1,4 +1,4 @@
-//sourcehash: a92c6b06219423591cb330310b5abe491e03ee9d8aa81f35033deac7fed4254b
+//sourcehash: cfe7254eafaa21cff83e5dcec18ae48072be399a2b7ad277327025dee56af436
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,8 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_themachinethatgoesping_tools_helper_xtensor_datatype = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
