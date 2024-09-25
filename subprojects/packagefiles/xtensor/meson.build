@@ -18,12 +18,14 @@ xsimd_dep = dependency('xsimd',
 
 
 if meson.get_compiler('cpp').get_id() == 'msvc'
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '/EHsc', '/MP', '/bigobj']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1', '/EHsc', '/MP', '/bigobj']
+elif meson.get_compiler('cpp').get_id() == 'clang-cl'
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1', '/EHsc', '/MP', '/bigobj']
 elif meson.get_compiler('cpp').get_id() == 'clang'
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1']
 else
     #xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD', '-march=native']
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1']
 endif
 
 xtensor_dep = declare_dependency(
