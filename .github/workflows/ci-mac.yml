@@ -64,7 +64,7 @@ jobs:
         llvm: ["$(brew --prefix llvm@18)"]
         boost: ["$(brew --prefix boost)"]
         libomp: ["$(brew --prefix libomp)"]
-        os: ["macos-12","macos-14","macos-15"] 
+        os: ["macos-12"] 
                 
     # env does not work here because is resolved as string and not command 
     # env:
@@ -88,7 +88,7 @@ jobs:
         key: super-ci-mac-2  # name for the cache
         
     # uninstall clang 15
-    #- run: brew uninstall llvm@15
+    - run: brew uninstall llvm@15
 
     - run: brew install coreutils llvm@18
         
@@ -99,7 +99,7 @@ jobs:
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
       run: |
-        BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib -lunwind" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+        BOOST_ROOT=${{ matrix.boost }} CXX=${{ matrix.llvm }}/bin/clang++  LDFLAGS="-L${{ matrix.llvm }}/lib/c++ -L${{ matrix.llvm }}/lib -L${{ matrix.boost }}/lib" CPPFLAGS="-I${{ matrix.llvm }}/include -I${{ matrix.boost }}/include" meson setup builddir/; meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
@@ -132,6 +132,7 @@ jobs:
       matrix:
         boost: ["$(brew --prefix boost)"]
         libomp: ["$(brew --prefix libomp)"]
+        llvm: ["$(brew --prefix llvm@18)"]
         os: ["macos-15"] 
         
     steps:
@@ -151,14 +152,19 @@ jobs:
       with:
         key: super-ci-mac-2  # name for the cache
         
-    - run: brew install libomp boost
+    - run: brew install libomp boost coreutils llvm@18
     
     - run: pip install meson meson-python ninja pytest numpy
     
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
       run: |
-        CXX=$(brew --prefix llvm)/bin/clang++ CC=$(brew --prefix llvm)/bin/clang meson setup builddir -Dpython.install_env=auto
+        meson setup builddir -Dpython.install_env=auto
+        # CXX=${{ matrix.llvm }}/bin/clang++ CC=${{ matrix.llvm }}/bin/clang \
+        # LDFLAGS="-L${{ matrix.llvm }}/lib \
+        #          -L${{ matrix.llvm }}/lib/c++ \
+        #          -lunwind" \
+        #           meson setup builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
