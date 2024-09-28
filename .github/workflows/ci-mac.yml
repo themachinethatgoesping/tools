@@ -162,7 +162,7 @@ jobs:
     # LDFLAGS="-L/opt/homebrew/opt/libomp/lib" CPPFLAGS="-I/opt/homebrew/opt/libomp/include" 
     - name: configure meson
       run: |
-        BOOST_ROOT=${{ matrix.boost }} LDFLAGS="-L${{ matrix.boost }}/lib" CPPFLAGS="-I${{ matrix.boost }}/include" meson setup builddir/; meson configure builddir -Dpython.install_env=auto
+        BOOST_ROOT=${{ matrix.boost }} meson setup builddir/; meson configure builddir -Dpython.install_env=auto
 
     - name: compile project
       run: meson compile -C builddir/
