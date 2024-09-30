@@ -23,7 +23,7 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
 
-template <typename t_out, typename t_in1, typename t_in2>
+template<typename t_out, typename t_in1, typename t_in2>
 inline t_out substract_set_zero_if_negative(t_in1 a, t_in2 b)
 {
     return a > b ? a - b : 0;
@@ -228,10 +228,16 @@ inline bool compare_containers(const t_container1& c1, const t_container2& c2)
 }
 
 template<typename t_float>
-bool float_equals(t_float a, t_float b, t_float epsilon = 0.0001)
+bool float_equals(t_float a, t_float b, t_float epsilon = t_float(0.0001))
 {
     return std::abs(a - b) < epsilon || (std::isnan(a) && std::isnan(b)) ||
            (std::isinf(a) && std::isinf(b));
+}
+
+template<typename t_float>
+bool float_is_finite_and_not_zero(t_float a, t_float epsilon = t_float(0.0001))
+{
+    return std::isfinite(a) && std::abs(a) > epsilon;
 }
 
 } // namespace helper
