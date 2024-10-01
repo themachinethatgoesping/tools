@@ -3,9 +3,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-
-
-
 #include "m_helper.hpp"
 // automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
@@ -42,4 +39,6 @@ void init_m_helper(py::module& m)
                  &string_as_int<int64_t>,
                  "Interprete a 8 byte string to an integer",
                  py::arg("value"));
+    m_helper.def(
+        "superscript", &superscript, "convert integer number to superscript", py::arg("exponent"));
 }

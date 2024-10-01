@@ -1,4 +1,4 @@
-//sourcehash: d77c6fb59ff80346ff9bcaa8cf644d468ca746f467bb2995692fcf869fc94bda
+//sourcehash: 65adb094e49784814bd9559cd6fe359d233b0bfd238da8647ae3fa91517e93a9
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,8 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_themachinethatgoesping_tools_helper_superscript = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

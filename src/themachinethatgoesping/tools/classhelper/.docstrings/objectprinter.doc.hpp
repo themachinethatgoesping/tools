@@ -1,4 +1,4 @@
-//sourcehash: 1035d74930b449d87a2f6efd0753966618188fd10c4f929ffbaad9a8fa55d240
+//sourcehash: 0e20a3d65c3932d08dc850baf509abf947dd3d6d0ee8ba4f48de9ed14b372270
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -126,6 +126,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -138,7 +141,10 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_printer = R"doc()doc";
 
@@ -250,10 +256,7 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_superscript_exponents = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing

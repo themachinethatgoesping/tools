@@ -69,12 +69,14 @@ headers = [
   'helper/enum.hpp',
   'helper/isviewstream.hpp',
   'helper/omp_helper.hpp',
+  'helper/printing.hpp',
   'helper/xtensor.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
   'helper/.docstrings/enum.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
   'helper/.docstrings/omp_helper.doc.hpp',
+  'helper/.docstrings/printing.doc.hpp',
   'helper/.docstrings/xtensor.doc.hpp',
 ]
 

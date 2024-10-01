@@ -31,6 +31,7 @@
 #include <magic_enum.hpp>
 #include <numeric>
 
+#include "../helper/printing.hpp"
 #include "stream.hpp"
 
 // // source https://gitlab.com/tesch1/cppduals/blob/master/duals/dual#L1379-1452
@@ -86,8 +87,8 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
     }
 
     template<typename FormatContext>
-    FMT_CONSTEXPR auto format(const std::complex<T>& x, FormatContext& ctx) const
-        -> decltype(ctx.out())
+    FMT_CONSTEXPR auto format(const std::complex<T>& x,
+                              FormatContext&         ctx) const -> decltype(ctx.out())
     {
         format_to(ctx.out(), "(");
         if (style_ == style::pair)
@@ -122,11 +123,13 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
     /**                                                                                            \
      * @brief return an info string using the class __printer__ object                             \
      * @param float_precision number of digits for floating point values                           \
+     * @param superscript_exponents print exponents in superscript                                 \
      * @return std::string                                                                         \
      */                                                                                            \
-    std::string info_string(unsigned int float_precision = 2) const                                \
+    std::string info_string(unsigned int float_precision = 3, bool superscript_exponents = true)   \
+        const                                                                                      \
     {                                                                                              \
-        return this->__printer__(float_precision).create_str();                                    \
+        return this->__printer__(float_precision, superscript_exponents).create_str();             \
     }
 
 #define __CLASSHELPER_PRINTER_PRINT__                                                              \
@@ -135,10 +138,13 @@ struct fmt::formatter<std::complex<T>, Char> : public fmt::formatter<T, Char>
      *                                                                                             \
      * @param os output stream, e.g. file stream or std::out or std::cerr                          \
      * @param float_precision number of digits for floating point values                           \
+     * @param superscript_exponents print exponents in superscript                                 \
      */                                                                                            \
-    void print(std::ostream& os, unsigned int float_precision = 2) const                           \
+    void print(std::ostream& os,                                                                   \
+               unsigned int  float_precision       = 3,                                            \
+               bool          superscript_exponents = true) const                                            \
     {                                                                                              \
-        os << this->__printer__(float_precision).create_str() << std::endl;                        \
+        os << this->__printer__(float_precision, superscript_exponents).create_str() << std::endl; \
     }
 
 #define __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__                                                 \
@@ -184,7 +190,8 @@ class ObjectPrinter
     std::vector<std::string>              _value_infos; ///< additional info (printed in [])
     std::vector<char>                     _section_underliner; ///< additional info (printed in [])
 
-    unsigned int _float_precision = 2;
+    unsigned int _float_precision       = 3;
+    bool         _superscript_exponents = true;
 
     /**
      * @brief Construct a new Object Printer object
@@ -212,6 +219,9 @@ class ObjectPrinter
         is.read(reinterpret_cast<char*>(&printer._float_precision),
                 sizeof(printer._float_precision));
 
+        is.read(reinterpret_cast<char*>(&printer._superscript_exponents),
+                sizeof(printer._superscript_exponents));
+
         return printer;
     }
 
@@ -227,11 +237,13 @@ class ObjectPrinter
         container_to_stream(os, _section_underliner);
 
         os.write(reinterpret_cast<const char*>(&_float_precision), sizeof(_float_precision));
+        os.write(reinterpret_cast<const char*>(&_superscript_exponents),
+                 sizeof(_superscript_exponents));
     }
 
-    ObjectPrinter __printer__(unsigned int float_precision) const
+    ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const
     {
-        ObjectPrinter printer("ObjectPrinter", float_precision);
+        ObjectPrinter printer("ObjectPrinter", float_precision, superscript_exponents);
 
         printer.register_value("name", _name);
         printer.register_container("fields", _fields);
@@ -255,6 +267,7 @@ class ObjectPrinter
         printer.register_container("value_infos", _value_infos);
         printer.register_container("section_underliner", _section_underliner);
         printer.register_value("float_precision", _float_precision);
+        printer.register_value("superscript_exponents", _superscript_exponents);
 
         return printer;
     }
@@ -268,9 +281,10 @@ class ObjectPrinter
      *
      * @param name name of the class that is to be printed
      */
-    ObjectPrinter(std::string_view name, unsigned int float_precision)
+    ObjectPrinter(std::string_view name, unsigned int float_precision, bool superscript_exponents)
         : _name(std::string(name))
         , _float_precision(float_precision)
+        , _superscript_exponents(superscript_exponents)
     {
     }
 
@@ -394,7 +408,28 @@ class ObjectPrinter
 
         // convert value to string
         if constexpr (std::is_floating_point<t_value>())
-            str = fmt::format("{:.{}f}", value, _float_precision);
+        {
+            // make sure small values are displayed in a more readable format
+            int exponent = 0;
+            if (value < 0.1)
+                exponent = std::floor(std::log10(std::fabs(value) + t_value(1)) / t_value(3)) * 3;
+            else if (value > 1000)
+                exponent = std::floor(std::log10(std::fabs(value) - t_value(1)) / t_value(3)) * 3;
+            
+            if (exponent != 0)
+            {
+                value *= std::pow(10, t_value(-exponent));
+                if (_superscript_exponents)
+                    str = fmt::format("{:.{}f}e{}",
+                                      value,
+                                      _float_precision,
+                                      tools::helper::superscript(exponent));
+                else
+                    str = fmt::format("{:.{}f}e{}", value, _float_precision, exponent);
+            }
+            else
+                str = fmt::format("{:.{}f}", value, _float_precision);
+        }
         else
             str = fmt::format("{}", value);
 

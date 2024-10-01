@@ -22,10 +22,11 @@ void init_c_objectprinter(pybind11::module& m)
 
     py::class_<ObjectPrinter>(
         m, "ObjectPrinter", DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter))
-        .def(py::init<const std::string&, unsigned int>(),
+        .def(py::init<const std::string&, unsigned int, bool>(),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),
              py::arg("name"),
-             py::arg("float_precission"))
+             py::arg("float_precission"),
+             py::arg("superscript_exponents"))
         .def("class_name",
              &ObjectPrinter::class_name,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, class_name))

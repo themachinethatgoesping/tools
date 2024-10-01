@@ -200,7 +200,7 @@ class I_Interpolator
      * @param float_precision number of digits for floating point numbers
      * @return classhelper::ObjectPrinter
      */
-    virtual classhelper::ObjectPrinter __printer__(unsigned int float_precision) const = 0;
+    virtual classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const = 0;
 
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__

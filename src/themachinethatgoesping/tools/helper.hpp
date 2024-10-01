@@ -18,6 +18,7 @@
 
 #include "helper/defaultmap.hpp"
 #include "helper/defaultsharedpointermap.hpp"
+#include "helper/printing.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

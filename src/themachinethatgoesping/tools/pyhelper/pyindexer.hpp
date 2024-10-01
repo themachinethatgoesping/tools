@@ -72,14 +72,14 @@ class PyIndexer
         // operators
         bool operator==(const Slice& other) const = default;
 
-        classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+        classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const
         {
             std::string start_ = start == PyIndexer::None ? "" : std::to_string(start);
             std::string stop_  = stop == PyIndexer::None ? "" : std::to_string(stop);
             std::string step_  = step == PyIndexer::None ? "" : std::to_string(step);
 
             classhelper::ObjectPrinter printer(
-                fmt::format("PyIndexer::Slice({}:{}:{})", start_, stop_, step_), float_precision);
+                fmt::format("PyIndexer::Slice({}:{}:{})", start_, stop_, step_), float_precision, superscript_exponents);
 
             return printer;
         }
@@ -497,9 +497,9 @@ class PyIndexer
      * @param float_precision Precision of floating point numbers
      * @return classhelper::ObjectPrinter
      */
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const
     {
-        classhelper::ObjectPrinter printer("PyIndexer", float_precision);
+        classhelper::ObjectPrinter printer("PyIndexer", float_precision, superscript_exponents);
 
         printer.register_value("_vector_size", _vector_size);
 

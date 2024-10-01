@@ -370,9 +370,9 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
     }
 
   public:
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const override
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const override
     {
-        classhelper::ObjectPrinter printer(this->class_name(), float_precision);
+        classhelper::ObjectPrinter printer(this->class_name(), float_precision, superscript_exponents);
 
         printer.register_enum("extr_mode", this->_extr_mode);
         printer.register_section("data lists");

@@ -50,7 +50,7 @@
         .def(                                                                                      \
             "hash",                                                                                \
             [](T_CLASS& self) { return self.binary_hash(); },                                      \
-            "hash function implemented using binary_hash")                                         \
+            "hash function implemented using binary_hash")
 
 #define __PYCLASS_DEFAULT_BINARY__1__(T_CLASS)                                                     \
     .def(                                                                                          \
@@ -79,23 +79,26 @@
 #define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
     .def(                                                                                          \
         "__str__",                                                                                 \
-        [](T_CLASS& self) { return self.__printer__(2).create_str(); },                            \
+        [](T_CLASS& self) { return self.__printer__(3, true).create_str(); },                            \
         "Return object information as string")                                                     \
         .def(                                                                                      \
             "__repr__",                                                                            \
-            [](T_CLASS& self) { return self.__printer__(2).class_name(); },                          \
+            [](T_CLASS& self) { return self.__printer__(3, true).class_name(); },                        \
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
-            [](T_CLASS& self, unsigned int float_precision) {                                      \
-                return self.__printer__(float_precision).create_str();                             \
+            [](T_CLASS& self, unsigned int float_precision, bool superscript_exponents) {          \
+                return self.__printer__(float_precision, superscript_exponents).create_str();      \
             },                                                                                     \
             "Return object information as string",                                                 \
-            py::arg("float_precision") = 2)                                                        \
+            py::arg("float_precision")       = 3,                                                  \
+            py::arg("superscript_exponents") = true)                                               \
         .def(                                                                                      \
             "print",                                                                               \
-            [](T_CLASS& self, unsigned int float_precision) {                                      \
-                py::print(self.__printer__(float_precision).create_str());                         \
+            [](T_CLASS& self, unsigned int float_precision, bool superscript_exponents) {          \
+                py::print(self.__printer__(float_precision, superscript_exponents).create_str());  \
             },                                                                                     \
             "Print object information",                                                            \
-            py::arg("float_precision") = 2)
+            py::arg("float_precision")       = 3,                                                  \
+            py::arg("superscript_exponents") = true)
+
