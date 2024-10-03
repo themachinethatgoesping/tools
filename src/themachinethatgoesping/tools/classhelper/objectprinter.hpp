@@ -410,12 +410,17 @@ class ObjectPrinter
         if constexpr (std::is_floating_point<t_value>())
         {
             // make sure small values are displayed in a more readable format
-            int exponent = 0;
-            if (value < 0.1)
-                exponent = std::floor(std::log10(std::fabs(value) + t_value(1)) / t_value(3)) * 3;
-            else if (value > 1000)
-                exponent = std::floor(std::log10(std::fabs(value) - t_value(1)) / t_value(3)) * 3;
-            
+            int  exponent  = 0;
+            auto abs_value = std::fabs(value);
+
+            if (value != t_value(0) && abs_value != t_value(0))
+            {
+                if (abs_value < 0.1)
+                    exponent = std::floor((std::log10(abs_value) + t_value(1)) / t_value(3)) * 3;
+                else if (abs_value > 1000)
+                    exponent = std::floor((std::log10(abs_value) - t_value(1)) / t_value(3)) * 3;
+            }
+
             if (exponent != 0)
             {
                 value *= std::pow(10, t_value(-exponent));
