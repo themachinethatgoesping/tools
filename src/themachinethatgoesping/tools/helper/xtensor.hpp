@@ -41,6 +41,24 @@ struct xtensor_datatype
 template<typename T>
 using xtensor_datatype_t = typename xtensor_datatype<T>::type;
 
+// container approx
+template<c_xtensor t_tensor>
+bool approx_xtensor(
+    const t_tensor&                           c1,
+    const t_tensor&                           c2,
+    typename xtensor_datatype<t_tensor>::type relative_difference_factor = 0.0001 // 0.01%
+)
+{
+    if (c1.size() != c2.size())
+        return false;
+
+    for (size_t i = 0; i < c1.size(); i++)
+        if (!approx(c1.data()[i], c2.data()[i], relative_difference_factor))
+            return false;
+
+    return true;
+}
+
 }
 }
 }
