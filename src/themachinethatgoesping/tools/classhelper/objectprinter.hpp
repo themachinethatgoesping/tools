@@ -390,6 +390,31 @@ class ObjectPrinter
     }
 
     /**
+     * @brief Registers an optional value with the given name and additional information.
+     *
+     * This function checks if the optional value has a value. If it does, it registers the value
+     * using the provided name, value information, and position. If the optional value does not
+     * have a value, it registers the string "Not set" instead.
+     *
+     * @tparam t_value The type of the optional value.
+     * @param name The name to register the value under.
+     * @param value The optional value to register.
+     * @param value_info Additional information about the value (default is an empty string).
+     * @param pos The position to register the value at (default is -1).
+     */
+    template<typename t_value>
+    void register_optional_value(const std::string&     name,
+                                 std::optional<t_value> value,
+                                 std::string_view       value_info = "",
+                                 int                    pos        = -1)
+    {
+        if (value.has_value())
+            register_value(name, value.value(), value_info, pos);
+        else
+            register_string(name, "Not set", std::string(value_info), pos);
+    }
+
+    /**
      * @brief register a single integer of floating point value for printing
      *
      * @tparam t_value double or floating point

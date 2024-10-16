@@ -139,7 +139,6 @@ bool approx_container(const t_container&               c1,
     return true;
 }
 
-
 template<typename t_container>
 bool approx_container_complex(
     const t_container&                           c1,
@@ -230,14 +229,33 @@ inline bool compare_containers(const t_container1& c1, const t_container2& c2)
 }
 
 template<typename t_float>
-bool float_equals(t_float a, t_float b, t_float epsilon = t_float(0.0001))
+inline bool float_equals(t_float a, t_float b, t_float epsilon = t_float(0.0001))
 {
     return std::abs(a - b) < epsilon || (std::isnan(a) && std::isnan(b)) ||
            (std::isinf(a) && std::isinf(b));
 }
 
 template<typename t_float>
-bool float_is_finite_and_not_zero(t_float a, t_float epsilon = t_float(0.0001))
+inline bool optional_float_equals(std::optional<t_float> a,
+                                  std::optional<t_float> b,
+                                  t_float                epsilon = t_float(0.0001))
+{
+    if (a.has_value())
+    {
+        if (!b.has_value())
+            return false;
+
+        return float_equals(a.value(), b.value(), epsilon);
+    }
+
+    if (b.has_value())
+        return false;
+
+    return true;
+}
+
+template<typename t_float>
+inline bool float_is_finite_and_not_zero(t_float a, t_float epsilon = t_float(0.0001))
 {
     return std::isfinite(a) && std::abs(a) > epsilon;
 }

@@ -57,6 +57,35 @@ void init_c_objectprinter(pybind11::module& m)
              py::arg("value"),
              py::arg("value_info") = "",
              py::arg("pos")        = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&, std::optional<double>, std::string_view, int>(
+                &ObjectPrinter::register_optional_value<double>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info") = "",
+            py::arg("pos")        = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&, std::optional<int>, std::string_view, int>(
+                &ObjectPrinter::register_optional_value<int>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info") = "",
+            py::arg("pos")        = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&,
+                              std::optional<std::string>,
+                              std::string_view,
+                              int>(&ObjectPrinter::register_optional_value<std::string>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info") = "",
+            py::arg("pos")        = -1)
         .def("register_value_bytes",
              &ObjectPrinter::register_value_bytes,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_value_bytes),

@@ -8,6 +8,8 @@
 #include ".docstrings/hashhelper.doc.hpp"
 
 #include <xxhash.hpp>
+// xtensor includes
+#include "helper/xtensor.hpp"
 
 /**
  * @brief boost hash specializations for some types
@@ -26,10 +28,14 @@ namespace xt {
  * @param b
  * @return std::size_t
  */
-template<typename T, size_t d>
-std::size_t hash_value(const xt::xtensor<T, d>& array)
+template<themachinethatgoesping::tools::helper::c_xtensor t_xtensor>
+std::size_t hash_value(const t_xtensor& array)
 {
-    return xxh::xxhash3<64>(array.data(), array.size() * sizeof(T));
+    return xxh::xxhash3<64>(
+        array.data(),
+        array.size() *
+            sizeof(
+                typename themachinethatgoesping::tools::helper::xtensor_datatype<t_xtensor>::type));
 }
 
 }

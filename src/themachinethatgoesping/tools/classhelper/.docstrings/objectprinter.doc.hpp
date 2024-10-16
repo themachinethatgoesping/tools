@@ -1,4 +1,4 @@
-//sourcehash: 8a21ce58ab7c73cc11b89a020678773126dc5105c99f9a50b1baed970ab1ba59
+//sourcehash: 18105462111687f1557bea5c759aceda513f742aec0d1de9a242a8282f85c57c
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -185,6 +185,31 @@ Parameter ``value_info``:
 Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_optional_value =
+R"doc(Registers an optional value with the given name and additional
+information.
+
+This function checks if the optional value has a value. If it does, it
+registers the value using the provided name, value information, and
+position. If the optional value does not have a value, it registers
+the string "Not set" instead.
+
+Template parameter ``t_value``:
+    The type of the optional value.
+
+Parameter ``name``:
+    The name to register the value under.
+
+Parameter ``value``:
+    The optional value to register.
+
+Parameter ``value_info``:
+    Additional information about the value (default is an empty
+    string).
+
+Parameter ``pos``:
+    The position to register the value at (default is -1).)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_section =
 R"doc(register a section break for printing
