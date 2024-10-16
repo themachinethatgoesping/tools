@@ -13,6 +13,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <optional>
 
 #include "fast_float/fast_float.h"
 
