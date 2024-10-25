@@ -11,6 +11,7 @@
 #include "m_progressbars.hpp"
 #include "m_timeconv.hpp"
 #include "pyhelper/module.hpp"
+#include "rotationfunctions/module.hpp"
 #include "vectorinterpolators/module.hpp"
 
 PYBIND11_MODULE(MODULE_NAME, m)
@@ -24,6 +25,7 @@ PYBIND11_MODULE(MODULE_NAME, m)
     init_m_helper(m);
     init_m_progressbars(m);
     init_m_vectorinterpolators(m);
+    init_m_rotationfunctions(m);
     init_m_classhelper(m);
     init_m_pyhelper(m);
 }

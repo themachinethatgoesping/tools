@@ -18,6 +18,8 @@ sources = [
   'vectorinterpolators/c_nearestinterpolator.cpp',
   'vectorinterpolators/c_slerpinterpolator.cpp',
   'vectorinterpolators/module.cpp',
+  'rotationfunctions/c_quaternions.cpp',
+  'rotationfunctions/module.cpp',
   'pyhelper/c_pyindexer.cpp',
   'pyhelper/module.cpp',
 ]
