@@ -24,6 +24,7 @@ using namespace themachinethatgoesping::tools::rotationfunctions;
 template<std::floating_point t_float>
 void init_quaternion_types(pybind11::module& m)
 {
+
     m.def("quaternion_from_ypr",
           py::overload_cast<std::array<t_float, 3>, bool>(&quaternion_from_ypr<t_float>),
           DOC_Quaternions(quaternion_from_ypr),
@@ -142,6 +143,60 @@ void init_quaternion_types(pybind11::module& m)
           DOC_Quaternions(rotateXYZ),
           py::arg("q"),
           py::arg("v"));
+
+    m.def(
+        "rotateYPR",
+        [](t_float yaw1,
+           t_float pitch1,
+           t_float roll1,
+           t_float yaw2,
+           t_float pitch2,
+           t_float roll2,
+           bool    input_in_degrees = true) {
+            auto q1 = quaternion_from_ypr(yaw1, pitch1, roll1, input_in_degrees);
+            auto q2 = quaternion_from_ypr(yaw2, pitch2, roll2, input_in_degrees);
+
+            auto q3 = q1 * q2;
+            return ypr_from_quaternion(q3, input_in_degrees);
+        },
+        "Rotate yaw pitch roll angles by other yaw pitch and roll angles",
+        py::arg("yaw1"),
+        py::arg("pitch1"),
+        py::arg("roll1"),
+        py::arg("yaw2"),
+        py::arg("pitch2"),
+        py::arg("roll2"),
+        py::arg("input_in_degrees") = true);
+
+    m.def(
+        "rotateYPR",
+        [](const std::vector<t_float>& yaw1,
+           const std::vector<t_float>& pitch1,
+           const std::vector<t_float>& roll1,
+           t_float                     yaw2,
+           t_float                     pitch2,
+           t_float                     roll2,
+           bool                        input_in_degrees = true) {
+            auto Q1 = quaternion_from_ypr(yaw1, pitch1, roll1, input_in_degrees);
+            auto q2 = quaternion_from_ypr(yaw2, pitch2, roll2, input_in_degrees);
+
+            std::vector<Eigen::Quaternion<t_float>> Q3;
+            Q3.reserve(Q1.size());
+
+            for (unsigned int i = 0; i < Q1.size(); ++i)
+            {
+                Q3.push_back(Q1[i] * q2);
+            }
+            return ypr_from_quaternion(Q3, input_in_degrees);
+        },
+        "Rotate yaw pitch roll angles by other yaw pitch and roll angles",
+        py::arg("yaw1"),
+        py::arg("pitch1"),
+        py::arg("roll1"),
+        py::arg("yaw2"),
+        py::arg("pitch2"),
+        py::arg("roll2"),
+        py::arg("input_in_degrees") = true);
 }
 
 void init_quaternions(pybind11::module& m)

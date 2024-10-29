@@ -29,7 +29,7 @@ void init_m_rotationfunctions(pybind11::module& m)
 {
     // module description
     auto m_rotationfunctions = m.def_submodule(
-        "init_m_rotationfunctions", "functions for rotating coordinates using libeigen quaternions");
+        "rotationfunctions", "functions for rotating coordinates using libeigen quaternions");
 
     init_quaternions(m_rotationfunctions);
 }
