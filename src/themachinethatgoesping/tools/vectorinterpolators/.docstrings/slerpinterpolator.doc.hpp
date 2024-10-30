@@ -1,4 +1,4 @@
-//sourcehash: 8ada8ce9065b812dcedc02a91c3912527315ea959a8d5d7db26cb4097f40538c
+//sourcehash: 16fdb3d053d0dae3ec48396a5d10edefb693b0fa9a0400a99a93b74e86e63cdc
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -346,6 +346,18 @@ R"doc(get the interpolated yaw, pitch and roll values for given x target
 Parameter ``targets_x``:
     vector of x values. For each of these values find the corrsponding
     yaw, pitch and roll value
+
+Parameter ``output_in_degrees``:
+    if true, yaw pitch and roll input values are in ° otherwise rad
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr_const =
+R"doc(get the interpolated yaw, pitch and roll values for given x target
+
+Parameter ``target_x``:
+    find the corresponding y value for this x value
 
 Parameter ``output_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad
