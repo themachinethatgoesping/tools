@@ -37,15 +37,16 @@ void init_nearestinterpolator(pybind11::module& m, const std::string& name)
              py::arg("Y")                  = std::vector<YType>({}),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
-             py::overload_cast<XType>(&t_NearestInterpolator::operator()),
+             py::overload_cast<XType>(&t_NearestInterpolator::operator(), py::const_),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              py::arg("target_x"))
-        .def("get_y_const",
-             py::overload_cast<XType>(&t_NearestInterpolator::get_y_const, py::const_),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_y_const),
+        .def("get_y",
+             py::overload_cast<XType>(&t_NearestInterpolator::get_y, py::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_y),
              py::arg("target_x"))
         .def("__call__",
-             py::overload_cast<const std::vector<XType>&>(&t_NearestInterpolator::operator()),
+             py::overload_cast<const std::vector<XType>&>(&t_NearestInterpolator::operator(),
+                                                          py::const_),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

@@ -117,11 +117,11 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         return true;
     }
 
-    XYType get_y_const(XYType target_x) const
+    XYType get_y(XYType target_x) const
     {
         // if less than 4 values are present, act as linear interpolator
         if (_X.size() < 4)
-            return _min_linearextrapolator.get_y_const(target_x);
+            return _min_linearextrapolator.get_y(target_x);
 
         // check if _X (and _Y) are initialized (_X and _Y should always be the same size)
         if (_X.size() != _Y.size())
@@ -136,7 +136,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _Y[0];
 
                 case t_extr_mode::extrapolate:
-                    return _min_linearextrapolator.get_y_const(target_x);
+                    return _min_linearextrapolator.get_y(target_x);
 
                 default: // fail
                     // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too small), "
@@ -157,7 +157,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                     return _Y.back();
 
                 case t_extr_mode::extrapolate:
-                    return _max_linearextrapolator.get_y_const(target_x);
+                    return _max_linearextrapolator.get_y(target_x);
 
                 default: // fail
                     // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too large), "
@@ -180,7 +180,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    XYType operator()(XYType target_x) final { return get_y_const(target_x); }
+    XYType operator()(XYType target_x) const final { return get_y(target_x); }
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)
@@ -189,7 +189,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
      * corrsponding y value
      * @return corresponding y value
      */
-    std::vector<XYType> operator()(const std::vector<XYType>& targetsX)
+    std::vector<XYType> operator()(const std::vector<XYType>& targetsX) const
     {
         return I_Interpolator<XYType, XYType>::operator()(targetsX);
     }

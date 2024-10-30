@@ -45,7 +45,7 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
     SECTION("const interpolation should produce the same results as classic interpolation")
     {
         for (double x_val = -10; x_val <= 12; x_val += 0.1)
-            REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
+            REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y(x_val)));
     }
     REQUIRE(interpolator.binary_hash() ==
             10074301266414863605ULL); // lookup should not change the hash
@@ -95,8 +95,8 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
                     {
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.get_y(-11), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.get_y(13), std::out_of_range);
                     }
                     break;
 
@@ -104,8 +104,8 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
                     SECTION(" - nearest extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1));
                     REQUIRE(interpolator(13) == Catch::Approx(y_append));
-                    REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1));
-                    REQUIRE(interpolator.get_y_const(13) == Catch::Approx(y_append));
+                    REQUIRE(interpolator.get_y(-11) == Catch::Approx(1));
+                    REQUIRE(interpolator.get_y(13) == Catch::Approx(y_append));
                     break;
             }
         }

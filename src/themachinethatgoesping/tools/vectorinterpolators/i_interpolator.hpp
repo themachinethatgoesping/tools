@@ -142,7 +142,7 @@ class I_Interpolator
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    virtual YType operator()(XType target_x) = 0;
+    virtual YType operator()(XType target_x) const = 0;
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)
@@ -150,7 +150,7 @@ class I_Interpolator
      * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
-    std::vector<YType> operator()(const std::vector<XType>& targetsX)
+    std::vector<YType> operator()(const std::vector<XType>& targetsX) const
     {
         std::vector<YType> y_values;
         y_values.reserve(targetsX.size());
