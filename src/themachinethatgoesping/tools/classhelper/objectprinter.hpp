@@ -28,7 +28,7 @@
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <limits>
-#include <magic_enum.hpp>
+#include <magic_enum/magic_enum.hpp>
 #include <numeric>
 
 #include "../helper/printing.hpp"
