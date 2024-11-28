@@ -405,13 +405,14 @@ class ObjectPrinter
     template<typename t_value>
     void register_optional_value(const std::string&     name,
                                  std::optional<t_value> value,
-                                 std::string_view       value_info = "",
-                                 int                    pos        = -1)
+                                 std::string_view       value_info     = "",
+                                 std::string_view       optional_value = "Not set",
+                                 int                    pos            = -1)
     {
         if (value.has_value())
             register_value(name, value.value(), value_info, pos);
         else
-            register_string(name, "Not set", std::string(value_info), pos);
+            register_string(name, std::string(optional_value), std::string(value_info), pos);
     }
 
     /**
@@ -696,6 +697,30 @@ class ObjectPrinter
                 line_ref.push_back(fmt::format("... {} elements", values.size()));
             }
         }
+    }
+    /**
+     * @brief register a formatted string field for printing, with delimiters
+     *
+     * @param name name of the variable
+     * @param value value of the variable
+     * @param delimiter_left left delimiter
+     * @param delimiter_right right delimiter
+     * @param value_info additional info (is printed in [] behind the variable)
+     * @param pos position where the value is registers (if negative, the value is appended)
+     * @param max_visible_elements maximum of chars that are printed (if 0, all elements are
+     * printed)
+     */
+    void register_string_with_delimiters(const std::string& name,
+                                         std::string        value,
+                                         std::string        value_info           = "",
+                                         std::string        delimiter_left       = "\"",
+                                         std::string        delimiter_right      = "\"",
+                                         int                pos                  = -1,
+                                         size_t             max_visible_elements = 0)
+    {
+        value = delimiter_left + value + delimiter_right;
+
+        register_string(name, value, value_info, pos, max_visible_elements);
     }
 
     /**

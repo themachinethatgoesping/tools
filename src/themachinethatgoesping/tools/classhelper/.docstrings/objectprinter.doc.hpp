@@ -1,4 +1,4 @@
-//sourcehash: bb934fd819aa8d352a48df0ddf58799374ced0b1bd5529d1beb2bf77428d61a4
+//sourcehash: e84430c2e53dad0f9e45166f9e70dd867396c97d3cad782004c83e54f3deef90
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -232,6 +232,31 @@ Parameter ``name``:
 
 Parameter ``value``:
     value of the variable
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended)
+
+Parameter ``max_visible_elements``:
+    maximum of chars that are printed (if 0, all elements are printed))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_string_with_delimiters =
+R"doc(register a formatted string field for printing, with delimiters
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable
+
+Parameter ``delimiter_left``:
+    left delimiter
+
+Parameter ``delimiter_right``:
+    right delimiter
 
 Parameter ``value_info``:
     additional info (is printed in [] behind the variable)
