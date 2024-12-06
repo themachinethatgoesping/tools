@@ -18,6 +18,8 @@ nlohmann_json*/*
 pugixml*/*
 xsimd*/*
 xtl*/*
+frozen*/*
+sse2neon*/*
 
 #git repos
 meta-*
