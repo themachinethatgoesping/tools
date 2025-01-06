@@ -10,7 +10,7 @@ project(
   license: 'MPL-2.0',
 
   version: '0.28.3',
-  default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
+  default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20', 'b_lto=true'],
   meson_version: '>=1.3.2' #first version with  clang-cl openmp support,
 )
 
@@ -26,8 +26,11 @@ else
 endif
 
 # extra compiler args when for the tools target
-tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC']
-
+tools_compile_args = ['-D_USE_MATH_DEFINES', '-fPIC', 
+#'-march=x86-64-v3',
+#'-mtune=generic',
+#'-funroll-loops'
+]
 
 if meson.get_compiler('cpp').get_id() == 'clang' or meson.get_compiler('cpp').get_id() == 'gcc'
   # TODO: find a way to include these warnings again
@@ -85,6 +88,7 @@ if get_option('build_pythonmodule').enabled()
 
   python3_dep = pymod.dependency()
   pybind11_dep = dependency('pybind11')
+  #nanobind_dep = dependency('nanobind', static: true) 
   xtensor_python_dep = dependency('xtensor-python', static: true).as_system('system')
 
   # -- numpy (necessary for xtensor_python) --
