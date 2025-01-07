@@ -7,10 +7,10 @@
 /* generated doc strings */
 #include ".docstrings/hashhelper.doc.hpp"
 
-#if defined(__x86_64__) || defined(_M_X64)
-#else
-#define _MM_PERM_ENUM int
-#endif
+// #if defined(__x86_64__) || defined(_M_X64)
+// #else
+// #define _MM_PERM_ENUM int
+// #endif
 #include <xxhash.hpp>
 // xtensor includes
 #include "helper/xtensor.hpp"
