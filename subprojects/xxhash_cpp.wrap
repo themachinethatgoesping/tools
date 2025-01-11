@@ -11,8 +11,8 @@
 
 [wrap-git]
 url =https://github.com/RedSpah/xxhash_cpp.git
-revision = mr-mm_perm_enum
-directory = xxhash_cpp-git-pr
+revision = master
+directory = xxhash_cpp-git-master
 patch_directory = xxhash_cpp
 
 [provide]
