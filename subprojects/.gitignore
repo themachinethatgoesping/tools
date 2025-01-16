@@ -5,7 +5,7 @@
 #folders
 packagecache/*
 date*
-Catch2*/*
+Catch2-*
 xxhash*/*
 xxhash_cpp-*
 
