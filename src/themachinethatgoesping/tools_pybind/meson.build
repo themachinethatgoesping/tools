@@ -21,35 +21,35 @@ headers = [
 
 # -- targets --
 # for now force static linking on windows
-if build_machine.system() != 'linux'
-  tools_pybind_lib = static_library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          pybind11_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-else  
-  tools_pybind_lib = library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          pybind11_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-endif
+# if build_machine.system() != 'linux'
+#   tools_pybind_lib = static_library(libname,sources,
+#                         dependencies : [
+#                           tools_dep,
+#                           pybind11_dep,
+#                           python3_dep,
+#                           xtensor_python_dep,
+#                           numpy_dep],
+#                         override_options: [
+#                           'b_lundef=false'
+#                       ],
+#                         # cpp_pch : 'pch/pch.hpp',
+#                         install : true
+#                         )
+# else  
+#   tools_pybind_lib = library(libname,sources,
+#                         dependencies : [
+#                           tools_dep,
+#                           pybind11_dep,
+#                           python3_dep,
+#                           xtensor_python_dep,
+#                           numpy_dep],
+#                         override_options: [
+#                           'b_lundef=false'
+#                       ],
+#                         # cpp_pch : 'pch/pch.hpp',
+#                         install : true
+#                         )
+# endif
                       
 
 # -- internal dependency --
@@ -61,7 +61,7 @@ tools_pybind_dep = declare_dependency(
                 xtensor_python_dep,
                 numpy_dep
   ],
-  link_with : [tools_pybind_lib],
+  #link_with : [tools_pybind_lib],
   compile_args : ['-D_USE_MATH_DEFINES'],
   include_directories : ['../../']
   )
@@ -75,9 +75,8 @@ if headers != ['']
 endif
 
 # create pkgconfig file
-pkg = import('pkgconfig')
-pkg.generate(tools_pybind_lib,
-             requires : [tools_lib],#,'aglib','boost'],
-             description : 'Shared functions and classes (C++) for pybind11 bindings',
-             url : 'https://github.com/themachinethatgoesping/tools')
-
+# pkg = import('pkgconfig')
+# pkg.generate(tools_pybind_lib,
+#              requires : [tools_lib],#,'aglib','boost'],
+#              description : 'Shared functions and classes (C++) for pybind11 bindings',
+#              url : 'https://github.com/themachinethatgoesping/tools')
