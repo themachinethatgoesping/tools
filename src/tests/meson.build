@@ -10,6 +10,7 @@ sources = [
   'timeconv.test.cpp',
   'tutorial.test.cpp',
   'vectorinterpolators/akima.test.cpp',
+  'vectorinterpolators/bivector.test.cpp',
   'vectorinterpolators/common.test.cpp',
   'vectorinterpolators/linear.test.cpp',
   'vectorinterpolators/nearest.test.cpp',

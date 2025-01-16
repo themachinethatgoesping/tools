@@ -114,5 +114,5 @@ void init_akimainterpolator(pybind11::module& m, const std::string& name)
 void init_c_akimainterpolator(pybind11::module& m)
 {
     init_akimainterpolator<double>(m, "AkimaInterpolator");
-    init_akimainterpolator<float>(m, "AkimaInterpolatorFF");
+    init_akimainterpolator<float>(m, "AkimaInterpolatorF");
 }

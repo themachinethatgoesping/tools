@@ -20,6 +20,7 @@ xsimd*/*
 xtl*/*
 frozen*/*
 sse2neon*/*
+xxhash_cpp*/*
 
 #git repos
 meta-*

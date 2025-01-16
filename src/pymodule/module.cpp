@@ -6,6 +6,9 @@
 #include <pybind11/iostream.h>
 #include <pybind11/pybind11.h>
 
+#define FORCE_IMPORT_ARRAY // this is needed for xtensor-python but must only be included once
+#include <xtensor-python/pytensor.hpp> // Numpy bindings
+
 #include "classhelper/module.hpp"
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
@@ -16,6 +19,8 @@
 
 PYBIND11_MODULE(MODULE_NAME, m)
 {
+    xt::import_numpy(); // import numpy for xtensor (otherwise there will be weird segfaults)
+
     pybind11::add_ostream_redirect(m, "ostream_redirect");
 
     m.attr("__version__") = MODULE_VERSION;

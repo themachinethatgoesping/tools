@@ -14,6 +14,7 @@ sources = [
   'classhelper/c_objectprinter.cpp',
   'classhelper/module.cpp',
   'vectorinterpolators/c_akimainterpolator.cpp',
+  'vectorinterpolators/c_bivectorinterpolator.cpp',
   'vectorinterpolators/c_linearinterpolator.cpp',
   'vectorinterpolators/c_nearestinterpolator.cpp',
   'vectorinterpolators/c_slerpinterpolator.cpp',
