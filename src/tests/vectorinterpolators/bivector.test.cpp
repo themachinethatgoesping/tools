@@ -30,10 +30,10 @@ void test_interpolator_serialize(t_interpolator& ip)
 
     REQUIRE(ip == ip2);
 
-    return; // 1
-
     // test internal to/from binary functions
     auto buffer2 = ip2.to_binary();
+
+    return; // 2
     auto ip3     = t_interpolator::from_binary(buffer2);
 
     // test internal to/from stream functions
