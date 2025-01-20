@@ -62,10 +62,10 @@ void test_interpolator_serialize(t_interpolator& ip)
 
     // read permanently created test data
     ifs.open(test_file);
-    return; //10
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();
+    return; //11
 
     int i = 0;
     for (auto ipx : { ip2, ip3, ip4, ip5 })
