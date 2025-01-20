@@ -51,8 +51,8 @@ void test_interpolator_serialize(t_interpolator& ip)
     if (__UPDATE_TEST_DATA__ || recreate_test_file || true)
     {
         ofs.open(test_file, std::ios::binary);
-    return; //6
         ip3.to_stream(ofs);
+    return; //7
         ofs.close();
     }
 
