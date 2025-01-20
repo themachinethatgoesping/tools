@@ -32,9 +32,9 @@ void test_interpolator_serialize(t_interpolator& ip)
 
     // test internal to/from binary functions
     auto buffer2 = ip2.to_binary();
-
-    return; // 2
     auto ip3     = t_interpolator::from_binary(buffer2);
+
+    return; //3
 
     // test internal to/from stream functions
     std::ofstream ofs(TESTDIR + "interpolator.tmp", std::ios::binary);
