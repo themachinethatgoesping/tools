@@ -59,10 +59,10 @@ void test_interpolator_serialize(t_interpolator& ip)
     std::ifstream ifs(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto          ip4 = t_interpolator::from_stream(ifs);
     ifs.close();
-    return; //9
 
     // read permanently created test data
     ifs.open(test_file);
+    return; //10
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();
