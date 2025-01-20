@@ -65,7 +65,6 @@ void test_interpolator_serialize(t_interpolator& ip)
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();
-    return; //11
 
     int i = 0;
     for (auto ipx : { ip2, ip3, ip4, ip5 })
@@ -73,6 +72,7 @@ void test_interpolator_serialize(t_interpolator& ip)
         INFO(fmt::format("comparing nr {}", i++));
         REQUIRE(ip == ipx);
     }
+    return; //12
 }
 
 TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly", TESTTAG)
