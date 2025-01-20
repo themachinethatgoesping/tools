@@ -40,7 +40,6 @@ void test_interpolator_serialize(t_interpolator& ip)
     ofs.close();
     // write file if it does not exist or is only an empty reference
     auto test_file = TESTDIR + "vectorinterpolators/" + ip3.class_name() + ".binary";
-    return; //4
 
     std::filesystem::create_directories(TESTDIR + "vectorinterpolators/");
     bool recreate_test_file = false;
@@ -48,6 +47,7 @@ void test_interpolator_serialize(t_interpolator& ip)
         recreate_test_file = true;
     else if (std::filesystem::file_size(test_file) < 100)
         recreate_test_file = true;
+    return; //5
 
     if (__UPDATE_TEST_DATA__ || recreate_test_file || true)
     {
