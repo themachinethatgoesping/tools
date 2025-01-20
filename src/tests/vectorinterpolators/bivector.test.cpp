@@ -52,9 +52,9 @@ void test_interpolator_serialize(t_interpolator& ip)
     {
         ofs.open(test_file, std::ios::binary);
         ip3.to_stream(ofs);
-    return; //7
         ofs.close();
     }
+    return; //8
 
     // read test data created during this test
     std::ifstream ifs(TESTDIR + "interpolator.tmp", std::ios::binary);
