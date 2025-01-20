@@ -72,7 +72,6 @@ void test_interpolator_serialize(t_interpolator& ip)
         INFO(fmt::format("comparing nr {}", i++));
         REQUIRE(ip == ipx);
     }
-    return; //12
 }
 
 TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly", TESTTAG)
