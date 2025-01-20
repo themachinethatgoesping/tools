@@ -47,11 +47,11 @@ void test_interpolator_serialize(t_interpolator& ip)
         recreate_test_file = true;
     else if (std::filesystem::file_size(test_file) < 100)
         recreate_test_file = true;
-    return; //5
 
     if (__UPDATE_TEST_DATA__ || recreate_test_file || true)
     {
         ofs.open(test_file, std::ios::binary);
+    return; //6
         ip3.to_stream(ofs);
         ofs.close();
     }
