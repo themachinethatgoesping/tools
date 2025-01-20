@@ -40,6 +40,11 @@ if meson.get_compiler('cpp').get_id() == 'clang' or meson.get_compiler('cpp').ge
   tools_compile_args += '-Wno-stringop-overflow'
 endif
 
+#fix xtensor problem with clang 19 for now (review on next version of xtensor)
+if meson.get_compiler('cpp').get_id() == 'clang-cl'
+  tools_compile_args += '-fno-relaxed-template-template-args'
+endif
+
 # # boost
 boost_version = '>=1.73'
 boost_modules = dependency(
