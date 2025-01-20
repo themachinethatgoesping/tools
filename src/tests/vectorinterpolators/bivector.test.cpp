@@ -34,14 +34,13 @@ void test_interpolator_serialize(t_interpolator& ip)
     auto buffer2 = ip2.to_binary();
     auto ip3     = t_interpolator::from_binary(buffer2);
 
-    return; //3
-
     // test internal to/from stream functions
     std::ofstream ofs(TESTDIR + "interpolator.tmp", std::ios::binary);
     ip3.to_stream(ofs);
     ofs.close();
     // write file if it does not exist or is only an empty reference
     auto test_file = TESTDIR + "vectorinterpolators/" + ip3.class_name() + ".binary";
+    return; //4
 
     std::filesystem::create_directories(TESTDIR + "vectorinterpolators/");
     bool recreate_test_file = false;
