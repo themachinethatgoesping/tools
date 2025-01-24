@@ -31,7 +31,7 @@ class PyIndexer
 {
     size_t _vector_size; ///< the size of the vector to be indexed
 
-    size_t _slice_size = _vector_size; ///< the size of the slice (_vector_size if not sliced)
+    size_t _slice_size; ///< the size of the slice (_vector_size if not sliced)
     size_t _index_min  = 0;            ///< the minimum index of the slice (0 if not sliced)
     size_t _index_max; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
@@ -120,6 +120,7 @@ class PyIndexer
      */
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
+        , _slice_size(vector_size)
         , _index_max(long(vector_size - 1))
         , _index_stop(long(vector_size))
     {
@@ -136,7 +137,7 @@ class PyIndexer
      * @param step Step size of the slice
      */
     PyIndexer(size_t vector_size, long start, long stop, long step = 1)
-        : _vector_size(vector_size)
+        : _vector_size(vector_size), _slice_size(vector_size)
     {
         set_slice_indexing(start, stop, step);
     }
@@ -150,7 +151,7 @@ class PyIndexer
      * @param slice PyIndexer::Slice structure (contains, start, stop, step)
      */
     PyIndexer(size_t vector_size, const PyIndexer::Slice& slice)
-        : _vector_size(vector_size)
+        : _vector_size(vector_size), _slice_size(vector_size)
     {
         set_slice_indexing(slice);
     }
