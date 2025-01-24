@@ -22,7 +22,7 @@ using namespace themachinethatgoesping::tools;
 using Buffer = std::vector<uint8_t>;
 
 // update the written test data
-#define __UPDATE_TEST_DATA__ false
+#define __UPDATE_TEST_DATA__ true
 // __PROJECT_TESTDATADIR__ is set in meson build file of the test folder
 const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 

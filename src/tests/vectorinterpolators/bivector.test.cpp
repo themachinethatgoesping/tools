@@ -19,7 +19,7 @@ using namespace themachinethatgoesping::tools;
 #define TESTTAG "[vectorinterpolators]"
 
 // update the written test data
-#define __UPDATE_TEST_DATA__ false
+#define __UPDATE_TEST_DATA__ true
 const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 
 template<typename t_interpolator>
