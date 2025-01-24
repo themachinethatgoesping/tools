@@ -19,7 +19,7 @@ using namespace themachinethatgoesping::tools;
 #define TESTTAG "[vectorinterpolators]"
 
 // update the written test data
-#define __UPDATE_TEST_DATA__ true
+#define __UPDATE_TEST_DATA__ false
 const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 
 template<typename t_interpolator>
@@ -61,7 +61,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     ifs.close();
 
     // read permanently created test data
-    ifs.open(test_file);
+    ifs.open(test_file, std::ios::binary);
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();

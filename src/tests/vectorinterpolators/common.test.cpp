@@ -22,7 +22,7 @@ using namespace themachinethatgoesping::tools;
 using Buffer = std::vector<uint8_t>;
 
 // update the written test data
-#define __UPDATE_TEST_DATA__ true
+#define __UPDATE_TEST_DATA__ false
 // __PROJECT_TESTDATADIR__ is set in meson build file of the test folder
 const std::string TESTDIR = __PROJECT_TESTDATADIR__ + std::string("/");
 
@@ -66,13 +66,15 @@ void test_interpolator_serialize(t_interpolator& ip)
     ifs.close();
 
     // read permanently created test data
-    ifs.open(test_file);
+    ifs.open(test_file, std::ios::binary);
     // ifs.open(TESTDIR + "interpolator.tmp", std::ios::binary);
     auto ip5 = t_interpolator::from_stream(ifs);
     ifs.close();
 
+    int i = 0;
     for (auto ipx : { ip2, ip3, ip4, ip5 })
     {
+        INFO(fmt::format("test_interpolator_serialize[{}]: {}",ip2.class_name(), i++));
         // this is a copy so no approx should be necessary
         REQUIRE(ip == ipx);
         REQUIRE(ip(0.5) == ipx(0.5));
