@@ -35,7 +35,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     auto ip3     = t_interpolator::from_binary(buffer2);
 
     // test internal to/from stream functions
-    std::ofstream ofs(TESTDIR + "interpolator.tmp", std::ios::binary);
+    std::ofstream ofs(TESTDIR + "bivinterpolator.tmp", std::ios::binary);
     ip3.to_stream(ofs);
     ofs.close();
     // write file if it does not exist or is only an empty reference
@@ -56,7 +56,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     }
 
     // read test data created during this test
-    std::ifstream ifs(TESTDIR + "interpolator.tmp", std::ios::binary);
+    std::ifstream ifs(TESTDIR + "bivinterpolator.tmp", std::ios::binary);
     auto          ip4 = t_interpolator::from_stream(ifs);
     ifs.close();
 
