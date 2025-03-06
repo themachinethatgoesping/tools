@@ -23,6 +23,10 @@ concept c_xtensor = requires {
 };
 
 template<typename T>
+concept c_xtensor_3d =
+    c_xtensor<T> && requires { requires std::tuple_size<typename T::shape_type>::value == 3; };
+
+template<typename T>
 concept c_xtensor_2d =
     c_xtensor<T> && requires { requires std::tuple_size<typename T::shape_type>::value == 2; };
 
