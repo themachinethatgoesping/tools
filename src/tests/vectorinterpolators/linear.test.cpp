@@ -39,7 +39,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
     SECTION("const interpolation should produce the same results as classic interpolation")
     {
         for (double x_val = -10; x_val <= 12; x_val += 0.1)
-            REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y_const(x_val)));
+            REQUIRE(interpolator(x_val) == Catch::Approx(interpolator.get_y(x_val)));
     }
 
     SECTION("preset values should be interpolated correctly")
@@ -82,8 +82,8 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                     {
                         REQUIRE_THROWS_AS(interpolator(-11), std::out_of_range);
                         REQUIRE_THROWS_AS(interpolator(13), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(-11), std::out_of_range);
-                        REQUIRE_THROWS_AS(interpolator.get_y_const(13), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.get_y(-11), std::out_of_range);
+                        REQUIRE_THROWS_AS(interpolator.get_y(13), std::out_of_range);
                     }
                     break;
 
@@ -92,8 +92,8 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                     {
                         REQUIRE(interpolator(-11) == Catch::Approx(1));
                         REQUIRE(interpolator(13) == Catch::Approx(y_append));
-                        REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1));
-                        REQUIRE(interpolator.get_y_const(13) == Catch::Approx(y_append));
+                        REQUIRE(interpolator.get_y(-11) == Catch::Approx(1));
+                        REQUIRE(interpolator.get_y(13) == Catch::Approx(y_append));
                     }
                     break;
 
@@ -101,8 +101,8 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
                     SECTION(" - extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1.2));
                     REQUIRE(interpolator(14) == Catch::Approx(-4 / 3.));
-                    REQUIRE(interpolator.get_y_const(-11) == Catch::Approx(1.2));
-                    REQUIRE(interpolator.get_y_const(14) == Catch::Approx(-4 / 3.));
+                    REQUIRE(interpolator.get_y(-11) == Catch::Approx(1.2));
+                    REQUIRE(interpolator.get_y(14) == Catch::Approx(-4 / 3.));
 
                     break;
             }

@@ -1,4 +1,4 @@
-//sourcehash: 390c910b626333c212305666bc1bab58a2c0e92fa06902d8b143c93f5a69d895
+//sourcehash: ea5c0b8981ed478f068681b7ed35930e023563b427f8656d2eee5d87d2cd6855
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -115,6 +115,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -160,7 +163,10 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_printer =
 R"doc(return a printer object

@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-
-
 #include <pybind11/stl.h>
 
 #include <sstream>
@@ -22,10 +20,11 @@ using namespace themachinethatgoesping;
 #include <pybind11/pybind11.h>
 
 // -- submodule declarations --
-void init_c_nearestinterpolator(pybind11::module& m); // c_nearestinterpolator.cpp
-void init_c_linearinterpolator(pybind11::module& m);  // c_linearinterpolator.cpp
-void init_c_akimainterpolator(pybind11::module& m);   // c_linearinterpolator.cpp
-void init_c_slerpinterpolator(pybind11::module& m);   // c_linearinterpolator.cpp
+void init_c_nearestinterpolator(pybind11::module& m);  // c_nearestinterpolator.cpp
+void init_c_linearinterpolator(pybind11::module& m);   // c_linearinterpolator.cpp
+void init_c_akimainterpolator(pybind11::module& m);    // c_linearinterpolator.cpp
+void init_c_slerpinterpolator(pybind11::module& m);    // c_linearinterpolator.cpp
+void init_c_bivectorinterpolator(pybind11::module& m); // c_bivectorinterpolator.cpp
 
 // -- create submodule --
 void init_m_vectorinterpolators(pybind11::module& m)
@@ -53,4 +52,5 @@ void init_m_vectorinterpolators(pybind11::module& m)
     init_c_linearinterpolator(m_vectorinterpolators);
     init_c_akimainterpolator(m_vectorinterpolators);
     init_c_slerpinterpolator(m_vectorinterpolators);
+    init_c_bivectorinterpolator(m_vectorinterpolators);
 }

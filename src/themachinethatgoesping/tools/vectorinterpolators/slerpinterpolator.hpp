@@ -146,10 +146,10 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
      * @param output_in_degrees if true, yaw pitch and roll input values are in ° otherwise rad
      * @return corresponding y value
      */
-    std::array<YType, 3> ypr(XType target_x, bool output_in_degrees = true)
+    std::array<YType, 3> ypr(XType target_x, bool output_in_degrees = true) const
     {
         return rotationfunctions::ypr_from_quaternion(
-            I_PairInterpolator<XType, t_quaternion>::operator()(target_x), output_in_degrees);
+            I_PairInterpolator<XType, t_quaternion>::get_y(target_x), output_in_degrees);
     }
 
     /**
@@ -161,16 +161,17 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
      * @return corresponding y value
      */
     std::vector<std::array<YType, 3>> ypr(const std::vector<XType>& targets_x,
-                                          bool                      output_in_degrees = true)
+                                          bool                      output_in_degrees = true) const
     {
-        std::vector<std::array<YType, 3>> y_values;
-        y_values.reserve(targets_x.size());
-        for (const auto target_x : targets_x)
+        auto y_values = I_PairInterpolator<XType, t_quaternion>::operator()(targets_x);
+        std::vector<std::array<YType, 3>> ypr_values;
+        ypr_values.reserve(y_values.size());
+        for (const auto& q : y_values)
         {
-            y_values.push_back(ypr(target_x, output_in_degrees));
+            ypr_values.push_back(rotationfunctions::ypr_from_quaternion(q, output_in_degrees));
         }
 
-        return y_values;
+        return ypr_values;
     }
 
     // ------------------
@@ -370,9 +371,11 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
     }
 
   public:
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const override
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision,
+                                           bool         superscript_exponents) const override
     {
-        classhelper::ObjectPrinter printer(this->class_name(), float_precision);
+        classhelper::ObjectPrinter printer(
+            this->class_name(), float_precision, superscript_exponents);
 
         printer.register_enum("extr_mode", this->_extr_mode);
         printer.register_section("data lists");

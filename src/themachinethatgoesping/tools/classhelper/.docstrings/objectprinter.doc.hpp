@@ -1,4 +1,4 @@
-//sourcehash: 1035d74930b449d87a2f6efd0753966618188fd10c4f929ffbaad9a8fa55d240
+//sourcehash: e84430c2e53dad0f9e45166f9e70dd867396c97d3cad782004c83e54f3deef90
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -126,6 +126,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -138,7 +141,10 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_printer = R"doc()doc";
 
@@ -180,6 +186,31 @@ Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_optional_value =
+R"doc(Registers an optional value with the given name and additional
+information.
+
+This function checks if the optional value has a value. If it does, it
+registers the value using the provided name, value information, and
+position. If the optional value does not have a value, it registers
+the string "Not set" instead.
+
+Template parameter ``t_value``:
+    The type of the optional value.
+
+Parameter ``name``:
+    The name to register the value under.
+
+Parameter ``value``:
+    The optional value to register.
+
+Parameter ``value_info``:
+    Additional information about the value (default is an empty
+    string).
+
+Parameter ``pos``:
+    The position to register the value at (default is -1).)doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_section =
 R"doc(register a section break for printing
 
@@ -201,6 +232,31 @@ Parameter ``name``:
 
 Parameter ``value``:
     value of the variable
+
+Parameter ``value_info``:
+    additional info (is printed in [] behind the variable)
+
+Parameter ``pos``:
+    position where the value is registers (if negative, the value is
+    appended)
+
+Parameter ``max_visible_elements``:
+    maximum of chars that are printed (if 0, all elements are printed))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_string_with_delimiters =
+R"doc(register a formatted string field for printing, with delimiters
+
+Parameter ``name``:
+    name of the variable
+
+Parameter ``value``:
+    value of the variable
+
+Parameter ``delimiter_left``:
+    left delimiter
+
+Parameter ``delimiter_right``:
+    right delimiter
 
 Parameter ``value_info``:
     additional info (is printed in [] behind the variable)
@@ -250,10 +306,7 @@ static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_section_underliner = R"doc(< additional info (printed in []))doc";
 
-static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_superscript_exponents = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field =
 R"doc(internal, describe the value type for implementing different printing

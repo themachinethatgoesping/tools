@@ -5,8 +5,9 @@
 #folders
 packagecache/*
 date*
-Catch2*/*
+Catch2-*
 xxhash*/*
+xxhash_cpp-*
 
 pybind11*/*
 eigen*/*
@@ -14,10 +15,14 @@ fast_float*/*
 fmt*/*
 magic_enum*/*
 xtensor*/*
+xtensor-pr/*
+xtensor-pr*
 nlohmann_json*/*
 pugixml*/*
 xsimd*/*
 xtl*/*
+frozen*/*
+sse2neon*/*
 
 #git repos
 meta-*

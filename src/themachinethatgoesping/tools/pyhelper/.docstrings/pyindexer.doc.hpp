@@ -1,4 +1,4 @@
-//sourcehash: 3c0d4feadbff0131d234be02026952f1d91aae273da61f904d59d0c6e19c3337
+//sourcehash: 657d0b28748e84ac0e4a6a976899614404f66d2a9f1875623091fe78ec0a2af3
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -132,6 +132,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -144,14 +147,12 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_Slice_start = R"doc(< the start index of the slice (None if not sliced))doc";
 
@@ -226,6 +227,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -249,7 +253,10 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_printer =
 R"doc(Print function, needs __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__ macro
@@ -318,11 +325,6 @@ Parameter ``step``:
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_size = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slice_size = R"doc(< the size of the slice (_vector_size if not sliced))doc";
-
-static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_to_binary =
 R"doc(convert object to vector of bytes \ \

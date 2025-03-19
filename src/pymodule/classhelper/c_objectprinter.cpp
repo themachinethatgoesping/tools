@@ -22,10 +22,11 @@ void init_c_objectprinter(pybind11::module& m)
 
     py::class_<ObjectPrinter>(
         m, "ObjectPrinter", DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter))
-        .def(py::init<const std::string&, unsigned int>(),
+        .def(py::init<const std::string&, unsigned int, bool>(),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),
              py::arg("name"),
-             py::arg("float_precission"))
+             py::arg("float_precission"),
+             py::arg("superscript_exponents"))
         .def("class_name",
              &ObjectPrinter::class_name,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, class_name))
@@ -56,6 +57,45 @@ void init_c_objectprinter(pybind11::module& m)
              py::arg("value"),
              py::arg("value_info") = "",
              py::arg("pos")        = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&,
+                              std::optional<double>,
+                              std::string_view,
+                              std::string_view,
+                              int>(&ObjectPrinter::register_optional_value<double>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info")     = "",
+            py::arg("optional_value") = "Not set",
+            py::arg("pos")            = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&,
+                              std::optional<int>,
+                              std::string_view,
+                              std::string_view,
+                              int>(&ObjectPrinter::register_optional_value<int>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info")     = "",
+            py::arg("optional_value") = "Not set",
+            py::arg("pos")            = -1)
+        .def(
+            "register_optional_value",
+            py::overload_cast<const std::string&,
+                              std::optional<std::string>,
+                              std::string_view,
+                              std::string_view,
+                              int>(&ObjectPrinter::register_optional_value<std::string>),
+            DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_optional_value),
+            py::arg("name"),
+            py::arg("value"),
+            py::arg("value_info")     = "",
+            py::arg("optional_value") = "Not set",
+            py::arg("pos")            = -1)
         .def("register_value_bytes",
              &ObjectPrinter::register_value_bytes,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_value_bytes),
@@ -90,6 +130,28 @@ void init_c_objectprinter(pybind11::module& m)
              py::arg("value"),
              py::arg("value_info") = "",
              py::arg("pos")        = -1)
+        .def("register_string",
+             &ObjectPrinter::register_string,
+             DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_string),
+             py::arg("name"),
+             py::arg("value"),
+             py::arg("value_info")           = "",
+             py::arg("pos")                  = -1,
+             py::arg("max_visible_elements") = 0)
+        .def("register_string_with_delimiters",
+             &ObjectPrinter::register_string_with_delimiters,
+             DOC(themachinethatgoesping,
+                 tools,
+                 classhelper,
+                 ObjectPrinter,
+                 register_string_with_delimiters),
+             py::arg("name"),
+             py::arg("value"),
+             py::arg("value_info")           = "",
+             py::arg("delimiter_left")       = "\"",
+             py::arg("delimiter_right")      = "\"",
+             py::arg("pos")                  = -1,
+             py::arg("max_visible_elements") = 0)
         .def("register_section",
              &ObjectPrinter::register_section,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_section),

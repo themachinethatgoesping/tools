@@ -6,7 +6,7 @@
 project(
     'sse2neon', ['cpp'],
     default_options: ['cpp_std=c++20'],
-    version: 'v1.7.0',
+    version: 'v1.8.0',
 )
 
 sse2neon_include = include_directories('.')

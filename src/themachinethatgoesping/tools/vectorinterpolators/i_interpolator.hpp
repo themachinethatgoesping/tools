@@ -19,12 +19,12 @@
 #include <algorithm>
 #include <array>
 #include <boost/algorithm/string.hpp>
+#include <concepts>
 #include <iostream>
+#include <stdexcept>
 #include <unordered_map>
 #include <utility>
 #include <vector>
-#include <concepts>
-#include <stdexcept>
 
 #include "../classhelper/objectprinter.hpp"
 
@@ -36,7 +36,7 @@ namespace vectorinterpolators {
  * @brief extrapolation mode type.
  *
  */
-enum class t_extr_mode: uint8_t
+enum class t_extr_mode : uint8_t
 {
     extrapolate = 0, ///< interpolate using the closest value pair in the internal x vector
     fail    = 1, ///< throw out_of_range exception if x value exceeds boundaries of internal vector
@@ -60,8 +60,12 @@ static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapo
 template<std::floating_point XType, typename YType>
 class I_Interpolator
 {
+  public:
+        using t_XType = XType;
+        using t_YType = YType;
+
   protected:
-    t_extr_mode      _extr_mode; ///< extrapolation mode
+    t_extr_mode _extr_mode; ///< extrapolation mode
 
   public:
     /**
@@ -70,7 +74,7 @@ class I_Interpolator
      *
      * @param extrapolation_mode extrapolation mode (nearest or fail)
      */
-    I_Interpolator(t_extr_mode      extrapolation_mode = t_extr_mode::extrapolate)
+    I_Interpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : _extr_mode(extrapolation_mode)
     {
     }
@@ -142,7 +146,7 @@ class I_Interpolator
      * @param target_x find the corresponding y value for this x value
      * @return corresponding y value
      */
-    virtual YType operator()(XType target_x) = 0;
+    virtual YType operator()(XType target_x) const = 0;
 
     /**
      * @brief get nearest y values for given x targets (vectorized call)
@@ -150,7 +154,7 @@ class I_Interpolator
      * @param targets_x vector of x values. For each of these values find the corrsponding y value
      * @return corresponding y value
      */
-    std::vector<YType> operator()(const std::vector<XType>& targetsX)
+    std::vector<YType> operator()(const std::vector<XType>& targetsX) const
     {
         std::vector<YType> y_values;
         y_values.reserve(targetsX.size());
@@ -191,8 +195,8 @@ class I_Interpolator
      * @param is_sorted this indicates that X is already sorted in ascending order. (default: false)
      */
     virtual void insert(const std::vector<XType>& X,
-                        const std::vector<YType>&  Y,
-                        bool                       is_sorted = false) = 0;
+                        const std::vector<YType>& Y,
+                        bool                      is_sorted = false) = 0;
 
     /**
      * @brief return a printer object
@@ -200,7 +204,8 @@ class I_Interpolator
      * @param float_precision number of digits for floating point numbers
      * @return classhelper::ObjectPrinter
      */
-    virtual classhelper::ObjectPrinter __printer__(unsigned int float_precision) const = 0;
+    virtual classhelper::ObjectPrinter __printer__(unsigned int float_precision,
+                                                   bool         superscript_exponents) const = 0;
 
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__

@@ -6,7 +6,7 @@
 /* generated doc strings */
 #include ".docstrings/enum.doc.hpp"
 
-#include <magic_enum.hpp>
+#include <magic_enum/magic_enum.hpp>
 
 namespace themachinethatgoesping {
 namespace tools {

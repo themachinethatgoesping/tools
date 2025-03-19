@@ -11,6 +11,7 @@ sources = [
   'tutorial.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',
   'vectorinterpolators/akima.test.cpp',
+  'vectorinterpolators/bivector.test.cpp',
   'vectorinterpolators/common.test.cpp',
   'vectorinterpolators/linear.test.cpp',
   'vectorinterpolators/nearest.test.cpp',

@@ -35,15 +35,16 @@ void init_akimainterpolator(pybind11::module& m, const std::string& name)
              py::arg("Y")                  = std::vector<XYType>({}),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
-             py::overload_cast<XYType>(&t_AkimaInterpolator::operator()),
+             py::overload_cast<XYType>(&t_AkimaInterpolator::operator(), py::const_),
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              py::arg("target_x"))
-        .def("get_y_const",
-             py::overload_cast<XYType>(&t_AkimaInterpolator::get_y_const, py::const_),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, get_y_const),
+        .def("get_y",
+             py::overload_cast<XYType>(&t_AkimaInterpolator::get_y, py::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, get_y),
              py::arg("target_x"))
         .def("__call__",
-             py::overload_cast<const std::vector<XYType>&>(&t_AkimaInterpolator::operator()),
+             py::overload_cast<const std::vector<XYType>&>(&t_AkimaInterpolator::operator(),
+                                                           py::const_),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,
@@ -113,5 +114,5 @@ void init_akimainterpolator(pybind11::module& m, const std::string& name)
 void init_c_akimainterpolator(pybind11::module& m)
 {
     init_akimainterpolator<double>(m, "AkimaInterpolator");
-    init_akimainterpolator<float>(m, "AkimaInterpolatorFF");
+    init_akimainterpolator<float>(m, "AkimaInterpolatorF");
 }

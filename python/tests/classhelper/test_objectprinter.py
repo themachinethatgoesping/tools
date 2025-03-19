@@ -13,7 +13,7 @@ from themachinethatgoesping.tools import classhelper as ch
 
 class Test_tools_classhelper_objectprinter:
     def test_ObjectPrinter_should_not_crash_for_basic_operations(self):
-        a = ch.ObjectPrinter("ObjectPrinterTester", 2)
+        a = ch.ObjectPrinter("ObjectPrinterTester", 2, True)
 
         a.register_value("test1", 0, "int")
         a.register_value("test1", 0, "int")

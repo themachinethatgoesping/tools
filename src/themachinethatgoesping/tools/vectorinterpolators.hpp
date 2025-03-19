@@ -11,3 +11,5 @@
 #include "vectorinterpolators/linearinterpolator.hpp"
 #include "vectorinterpolators/nearestinterpolator.hpp"
 #include "vectorinterpolators/slerpinterpolator.hpp"
+
+#include "vectorinterpolators/bivectorinterpolator.hpp"

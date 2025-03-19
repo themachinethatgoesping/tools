@@ -46,12 +46,24 @@ void init_slerpinterpolator(pybind11::module& m, const std::string& name)
              &t_SlerpInterpolator::empty,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
         .def("__call__",
-             py::overload_cast<XType, bool>(&t_SlerpInterpolator::ypr),
+             py::overload_cast<XType, bool>(&t_SlerpInterpolator::ypr, py::const_),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr),
              py::arg("target_x"),
              py::arg("output_in_degrees") = true)
         .def("__call__",
-             py::overload_cast<const std::vector<XType>&, bool>(&t_SlerpInterpolator::ypr),
+             py::overload_cast<const std::vector<XType>&, bool>(&t_SlerpInterpolator::ypr,
+                                                                py::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr_2),
+             py::arg("targets_x"),
+             py::arg("output_in_degrees") = true)
+        .def("ypr",
+             py::overload_cast<XType, bool>(&t_SlerpInterpolator::ypr, py::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr),
+             py::arg("target_x"),
+             py::arg("output_in_degrees") = true)
+        .def("ypr",
+             py::overload_cast<const std::vector<XType>&, bool>(&t_SlerpInterpolator::ypr,
+                                                                py::const_),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr_2),
              py::arg("targets_x"),
              py::arg("output_in_degrees") = true)

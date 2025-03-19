@@ -1,4 +1,4 @@
-//sourcehash: f9c19fe29b61a1c3d245cf4d6968a730427e48d6dba9616643d025df1348ef54
+//sourcehash: c6f1d85822cd5b35b8691c5bedfab8abf5ed387e7949d6780715d3106eb582f4
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -75,6 +75,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -104,14 +107,12 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_printer = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_LinearInterpolator_to_binary =
 R"doc(convert object to vector of bytes \ \

@@ -1,4 +1,4 @@
-//sourcehash: fa4fc2190912b87676f5155f663b329167d6494b5e38cf6990e6ba62caee7ba5
+//sourcehash: 2ea9486c0b7d77753818c25eb8f9084cb585df0bdaf3189a62ff0a0514e56ee8
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -97,7 +97,7 @@ R"doc(return the y component of the internal data vector
 Returns:
     std::vector<YType>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_y_const = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_y = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_insert = R"doc()doc";
 
@@ -117,8 +117,6 @@ Parameter ``y1``:
 
 Returns:
     interpolated y value)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_last_x_pair = R"doc(< last pair (for faster consecutive searches))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
 R"doc(get the interpolated y value for given x target

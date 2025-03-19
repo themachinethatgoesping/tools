@@ -31,7 +31,7 @@ class PyIndexer
 {
     size_t _vector_size; ///< the size of the vector to be indexed
 
-    size_t _slice_size = _vector_size; ///< the size of the slice (_vector_size if not sliced)
+    size_t _slice_size; ///< the size of the slice (_vector_size if not sliced)
     size_t _index_min  = 0;            ///< the minimum index of the slice (0 if not sliced)
     size_t _index_max; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
@@ -72,14 +72,14 @@ class PyIndexer
         // operators
         bool operator==(const Slice& other) const = default;
 
-        classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+        classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const
         {
             std::string start_ = start == PyIndexer::None ? "" : std::to_string(start);
             std::string stop_  = stop == PyIndexer::None ? "" : std::to_string(stop);
             std::string step_  = step == PyIndexer::None ? "" : std::to_string(step);
 
             classhelper::ObjectPrinter printer(
-                fmt::format("PyIndexer::Slice({}:{}:{})", start_, stop_, step_), float_precision);
+                fmt::format("PyIndexer::Slice({}:{}:{})", start_, stop_, step_), float_precision, superscript_exponents);
 
             return printer;
         }
@@ -120,6 +120,7 @@ class PyIndexer
      */
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
+        , _slice_size(vector_size)
         , _index_max(long(vector_size - 1))
         , _index_stop(long(vector_size))
     {
@@ -136,7 +137,7 @@ class PyIndexer
      * @param step Step size of the slice
      */
     PyIndexer(size_t vector_size, long start, long stop, long step = 1)
-        : _vector_size(vector_size)
+        : _vector_size(vector_size), _slice_size(vector_size)
     {
         set_slice_indexing(start, stop, step);
     }
@@ -150,7 +151,7 @@ class PyIndexer
      * @param slice PyIndexer::Slice structure (contains, start, stop, step)
      */
     PyIndexer(size_t vector_size, const PyIndexer::Slice& slice)
-        : _vector_size(vector_size)
+        : _vector_size(vector_size), _slice_size(vector_size)
     {
         set_slice_indexing(slice);
     }
@@ -497,9 +498,9 @@ class PyIndexer
      * @param float_precision Precision of floating point numbers
      * @return classhelper::ObjectPrinter
      */
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision) const
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const
     {
-        classhelper::ObjectPrinter printer("PyIndexer", float_precision);
+        classhelper::ObjectPrinter printer("PyIndexer", float_precision, superscript_exponents);
 
         printer.register_value("_vector_size", _vector_size);
 

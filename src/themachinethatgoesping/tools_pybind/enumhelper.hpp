@@ -16,7 +16,7 @@
 #include ".docstrings/enumhelper.doc.hpp"
 
 #include <fmt/core.h>
-#include <magic_enum.hpp>
+#include <magic_enum/magic_enum.hpp>
 #include <pybind11/pybind11.h>
 
 namespace themachinethatgoesping {

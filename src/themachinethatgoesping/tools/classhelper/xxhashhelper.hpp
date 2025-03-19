@@ -15,6 +15,10 @@
 #include <boost/iostreams/concepts.hpp> // sink
 #include <boost/iostreams/stream.hpp>
 
+// #if defined(__x86_64__) || defined(_M_X64)
+// #else
+// #define _MM_PERM_ENUM int
+// #endif
 #include <xxhash.hpp>
 
 class XXHashSink : public boost::iostreams::sink

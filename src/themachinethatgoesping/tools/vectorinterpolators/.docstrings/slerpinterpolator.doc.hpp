@@ -1,4 +1,4 @@
-//sourcehash: 226209818f7900941a258d9145de12e13bb728d83808f985b3a6204fd85216f3
+//sourcehash: d8b630d9b4aab99aa6397befd5baa274e95d3d0e0244a255c4e1f77f9c7e5df6
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -199,6 +199,9 @@ R"doc(\ return an info string using the class __printer__ object \
 Parameter ``float_precision``:
     number of digits for floating point values \
 
+Parameter ``superscript_exponents``:
+    print exponents in superscript \
+
 Returns:
     std::string \)doc";
 
@@ -262,7 +265,10 @@ Parameter ``os``:
     output stream, e.g. file stream or std::out or std::cerr \
 
 Parameter ``float_precision``:
-    number of digits for floating point values \)doc";
+    number of digits for floating point values \
+
+Parameter ``superscript_exponents``:
+    print exponents in superscript \)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
 
@@ -309,11 +315,6 @@ Parameter ``roll``:
 
 Parameter ``input_in_degrees``:
     if true, yaw pitch and roll input values are in ° otherwise rad)doc";
-
-static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_slow_hash =
-R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
-function. This function is called binary because the to_binary
-function creates \ a copy)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary =
 R"doc(convert object to vector of bytes \ \

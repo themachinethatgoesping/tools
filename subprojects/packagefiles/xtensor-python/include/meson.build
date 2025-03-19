@@ -4,7 +4,7 @@
 
 # list and install headers
 headers = [
-  'pyarray.hpp',
+  'pytensor.hpp',
   'pyarray_backstrides.hpp',
   'pycontainer.hpp',
   'pynative_casters.hpp',
