@@ -9,7 +9,6 @@ testcomponent = 'tools'
 sources = [
   'timeconv.test.cpp',
   'tutorial.test.cpp',
-  'helper/defaultsharedpointermap.test.cpp',
   'vectorinterpolators/akima.test.cpp',
   'vectorinterpolators/bivector.test.cpp',
   'vectorinterpolators/common.test.cpp',
@@ -19,6 +18,7 @@ sources = [
   'rotationfunctions/helper.test.cpp',
   'rotationfunctions/quaternions.test.cpp',
   'pyhelper/pyindexer.test.cpp',
+  'helper/defaultsharedpointermap.test.cpp',
 ]
 
 foreach source : sources
