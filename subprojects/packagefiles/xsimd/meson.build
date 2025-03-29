@@ -1,4 +1,4 @@
-project('xtl', 'cpp', version:'13.2.0', license:'BSD-3-Clause', default_options : ['warning_level=3', 'cpp_std=c++14'])
+project('xsimd', 'cpp', version:'13.2.0', license:'BSD-3-Clause', default_options : ['warning_level=3', 'cpp_std=c++17'])
 
 
 xsimd_dep = declare_dependency(
@@ -15,7 +15,7 @@ else
     install_dir = get_option('includedir')
 endif
 
-install_subdir('include/xtl', install_dir: install_dir)
+install_subdir('include/xsimd', install_dir: install_dir)
 
 pkgconfig = import('pkgconfig')
 pkgconfig.generate(name: meson.project_name(),

@@ -1,8 +1,8 @@
 ; [wrap-file]
-; directory = xtensor-0.25.0
-; source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.25.0.tar.gz
-; source_filename = xtensor-0.25.0.tar.gz
-; source_hash = 32d5d9fd23998c57e746c375a544edf544b74f0a18ad6bc3c38cbba968d5e6c7
+; directory = xtensor-0.26.0
+; source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.26.0.tar.gz
+; source_filename = xtensor-0.26.0.tar.gz
+; source_hash = f5f42267d850f781d71097b50567a480a82cd6875a5ec3e6238555e0ef987dc6
 ; patch_directory = xtensor
 
 [wrap-git]
