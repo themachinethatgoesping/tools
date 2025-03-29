@@ -6,6 +6,7 @@
 #from . import read_xcf
 from . import oceanographic
 from . import plot_tools
+from . import nearfield
 from . import sbes
 from . import mbes
 
