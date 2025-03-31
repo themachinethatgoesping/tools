@@ -8,6 +8,7 @@ sources = [
   'themachinethatgoesping/tools/timeconv.py',
   'themachinethatgoesping/scripts/__init__.py',
   'themachinethatgoesping/scripts/mbes.py',
+  'themachinethatgoesping/scripts/nearfield.py',
   'themachinethatgoesping/scripts/oceanographic.py',
   'themachinethatgoesping/scripts/plot_tools.py',
   'themachinethatgoesping/scripts/read_xcf.py',
