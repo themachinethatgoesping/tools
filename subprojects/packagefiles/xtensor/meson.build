@@ -20,7 +20,7 @@ xsimd_dep = dependency('xsimd',
 if meson.get_compiler('cpp').get_id() == 'msvc'
     xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1', '/EHsc', '/MP', '/bigobj']
 elif meson.get_compiler('cpp').get_id() == 'clang-cl'
-    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1', '/EHsc', '/MP', '/bigobj']
+    xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1', '/EHsc', '/bigobj']
 elif meson.get_compiler('cpp').get_id() == 'clang'
     xtensor_cpp_arg = ['-DXTENSOR_USE_XSIMD=1']
 else
