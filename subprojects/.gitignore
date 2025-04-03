@@ -8,6 +8,7 @@ date*
 Catch2-*
 xxhash*/*
 xxhash_cpp-*
+boost_*
 
 pybind11*/*
 eigen*/*
