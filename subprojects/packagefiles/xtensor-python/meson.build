@@ -5,7 +5,7 @@
 project(
     'xtensor-python', ['cpp'],
     default_options: ['cpp_std=c++20'],
-    version: '0.27.0',
+    version: '0.28.0',
 )
 
 xtensor_python_include = include_directories('include')

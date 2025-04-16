@@ -1,15 +1,15 @@
-; [wrap-file]
-; directory = xtensor-0.26.0
-; source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.26.0.tar.gz
-; source_filename = xtensor-0.26.0.tar.gz
-; source_hash = f5f42267d850f781d71097b50567a480a82cd6875a5ec3e6238555e0ef987dc6
-; patch_directory = xtensor
-
-[wrap-git]
-url = https://github.com/BioDataAnalysis/xtensor.git
-revision = add_fix_for_building_with_clang_19
-directory = xtensor-pr
+[wrap-file]
+directory = xtensor-0.26.0
+source_url = https://github.com/xtensor-stack/xtensor/archive/refs/tags/0.26.0.tar.gz
+source_filename = xtensor-0.26.0.tar.gz
+source_hash = f5f42267d850f781d71097b50567a480a82cd6875a5ec3e6238555e0ef987dc6
 patch_directory = xtensor
+
+; [wrap-git]
+; url = https://github.com/BioDataAnalysis/xtensor.git
+; revision = add_fix_for_building_with_clang_19
+; directory = xtensor-pr
+; patch_directory = xtensor
 
 [provide]
 xtensor = xtensor_dep

@@ -1,10 +1,10 @@
 project('xtensor', 'cpp',
-        version:'0.25.0',
+        version:'0.26.0',
         license:'BSD-3-Clause',
         default_options : ['warning_level=3', 'cpp_std=c++14'])
 
 xtl_dep = dependency('xtl',
-    version:['>=0.7.5', '<1.0.0'])
+    version:['>=0.8.0', '<1.0.0'])
 
 json_dep = dependency('nlohmann_json',
     version:'>=3.1.1')

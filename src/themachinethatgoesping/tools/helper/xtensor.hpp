@@ -6,7 +6,7 @@
 
 /* generated doc strings */
 #include ".docstrings/xtensor.doc.hpp"
-#include <xtensor/xcontainer.hpp>
+#include <xtensor/containers/xcontainer.hpp>
 
 namespace themachinethatgoesping {
 namespace tools {
