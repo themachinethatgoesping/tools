@@ -1,4 +1,4 @@
-project('fmt', 'cpp', version: '11.1.4', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++20'])
+project('fmt', 'cpp', version: '11.2.0', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++20'])
 
 fmt_private_cpp_args = []
 fmt_interface_cpp_args = []
@@ -12,7 +12,7 @@ endif
 
 header_only = get_option('header-only')
 
-fmt_lib = library(
+fmt_lib = library(11.1.4
   'fmt',
   'src/format.cc',
   'src/os.cc',
