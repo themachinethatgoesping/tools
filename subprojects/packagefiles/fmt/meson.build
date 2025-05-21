@@ -12,7 +12,7 @@ endif
 
 header_only = get_option('header-only')
 
-fmt_lib = library(11.1.4
+fmt_lib = library(
   'fmt',
   'src/format.cc',
   'src/os.cc',
