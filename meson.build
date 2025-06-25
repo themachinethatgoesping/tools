@@ -19,9 +19,8 @@ projectnamespace = 'themachinethatgoesping'
 # --- dependencies ---
 
 # openmp (not used in clang-cl / windows)
-if meson.get_compiler('cpp').get_id() == 'clang-cl'
-  omp_dep = declare_dependency()
-else
+omp_dep = declare_dependency()
+if meson.get_compiler('cpp').get_id() != 'clang-cl' or get_option('force_openmp').enabled()
   omp_dep = dependency('openmp')
 endif
 
