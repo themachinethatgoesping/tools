@@ -7,7 +7,8 @@
 // automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
-#include "../themachinethatgoesping/tools/helper.hpp"
+#include <themachinethatgoesping/tools/helper/stringconversion.hpp>
+#include <themachinethatgoesping/tools/helper/printing.hpp>
 
 // -- include system headers
 #include <sstream>

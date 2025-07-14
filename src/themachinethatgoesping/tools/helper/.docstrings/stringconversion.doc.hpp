@@ -1,4 +1,4 @@
-//sourcehash: a1d57481aea118d963d9b19b723c9cd4fcdf0ee551c9a539d3b9f991bce1a7b3
+//sourcehash: 4782dae79cc06d3475424308d10f47770a8c470c3e298cac4725c4e73510ecb7
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,19 +38,24 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_helper_compare_containers = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_int_as_string = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_helper_get_from_map_with_default = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_string_as_int = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_string_to_floattype =
+R"doc(convert a string to float using fast_float::from_chars Fast_float
+conforms to std::from_chars (c++20, but not completely implemented in
+clang yet) The conversion is locale independent (. is the decimal
+separator) see also: https://github.com/fastfloat/fast_float
 
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload_2 = R"doc()doc";
+Template parameter ``t_float``:
+    : double or float
 
-static const char *__doc_themachinethatgoesping_tools_helper_substract_set_zero_if_negative = R"doc()doc";
+Parameter ``str``:
+    if empty or non-numeric a NAN is returned
 
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant_no_return = R"doc()doc";
+Returns:
+    double)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

@@ -1,4 +1,4 @@
-//sourcehash: a1d57481aea118d963d9b19b723c9cd4fcdf0ee551c9a539d3b9f991bce1a7b3
+//sourcehash: 6784095a381288cfcc0372af311a34fd449812ce1f47782d7130d043a830b016
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,19 +38,28 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_helper_compare_containers = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_approx =
+R"doc(compare to floats using a relative difference factor
 
-static const char *__doc_themachinethatgoesping_tools_helper_get_from_map_with_default = R"doc()doc";
+Template parameter ``t_float``:
+    floating point type
 
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload = R"doc()doc";
+Parameter ``f1``:
+    float/double 1
 
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload_2 = R"doc()doc";
+Parameter ``f2``:
+    float/double 1
 
-static const char *__doc_themachinethatgoesping_tools_helper_substract_set_zero_if_negative = R"doc()doc";
+Parameter ``relative_difference_factor``:
+    relative factor by which the 2 numbers must be comparable (default
+    0.01%)
 
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant = R"doc()doc";
+Returns:
+    true/false)doc";
 
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant_no_return = R"doc()doc";
+static const char *__doc_themachinethatgoesping_tools_helper_approx_container = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_approx_container_complex = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

@@ -27,7 +27,7 @@
 
 #include "../classhelper/objectprinter.hpp"
 #include "../classhelper/stream.hpp"
-#include "../helper.hpp"
+#include "../helper/approx.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
