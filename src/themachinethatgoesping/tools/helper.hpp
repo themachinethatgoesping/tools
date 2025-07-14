@@ -8,6 +8,9 @@
 /* generated doc strings */
 #include ".docstrings/helper.doc.hpp"
 
+#include <ranges>
+#include <concepts>
+
 #include <cmath>
 #include <complex>
 #include <string>
@@ -65,12 +68,6 @@ V get_from_map_with_default(const C<K, V, Args...>& m, K const& key, const V& de
     return it->second;
 }
 
-// usage:
-//  visit_variant(v,
-//          [](int i) { std::cout << i << '\n'; },
-//          [](double d) { std::cout << d << '\n'; },
-//          [](const std::string& s) { std::cout << s << '\n'; }
-//      );
 
 /**
  * @brief compare to floats using a relative difference factor
@@ -82,7 +79,7 @@ V get_from_map_with_default(const C<K, V, Args...>& m, K const& key, const V& de
  * (default 0.01%)
  * @return true/false
  */
-template<typename t_float>
+template<std::floating_point t_float>
 bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 // 0.01%
 )
 {
@@ -115,7 +112,7 @@ bool approx(t_float f1, t_float f2, t_float relative_difference_factor = 0.0001 
     return std::abs(f1 - f2) <= relative_difference_factor * std::max(std::abs(f1), std::abs(f2));
 }
 
-template<typename t_float>
+template<std::floating_point t_float>
 bool approx_complex(std::complex<t_float> f1,
                     std::complex<t_float> f2,
                     t_float               relative_difference_factor = 0.0001 /* 0.01% */)
@@ -124,7 +121,7 @@ bool approx_complex(std::complex<t_float> f1,
            approx(f1.imag(), f2.imag(), relative_difference_factor);
 }
 
-template<typename t_container>
+template<std::ranges::random_access_range t_container>
 bool approx_container(const t_container&               c1,
                       const t_container&               c2,
                       typename t_container::value_type relative_difference_factor = 0.0001 // 0.01%
@@ -140,7 +137,7 @@ bool approx_container(const t_container&               c1,
     return true;
 }
 
-template<typename t_container>
+template<std::ranges::random_access_range t_container>
 bool approx_container_complex(
     const t_container&                           c1,
     const t_container&                           c2,
@@ -167,7 +164,7 @@ bool approx_container_complex(
  * @param str if empty or non-numeric a NAN is returned
  * @return double
  */
-template<typename t_float>
+template<std::floating_point t_float>
 inline t_float string_to_floattype(std::string_view str)
 {
     if (str.empty())
@@ -182,7 +179,7 @@ inline t_float string_to_floattype(std::string_view str)
     return result;
 }
 
-template<typename t_float>
+template<std::floating_point t_float>
 inline std::vector<t_float> string_to_floattype_vector(std::string_view std, char delim = ',')
 {
     std::vector<t_float>        result;
@@ -229,14 +226,14 @@ inline bool compare_containers(const t_container1& c1, const t_container2& c2)
             return false;
 }
 
-template<typename t_float>
+template<std::floating_point t_float>
 inline bool float_equals(t_float a, t_float b, t_float epsilon = t_float(0.0001))
 {
     return std::abs(a - b) < epsilon || (std::isnan(a) && std::isnan(b)) ||
            (std::isinf(a) && std::isinf(b));
 }
 
-template<typename t_float>
+template<std::floating_point t_float>
 inline bool optional_float_equals(std::optional<t_float> a,
                                   std::optional<t_float> b,
                                   t_float                epsilon = t_float(0.0001))
@@ -255,7 +252,7 @@ inline bool optional_float_equals(std::optional<t_float> a,
     return true;
 }
 
-template<typename t_float>
+template<std::floating_point t_float>
 inline bool float_is_finite_and_not_zero(t_float a, t_float epsilon = t_float(0.0001))
 {
     return std::isfinite(a) && std::abs(a) > epsilon;

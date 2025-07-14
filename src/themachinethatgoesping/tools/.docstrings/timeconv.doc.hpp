@@ -1,4 +1,4 @@
-//sourcehash: 951fcf15ff0e69e07a662ae48cdd18863ae7933d33f683b2d221ea925deef756
+//sourcehash: 477afdadb4eeaebcb192d1a416f01cc30b3a70131765400315e8340ec53ea675
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -39,99 +39,93 @@
 
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_datestring_to_unixtime =
-R"doc(Converting between date strings and unixtime stamps (ref 1970)
+R"doc(Parses a date/time string to a UNIX timestamp using the specified
+format.
 
-Parameter ``DateString:``:
-    DateString to be converted. Must fit format string.
+Parameter ``DateString``:
+    Date/time string to parse
 
-Parameter ``format:``:
-    Format string to convert Date string. Default Format:
-    "%z__%d-%m-%Y__%H:%M:%S" see
-    https://m.cplusplus.com/reference/ctime/strftime/ * https://themac
-    hinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.h
-    tml#format-string
+Parameter ``format``:
+    Format string (default: "%z__%d-%m-%Y__%H:%M:%S")
 
 Returns:
-    unixtime as double (seconds since 01.01.1970))doc";
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z))doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_timepoint_to_unixtime =
-R"doc(timepoint_to_unixtime IMPORTANT: Conversion does only have
-microseconds precision!
+R"doc(Converts a std::chrono::system_clock::time_point to a UNIX timestamp
+(seconds since epoch, UTC).
 
-Parameter ``TimePoint:``:
-    chrono::system_clock::time_point
+Parameter ``TimePoint``:
+    Time point to convert
 
 Returns:
-    Unix time stamp (seconds since 01.01.1970) as double)doc";
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z))doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_datestring =
-R"doc(Converting between date strings and unixtime stamps (ref 1970)
-
-Parameter ``unixtime:``:
-    seconds since 01.01.1970 as double
-
-Parameter ``fractionalSecondsDigits:``:
-    How many digits to use for the split seconds. Minimum is 0 (second
-    resolution) Maximum is 6 (microsecond resolution)
-
-Parameter ``format:``:
-    Format string to convert Date string. Default Format:
-    "%z__%d-%m-%Y__%H:%M:%S" see:
-    https://m.cplusplus.com/reference/ctime/strftime/ * https://themac
-    hinethatgoesping.readthedocs.io/en/latest/modules/tools/timeconv.h
-    tml#format-string
-
-Returns:
-    DateString that fits to the specified format)doc";
-
-static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_timepoint =
-R"doc(unixtime_to_timepoint IMPORTANT: return value will only have
-microseconds precision!
-
-Parameter ``unixtime:``:
-    Unix time stamp (seconds since 01.01.1970) as double
-
-Returns:
-    chrono::system_clock::time_point)doc";
-
-static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_windows_filetime =
-R"doc(Convert a unix timestamp to a windows 32bit Filetime conversion to 2 x
-32 bit word see: https://support.microsoft.com/en-us/help/188768/info-
-working-with-the-filetime-structure
+R"doc(Converts a UNIX timestamp to a formatted date/time string.
 
 Parameter ``unixtime``:
-    in seconds since 1970
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z)
+
+Parameter ``fractionalSecondsDigits``:
+    Number of digits for fractional seconds (default: 0)
+
+Parameter ``format``:
+    Format string (default: "%z__%d-%m-%Y__%H:%M:%S")
 
 Returns:
-    std::pair<uint32_t, uint32_t>)doc";
+    Formatted date/time string)doc";
+
+static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_timepoint =
+R"doc(Converts a UNIX timestamp (seconds since epoch, UTC) to a
+std::chrono::system_clock::time_point.
+
+Parameter ``unixtime``:
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z)
+
+Returns:
+    Corresponding std::chrono::system_clock::time_point)doc";
+
+static const char *__doc_themachinethatgoesping_tools_timeconv_unixtime_to_windows_filetime =
+R"doc(Converts a UNIX timestamp to Windows FILETIME (high/low 32-bit
+values).
+
+Parameter ``unixtime``:
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z)
+
+Returns:
+    Pair of high and low 32-bit FILETIME values)doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_windows_filetime_to_unixtime =
-R"doc(Convert a windows 32bit Filetime to a unix timestamp conversion to
-unixtime see: http://www.frenk.com/2009/12/convert-filetime-to-unix-
-timestamp/
-
-WARNING: converting to unixtime and then back causes small (100 ns )
-rounding error *
+R"doc(Converts Windows FILETIME (high/low 32-bit values) to UNIX timestamp.
 
 Parameter ``highDateTime``:
-    $Parameter ``lowDateTime``:
+    High 32 bits of FILETIME
+
+Parameter ``lowDateTime``:
+    Low 32 bits of FILETIME
 
 Returns:
-    double)doc";
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z))doc";
 
 static const char *__doc_themachinethatgoesping_tools_timeconv_year_month_day_to_unixtime =
-R"doc(Convert a year, month and day to a unixtime stamp (ref 1970)
+R"doc(Converts a calendar date (year, month, day) and optional microseconds
+to a UNIX timestamp.
 
 Parameter ``year``:
-    $Parameter ``month``:
+    Year (e.g. 2024)
+
+Parameter ``month``:
+    Month (1-12)
 
 Parameter ``day``:
-    $Parameter ``micro_seconds``:
+    Day (1-31)
 
-microseconds since midnight
+Parameter ``micro_seconds``:
+    Optional microseconds to add
 
 Returns:
-    double)doc";
+    UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z))doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
