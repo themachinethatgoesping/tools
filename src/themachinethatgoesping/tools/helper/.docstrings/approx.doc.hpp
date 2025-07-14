@@ -1,4 +1,4 @@
-//sourcehash: 6784095a381288cfcc0372af311a34fd449812ce1f47782d7130d043a830b016
+//sourcehash: 74b71c63d3ca4e4524da11e9f115b3370a2ce8d0795d653a790564b8a8c5d2a6
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -56,6 +56,8 @@ Parameter ``relative_difference_factor``:
 
 Returns:
     true/false)doc";
+
+static const char *__doc_themachinethatgoesping_tools_helper_approx_complex = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_helper_approx_container = R"doc()doc";
 

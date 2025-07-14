@@ -4,6 +4,7 @@
 #include ".docstrings/approx.doc.hpp"
 
 #include <concepts>
+#include <complex>
 #include <ranges>
 
 namespace themachinethatgoesping::tools::helper {

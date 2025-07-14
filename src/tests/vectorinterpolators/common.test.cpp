@@ -9,8 +9,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include "../../themachinethatgoesping/tools/helper.hpp"
-#include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include <themachinethatgoesping/tools/vectorinterpolators.hpp>
 
 // using namespace testing;
 using namespace std;
@@ -74,7 +73,7 @@ void test_interpolator_serialize(t_interpolator& ip)
     int i = 0;
     for (auto ipx : { ip2, ip3, ip4, ip5 })
     {
-        INFO(fmt::format("test_interpolator_serialize[{}]: {}",ip2.class_name(), i++));
+        INFO(fmt::format("test_interpolator_serialize[{}]: {}", ip2.class_name(), i++));
         // this is a copy so no approx should be necessary
         REQUIRE(ip == ipx);
         REQUIRE(ip(0.5) == ipx(0.5));
@@ -164,10 +163,10 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 {
     SECTION("single value interpolators")
     { // initialize test data (correct order)
-        std::vector<double> x = { -10, -5, 0, 6, 12};
-        std::vector<double> y = { 1, 0, 1, 0 , -1};
-        std::vector<double> x_extended = { -10, -5, 0, 6, 12, 14, 15};
-        std::vector<double> y_extended = { 1, 0, 1, 0 , -1, 0, -1};
+        std::vector<double> x          = { -10, -5, 0, 6, 12 };
+        std::vector<double> y          = { 1, 0, 1, 0, -1 };
+        std::vector<double> x_extended = { -10, -5, 0, 6, 12, 14, 15 };
+        std::vector<double> y_extended = { 1, 0, 1, 0, -1, 0, -1 };
 
         std::vector<std::shared_ptr<vectorinterpolators::I_Interpolator<double, double>>>
             interpolators;
@@ -186,7 +185,7 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             // first test extending  some values (make sure it does not throw)
             interpolator->extend({ 14, 15 }, { 0, -1 });
             REQUIRE(interpolator->get_data_X() == x_extended);
-            REQUIRE(interpolator->get_data_Y() == y_extended); 
+            REQUIRE(interpolator->get_data_Y() == y_extended);
             interpolator->set_data_XY(x, y);
 
             // interpolator should fail if double x elements are appended
@@ -201,10 +200,12 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
 
             // same for extending lists
             cerr << "same for extending lists: 0" << endl;
-            try {
+            try
+            {
                 interpolator->extend({ 12, 13 }, { -1, 1 });
             }
-            catch (std::exception& e){
+            catch (std::exception& e)
+            {
                 cerr << "Exception: " << e.what() << endl;
             }
             REQUIRE_THROWS(interpolator->extend({ 12, 13 }, { -1, 1 }));

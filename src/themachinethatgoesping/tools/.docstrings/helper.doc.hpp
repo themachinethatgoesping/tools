@@ -1,4 +1,4 @@
-//sourcehash: a1d57481aea118d963d9b19b723c9cd4fcdf0ee551c9a539d3b9f991bce1a7b3
+//sourcehash: 9ce0e5a5b3e45fab602c849b572540a0fdc7fb2b796a42ee232d5d81c8bbb461
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -39,18 +39,6 @@
 
 
 static const char *__doc_themachinethatgoesping_tools_helper_compare_containers = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_get_from_map_with_default = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_make_overload_2 = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_substract_set_zero_if_negative = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant = R"doc()doc";
-
-static const char *__doc_themachinethatgoesping_tools_helper_visit_variant_no_return = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
