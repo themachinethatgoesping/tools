@@ -12,7 +12,6 @@ sources = [
 ]
 
 headers = [
-  'hashhelper.hpp',
   'progressbars.hpp',
   'timeconv.hpp',
   'vectorinterpolators.hpp',
@@ -78,11 +77,13 @@ headers = [
   'helper/stringconversion.hpp',
   'helper/variant.hpp',
   'helper/xtensor.hpp',
+  'helper/xtensor_hash.hpp',
   'helper/.docstrings/approx.doc.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
   'helper/.docstrings/enum.doc.hpp',
   'helper/.docstrings/floatcompare.doc.hpp',
+  'helper/.docstrings/hashhelper.doc.hpp',
   'helper/.docstrings/integermath.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
   'helper/.docstrings/map_tools.doc.hpp',

@@ -1,4 +1,4 @@
-//sourcehash: edd370885905cd859b470fa1c483ea628d4947621c21597e1eda3847f8deb62b
+//sourcehash: 08216285740705392df90380605d8e4a69fca9767af0cb74dc554b60bd1f18be
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,9 +38,14 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_helper_approx_xtensor = R"doc()doc";
+static const char *__doc_xt_hash_value =
+R"doc(Boost hash function for xt tensors
 
-static const char *__doc_themachinethatgoesping_tools_helper_xtensor_datatype = R"doc()doc";
+Template parameter ``T``:
+    $Parameter ``b``:
+
+Returns:
+    std::size_t)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
