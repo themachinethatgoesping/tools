@@ -24,7 +24,7 @@ void test_reversed(const PyIndexer& indexer)
     INFO("reversed indexer");
     INFO(reversed.info_string());
 
-    for (long i = 0; i < long(indexer.size()); ++i)
+    for (int64_t i = 0; i < int64_t(indexer.size()); ++i)
     {
         INFO("i: " << i);
         REQUIRE(indexer(i) == reversed(-i - 1));
@@ -40,14 +40,14 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         std::vector<size_t> expected_results = { 1, 3, 5 };
 
         REQUIRE(indexer.size() == expected_results.size());
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
             REQUIRE(indexer(enumerator) == expected_results.at(enumerator));
         }
 
-        long enumerator = 0;
+        int64_t enumerator = 0;
         for (const auto i : indexer)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
@@ -59,7 +59,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         indexer.reset(10, 5, 0, -2);
         REQUIRE(indexer.size() == expected_results.size());
 
-        enumerator = long(expected_results.size() - 1);
+        enumerator = int64_t(expected_results.size() - 1);
         for (const auto i : indexer)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
@@ -217,7 +217,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(10, 90, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -244,7 +244,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -290,7 +290,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(99, 0, -3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -318,7 +318,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(0, 99, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -347,7 +347,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(20, 90, 3);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -374,7 +374,7 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
         auto expected_results = xt::arange(70, 30, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -397,12 +397,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, positive stop, positive multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, 7);
+        PyIndexer indexer(100, std::numeric_limits<int64_t>::max(), 70, 7);
         test_reversed(indexer);
         auto expected_results = xt::arange(0, 70, 7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -423,12 +423,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, positive stop, negative multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), 70, -7);
+        PyIndexer indexer(100, std::numeric_limits<int64_t>::max(), 70, -7);
         test_reversed(indexer);
         auto expected_results = xt::arange(99, 70, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -449,12 +449,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, negative stop, positive multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, 7);
+        PyIndexer indexer(100, std::numeric_limits<int64_t>::max(), -70, 7);
         test_reversed(indexer);
         auto expected_results = xt::arange(0, 30, 7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -475,12 +475,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, none start, negative stop, negative multi step)")
     {
-        PyIndexer indexer(100, std::numeric_limits<long>::max(), -70, -7);
+        PyIndexer indexer(100, std::numeric_limits<int64_t>::max(), -70, -7);
         test_reversed(indexer);
         auto expected_results = xt::arange(99, 30, -7);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -502,12 +502,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Reproduce precomputed results (slice, none start, none stop, positive multi step)")
     {
         PyIndexer indexer(
-            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), 5);
+            100, std::numeric_limits<int64_t>::max(), std::numeric_limits<int64_t>::max(), 5);
         test_reversed(indexer);
         auto expected_results = xt::arange(0, 99, 5);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -529,17 +529,17 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Reproduce precomputed results (slice, none start, none stop, negative single step)")
     {
         PyIndexer indexer(
-            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -1);
+            100, std::numeric_limits<int64_t>::max(), std::numeric_limits<int64_t>::max(), -1);
         test_reversed(indexer);
         // xt::arange(99, 0, -1) does not capture the very last index (0)
         auto expected_results = xt::arange(99, 0, -1);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (long enumerator = 0; enumerator < long(indexer.size() - 1); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size() - 1); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(long(indexer(enumerator)) == expected_results.at(enumerator));
+            REQUIRE(int64_t(indexer(enumerator)) == expected_results.at(enumerator));
         }
         CHECK(indexer(99) == 0);
 
@@ -558,17 +558,17 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION("Reproduce precomputed results (slice, none start, none stop, negative multi step)")
     {
         PyIndexer indexer(
-            100, std::numeric_limits<long>::max(), std::numeric_limits<long>::max(), -11);
+            100, std::numeric_limits<int64_t>::max(), std::numeric_limits<int64_t>::max(), -11);
         test_reversed(indexer);
         // xt::arange(99, 0, -11) does not capture the very last index (0)
         auto expected_results = xt::arange(99, 0, -11);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (long enumerator = 0; enumerator < long(indexer.size() - 1); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size() - 1); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(long(indexer(enumerator)) == expected_results.at(enumerator));
+            REQUIRE(int64_t(indexer(enumerator)) == expected_results.at(enumerator));
         }
         CHECK(indexer(9) == 0);
 
@@ -586,12 +586,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, positive start, none stop, positive multi step)")
     {
-        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), 11);
+        PyIndexer indexer(100, 30, std::numeric_limits<int64_t>::max(), 11);
         test_reversed(indexer);
         auto expected_results = xt::arange(30, 100, 11);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -612,12 +612,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, positive start, none stop, negative multi step)")
     {
-        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -13);
+        PyIndexer indexer(100, 30, std::numeric_limits<int64_t>::max(), -13);
         test_reversed(indexer);
         auto expected_results = xt::arange(30, 0, -13);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -639,16 +639,16 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
     SECTION(
         "Reproduce precomputed results (slice, positive start, none stop, negative single step)")
     {
-        PyIndexer indexer(100, 30, std::numeric_limits<long>::max(), -1);
+        PyIndexer indexer(100, 30, std::numeric_limits<int64_t>::max(), -1);
         test_reversed(indexer);
         auto expected_results = xt::arange(30, 0, -1);
         REQUIRE(indexer.size() == expected_results.size() + 1);
 
-        for (long enumerator = 0; enumerator < long(indexer.size() - 1); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size() - 1); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
-            REQUIRE(long(indexer(enumerator)) == expected_results.at(enumerator));
+            REQUIRE(int64_t(indexer(enumerator)) == expected_results.at(enumerator));
         }
         CHECK(indexer(0) == 30);
 
@@ -666,12 +666,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, negative start, none stop, positive multi step)")
     {
-        PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), 4);
+        PyIndexer indexer(100, -30, std::numeric_limits<int64_t>::max(), 4);
         test_reversed(indexer);
         auto expected_results = xt::arange(70, 100, 4);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());
@@ -693,12 +693,12 @@ TEST_CASE("pyhelper:PyIndexer", TESTTAG)
 
     SECTION("Reproduce precomputed results (slice, negative start, none stop, negative multi step)")
     {
-        PyIndexer indexer(100, -30, std::numeric_limits<long>::max(), -4);
+        PyIndexer indexer(100, -30, std::numeric_limits<int64_t>::max(), -4);
         test_reversed(indexer);
         auto expected_results = xt::arange(70, 0, -4);
         REQUIRE(indexer.size() == expected_results.size());
 
-        for (long enumerator = 0; enumerator < long(indexer.size()); ++enumerator)
+        for (int64_t enumerator = 0; enumerator < int64_t(indexer.size()); ++enumerator)
         {
             INFO(fmt::format("enumerator: {}", enumerator));
             INFO(indexer.info_string());

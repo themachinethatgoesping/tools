@@ -1,4 +1,4 @@
-//sourcehash: f774c51e7b4bd7a9b08d4d39a7d00d943ec322a0ebda18884ba2784866a3e0bb
+//sourcehash: 185ec8e824682a60b66cf07d4d298a8b4de02603525fc2167ecf44e6e7cab978
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -218,7 +218,7 @@ static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_s
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_index_stop =
 R"doc(< the stop index of the slice (_vector_size if not sliced) < (stop is
-exclusive) (long because can be negative under some < circumstances
+exclusive) (int64_t because can be negative under some < circumstances
 (see below) this index is used for out of bounds)doc";
 
 static const char *__doc_themachinethatgoesping_tools_pyhelper_PyIndexer_info_string =

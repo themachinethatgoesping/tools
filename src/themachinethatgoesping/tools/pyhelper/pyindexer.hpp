@@ -37,18 +37,18 @@ class PyIndexer
     size_t _index_min  = 0;            ///< the minimum index of the slice (0 if not sliced)
     size_t _index_max; ///< the maximum index of the slice (_vector_size - 1 if not sliced)
 
-    long _index_start = 0;    ///< the start index of the slice (0 if not sliced)
-    long _index_stop;         ///< the stop index of the slice (_vector_size if not sliced)
-                              ///< (stop is exclusive) (long because can be negative under some
+    int64_t _index_start = 0;    ///< the start index of the slice (0 if not sliced)
+    int64_t _index_stop;         ///< the stop index of the slice (_vector_size if not sliced)
+                              ///< (stop is exclusive) (int64_t because can be negative under some
                               ///< circumstances (see below) this index is used for out of bounds
-    long _index_step = 1;     ///< the step size of the slice (1 if not sliced)
+    int64_t _index_step = 1;     ///< the step size of the slice (1 if not sliced)
     bool _is_slice   = false; ///< is this a slice?
 
     // make this private (only allowed in factory functions)
     PyIndexer() = default;
 
   public:
-    const static long None = std::numeric_limits<long>::max(); ///< a static value to indicate None
+    const static int64_t None = std::numeric_limits<int64_t>::max(); ///< a static value to indicate None
 
     /**
      * @brief A structure to hold a slice
@@ -57,14 +57,14 @@ class PyIndexer
     struct Slice
     {
 
-        long start = PyIndexer::None; ///< the start index of the slice (None if not sliced)
-        long stop  = PyIndexer::None; ///< the stop index of the slice (None if not sliced)
+        int64_t start = PyIndexer::None; ///< the start index of the slice (None if not sliced)
+        int64_t stop  = PyIndexer::None; ///< the stop index of the slice (None if not sliced)
                                       ///< (stop is exclusive)
-        long step = 1;                ///< the step size of the slice (1 if not sliced)
+        int64_t step = 1;                ///< the step size of the slice (1 if not sliced)
 
         Slice() = default;
 
-        Slice(long start, long stop, long step = 1)
+        Slice(int64_t start, int64_t stop, int64_t step = 1)
             : start(start)
             , stop(stop)
             , step(step)
@@ -123,8 +123,8 @@ class PyIndexer
     PyIndexer(size_t vector_size)
         : _vector_size(vector_size)
         , _slice_size(vector_size)
-        , _index_max(long(vector_size - 1))
-        , _index_stop(long(vector_size))
+        , _index_max(int64_t(vector_size - 1))
+        , _index_stop(int64_t(vector_size))
     {
     }
 
@@ -138,7 +138,7 @@ class PyIndexer
      * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    PyIndexer(size_t vector_size, long start, long stop, long step = 1)
+    PyIndexer(size_t vector_size, int64_t start, int64_t stop, int64_t step = 1)
         : _vector_size(vector_size), _slice_size(vector_size)
     {
         set_slice_indexing(start, stop, step);
@@ -165,8 +165,8 @@ class PyIndexer
      */
     PyIndexer reversed() const
     {
-        long new_start = _index_stop - _index_step;
-        long new_stop  = _index_start - _index_step;
+        int64_t new_start = _index_stop - _index_step;
+        int64_t new_stop  = _index_start - _index_step;
 
         if (new_stop < 0)
             new_stop = PyIndexer::None;
@@ -191,7 +191,7 @@ class PyIndexer
      * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    void set_slice_indexing(long start, long stop, long step = 1)
+    void set_slice_indexing(int64_t start, int64_t stop, int64_t step = 1)
     {
         if (step == 0)
             throw(std::out_of_range("PyIndexer: step is zero!"));
@@ -199,23 +199,23 @@ class PyIndexer
             step = 1;
 
         if (stop < 0)
-            stop += long(_vector_size);
+            stop += int64_t(_vector_size);
         else if (stop == PyIndexer::None)
         {
             if (step > 0)
-                stop = long(_vector_size);
+                stop = int64_t(_vector_size);
             else
                 stop = -1;
         }
 
         if (start < 0)
-            start += long(_vector_size);
+            start += int64_t(_vector_size);
         else if (start == PyIndexer::None)
         {
             if (step > 0)
                 start = 0;
             else
-                start = long(_vector_size - 1);
+                start = int64_t(_vector_size - 1);
         }
 
         if (start < stop && step > 0)
@@ -224,9 +224,9 @@ class PyIndexer
             _index_start = start;
             _index_step  = step;
             _slice_size  = size_t(std::ceil(float(stop - start) / float(_index_step)));
-            _index_stop  = _index_start + long(_slice_size) * _index_step;
+            _index_stop  = _index_start + int64_t(_slice_size) * _index_step;
 
-            if (_index_start >= long(_vector_size))
+            if (_index_start >= int64_t(_vector_size))
             {
                 // throw std::out_of_range("failure");
                 throw(std::out_of_range(fmt::format(
@@ -247,9 +247,9 @@ class PyIndexer
             // _index stop can be negative (if start is negative and stop is positive, e.g. (start =
             // 5, stop = 0, step = -2)) this is not a problem, because the index is only used to
             // check if it is out of bounds
-            _index_stop = _index_start + long(_slice_size) * _index_step;
+            _index_stop = _index_start + int64_t(_slice_size) * _index_step;
 
-            if (_index_start >= long(_vector_size))
+            if (_index_start >= int64_t(_vector_size))
                 throw(std::out_of_range(fmt::format(
                     "PyIndexer({}, {}, {}): Start is out of bounds!\n--- indexer ---\n{}",
                     start,
@@ -306,7 +306,7 @@ class PyIndexer
     void reset(size_t vector_size)
     {
         _vector_size = vector_size;
-        _index_stop  = long(vector_size);
+        _index_stop  = int64_t(vector_size);
         _slice_size  = vector_size;
         _index_min   = 0;
         _index_max   = vector_size - 1;
@@ -327,7 +327,7 @@ class PyIndexer
      * @param stop Stop index of the slice
      * @param step Step size of the slice
      */
-    void reset(size_t vector_size, long start, long stop, long step = 1)
+    void reset(size_t vector_size, int64_t start, int64_t stop, int64_t step = 1)
     {
         _vector_size = vector_size;
         set_slice_indexing(start, stop, step);
@@ -352,7 +352,7 @@ class PyIndexer
      * @param index (python style) index of the element (can be negative)
      * @return size_t
      */
-    size_t operator()(long index) const
+    size_t operator()(int64_t index) const
     {
         if (_is_slice)
         {
@@ -362,27 +362,27 @@ class PyIndexer
 
                 if (_index_step < 0)
                 {
-                    index = long(_index_min) + (index)*_index_step;
+                    index = int64_t(_index_min) + (index)*_index_step;
                 }
                 else
                 {
-                    index = long(_index_max) + (index)*_index_step;
+                    index = int64_t(_index_max) + (index)*_index_step;
                 }
             }
             else
             {
                 if (_index_step < 0)
                 {
-                    index = long(_index_max) + (index)*_index_step;
+                    index = int64_t(_index_max) + (index)*_index_step;
                 }
                 else
                 {
-                    index = long(_index_min) + index * _index_step;
+                    index = int64_t(_index_min) + index * _index_step;
                 }
             }
 
             // TODO: fix error messages
-            if (index > long(_index_max))
+            if (index > int64_t(_index_max))
             {
                 // throw std::out_of_range("failure");
                 throw std::out_of_range(fmt::format("index[{} + ({} * {}) = {}] is >= max ({})! ",
@@ -397,7 +397,7 @@ class PyIndexer
         {
             // convert from python index (can be negative) to C++ index
             if (index < 0)
-                index += long(_vector_size);
+                index += int64_t(_vector_size);
             // index = python_index < 0 ? _vector_size + python_index : python_index;
 
             if (size_t(index) >= _vector_size)
@@ -408,7 +408,7 @@ class PyIndexer
             }
         }
 
-        if (index < long(_index_min))
+        if (index < int64_t(_index_min))
         {
             // throw std::out_of_range("failure");
             throw std::out_of_range(fmt::format("Index [{}] is < min [{}]! ", index, _index_min));
@@ -431,9 +431,9 @@ class PyIndexer
     struct PyRangeIterator
     {
         size_t _val;
-        long   _step;
+        int64_t   _step;
 
-        PyRangeIterator(size_t val, long step)
+        PyRangeIterator(size_t val, int64_t step)
             : _val(val)
             , _step(step)
         {

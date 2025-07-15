@@ -723,22 +723,22 @@ template void ObjectPrinter::register_value<std::string_view>(const std::string&
                                                               std::string_view,
                                                               std::string_view,
                                                               int);
-template void ObjectPrinter::register_value<u_int8_t>(const std::string&,
-                                                      u_int8_t,
+template void ObjectPrinter::register_value<uint8_t>(const std::string&,
+                                                     uint8_t,
+                                                     std::string_view,
+                                                     int);
+template void ObjectPrinter::register_value<uint16_t>(const std::string&,
+                                                      uint16_t,
                                                       std::string_view,
                                                       int);
-template void ObjectPrinter::register_value<u_int16_t>(const std::string&,
-                                                       u_int16_t,
-                                                       std::string_view,
-                                                       int);
-template void ObjectPrinter::register_value<u_int32_t>(const std::string&,
-                                                       u_int32_t,
-                                                       std::string_view,
-                                                       int);
-template void ObjectPrinter::register_value<u_int64_t>(const std::string&,
-                                                       u_int64_t,
-                                                       std::string_view,
-                                                       int);
+template void ObjectPrinter::register_value<uint32_t>(const std::string&,
+                                                      uint32_t,
+                                                      std::string_view,
+                                                      int);
+template void ObjectPrinter::register_value<uint64_t>(const std::string&,
+                                                      uint64_t,
+                                                      std::string_view,
+                                                      int);
 template void ObjectPrinter::register_value<int8_t>(const std::string&,
                                                     int8_t,
                                                     std::string_view,
@@ -764,6 +764,14 @@ template void ObjectPrinter::register_value<double>(const std::string&,
                                                     std::string_view,
                                                     int);
 
+// Add missing char instantiation
+template void ObjectPrinter::register_value<char>(const std::string&, char, std::string_view, int);
+
+// Add missing std::string instantiation
+template void ObjectPrinter::register_value<std::string>(const std::string&,
+                                                         std::string,
+                                                         std::string_view,
+                                                         int);
 // Standard containers
 template void ObjectPrinter::register_container<std::vector<int>>(const std::string&,
                                                                   const std::vector<int>&,
@@ -875,15 +883,6 @@ template void ObjectPrinter::register_container<
     std::string_view,
     int);
 
-// Add missing char instantiation
-template void ObjectPrinter::register_value<char>(const std::string&, char, std::string_view, int);
-
-// Add missing std::string instantiation
-template void ObjectPrinter::register_value<std::string>(const std::string&,
-                                                         std::string,
-                                                         std::string_view,
-                                                         int);
-
 // Add missing std::array instantiations
 template void ObjectPrinter::register_container<std::array<unsigned char, 4>>(
     const std::string&,
@@ -897,10 +896,10 @@ template void ObjectPrinter::register_container<std::array<unsigned char, 7>>(
     std::string_view,
     int);
 
-// Add missing std::vector<unsigned long> instantiation
-template void ObjectPrinter::register_container<std::vector<unsigned long>>(
+// Add missing std::vector<uint64_t> instantiation
+template void ObjectPrinter::register_container<std::vector<uint64_t>>(
     const std::string&,
-    const std::vector<unsigned long>&,
+    const std::vector<uint64_t>&,
     std::string_view,
     int);
 
@@ -911,12 +910,11 @@ template void ObjectPrinter::register_container<std::vector<unsigned int>>(
     std::string_view,
     int);
 
-// Add missing std::vector<long> instantiation
-template void ObjectPrinter::register_container<std::vector<long>>(
-    const std::string&,
-    const std::vector<long>&,
-    std::string_view,
-    int);
+// Add missing std::vector<int64_t> instantiation
+template void ObjectPrinter::register_container<std::vector<int64_t>>(const std::string&,
+                                                                   const std::vector<int64_t>&,
+                                                                   std::string_view,
+                                                                   int);
 
 // Add missing optional value instantiations
 template void ObjectPrinter::register_optional_value<unsigned char>(const std::string&,
