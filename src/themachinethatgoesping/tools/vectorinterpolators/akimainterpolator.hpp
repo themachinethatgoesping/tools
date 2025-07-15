@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
+// SPDX-FileCopyrightText: 2022 - 2025 Peter Urban, Ghent University
 // SPDX-FileCopyrightText: 2022 Peter Urban, GEOMAR Helmholtz Centre for Ocean
 // Research Kiel
 //
@@ -16,10 +16,11 @@
 /* generated doc strings */
 #include ".docstrings/akimainterpolator.doc.hpp"
 
-#include <array>
+#include <algorithm>
 #include <boost/math/interpolators/makima.hpp>
-#include <iostream>
-#include <unordered_map>
+#include <cmath>
+#include <stdexcept>
+#include <utility>
 #include <vector>
 
 #include <fmt/format.h>
@@ -432,6 +433,9 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
+
+extern template class AkimaInterpolator<float>;
+extern template class AkimaInterpolator<double>;
 
 } // namespace vectorinterpolators
 } // namespace tools

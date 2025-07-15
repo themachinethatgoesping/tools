@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
+// SPDX-FileCopyrightText: 2022 - 2025 Peter Urban, Ghent University
 // SPDX-FileCopyrightText: 2022 Peter Urban, GEOMAR Helmholtz Centre for Ocean
 // Research Kiel
 //
@@ -20,10 +20,9 @@
 #include ".docstrings/i_pairinterpolator.doc.hpp"
 
 #include <algorithm>
-#include <array>
-#include <boost/algorithm/string.hpp>
-#include <iostream>
-#include <unordered_map>
+#include <memory>
+#include <stdexcept>
+#include <string>
 #include <utility>
 #include <vector>
 

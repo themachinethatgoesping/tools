@@ -7,12 +7,8 @@
 /* generated doc strings */
 #include ".docstrings/slerpinterpolator.doc.hpp"
 
-#include <Eigen/Eigen>
 #include <Eigen/Geometry>
 #include <array>
-#include <iostream>
-#include <tuple>
-#include <unordered_map>
 #include <vector>
 
 #include "../rotationfunctions/quaternions.hpp"
@@ -20,7 +16,6 @@
 
 #include "../classhelper/objectprinter.hpp"
 #include "../classhelper/stream.hpp"
-#include "../helper/approx.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -403,6 +398,11 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
     // define info_string and print functions (needs the __printer__ function)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
+
+extern template class SlerpInterpolator<float, float>;
+extern template class SlerpInterpolator<double, double>;
+extern template class SlerpInterpolator<float, double>;
+extern template class SlerpInterpolator<double, float>;
 
 } // namespace vectorinterpolators
 } // namespace tools

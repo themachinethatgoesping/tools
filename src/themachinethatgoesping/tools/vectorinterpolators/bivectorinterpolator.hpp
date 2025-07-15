@@ -14,21 +14,15 @@
 /* generated doc strings */
 #include ".docstrings/bivectorinterpolator.doc.hpp"
 
-#include <algorithm>
-#include <array>
-#include <boost/algorithm/string.hpp>
-#include <concepts>
-#include <iostream>
-#include <stdexcept>
-#include <unordered_map>
 #include <utility>
 #include <vector>
+#include <xtensor/containers/xcontainer.hpp>
 #include <xtensor/containers/xtensor.hpp>
-#include <xtensor/views/xview.hpp>
 
 #include "i_interpolator.hpp"
 
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/stream.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {

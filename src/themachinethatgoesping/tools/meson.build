@@ -10,6 +10,8 @@ headerdir = projectnamespace + '/tools'
 sources = [
   'timeconv.cpp',
   'classhelper/objectprinter.cpp',
+  'vectorinterpolators/vectorinterpolators.cpp',
+  'pyhelper/pyindexer.cpp',
 ]
 
 headers = [
@@ -38,11 +40,7 @@ headers = [
   'vectorinterpolators/.docstrings/linearinterpolator.doc.hpp',
   'vectorinterpolators/.docstrings/nearestinterpolator.doc.hpp',
   'vectorinterpolators/.docstrings/slerpinterpolator.doc.hpp',
-  '.docstrings/hashhelper.doc.hpp',
-  '.docstrings/helper.doc.hpp',
-  '.docstrings/progressbars.doc.hpp',
   '.docstrings/timeconv.doc.hpp',
-  '.docstrings/vectorinterpolators.doc.hpp',
   'rotationfunctions/helper.hpp',
   'rotationfunctions/quaternions.hpp',
   'rotationfunctions/.docstrings/helper.doc.hpp',
@@ -79,9 +77,7 @@ headers = [
   'helper/.docstrings/approx.doc.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
-  'helper/.docstrings/enum.doc.hpp',
   'helper/.docstrings/floatcompare.doc.hpp',
-  'helper/.docstrings/hashhelper.doc.hpp',
   'helper/.docstrings/integermath.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
   'helper/.docstrings/map_tools.doc.hpp',

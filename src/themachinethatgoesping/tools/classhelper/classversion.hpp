@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 Peter Urban, Ghent University
+// SPDX-FileCopyrightText: 2025 Peter Urban, Ghent University
 //
 // SPDX-License-Identifier: MPL-2.0
 

@@ -2,7 +2,7 @@
  * MIT No Attribution
  *
  * Copyright 2020-2023 Andrey Zhukov
- * Copyright 2024 Peter Urban
+ * Copyright 2025 Peter Urban
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software

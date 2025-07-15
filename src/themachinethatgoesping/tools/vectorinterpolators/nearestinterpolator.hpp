@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
+// SPDX-FileCopyrightText: 2022 - 2025 Peter Urban, Ghent University
 // SPDX-FileCopyrightText: 2022 Peter Urban, GEOMAR Helmholtz Centre for Ocean
 // Research Kiel
 //
@@ -16,9 +16,6 @@
 /* generated doc strings */
 #include ".docstrings/nearestinterpolator.doc.hpp"
 
-#include <array>
-#include <iostream>
-#include <unordered_map>
 #include <vector>
 
 #include <fmt/core.h>
@@ -157,6 +154,27 @@ class NearestInterpolator : public I_PairInterpolator<XType, YType>
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
 
+extern template class NearestInterpolator<float, float>;
+extern template class NearestInterpolator<double, double>;
+extern template class NearestInterpolator<float, double>;
+extern template class NearestInterpolator<double, float>;
+
+extern template class NearestInterpolator<float, uint8_t>;
+extern template class NearestInterpolator<float, int8_t>;
+extern template class NearestInterpolator<double, uint8_t>;
+extern template class NearestInterpolator<double, int8_t>;
+extern template class NearestInterpolator<float, uint16_t>;
+extern template class NearestInterpolator<float, int16_t>;
+extern template class NearestInterpolator<double, uint16_t>;
+extern template class NearestInterpolator<double, int16_t>;
+extern template class NearestInterpolator<float, uint32_t>;
+extern template class NearestInterpolator<float, int32_t>;
+extern template class NearestInterpolator<double, uint32_t>;
+extern template class NearestInterpolator<double, int32_t>;
+extern template class NearestInterpolator<float, uint64_t>;
+extern template class NearestInterpolator<float, int64_t>;
+extern template class NearestInterpolator<double, uint64_t>;
+extern template class NearestInterpolator<double, int64_t>;
 } // namespace interpolation
 } // namespace tools
 } // namespace themachinethatgoesping
