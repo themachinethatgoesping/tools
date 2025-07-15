@@ -12,7 +12,11 @@
 #include <tuple>
 #include <vector>
 
-#include <themachinethatgoesping/tools/vectorinterpolators.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/bivectorinterpolator.hpp>
 #include <themachinethatgoesping/tools_pybind/classhelper.hpp>
 
 #include "module.hpp"

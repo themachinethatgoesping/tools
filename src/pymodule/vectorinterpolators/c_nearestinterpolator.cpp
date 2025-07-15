@@ -10,8 +10,8 @@
 #include <tuple>
 #include <vector>
 
-#include "../../themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp"
-#include "../../themachinethatgoesping/tools_pybind/classhelper.hpp"
+#include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
+#include <themachinethatgoesping/tools_pybind/classhelper.hpp>
 
 #include "module.hpp"
 

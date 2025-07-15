@@ -12,9 +12,7 @@ sources = [
 ]
 
 headers = [
-  'progressbars.hpp',
   'timeconv.hpp',
-  'vectorinterpolators.hpp',
   'exceptions/version_error.hpp',
   'exceptions/.docstrings/version_error.doc.hpp',
   'classhelper/classversion.hpp',
@@ -92,6 +90,7 @@ headers = [
   'helper/.docstrings/stringconversion.doc.hpp',
   'helper/.docstrings/variant.doc.hpp',
   'helper/.docstrings/xtensor.doc.hpp',
+  'helper/.docstrings/xtensor_hash.doc.hpp',
 ]
 
 # -- targets --

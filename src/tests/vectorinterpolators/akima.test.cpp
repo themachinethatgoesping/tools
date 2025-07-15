@@ -8,7 +8,7 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <chrono>
 
-#include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
 
 // using namespace testing;
 using namespace std;
@@ -42,7 +42,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         REQUIRE(interpolator(x_append) == y_append);
     }
 
-    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("preset values should be interpolated correctly")
     {
@@ -55,7 +56,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
         CHECK(interpolator(10) == Catch::Approx(-2. / 3.));
     }
 
-    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("preset value vectors should be interpolated correctly")
     {
@@ -68,7 +70,8 @@ TEST_CASE("AkimaInterpolator: should perform basic interpolations correctly", TE
             REQUIRE(comp_y[i] == Catch::Approx(expected_y[i]));
     }
 
-    REQUIRE(interpolator.binary_hash() == 10074301266414863605ULL); // lookup should not change the hash
+    REQUIRE(interpolator.binary_hash() ==
+            10074301266414863605ULL); // lookup should not change the hash
 
     SECTION("extrapolation mode should cause:")
     {

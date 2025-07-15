@@ -10,7 +10,8 @@
 #include <filesystem>
 #include <fstream>
 
-#include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include <themachinethatgoesping/tools/vectorinterpolators/bivectorinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
 
 // using namespace testing;
 using namespace std;
@@ -79,9 +80,9 @@ TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly",
     // initialize test data
     // std::vector<double> x = { -10, -5, 0, 6, 12 };
     // std::vector<double> y = { 1, 0, 1, 0, -1 };
-    std::vector<double> x        = { -10,  -5,  0, 6 };
-    std::vector<double> y        = { -20, -15, -4, 3, 10 };
-    std::vector<double> y_val    = {   2,   3,  2, 0, 12 };
+    std::vector<double> x     = { -10, -5, 0, 6 };
+    std::vector<double> y     = { -20, -15, -4, 3, 10 };
+    std::vector<double> y_val = { 2, 3, 2, 0, 12 };
     vectorinterpolators::BiVectorInterpolator<vectorinterpolators::AkimaInterpolator<double>>
         interpolator;
 
@@ -102,7 +103,7 @@ TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly",
         for (unsigned int i = 0; i < x.size(); ++i)
             for (unsigned int j = 0; j < y.size(); ++j)
             {
-                INFO(fmt::format("{}, {}", i,j));
+                INFO(fmt::format("{}, {}", i, j));
                 CHECK(image(i, j) == Catch::Approx(y_val[j]));
             }
     }

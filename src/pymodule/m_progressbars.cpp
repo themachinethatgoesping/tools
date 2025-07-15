@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-
-
 // -- c++ library headers
 #include <memory>
 #include <random>
@@ -15,10 +13,12 @@
 // ping headers
 #include <themachinethatgoesping/tools_pybind/enumhelper.hpp>
 
-
-#include "../themachinethatgoesping/tools/progressbars.hpp"
-#include "../themachinethatgoesping/tools/progressbars/progresstqdm.hpp"
-// automatically generated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
+#include <themachinethatgoesping/tools/progressbars/consoleprogressbar.hpp>
+#include <themachinethatgoesping/tools/progressbars/i_progressbar.hpp>
+#include <themachinethatgoesping/tools/progressbars/noindicator.hpp>
+#include <themachinethatgoesping/tools/progressbars/progressbarchooser.hpp>
+#include <themachinethatgoesping/tools/progressbars/progressindicator.hpp>
+#include <themachinethatgoesping/tools/progressbars/progresstqdm.hpp>
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::progressbars;

@@ -7,7 +7,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <chrono>
 
-#include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
 
 // using namespace testing;
 using namespace std;

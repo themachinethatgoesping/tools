@@ -9,7 +9,10 @@
 #include <filesystem>
 #include <fstream>
 
-#include <themachinethatgoesping/tools/vectorinterpolators.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
 
 // using namespace testing;
 using namespace std;

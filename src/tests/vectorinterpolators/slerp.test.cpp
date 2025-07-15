@@ -8,8 +8,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <chrono>
 
-#include "../../themachinethatgoesping/tools/rotationfunctions/quaternions.hpp"
-#include "../../themachinethatgoesping/tools/vectorinterpolators.hpp"
+#include <themachinethatgoesping/tools/rotationfunctions/quaternions.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
 
 // using namespace testing;
 using namespace std;
