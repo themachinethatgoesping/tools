@@ -9,6 +9,7 @@ headerdir = projectnamespace + '/tools'
 # -- source files --
 sources = [
   'timeconv.cpp',
+  'classhelper/objectprinter.cpp',
 ]
 
 headers = [
@@ -65,7 +66,6 @@ headers = [
   'helper/approx.hpp',
   'helper/defaultmap.hpp',
   'helper/defaultsharedpointermap.hpp',
-  'helper/enum.hpp',
   'helper/floatcompare.hpp',
   'helper/integermath.hpp',
   'helper/isviewstream.hpp',

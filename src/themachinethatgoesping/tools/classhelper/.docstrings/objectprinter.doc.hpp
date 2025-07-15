@@ -1,4 +1,4 @@
-//sourcehash: e84430c2e53dad0f9e45166f9e70dd867396c97d3cad782004c83e54f3deef90
+//sourcehash: 4f3ab4fdf3a69b4ee0ec5cde00803d64700e0d50ac3b2517b7a75aec5dd3a560
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,24 +37,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
-
-static const char *__doc_formatter = R"doc()doc";
-
-static const char *__doc_formatter_format = R"doc()doc";
-
-static const char *__doc_formatter_parse = R"doc()doc";
-
-static const char *__doc_formatter_specs = R"doc()doc";
-
-static const char *__doc_formatter_style = R"doc()doc";
-
-static const char *__doc_formatter_style_2 = R"doc()doc";
-
-static const char *__doc_formatter_style_expr = R"doc()doc";
-
-static const char *__doc_formatter_style_pair = R"doc()doc";
-
-static const char *__doc_formatter_style_star = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter =
 R"doc(Class that allows for easy pretty printing of class members usage: 1.
@@ -132,6 +114,8 @@ Parameter ``superscript_exponents``:
 Returns:
     std::string \)doc";
 
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_lines = R"doc(< first line is typically the field value)doc";
+
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_name = R"doc(< name of the class that is to be printed)doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_print =
@@ -185,6 +169,8 @@ Parameter ``value_info``:
 Parameter ``pos``:
     position where the value is registers (if negative, the value is
     appended))doc";
+
+static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_enum_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_optional_value =
 R"doc(Registers an optional value with the given name and additional

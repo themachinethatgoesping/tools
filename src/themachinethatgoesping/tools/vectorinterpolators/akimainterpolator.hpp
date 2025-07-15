@@ -22,6 +22,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <fmt/format.h>
+
 #include "i_interpolator.hpp"
 #include "linearinterpolator.hpp"
 

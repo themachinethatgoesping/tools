@@ -1,4 +1,7 @@
+#pragma once
 
+/* generated doc strings */
+#include ".docstrings/xtensor_hash.doc.hpp"
 // hash functions for xtensor
 
 // #if defined(__x86_64__) || defined(_M_X64)

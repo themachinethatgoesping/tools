@@ -9,6 +9,8 @@
  * @authors Peter Urban
  */
 
+#include <fmt/format.h>
+
 #include "../classhelper/objectprinter.hpp"
 #include "../classhelper/stream.hpp"
 

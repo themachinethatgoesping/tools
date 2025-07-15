@@ -16,15 +16,11 @@
 /* generated doc strings */
 #include ".docstrings/i_interpolator.doc.hpp"
 
-#include <algorithm>
-#include <array>
-#include <boost/algorithm/string.hpp>
 #include <concepts>
-#include <iostream>
 #include <stdexcept>
-#include <unordered_map>
-#include <utility>
 #include <vector>
+#include <array>
+#include <cmath>
 
 #include "../classhelper/objectprinter.hpp"
 
