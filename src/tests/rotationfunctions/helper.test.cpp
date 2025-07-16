@@ -41,17 +41,17 @@ TEST_CASE("compute_heading should return correct heading", TESTTAG)
     REQUIRE(rotationfunctions::compute_heading(0., 0., true) == Catch::Approx(0.)); // edge case
     REQUIRE(rotationfunctions::compute_heading(1., 0., true) == Catch::Approx(0.)); // north
     REQUIRE(rotationfunctions::compute_heading(1., 1., true) ==
-            Catch::Approx(M_PI / 4)); // north east
-    REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Catch::Approx(M_PI / 2)); // east
+            Catch::Approx(std::numbers::pi / 4)); // north east
+    REQUIRE(rotationfunctions::compute_heading(0., 1., true) == Catch::Approx(std::numbers::pi / 2)); // east
     REQUIRE(rotationfunctions::compute_heading(-1., 1., true) ==
-            Catch::Approx(M_PI * 3 / 4));                                              // south east
-    REQUIRE(rotationfunctions::compute_heading(-1., 0., true) == Catch::Approx(M_PI)); // south
+            Catch::Approx(std::numbers::pi * 3 / 4));                                              // south east
+    REQUIRE(rotationfunctions::compute_heading(-1., 0., true) == Catch::Approx(std::numbers::pi)); // south
     REQUIRE(rotationfunctions::compute_heading(-1., -1., true) ==
-            Catch::Approx(M_PI * 5 / 4)); // south west
+            Catch::Approx(std::numbers::pi * 5 / 4)); // south west
     REQUIRE(rotationfunctions::compute_heading(0., -1., true) ==
-            Catch::Approx(M_PI * 6 / 4)); // west
+            Catch::Approx(std::numbers::pi * 6 / 4)); // west
     REQUIRE(rotationfunctions::compute_heading(1., -1., true) ==
-            Catch::Approx(M_PI * 7 / 4)); // north west
+            Catch::Approx(std::numbers::pi * 7 / 4)); // north west
 }
 
 TEST_CASE("normalize_angles", TESTTAG)

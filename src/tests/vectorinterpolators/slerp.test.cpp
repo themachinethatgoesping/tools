@@ -7,6 +7,7 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <chrono>
+#include <numbers>
 
 #include <themachinethatgoesping/tools/rotationfunctions/quaternions.hpp>
 #include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
@@ -17,7 +18,7 @@ using namespace themachinethatgoesping::tools;
 
 #define TESTTAG "[vectorinterpolators]"
 
-static const double to_degrees = 180. / M_PI;
+static const double to_degrees = 180. / std::numbers::pi;
 static const double to_rad     = 1 / to_degrees;
 
 TEST_CASE(

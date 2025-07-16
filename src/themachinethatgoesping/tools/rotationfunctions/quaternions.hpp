@@ -29,6 +29,7 @@
 #include <tuple>
 #include <unordered_map>
 #include <vector>
+#include <numbers>
 
 #include "helper.hpp"
 
@@ -53,7 +54,7 @@ template<std::floating_point t_float>
 EigenQuaternion<t_float> quaternion_from_ypr(std::array<t_float, 3> ypr,
                                              bool                   input_in_degrees = true)
 {
-    static const t_float _quaternion_from_ypr_to_rad = M_PI / 180.;
+    static const t_float _quaternion_from_ypr_to_rad = std::numbers::pi / 180.;
 
     // check if values are valid
     if (!std::isfinite(ypr[0]) || !std::isfinite(ypr[1]) || !std::isfinite(ypr[2]))
@@ -94,7 +95,7 @@ template<std::floating_point t_float>
 EigenQuaternion<t_float> quaternion_from_rpy(std::array<t_float, 3> rpy,
                                              bool                   input_in_degrees = true)
 {
-    static const t_float _quaternion_from_rpy_to_rad = M_PI / 180.;
+    static const t_float _quaternion_from_rpy_to_rad = std::numbers::pi / 180.;
 
     // check if values are valid
     if (!std::isfinite(rpy[0]) || !std::isfinite(rpy[1]) || !std::isfinite(rpy[2]))
@@ -189,7 +190,7 @@ std::array<t_float, 3> ypr_from_quaternion(EigenQuaternion<t_float> q,
      */
     ypr = normalize_angles_rad(ypr);
 
-    static const t_float _ypr_from_quaternion_to_degrees = 180 / M_PI;
+    static const t_float _ypr_from_quaternion_to_degrees = 180 / std::numbers::pi;
     if (output_to_degrees)
     {
         ypr[0] *= _ypr_from_quaternion_to_degrees;
@@ -224,7 +225,7 @@ std::array<t_float, 3> rpy_from_quaternion(EigenQuaternion<t_float> q,
      */
     rpy = normalize_angles_rad(rpy);
 
-    static const t_float _rpy_from_quaternion_to_degrees = 180 / M_PI;
+    static const t_float _rpy_from_quaternion_to_degrees = 180 / std::numbers::pi;
     if (output_to_degrees)
     {
         rpy[0] *= _rpy_from_quaternion_to_degrees;
