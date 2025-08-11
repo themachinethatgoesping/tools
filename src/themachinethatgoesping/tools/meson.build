@@ -12,7 +12,14 @@ sources = [
   'classhelper/classversion.cpp',
   'classhelper/objectprinter.cpp',
   'vectorinterpolators/vectorinterpolators.cpp',
+  'rotationfunctions/helper.cpp',
+  'rotationfunctions/quaternions.cpp',
   'pyhelper/pyindexer.cpp',
+  'progressbars/consoleprogressbar.cpp',
+  'progressbars/i_progressbartimed.cpp',
+  'progressbars/noindicator.cpp',
+  'progressbars/progressbarchooser.cpp',
+  'progressbars/progressindicator.cpp',
 ]
 
 headers = [

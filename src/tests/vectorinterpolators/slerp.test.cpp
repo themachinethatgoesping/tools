@@ -9,7 +9,7 @@
 #include <chrono>
 #include <numbers>
 
-#include <themachinethatgoesping/tools/rotationfunctions/quaternions.hpp>
+
 #include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
 
 // using namespace testing;

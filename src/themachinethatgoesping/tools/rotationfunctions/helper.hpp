@@ -82,6 +82,9 @@ std::array<floattype, 3> normalize_angles_rad(std::array<floattype, 3> ypr)
     return ypr;
 }
 
+extern template std::array<float, 3>  normalize_angles_rad<float>(std::array<float, 3>);
+extern template std::array<double, 3> normalize_angles_rad<double>(std::array<double, 3>);
+
 /**
  * @brief Shift angles into specified angular range: yaw [0°,359.99°], pitch [-90°, 90°], roll
  * [-180¶, 179.99°]
@@ -135,6 +138,9 @@ std::array<floattype, 3> normalize_angles_degrees(std::array<floattype, 3> ypr)
     return ypr;
 }
 
+extern template std::array<float, 3>  normalize_angles_degrees<float>(std::array<float, 3>);
+extern template std::array<double, 3> normalize_angles_degrees<double>(std::array<double, 3>);
+
 /**
  * @brief compute heading from northing and easting
  * north 0°/360°, east 90°, south 180°, west 270
@@ -159,6 +165,9 @@ inline floattype compute_heading(floattype northing, floattype easting, bool rad
 
     return heading;
 }
+
+extern template float  compute_heading<float>(float northing, float easting, bool radians);
+extern template double compute_heading<double>(double northing, double easting, bool radians);
 
 } // namespace rotationfunctions
 } // namespace tools

@@ -1,4 +1,4 @@
-//sourcehash: fe78b2fc3ac7d4d6d641e71dc2a690be5ff48d1eca974e3fcb75803abe62bcf4
+//sourcehash: 95466f3517b2ab17a687be04c3cb93374a92da28eb47fafb6f407b55d817cd90
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -45,31 +45,15 @@ a configuration file)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_2 =
-R"doc(Construct a new Progress Bar Chooser. This will select the default
-progress bar type if show_progress is true and NoIndicator otherwise.
-
-Parameter ``show_progress``:)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_ProgressBarChooser_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_builtin_progress_bar = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_get =
-R"doc(get the ProgressBarInterface
-
-Returns:
-    I_ProgressBar&)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_get = R"doc(get the ProgressBarInterface)doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressBarChooser_operator_call =
 R"doc(This is the visitor function that implicitly converts t_ProgressBar to
-I_ProgressBar (the common interface)
-
-Template parameter ``t_ProgressBar``:
-    $Parameter ``progress_bar``:
-
-ProgressBar class that is derived from I_ProgressBar
-
-Returns:
-    I_ProgressBar&)doc";
+I_ProgressBar (the common interface))doc";
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_t_BuiltInProgressBar = R"doc()doc";
 

@@ -1,4 +1,4 @@
-//sourcehash: 29b7a67c268a100ef107eac1fa3a9e66959774c5e6aa7a1e6cfcd1a7f42fb113
+//sourcehash: cbc6b980f44d3f369cf85d5d681f4e19d1e78f64b1ccf4b5f72421f0fb1493cb
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -61,9 +61,9 @@ static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndic
 
 static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_callback_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_first = R"doc(< first value of the progressbar range)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_first = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc(< indicator progressbar implementation)doc";
+static const char *__doc_themachinethatgoesping_tools_progressbars_ProgressIndicator_indicator = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
