@@ -9,6 +9,7 @@ headerdir = projectnamespace + '/tools'
 # -- source files --
 sources = [
   'timeconv.cpp',
+  'classhelper/classversion.cpp',
   'classhelper/objectprinter.cpp',
   'vectorinterpolators/vectorinterpolators.cpp',
   'pyhelper/pyindexer.cpp',
