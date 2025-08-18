@@ -1,4 +1,3 @@
-
 // SPDX-FileCopyrightText: 2022 - 2025 Peter Urban, Ghent University
 // Ghent University
 //
@@ -15,17 +14,12 @@
 /* generated doc strings */
 #include ".docstrings/datetime.doc.hpp"
 
-#include <fmt/core.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/embed.h>
-
-#include <themachinethatgoesping/tools/timeconv.hpp>
+// Only need pybind11 type declarations for object/handle
+#include <pybind11/pytypes.h>
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace pybind_helper {
-
 
 /**
  * @brief Converts a Unix timestamp to a Python datetime object.
@@ -34,20 +28,7 @@ namespace pybind_helper {
  * @param timezone_offset_hours The timezone offset in hours (default: 0).
  * @return The Python datetime object representing the given timestamp.
  */
-inline pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.)
-{
-    namespace py = pybind11;
-
-    py::module datetimeModule = py::module::import("datetime");
-    py::object datetimeClass  = datetimeModule.attr("datetime");
-    py::object timezoneClass  = datetimeModule.attr("timezone");
-    py::object timedeltaClass = datetimeModule.attr("timedelta");
-
-    py::object timezoneObject = timezoneClass(timedeltaClass(0, 0, 0, 0, 0, timezone_offset_hours));
-    py::object datetimeObject = datetimeClass.attr("fromtimestamp")(timestamp, timezoneObject);
-
-    return datetimeObject;
-}
+pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.);
 
 /**
  * @brief Converts a Python datetime object to a Unix timestamp.
@@ -55,11 +36,8 @@ inline pybind11::object unixtime_to_datetime(double timestamp, double timezone_o
  * @param datetimeObject The Python datetime object to convert.
  * @return The Unix timestamp representing the given datetime.
  */
-inline double datetime_to_unixtime(const pybind11::handle& datetimeObject)
-{
-    return pybind11::cast<double>(datetimeObject.attr("timestamp")());
-}
+double datetime_to_unixtime(const pybind11::handle& datetimeObject);
 
-}
-}
-}
+} // namespace pybind_helper
+} // namespace tools
+} // namespace themachinethatgoesping

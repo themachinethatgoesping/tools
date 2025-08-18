@@ -11,8 +11,6 @@
 #include <pybind11/stl.h>
 
 // ping headers
-#include <themachinethatgoesping/tools_pybind/enumhelper.hpp>
-
 #include <themachinethatgoesping/tools/progressbars/consoleprogressbar.hpp>
 #include <themachinethatgoesping/tools/progressbars/i_progressbar.hpp>
 #include <themachinethatgoesping/tools/progressbars/noindicator.hpp>
