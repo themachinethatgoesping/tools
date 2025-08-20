@@ -14,6 +14,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/std.h>
 #include <iostream>
 #include <limits>
 #include <numeric>
@@ -1079,6 +1080,21 @@ template void ObjectPrinter::register_container<
                                 3ul,
                                 xt::layout_type::row_major,
                                 xt::xtensor_expression_tag>&,
+    std::string_view,
+    int);
+
+template void ObjectPrinter::register_container<
+    xt::xtensor_container<
+        xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
+        1ul,
+        xt::layout_type::row_major,
+        xt::xtensor_expression_tag>>(
+    const std::string&,
+    const xt::xtensor_container<
+        xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
+        1ul,
+        xt::layout_type::row_major,
+        xt::xtensor_expression_tag>&,
     std::string_view,
     int);
 
