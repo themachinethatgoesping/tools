@@ -28,6 +28,7 @@ namespace pybind_helper {
  * @param timezone_offset_hours The timezone offset in hours (default: 0).
  * @return The Python datetime object representing the given timestamp.
  */
+__attribute__((visibility("default")))
 pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.);
 
 /**
@@ -36,6 +37,7 @@ pybind11::object unixtime_to_datetime(double timestamp, double timezone_offset_h
  * @param datetimeObject The Python datetime object to convert.
  * @return The Unix timestamp representing the given datetime.
  */
+__attribute__((visibility("default")))
 double datetime_to_unixtime(const pybind11::handle& datetimeObject);
 
 } // namespace pybind_helper
