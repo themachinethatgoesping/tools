@@ -128,8 +128,8 @@ jobs:
         #rm -rv boost*
 
     - name: install dependencies (meson & python)
-      run: pip ipip install meson meson-python pytest numpy 
-      #run: pip ipip install meson meson-python pytest numpy ninja
+      run: pip install meson meson-python pytest numpy 
+      #run: pip install meson meson-python pytest numpy ninja
 
     - name: download ninja long path
       run : |
