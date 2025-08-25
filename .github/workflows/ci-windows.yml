@@ -62,8 +62,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-2025]
-        boost-version: [1.87.0]
-        boost-version_: [1_87_0]
+        boost-version: [1.89.0]
+        boost-version_: [1_89_0]
         boost-modules: [--with-iostreams]
         include:
           - toolset: vc143
@@ -128,8 +128,8 @@ jobs:
         #rm -rv boost*
 
     - name: install dependencies (meson & python)
-      run: pip install meson==1.8.4 meson-python pytest numpy 
-      #run: pip install meson==1.8.4 meson-python pytest numpy ninja
+      run: pip ipip install meson meson-python pytest numpy 
+      #run: pip ipip install meson meson-python pytest numpy ninja
 
     - name: download ninja long path
       run : |
