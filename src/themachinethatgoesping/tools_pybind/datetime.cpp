@@ -2,7 +2,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/embed.h>
 
-#include "themachinethatgoesping/tools_pybind/datetime.hpp"
+#include "datetime.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
