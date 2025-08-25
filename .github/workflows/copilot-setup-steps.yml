@@ -22,7 +22,7 @@ on:
         default: true
 
 jobs:
-  setup:
+  copilot-setup-steps.yml:
     runs-on: ubuntu-latest
     
     steps:
