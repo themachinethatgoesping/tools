@@ -1,0 +1,126 @@
+# SPDX-FileCopyrightText: 2022 - 2023 Peter Urban, Ghent University
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: GitHub Copilot CI
+
+on:
+  pull_request:
+    branches: [ main ]
+    # Run on all pull requests, but especially important for Copilot-generated PRs
+    
+  # Allow manual triggering for testing
+  workflow_dispatch:
+
+# Make sure that multiple jobs don't run for the same action (new commits cancel old jobs when they are still running)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  # Fast feedback job for quick validation (smaller tests)
+  quick-check:
+    name: Quick validation
+    runs-on: ubuntu-latest
+    # This runs without approval for all collaborators and org members
+    
+    steps:
+    - name: checkout main repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        lfs: false
+    
+    - name: install basic dependencies
+      run: |
+        sudo apt update
+        sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          build-essential pkg-config libboost-all-dev libcurl4-openssl-dev \
+          libeigen3-dev libfmt-dev python3-pip
+        
+    - name: install python dependencies
+      run: pip install meson ninja pytest numpy
+    
+    - name: configure meson (minimal - tests only)
+      run: |
+        meson setup builddir \
+          -Dbuild_tests=enabled \
+          -Dbuild_pythonmodule=disabled \
+          -Dunity=on \
+          -Dunity_size=9999999
+    
+    - name: compile project
+      run: meson compile -C builddir/
+      timeout-minutes: 15
+    
+    - name: run cpp tests (small tests - meson test only)
+      run: meson test -C builddir/ --print-errorlogs --timeout-multiplier=2
+      timeout-minutes: 10
+        
+    - name: Upload error log on failure
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: copilot-ci-quick-error-log
+        path: builddir/meson-logs/meson-log.txt
+        retention-days: 7
+
+  # Comprehensive test job - following ci-linux.yml Ubuntu 22.04 pattern
+  comprehensive-test:
+    name: Comprehensive tests (Ubuntu 22.04)
+    runs-on: ubuntu-latest
+    # Only run this if quick-check passes
+    needs: quick-check
+    
+    steps:
+    - name: checkout main repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        lfs: false
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+        key: copilot-ci-ubuntu-22-04
+
+    - name: install system dependencies (Ubuntu 22.04 matrix job pattern)
+      run: |
+        sudo apt update
+        sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          build-essential ccache pkg-config cmake python3-pip \
+          libboost-all-dev libcurl4-openssl-dev libeigen3-dev libfmt-dev
+
+    - name: install python dependencies (from Ubuntu 22.04 matrix job)  
+      run: pip install meson meson-python ninja pytest numpy
+
+    - name: configure meson (matching ci-linux.yml Ubuntu 22.04 settings)
+      run: |
+        meson setup builddir \
+          -Dunity=on \
+          -Dunity_size=9999999 \
+          -Dpython.install_env=auto \
+          -Dprefix=/usr
+    
+    - name: compile project
+      run: meson compile -C builddir/
+      
+    - name: test (cpp) - big tests include meson test
+      run: meson test -C builddir/ --print-errorlogs
+      
+    - name: install project - big tests include meson install (compiles Python interface)
+      run: meson install -C builddir/
+      
+    - name: install pip requirements (matching ci-linux.yml Ubuntu 22.04)
+      run: pip install -r requirements.txt
+      
+    - name: test (pytest) - big tests run pytest in src directory
+      run: pytest -v
+        
+    - name: Upload error log on failure
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: copilot-ci-comprehensive-error-log
+        path: builddir/meson-logs/meson-log.txt
+        retention-days: 7
