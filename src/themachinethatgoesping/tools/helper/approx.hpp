@@ -3,6 +3,7 @@
 /* generated doc strings */
 #include ".docstrings/approx.doc.hpp"
 
+#include <iostream>
 #include <concepts>
 #include <complex>
 #include <ranges>
