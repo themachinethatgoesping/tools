@@ -113,7 +113,10 @@ if get_option('build_pythonmodule').enabled()
 endif
 
 #themachinethatgoesping meta info
-meta_dep = dependency('themachinethatgoesping_meta')
+meta_dep = dependency('themachinethatgoesping_meta', required: false)
+if not meta_dep.found()
+    meta_dep = subproject('meta').get_variable('meta_dep')
+endif
 
 #setup test_data_path
 test_data_path = '-D__PROJECT_TESTDATADIR__="' + meson.current_source_dir() + '/test_data"'
