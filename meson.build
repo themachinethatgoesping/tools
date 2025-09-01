@@ -31,12 +31,19 @@ tools_compile_args = ['-D_USE_MATH_DEFINES',
 #'-funroll-loops'
 ]
 
-if meson.get_compiler('cpp').get_id() == 'clang' or meson.get_compiler('cpp').get_id() == 'gcc'
+if meson.get_compiler('cpp').get_id() == 'gcc'
   # TODO: find a way to include these warnings again
   # these are generated in xtensor and I don't know how to deal with them ...
   tools_compile_args += '-Wno-array-bounds'
   tools_compile_args += '-Wno-maybe-uninitialized'
   tools_compile_args += '-Wno-stringop-overflow'
+elif meson.get_compiler('cpp').get_id() == 'clang'
+  # Clang-specific warning suppressions (different from GCC)
+  tools_compile_args += '-Wno-array-bounds'
+  # Suppress warnings from third-party headers like SSE2NEON
+  tools_compile_args += '-Wno-#warnings'
+  # Note: -Wno-maybe-uninitialized and -Wno-stringop-overflow are GCC-specific
+  # and not recognized by Clang, so we don't include them here
 endif
 
 # # boost
