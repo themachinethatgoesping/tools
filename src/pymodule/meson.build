@@ -39,12 +39,12 @@ py_tools = pymod.extension_module(
     # cpp_pch : 'pch/pch.hpp',
     override_options: [
         #'cpp_rtti=true',
+        'unity=off'
     ],
     cpp_args: ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
     install: true,
     subdir: projectnamespace,
-    install_tag: 'python-runtime',
-    override_options: ['unity=off']
+    install_tag: 'python-runtime'
 )
 
 
