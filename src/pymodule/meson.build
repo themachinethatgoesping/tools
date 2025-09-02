@@ -37,9 +37,6 @@ py_tools = pymod.extension_module(
     #link_with : [tools],
     link_language: 'cpp',
     # cpp_pch : 'pch/pch.hpp',
-    override_options: [
-        #'cpp_rtti=true',
-    ],
     cpp_args: ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
     install: true,
     subdir: projectnamespace,
