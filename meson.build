@@ -38,13 +38,29 @@ if meson.get_compiler('cpp').get_id() == 'gcc'
   tools_compile_args += '-Wno-maybe-uninitialized'
   tools_compile_args += '-Wno-stringop-overflow'
   tools_compile_args += '-Wno-stringop-overread'
+  # Suppress unused function warnings from third-party libraries like Catch2
+  tools_compile_args += '-Wno-unused-function'
+  
+  # Apply warning suppressions globally for all targets including subprojects
+  add_global_arguments('-Wno-array-bounds', language : 'cpp')
+  add_global_arguments('-Wno-maybe-uninitialized', language : 'cpp')
+  add_global_arguments('-Wno-stringop-overflow', language : 'cpp')
+  add_global_arguments('-Wno-stringop-overread', language : 'cpp')
+  add_global_arguments('-Wno-unused-function', language : 'cpp')
 elif meson.get_compiler('cpp').get_id() == 'clang'
   # Clang-specific warning suppressions (different from GCC)
   tools_compile_args += '-Wno-array-bounds'
   # Suppress warnings from third-party headers like SSE2NEON
   tools_compile_args += '-Wno-#warnings'
+  # Suppress unused function warnings from third-party libraries like Catch2
+  tools_compile_args += '-Wno-unused-function'
   # Note: -Wno-maybe-uninitialized and -Wno-stringop-overflow are GCC-specific
   # and not recognized by Clang, so we don't include them here
+  
+  # Apply warning suppressions globally for all targets including subprojects
+  add_global_arguments('-Wno-array-bounds', language : 'cpp')
+  add_global_arguments('-Wno-#warnings', language : 'cpp')
+  add_global_arguments('-Wno-unused-function', language : 'cpp')
 endif
 
 # # boost
