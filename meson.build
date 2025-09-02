@@ -37,6 +37,7 @@ if meson.get_compiler('cpp').get_id() == 'gcc'
   tools_compile_args += '-Wno-array-bounds'
   tools_compile_args += '-Wno-maybe-uninitialized'
   tools_compile_args += '-Wno-stringop-overflow'
+  tools_compile_args += '-Wno-stringop-overread'
 elif meson.get_compiler('cpp').get_id() == 'clang'
   # Clang-specific warning suppressions (different from GCC)
   tools_compile_args += '-Wno-array-bounds'
