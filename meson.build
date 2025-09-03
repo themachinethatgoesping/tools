@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.29.1',
+  version: '0.29.2',
   default_options: ['warning_level=2', 'buildtype=release', 'cpp_std=c++20'],
   meson_version: '>=1.8.1' #there is a problem with meson 1.8.0 so just use a higher version,
 )
@@ -41,12 +41,6 @@ if meson.get_compiler('cpp').get_id() == 'gcc'
   # Suppress unused function warnings from third-party libraries like Catch2
   tools_compile_args += '-Wno-unused-function'
   
-  # Apply warning suppressions globally for all targets including subprojects
-  add_global_arguments('-Wno-array-bounds', language : 'cpp')
-  add_global_arguments('-Wno-maybe-uninitialized', language : 'cpp')
-  add_global_arguments('-Wno-stringop-overflow', language : 'cpp')
-  add_global_arguments('-Wno-stringop-overread', language : 'cpp')
-  add_global_arguments('-Wno-unused-function', language : 'cpp')
 elif meson.get_compiler('cpp').get_id() == 'clang'
   # Clang-specific warning suppressions (different from GCC)
   tools_compile_args += '-Wno-array-bounds'
