@@ -50,11 +50,7 @@ elif meson.get_compiler('cpp').get_id() == 'clang'
   tools_compile_args += '-Wno-unused-function'
   # Note: -Wno-maybe-uninitialized and -Wno-stringop-overflow are GCC-specific
   # and not recognized by Clang, so we don't include them here
-  
-  # Apply warning suppressions globally for all targets including subprojects
-  add_global_arguments('-Wno-array-bounds', language : 'cpp')
-  add_global_arguments('-Wno-#warnings', language : 'cpp')
-  add_global_arguments('-Wno-unused-function', language : 'cpp')
+
 endif
 
 # # boost
