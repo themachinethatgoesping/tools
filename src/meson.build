@@ -16,7 +16,15 @@ endif
 
 # -- tests (catch2) --
 if get_option('build_tests').enabled()
-    catch2 = subproject('catch2', default_options: ['tests=false', 'install=false'])
+    # Suppress all warnings when building Catch2 subproject to avoid noise
+    # during compilation. We set warning_level=0 to disable warnings and
+    # werror=false to prevent warnings from being treated as errors.
+    catch2 = subproject('catch2', default_options: [
+        'tests=false', 
+        'install=false',
+        'warning_level=0',
+        'werror=false'
+    ])
     catch2 = catch2.get_variable('catch2_with_main_dep').as_system('system')
 
     subdir('tests')
