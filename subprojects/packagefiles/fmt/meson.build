@@ -5,11 +5,6 @@ fmt_interface_cpp_args = []
 fmt_private_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1']   # I don't know where this must go, so it is set for both
 fmt_interface_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1'] # I don't know where this must go, so it is set for both
 
-# Suppress fopen warnings on Windows (C4996: 'fopen': This function or variable may be unsafe)
-if host_machine.system() == 'windows'
-  fmt_private_cpp_args += ['-D_CRT_SECURE_NO_WARNINGS']
-endif
-
 if get_option('default_library') == 'shared'
   fmt_private_cpp_args += ['-DFMT_LIB_EXPORT']
   fmt_interface_cpp_args += ['-DFMT_SHARED']
