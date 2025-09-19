@@ -49,6 +49,9 @@ class BiVectorInterpolator
 
     bool operator==(const BiVectorInterpolator& other) const = default;
 
+    auto get_row_coordinates() const { return _row_coordinates; }
+    auto get_col_interpolators() const { return _col_interpolator_per_row; }
+
     /**
      * @brief Get the interpolator name (for debugging)
      *
@@ -62,9 +65,36 @@ class BiVectorInterpolator
                     const std::vector<CoordinateType>& column_coordinates,
                     const std::vector<ValueType>&      values)
     {
+        if (!_row_coordinates.empty() && row_coordinate <= _row_coordinates.back())
+            throw std::domain_error(fmt::format(
+                "ERROR[BiVectorInterpolator::append_row]: appended row coordinate {} must be > "
+                "than the last existing row coordinate {}!",
+                row_coordinate,
+                _row_coordinates.back()));
         _col_interpolator_per_row.push_back(t_interpolator(_extr_mode));
         _col_interpolator_per_row.back().set_data_XY(column_coordinates, values);
         _row_coordinates.push_back(row_coordinate);
+    }
+
+    void insert_row(CoordinateType                     row_coordinate,
+                    const std::vector<CoordinateType>& column_coordinates,
+                    const std::vector<ValueType>&      values)
+    {
+        auto it =
+            std::lower_bound(_row_coordinates.begin(), _row_coordinates.end(), row_coordinate);
+
+        if (it != _row_coordinates.end() && *it == row_coordinate)
+            throw std::domain_error(fmt::format(
+                "ERROR[BiVectorInterpolator::insert_row]: appended row coordinate {} already "
+                "exists in the interpolator!",
+                row_coordinate));
+
+        auto index = std::distance(_row_coordinates.begin(), it);
+
+        _col_interpolator_per_row.insert(_col_interpolator_per_row.begin() + index,
+                                         t_interpolator(_extr_mode));
+        _col_interpolator_per_row[index].set_data_XY(column_coordinates, values);
+        _row_coordinates.insert(_row_coordinates.begin() + index, row_coordinate);
     }
 
     // -----------------------

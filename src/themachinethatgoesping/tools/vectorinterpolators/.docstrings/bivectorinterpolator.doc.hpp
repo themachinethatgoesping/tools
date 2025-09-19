@@ -1,4 +1,4 @@
-//sourcehash: be558dc90ca8be5d9ab5b1c83ae62323bb6eba3704f971025de4cd10da379fc5
+//sourcehash: 266623cf6e92c07e422bf9c35cbfbf6b838e4a7b800834d46b927fb9f5caa9b2
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -72,6 +72,8 @@ Returns:
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_from_stream = R"doc()doc";
 
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_get_col_interpolators = R"doc()doc";
+
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_get_extrapolation_mode =
 R"doc(Get the currently set extrapolation mode
 
@@ -79,6 +81,8 @@ Returns:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_get_row_coordinates = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_info_string =
 R"doc(\ return an info string using the class __printer__ object \
@@ -91,6 +95,8 @@ Parameter ``superscript_exponents``:
 
 Returns:
     std::string \)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_insert_row = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_operator_call =
 R"doc(get interpolated y values for given x targets (vectorized call)

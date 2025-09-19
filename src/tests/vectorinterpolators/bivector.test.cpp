@@ -10,8 +10,8 @@
 #include <filesystem>
 #include <fstream>
 
-#include <themachinethatgoesping/tools/vectorinterpolators/bivectorinterpolator.hpp>
 #include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/bivectorinterpolator.hpp>
 
 // using namespace testing;
 using namespace std;
@@ -80,7 +80,7 @@ TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly",
     // initialize test data
     // std::vector<double> x = { -10, -5, 0, 6, 12 };
     // std::vector<double> y = { 1, 0, 1, 0, -1 };
-    std::vector<double> x     = { -10, -5, 0, 6 };
+    std::vector<double> x     = { -10, 0, 6 };
     std::vector<double> y     = { -20, -15, -4, 3, 10 };
     std::vector<double> y_val = { 2, 3, 2, 0, 12 };
     vectorinterpolators::BiVectorInterpolator<vectorinterpolators::AkimaInterpolator<double>>
@@ -89,6 +89,12 @@ TEST_CASE("BiVectorInterpolator: should perform basic interpolations correctly",
     // append some data
     for (unsigned int i = 0; i < x.size(); ++i)
         interpolator.append_row(x[i], y, y_val);
+
+    // appending a row with smaller or equal coordinate should throw
+    REQUIRE_THROWS_AS(interpolator.append_row(-5, y, y_val), std::domain_error);
+
+    // insert should work
+    interpolator.insert_row(-5, y, y_val);
 
     // test_interpolator_serialize
     test_interpolator_serialize(interpolator);

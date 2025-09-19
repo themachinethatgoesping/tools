@@ -13,10 +13,10 @@
 #include <vector>
 
 #include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
-#include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
-#include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
-#include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
 #include <themachinethatgoesping/tools/vectorinterpolators/bivectorinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
+#include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
 #include <themachinethatgoesping/tools_pybind/classhelper.hpp>
 
 #include "module.hpp"
@@ -39,6 +39,13 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
         .def(py::init<t_extr_mode>(),
              DOC_BiVectorInterpolator(BiVectorInterpolator),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
+        .def("get_row_coordinates",
+             &t_BiVectorInterpolator::get_row_coordinates,
+             DOC_BiVectorInterpolator(get_row_coordinates))
+        .def("get_col_interpolators",
+             &t_BiVectorInterpolator::get_col_interpolators,
+             DOC_BiVectorInterpolator(get_col_interpolators))
+        // interpolation function
         .def("__call__",
              &t_BiVectorInterpolator::operator(),
              DOC_BiVectorInterpolator(operator_call),
@@ -56,6 +63,12 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
         .def("append_row",
              &t_BiVectorInterpolator::append_row,
              DOC_BiVectorInterpolator(append_row),
+             py::arg("row_coordinate"),
+             py::arg("column_coordinates"),
+             py::arg("values"))
+        .def("insert_row",
+             &t_BiVectorInterpolator::insert_row,
+             DOC_BiVectorInterpolator(insert_row),
              py::arg("row_coordinate"),
              py::arg("column_coordinates"),
              py::arg("values"))
