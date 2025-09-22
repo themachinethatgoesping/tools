@@ -20,7 +20,6 @@ py_tools = pymod.extension_module(
     dependencies: [
         tools_dep,
         tools_nanobind_dep,
-        nanobind_dep,
         python3_dep],
     #link_with : [tools],
     link_language: 'cpp',
