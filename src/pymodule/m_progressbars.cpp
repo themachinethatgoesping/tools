@@ -22,7 +22,9 @@ namespace py = pybind11;
 using namespace themachinethatgoesping::tools::progressbars;
 
 // pybind trampoline class for virtual I_ProgressBar class
-class I_ProgressBar_PybindTrampoline : public I_ProgressBar
+class I_ProgressBar_PybindTrampoline
+    : public I_ProgressBar
+    , public pybind11::trampoline_self_life_support
 {
   public:
     /* Inherit the constructors */
@@ -105,7 +107,10 @@ class I_ProgressBar_PybindTrampoline : public I_ProgressBar
 };
 
 // pybind trampoline class for virtual I_ProgressBar class
-class I_ProgressBarTimed_PybindTrampoline : public I_ProgressBarTimed
+class I_ProgressBarTimed_PybindTrampoline
+    : public I_ProgressBarTimed
+    , public pybind11::trampoline_self_life_support
+
 {
   public:
     /* Inherit the constructors */
@@ -195,11 +200,11 @@ void init_m_progressbars(py::module& m)
                                           "passed to specific themachinethatgoesping functions");
 
     // // BuiltInProgressBars enum
-    // py::enum_<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
+    // py::native_enum<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
     //     .value("pbar_NoIndicator", t_BuiltInProgressBar::pbar_NoIndicator)
     //     .value("pbar_Indicator", t_BuiltInProgressBar::pbar_Indicator)
     //     .value("pbar_Classic", t_BuiltInProgressBar::pbar_Classic)
-    //     .export_values()
+    //     .finalize()
     //     // pybind enum helper
     //     __PYENUM_FROM_STRING__(t_BuiltInProgressBar)
     //     // end
@@ -208,7 +213,7 @@ void init_m_progressbars(py::module& m)
     // py::implicitly_convertible<std::string, t_BuiltInProgressBar>();
 
     // interface class
-    py::class_<I_ProgressBar, I_ProgressBar_PybindTrampoline>(
+    py::classh<I_ProgressBar, I_ProgressBar_PybindTrampoline>(
         m_progressbars,
         "I_ProgressBar",
         DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar))
@@ -253,7 +258,7 @@ void init_m_progressbars(py::module& m)
         ;
 
     // interface class
-    py::class_<I_ProgressBarTimed, I_ProgressBarTimed_PybindTrampoline, I_ProgressBar>(
+    py::classh<I_ProgressBarTimed, I_ProgressBarTimed_PybindTrampoline, I_ProgressBar>(
         m_progressbars,
         "I_ProgressBarTimed",
         DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed))
@@ -313,7 +318,7 @@ void init_m_progressbars(py::module& m)
         // end I_ProgressBar
         ;
 
-    py::class_<NoIndicator, I_ProgressBar>(
+    py::classh<NoIndicator, I_ProgressBar>(
         m_progressbars,
         "NoIndicator",
         DOC(themachinethatgoesping, tools, progressbars, NoIndicator))
@@ -322,7 +327,7 @@ void init_m_progressbars(py::module& m)
         // end ProgressIndicator
         ;
 
-    py::class_<ProgressIndicator, I_ProgressBar>(
+    py::classh<ProgressIndicator, I_ProgressBar>(
         m_progressbars,
         "ProgressIndicator",
         DOC(themachinethatgoesping, tools, progressbars, ProgressIndicator))
@@ -331,7 +336,7 @@ void init_m_progressbars(py::module& m)
         // end ProgressIndicator
         ;
 
-    py::class_<ConsoleProgressBar, I_ProgressBar>(
+    py::classh<ConsoleProgressBar, I_ProgressBar>(
         m_progressbars,
         "ConsoleProgressBar",
         DOC(themachinethatgoesping, tools, progressbars, ConsoleProgressBar))
@@ -344,7 +349,7 @@ void init_m_progressbars(py::module& m)
         // end ProgressIndicator
         ;
 
-    py::class_<ProgressTqdm, I_ProgressBar>(
+    py::classh<ProgressTqdm, I_ProgressBar>(
         m_progressbars,
         "ProgressTqdm",
         DOC(themachinethatgoesping, tools, progressbars, ProgressTqdm))

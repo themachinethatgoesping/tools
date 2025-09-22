@@ -23,7 +23,7 @@ void init_linearinterpolator(pybind11::module& m, const std::string& name)
 {
     using t_LinearInterpolator = LinearInterpolator<XType, YType>;
 
-    py::class_<t_LinearInterpolator>(
+    py::classh<t_LinearInterpolator>(
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, LinearInterpolator))

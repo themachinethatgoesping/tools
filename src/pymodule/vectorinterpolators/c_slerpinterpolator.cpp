@@ -23,7 +23,7 @@ void init_slerpinterpolator(pybind11::module& m, const std::string& name)
 {
     using t_SlerpInterpolator = SlerpInterpolator<XType, YType>;
 
-    py::class_<t_SlerpInterpolator>(
+    py::classh<t_SlerpInterpolator>(
         m, name.c_str(), DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator))
         .def(py::init<const std::vector<XType>&,
                       const std::vector<YType>&,

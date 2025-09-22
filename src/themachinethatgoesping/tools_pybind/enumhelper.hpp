@@ -27,7 +27,7 @@ namespace pybind_helper {
  * @brief Convert a string to an enum using magic_enum
  *
  * @tparam T_ENUM enum type
- * @tparam T_PYBIND_ENUM pybind11::enum_<T_ENUM>
+ * @tparam T_PYBIND_ENUM pybind11::native_enum<T_ENUM>
  * @param self enum class that is to be changes
  * @param str string that is to be converted
  */

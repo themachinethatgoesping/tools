@@ -51,6 +51,12 @@ class BiVectorInterpolator
 
     auto get_row_coordinates() const { return _row_coordinates; }
     auto get_col_interpolators() const { return _col_interpolator_per_row; }
+    void clear()
+    {
+        _col_interpolator_per_row.clear();
+        _row_coordinates.clear();
+    }
+    size_t size() const { return _row_coordinates.size(); }
 
     /**
      * @brief Get the interpolator name (for debugging)

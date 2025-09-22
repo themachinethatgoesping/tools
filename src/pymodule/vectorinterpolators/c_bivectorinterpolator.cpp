@@ -32,13 +32,15 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
 {
     using t_BiVectorInterpolator = BiVectorInterpolator<t_interpolator>;
 
-    py::class_<t_BiVectorInterpolator>(
+    py::classh<t_BiVectorInterpolator>(
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, BiVectorInterpolator))
         .def(py::init<t_extr_mode>(),
              DOC_BiVectorInterpolator(BiVectorInterpolator),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
+        .def("clear", &t_BiVectorInterpolator::clear, DOC_BiVectorInterpolator(clear))
+        .def("size", &t_BiVectorInterpolator::size, DOC_BiVectorInterpolator(size))
         .def("get_row_coordinates",
              &t_BiVectorInterpolator::get_row_coordinates,
              DOC_BiVectorInterpolator(get_row_coordinates))

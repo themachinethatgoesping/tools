@@ -23,7 +23,7 @@ void init_nearestinterpolator(pybind11::module& m, const std::string& name)
 {
     using t_NearestInterpolator = NearestInterpolator<XType, YType>;
 
-    py::class_<t_NearestInterpolator>(
+    py::classh<t_NearestInterpolator>(
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, NearestInterpolator))

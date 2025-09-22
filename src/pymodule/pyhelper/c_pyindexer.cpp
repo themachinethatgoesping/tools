@@ -18,7 +18,7 @@ using namespace themachinethatgoesping::tools::pyhelper;
 
 void init_c_pyindexer(pybind11::module& m)
 {
-    py::class_<PyIndexer::Slice>(
+    py::classh<PyIndexer::Slice>(
         m, "PyIndexerSlice", DOC(themachinethatgoesping, tools, pyhelper, PyIndexer, Slice))
         .def(py::init<int64_t, int64_t, int64_t>(),
              DOC(themachinethatgoesping, tools, pyhelper, PyIndexer, Slice, Slice_2),

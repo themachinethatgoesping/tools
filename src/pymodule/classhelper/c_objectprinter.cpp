@@ -20,7 +20,7 @@ using namespace themachinethatgoesping::tools::classhelper;
 void init_c_objectprinter(pybind11::module& m)
 {
 
-    py::class_<ObjectPrinter>(
+    py::classh<ObjectPrinter>(
         m, "ObjectPrinter", DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter))
         .def(py::init<const std::string&, unsigned int, bool>(),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),

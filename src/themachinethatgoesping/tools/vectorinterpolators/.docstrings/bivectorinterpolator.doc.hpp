@@ -1,4 +1,4 @@
-//sourcehash: 266623cf6e92c07e422bf9c35cbfbf6b838e4a7b800834d46b927fb9f5caa9b2
+//sourcehash: d688fd583f2a6ca072cf34e91e3af721c64de8088a8d60ff7a426b2417b6027f
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -54,6 +54,8 @@ R"doc(Get the interpolator name (for debugging)
 
 Returns:
     std::string_view)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_clear = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_col_interpolator_per_row = R"doc()doc";
 
@@ -140,6 +142,8 @@ Parameter ``extrapolation_mode``:
     :py:class:`t_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object (enumerator) that describes the extrapolation mode)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_size = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_to_binary =
 R"doc(convert object to vector of bytes \ \

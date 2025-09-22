@@ -1,16 +1,16 @@
 
+
 ; [wrap-file]
-; directory = xtensor-python-0.27.0
-; source_url = https://github.com/xtensor-stack/xtensor-python/archive/refs/tags/0.27.0.tar.gz
-; source_filename = xtensor-python-0.27.0.tar.gz
-; source_hash = 40ee01bd213aeb7bf64f6d8a3257f4fa98ed31c401596c6c7b3b115f61a473b9
+; directory = xtensor-python-0.28.0
+; source_url = https://github.com/xtensor-stack/xtensor-python/archive/refs/tags/0.28.0.tar.gz
+; source_filename = xtensor-python-0.28.0.tar.gz
+; source_hash = 3be09f2bc284e5a468937ad411a9976f9ab7ea5d0df40f5b1964a3694e7ee931
 ; patch_directory = xtensor-python
 
-[wrap-file]
-directory = xtensor-python-0.28.0
-source_url = https://github.com/xtensor-stack/xtensor-python/archive/refs/tags/0.28.0.tar.gz
-source_filename = xtensor-python-0.28.0.tar.gz
-source_hash = 3be09f2bc284e5a468937ad411a9976f9ab7ea5d0df40f5b1964a3694e7ee931
+[wrap-git]
+url = https://github.com/xtensor-stack/xtensor-python.git
+revision = master
+directory = xtensor-git
 patch_directory = xtensor-python
 
 

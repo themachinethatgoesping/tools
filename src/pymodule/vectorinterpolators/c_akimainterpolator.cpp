@@ -23,7 +23,7 @@ void init_akimainterpolator(pybind11::module& m, const std::string& name)
 {
     using t_AkimaInterpolator = AkimaInterpolator<XYType>;
 
-    py::class_<t_AkimaInterpolator>(
+    py::classh<t_AkimaInterpolator>(
         m, name.c_str(), DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator))
         .def(py::init<const std::vector<XYType>&, const std::vector<XYType>&, t_extr_mode>(),
              DOC(themachinethatgoesping,

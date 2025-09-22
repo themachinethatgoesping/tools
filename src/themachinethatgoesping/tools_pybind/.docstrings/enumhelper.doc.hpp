@@ -1,4 +1,4 @@
-//sourcehash: de525087cb376b93b08534b131d2017334b4a2dbe8185b31c0e3ac4a72becc29
+//sourcehash: b5d529bb1e02a41ee48a952c5a79a6304d02e94dae165319961bfc7cb935508a
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -45,7 +45,7 @@ Template parameter ``T_ENUM``:
     enum type
 
 Template parameter ``T_PYBIND_ENUM``:
-    pybind11::enum_<T_ENUM>
+    pybind11::native_enum<T_ENUM>
 
 Parameter ``self``:
     enum class that is to be changes
