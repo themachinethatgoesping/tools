@@ -11,6 +11,8 @@ sources = [
   'm_progressbars.cpp',
   'm_timeconv.cpp',
   'module.cpp',
+  'classhelper/c_objectprinter.cpp',
+  'classhelper/module.cpp',
 ]
 
 # define python module

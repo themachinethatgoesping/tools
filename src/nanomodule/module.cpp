@@ -8,6 +8,7 @@
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
 #include "m_timeconv.hpp"
+#include "classhelper/module.hpp"
 
 namespace nb = nanobind;
 
@@ -19,4 +20,6 @@ NB_MODULE(MODULE_NAME, m)
     init_m_helper(m);
     init_m_timeconv(m);
     init_m_progressbars(m);
+
+    init_m_classhelper(m);
 }
