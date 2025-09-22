@@ -20,6 +20,9 @@
 #include <themachinethatgoesping/tools/progressbars/progressindicator.hpp>
 #include <themachinethatgoesping/tools/progressbars/progresstqdm_nano.hpp>
 
+// Disable automatic type caster for ProgressTqdmNano since it inherits from nanobind::object
+NB_MAKE_OPAQUE(themachinethatgoesping::tools::progressbars::ProgressTqdmNano);
+
 namespace nb = nanobind;
 using namespace themachinethatgoesping::tools::progressbars;
 
@@ -266,7 +269,7 @@ void init_m_progressbars(nb::module_& m)
 
     nb::class_<ProgressTqdmNano, I_ProgressBar>(
         m_progressbars,
-        "ProgressTqdmNano",
+        "ProgressTqdm",
         DOC(themachinethatgoesping, tools, progressbars, ProgressTqdmNano))
         .def(nb::init<nanobind::object>(),
              DOC(themachinethatgoesping, tools, progressbars, ProgressTqdmNano, ProgressTqdmNano),
