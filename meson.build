@@ -100,7 +100,7 @@ if get_option('build_pythonmodule').enabled()
   pymod = import('python').find_installation(get_option('python_path'), pure: false)
 
   python3_dep = pymod.dependency()
-  pybind11_dep = dependency('pybind11')
+  pybind11_dep = dependency('pybind11',  version : '>=3.0.1')
   #nanobind_dep = dependency('nanobind', static: true) 
   xtensor_python_dep = dependency('xtensor-python', static: true).as_system('system')
 
