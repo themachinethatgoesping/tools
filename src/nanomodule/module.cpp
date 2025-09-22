@@ -9,6 +9,7 @@
 #include "m_progressbars.hpp"
 #include "m_timeconv.hpp"
 #include "classhelper/module.hpp"
+#include "pyhelper/module.hpp"
 
 namespace nb = nanobind;
 
@@ -22,4 +23,5 @@ NB_MODULE(MODULE_NAME, m)
     init_m_progressbars(m);
 
     init_m_classhelper(m);
+    init_m_pyhelper(m);
 }

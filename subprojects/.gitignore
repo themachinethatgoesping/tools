@@ -10,6 +10,10 @@ xxhash*/*
 xxhash_cpp-*
 boost_*
 
+nanobind*/*
+robin-map*/*
+xtensor*/*
+xtensor-git*/*
 pybind11*/*
 eigen*/*
 fast_float*/*
