@@ -101,7 +101,7 @@ if get_option('build_pythonmodule').enabled()
 
   python3_dep = pymod.dependency()
   pybind11_dep = dependency('pybind11',  version : '>=3.0.1')
-  #nanobind_dep = dependency('nanobind', static: true) 
+  nanobind_dep = dependency('nanobind', static: true, version: '>=2.9.2') 
   xtensor_python_dep = dependency('xtensor-python', static: true).as_system('system')
 
   # -- numpy (necessary for xtensor_python) --

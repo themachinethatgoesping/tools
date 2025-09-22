@@ -13,4 +13,5 @@ subdir('tools')
 if get_option('build_pythonmodule').enabled()
     #put module folders here
     subdir('tools_pybind')
+    subdir('tools_nanobind')
 endif

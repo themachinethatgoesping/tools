@@ -3,9 +3,6 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-
-
-
 #include "m_timeconv.hpp"
 // automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
@@ -21,8 +18,8 @@
 
 #include "../themachinethatgoesping/tools_pybind/datetime.hpp"
 
-namespace py        = pybind11;
-namespace pingtools = themachinethatgoesping::tools;
+namespace py          = pybind11;
+namespace pingtools   = themachinethatgoesping::tools;
 namespace pypingtools = pingtools::pybind_helper;
 
 void init_m_timeconv(py::module& m)
@@ -71,4 +68,5 @@ void init_m_timeconv(py::module& m)
                    &pypingtools::datetime_to_unixtime,
                    DOC(themachinethatgoesping, tools, pybind_helper, datetime_to_unixtime),
                    py::arg("datetime"));
+
 }
