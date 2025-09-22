@@ -5,6 +5,8 @@
 
 #include <nanobind/nanobind.h>
 
+#include "m_helper.hpp"
+#include "m_progressbars.hpp"
 #include "m_timeconv.hpp"
 
 namespace nb = nanobind;
@@ -12,7 +14,9 @@ namespace nb = nanobind;
 NB_MODULE(MODULE_NAME, m)
 {
     m.attr("__version__") = MODULE_VERSION;
-    m.doc() = "Small python tool functions for themachinethatgoesping";
+    m.doc()               = "Small python tool functions for themachinethatgoesping";
 
+    init_m_helper(m);
     init_m_timeconv(m);
+    init_m_progressbars(m);
 }

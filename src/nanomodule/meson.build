@@ -7,6 +7,8 @@ module_name = 'tools_nanopy'
         
 # -- sources
 sources = [
+  'm_helper.cpp',
+  'm_progressbars.cpp',
   'm_timeconv.cpp',
   'module.cpp',
 ]
