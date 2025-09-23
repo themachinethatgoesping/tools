@@ -10,7 +10,6 @@
 #include <vector>
 
 #include <themachinethatgoesping/tools/vectorinterpolators/i_interpolator.hpp>
-#include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
 
 #include "module.hpp"
 
@@ -19,6 +18,10 @@ using namespace themachinethatgoesping::tools::vectorinterpolators;
 using namespace themachinethatgoesping;
 
 #include <nanobind/nanobind.h>
+#include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
+
+// Make the enum opaque so we can bind it as a class instead of using the built-in enum type caster
+NB_MAKE_OPAQUE(themachinethatgoesping::tools::vectorinterpolators::t_extr_mode);
 
 // -- submodule declarations --
 void init_c_nearestinterpolator(nanobind::module_& m);  // c_nearestinterpolator.cpp
@@ -47,6 +50,8 @@ void init_m_vectorinterpolators(nanobind::module_& m)
         // end
         ;
     tools::nanobind_helper::add_string_to_enum_conversion<t_extr_mode>(pyenum_extr_mode);
+    // tools::nanobind_helper::make_enum_string_class<t_extr_mode>(
+    //     m_vectorinterpolators, "t_extr_mode");
 
     // interpolator classes
     init_c_nearestinterpolator(m_vectorinterpolators);

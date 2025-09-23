@@ -8,7 +8,6 @@ headerdir = projectnamespace + '/tools_nanobind'
 
 # -- source files --
 sources = [
-  'datetime.cpp',
 ]
 
 headers = [
@@ -22,35 +21,35 @@ headers = [
 
 # -- targets --
 # for now force static linking on windows
-if build_machine.system() != 'linux'
-  tools_nanobind_lib = static_library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          nanobind_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-else  
-  tools_nanobind_lib = library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          nanobind_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-endif
+# if build_machine.system() != 'linux'
+#   tools_nanobind_lib = static_library(libname,sources,
+#                         dependencies : [
+#                           tools_dep,
+#                           nanobind_dep,
+#                           python3_dep,
+#                           xtensor_python_dep,
+#                           numpy_dep],
+#                         override_options: [
+#                           'b_lundef=false'
+#                       ],
+#                         # cpp_pch : 'pch/pch.hpp',
+#                         install : true
+#                         )
+# else  
+#   tools_nanobind_lib = library(libname,sources,
+#                         dependencies : [
+#                           tools_dep,
+#                           nanobind_dep,
+#                           python3_dep,
+#                           xtensor_python_dep,
+#                           numpy_dep],
+#                         override_options: [
+#                           'b_lundef=false'
+#                       ],
+#                         # cpp_pch : 'pch/pch.hpp',
+#                         install : true
+#                         )
+# endif
                       
 
 # -- internal dependency --
@@ -62,7 +61,7 @@ tools_nanobind_dep = declare_dependency(
                 xtensor_python_dep,
                 numpy_dep
   ],
-  link_with : [tools_nanobind_lib],
+  #link_with : [tools_nanobind_lib],
   compile_args : ['-D_USE_MATH_DEFINES'],
   include_directories : ['../../']
   )

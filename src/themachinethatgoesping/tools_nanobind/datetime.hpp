@@ -14,8 +14,12 @@
 /* generated doc strings */
 #include ".docstrings/datetime.doc.hpp"
 
-// Only need nanobind type declarations for object/handle
+#include <fmt/core.h>
 #include <nanobind/nanobind.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/string_view.h>
+#include <nanobind/stl/chrono.h>
+#include <themachinethatgoesping/tools/timeconv.hpp>
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -28,9 +32,18 @@ namespace nanobind_helper {
  * @param timezone_offset_hours The timezone offset in hours (default: 0).
  * @return The Python datetime object representing the given timestamp.
  */
-__attribute__((visibility("default"))) nanobind::object unixtime_to_datetime(
-    double timestamp,
-    double timezone_offset_hours = 0.);
+inline nanobind::object unixtime_to_datetime(double timestamp, double timezone_offset_hours = 0.)
+{
+    nanobind::module_ datetimeModule = nanobind::module_::import_("datetime");
+    nanobind::object datetimeClass  = datetimeModule.attr("datetime");
+    nanobind::object timezoneClass  = datetimeModule.attr("timezone");
+    nanobind::object timedeltaClass = datetimeModule.attr("timedelta");
+
+    nanobind::object timezoneObject = timezoneClass(timedeltaClass(nanobind::arg("hours") = timezone_offset_hours));
+    nanobind::object datetimeObject = datetimeClass.attr("fromtimestamp")(timestamp, timezoneObject);
+
+    return datetimeObject;
+}
 
 /**
  * @brief Converts a Python datetime object to a Unix timestamp.
@@ -38,17 +51,22 @@ __attribute__((visibility("default"))) nanobind::object unixtime_to_datetime(
  * @param datetimeObject The Python datetime object to convert.
  * @return The Unix timestamp representing the given datetime.
  */
-__attribute__((visibility("default"))) double datetime_to_unixtime(
-    const nanobind::handle& datetimeObject);
+inline double datetime_to_unixtime(const nanobind::handle& datetimeObject)
+{
+    return nanobind::cast<double>(datetimeObject.attr("timestamp")());
+}
 
 /**
  * @brief Converts a date string to a Python datetime object using the specified format.
  *
  */
-__attribute__((visibility("default"))) nanobind::object datestring_to_datetime(
+inline nanobind::object datestring_to_datetime(
     std::string_view datestring,
-    const std::string& format                = "%z__%d-%m-%Y__%H:%M:%S",
-    double           timezone_offset_hours = 0.);
+    const std::string& format = "%z__%d-%m-%Y__%H:%M:%S",
+    double timezone_offset_hours = 0.)
+{
+    return unixtime_to_datetime(timeconv::datestring_to_unixtime(datestring, format), timezone_offset_hours);
+}
 
 /**
  * @brief Converts a Python datetime object to a formatted date string.
@@ -58,10 +76,15 @@ __attribute__((visibility("default"))) nanobind::object datestring_to_datetime(
  * @param format The format string to use for conversion.
  * @return The formatted date string.
  */
-__attribute__((visibility("default"))) std::string datetime_to_datestring(
+inline std::string datetime_to_datestring(
     const nanobind::handle& datetimeObject,
     unsigned int fractionalSecondsDigits = 0,
-    const std::string& format = "%z__%d-%m-%Y__%H:%M:%S");
+    const std::string& format = "%z__%d-%m-%Y__%H:%M:%S")
+{
+    // Convert the datetime object to unixtime first, then use timeconv to format it
+    double unixtime = datetime_to_unixtime(datetimeObject);
+    return timeconv::unixtime_to_datestring(unixtime, fractionalSecondsDigits, format);
+}
 
 } // namespace nanobind_helper
 } // namespace tools

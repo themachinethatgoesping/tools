@@ -16,6 +16,7 @@
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
 
 #include "module.hpp"
+#include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
 
 namespace nb = nanobind;
 using namespace themachinethatgoesping::tools::vectorinterpolators;

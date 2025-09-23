@@ -1,4 +1,4 @@
-//sourcehash: 8c10073d510871587504605b1e1f89d70b55deb3995ce9c945ea36cc0ebb16b3
+//sourcehash: 7b882cdf0508e030f3a96b10dcbe870e88d3a96f5932192023ce00241218041d
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,20 +38,9 @@
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_nanobind_helper_add_string_to_enum_conversion =
-R"doc(Convert a string to an enum using magic_enum
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_from_string = R"doc()doc";
 
-Template parameter ``T_ENUM``:
-    enum type
-
-Template parameter ``T_NANOBIND_ENUM``:
-    nanobind::native_enum<T_ENUM>
-
-Parameter ``self``:
-    enum class that is to be changes
-
-Parameter ``str``:
-    string that is to be converted)doc";
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_make_enum_string_class = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
