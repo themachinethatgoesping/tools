@@ -20,8 +20,11 @@
 #include <themachinethatgoesping/tools/progressbars/progressindicator.hpp>
 #include <themachinethatgoesping/tools/progressbars/progresstqdm_nano.hpp>
 
+// Only include nanobind-specific code if ProgressTqdmNano is available
+#ifdef NANOBIND_AVAILABLE
 // Disable automatic type caster for ProgressTqdmNano since it inherits from nanobind::object
 NB_MAKE_OPAQUE(themachinethatgoesping::tools::progressbars::ProgressTqdmNano);
+#endif
 
 namespace nb = nanobind;
 using namespace themachinethatgoesping::tools::progressbars;
@@ -267,6 +270,7 @@ void init_m_progressbars(nb::module_& m)
         // end ProgressIndicator
         ;
 
+#ifdef NANOBIND_AVAILABLE
     nb::class_<ProgressTqdmNano, I_ProgressBar>(
         m_progressbars,
         "ProgressTqdm",
@@ -280,6 +284,7 @@ void init_m_progressbars(nb::module_& m)
     // py::implicitly_convertible<ProgressTqdmNano,I_ProgressBar>();
     nb::implicitly_convertible<nanobind::object, ProgressTqdmNano>();
     // py::implicitly_convertible<ProgressTqdmNano,py::object&>();
+#endif
 
     m_progressbars.def(
         "test_loop",

@@ -4,6 +4,15 @@
 
 #pragma once
 
+// Check if nanobind is available
+#ifdef __has_include
+  #if __has_include(<nanobind/nanobind.h>)
+    #define NANOBIND_AVAILABLE 1
+  #endif
+#endif
+
+#ifdef NANOBIND_AVAILABLE
+
 /* generated doc strings */
 #include ".docstrings/progresstqdm_nano.doc.hpp"
 
@@ -99,6 +108,8 @@ class ProgressTqdmNano
     }
 };
 
-}
-}
-}
+} // namespace progressbars
+} // namespace tools
+} // namespace themachinethatgoesping
+
+#endif // NANOBIND_AVAILABLE
