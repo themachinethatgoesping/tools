@@ -21,36 +21,22 @@ headers = [
 ]
 
 # -- targets --
-# for now force static linking on windows
-if build_machine.system() != 'linux'
-  tools_pybind_lib = static_library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          pybind11_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-else  
-  tools_pybind_lib = library(libname,sources,
-                        dependencies : [
-                          tools_dep,
-                          pybind11_dep,
-                          python3_dep,
-                          xtensor_python_dep,
-                          numpy_dep],
-                        override_options: [
-                          'b_lundef=false'
-                      ],
-                        # cpp_pch : 'pch/pch.hpp',
-                        install : true
-                        )
-endif
+# Build as shared library when building python modules to avoid duplicate symbols
+# from pybind11 in the static lib and the extension module
+tools_pybind_lib = library(libname,sources,
+                      dependencies : [
+                        tools_dep,
+                        pybind11_dep,
+                        python3_dep,
+                        xtensor_python_dep,
+                        numpy_dep],
+                      override_options: [
+                        'b_lundef=false',
+                        'unity=off'  # Disable unity builds for pybind11
+                    ],
+                      # cpp_pch : 'pch/pch.hpp',
+                      install : true
+                      )
                       
 
 # -- internal dependency --
