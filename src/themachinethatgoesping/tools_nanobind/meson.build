@@ -26,7 +26,7 @@ if build_machine.system() != 'linux'
   tools_nanobind_lib = static_library(libname,sources,
                         dependencies : [
                           tools_dep,
-                          nanobind_dep,
+                          nanobind_dep.partial_dependency(compile_args: true, includes: true),
                           python3_dep,
                           xtensor_python_dep,
                           numpy_dep],
@@ -40,7 +40,7 @@ else
   tools_nanobind_lib = library(libname,sources,
                         dependencies : [
                           tools_dep,
-                          nanobind_dep,
+                          nanobind_dep.partial_dependency(compile_args: true, includes: true),
                           python3_dep,
                           xtensor_python_dep,
                           numpy_dep],
@@ -57,7 +57,7 @@ endif
 tools_nanobind_dep = declare_dependency(
   dependencies : [
                 tools_dep,
-                nanobind_dep,
+                nanobind_dep.partial_dependency(compile_args: true, includes: true),
                 python3_dep,
                 xtensor_python_dep,
                 numpy_dep
