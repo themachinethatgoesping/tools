@@ -13,6 +13,14 @@ sources = [
   'module.cpp',
   'classhelper/c_objectprinter.cpp',
   'classhelper/module.cpp',
+  'vectorinterpolators/c_akimainterpolator.cpp',
+  'vectorinterpolators/c_bivectorinterpolator.cpp',
+  'vectorinterpolators/c_linearinterpolator.cpp',
+  'vectorinterpolators/c_nearestinterpolator.cpp',
+  'vectorinterpolators/c_slerpinterpolator.cpp',
+  'vectorinterpolators/module.cpp',
+  'pyhelper/c_pyindexer.cpp',
+  'pyhelper/module.cpp',
 ]
 
 # define python module

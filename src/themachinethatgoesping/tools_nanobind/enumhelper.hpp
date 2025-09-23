@@ -36,7 +36,7 @@ void add_string_to_enum_conversion(T_NANOBIND_ENUM& t_enum)
 {
     namespace nb = nanobind;
     
-    t_enum.def(nb::init<const std::string&>([](const std::string& str) {
+    t_enum.def("__init__", [](T_ENUM* self, const std::string& str) {
                    auto enum_value = magic_enum::enum_cast<T_ENUM>(str);
                    if (!enum_value.has_value())
                    {
@@ -54,18 +54,19 @@ void add_string_to_enum_conversion(T_NANOBIND_ENUM& t_enum)
                        }
 
                        nb::print(fmt::format(
-                           "ERROR: unknown value option '{}'! Try: [{}]", str, enum_info));
+                           "ERROR: unknown value option '{}'! Try: [{}]", str, enum_info).c_str());
 
                        throw std::invalid_argument(fmt::format(
                            "ERROR: unknown value option '{}'! Try: [{}]", str, enum_info));
                    }
 
-                   return enum_value.value();
-               }),
+                   new (self) T_ENUM(enum_value.value());
+               },
                "Construct this enum type from string",
                nb::arg("str"));
 
     t_enum.def("str", [](const T_ENUM& self) { return std::string(magic_enum::enum_name(self)); });
+    //t_enum.def("__str__", [](const T_ENUM& self) { return std::string(magic_enum::enum_name(self)); });
 
     nb::implicitly_convertible<std::string, T_ENUM>();
 }

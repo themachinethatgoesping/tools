@@ -6,7 +6,6 @@
 
 
 #include <nanobind/nanobind.h>
-#include <nanobind/stl/limits.h>
 
 #include "../../themachinethatgoesping/tools/pyhelper/pyindexer.hpp"
 #include "../../themachinethatgoesping/tools_nanobind/classhelper.hpp"
@@ -25,7 +24,7 @@ void init_c_pyindexer(nanobind::module_& m)
              nb::arg("start") = std::numeric_limits<int64_t>::max(),
              nb::arg("stop")  = std::numeric_limits<int64_t>::max(),
              nb::arg("step")  = 1)
-        .def(nb::init([](const nb::object& pyslice) {
+        .def("__init__", [](PyIndexer::Slice* self, const nb::object& pyslice) {
                  auto pystart = pyslice.attr("start");
                  auto pystop  = pyslice.attr("stop");
                  auto pystep  = pyslice.attr("step");
@@ -40,8 +39,8 @@ void init_c_pyindexer(nanobind::module_& m)
                                   ? std::numeric_limits<int64_t>::max()
                                   : nb::cast<int64_t>(pystep);
 
-                 return PyIndexer::Slice(start, stop, step);
-             }),
+                 new (self) PyIndexer::Slice(start, stop, step);
+             },
              DOC(themachinethatgoesping, tools, pyhelper, PyIndexer, Slice, Slice_2),
              nb::arg("slice"))
         .def_rw("start",

@@ -13,7 +13,7 @@ boost_*
 nanobind*/*
 robin-map*/*
 xtensor*/*
-xtensor-git*/*
+xtensor-git*
 pybind11*/*
 eigen*/*
 fast_float*/*

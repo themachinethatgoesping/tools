@@ -10,6 +10,7 @@
 #include "m_timeconv.hpp"
 #include "classhelper/module.hpp"
 #include "pyhelper/module.hpp"
+#include "vectorinterpolators/module.hpp"
 
 namespace nb = nanobind;
 
@@ -24,4 +25,5 @@ NB_MODULE(MODULE_NAME, m)
 
     init_m_classhelper(m);
     init_m_pyhelper(m);
+    init_m_vectorinterpolators(m);
 }
