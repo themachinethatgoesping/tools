@@ -125,6 +125,6 @@ void init_c_nearestinterpolator(nanobind::module_& m)
     init_nearestinterpolator<float, double>(m, "NearestInterpolatorFD");
     init_nearestinterpolator<double, int64_t>(m, "NearestInterpolatorDI");
     init_nearestinterpolator<float, int64_t>(m, "NearestInterpolatorFI");
-    // init_nearestinterpolator<double, nb::object>(m, "NearestInterpolatorDO");
-    // init_nearestinterpolator<float, nb::object>(m, "NearestInterpolatorFO");
+    init_nearestinterpolator<double, nb::object>(m, "NearestInterpolatorDO");
+    init_nearestinterpolator<float, nb::object>(m, "NearestInterpolatorFO");
 }

@@ -82,8 +82,22 @@ class NearestInterpolator : public I_PairInterpolator<XType, YType>
         }
         else
         {
-            if (this->_Y != rhs._Y)
-                return false;
+            // Handle nb::object comparison using nanobind's .equal() method
+            if constexpr (requires(YType a, YType b) { a.equal(b); })
+            {
+                if (this->_Y.size() != rhs._Y.size())
+                    return false;
+                for (size_t i = 0; i < this->_Y.size(); ++i)
+                {
+                    if (!this->_Y[i].equal(rhs._Y[i]))
+                        return false;
+                }
+            }
+            else
+            {
+                if (this->_Y != rhs._Y)
+                    return false;
+            }
         }
 
         return true;
