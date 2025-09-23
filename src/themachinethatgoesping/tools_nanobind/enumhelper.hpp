@@ -184,3 +184,40 @@ void make_enum_string_class(nanobind::module_& m, const std::string& name)
 }
 }
 }
+
+
+NAMESPACE_BEGIN(NB_NAMESPACE)
+NAMESPACE_BEGIN(detail)
+template<typename EnumType>
+struct type_caster<EnumType, std::enable_if_t<std::is_enum_v<EnumType>>>
+{
+    NB_TYPE_CASTER(EnumType, const_name<EnumType>())
+
+    bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
+    {
+        // First try normal enum conversion (for actual enum values)
+        if (isinstance<EnumType>(src))
+        {
+            value = cast<EnumType>(src);
+            return true;
+        }
+
+        // Then try string conversion
+        if (isinstance<str>(src))
+        {
+            value = themachinethatgoesping::tools::nanobind_helper::from_string<EnumType>(cast<std::string>(src));
+            return true;
+        }
+
+        return false;
+    }
+
+    static handle from_cpp(EnumType src, rv_policy policy, cleanup_list* cleanup) noexcept
+    {
+        return cast(src, policy, cleanup);
+    }
+};
+
+
+NAMESPACE_END(detail)
+NAMESPACE_END(NB_NAMESPACE)
