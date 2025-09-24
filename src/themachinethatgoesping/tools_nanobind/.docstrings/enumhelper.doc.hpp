@@ -1,4 +1,4 @@
-//sourcehash: 6f11e586dd7ba429fec630559018e36f6bb4de1090b1bf941f49e3efe13c73d7
+//sourcehash: 2efef74dccb795bbb23a51dccc83256eb04b8662cd5d6b0aea0700285b38a6ba
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,8 +37,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
-
-static const char *__doc_themachinethatgoesping_tools_nanobind_helper_from_string = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_nanobind_helper_make_option_class = R"doc()doc";
 

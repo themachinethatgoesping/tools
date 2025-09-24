@@ -1,4 +1,4 @@
-//sourcehash: b5d529bb1e02a41ee48a952c5a79a6304d02e94dae165319961bfc7cb935508a
+//sourcehash: 9642cac303412f73509970f05fc71ecd58e4ae63ca5ed6d713d22df568b5d983
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -52,6 +52,8 @@ Parameter ``self``:
 
 Parameter ``str``:
     string that is to be converted)doc";
+
+static const char *__doc_themachinethatgoesping_tools_pybind_helper_make_option_class = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
