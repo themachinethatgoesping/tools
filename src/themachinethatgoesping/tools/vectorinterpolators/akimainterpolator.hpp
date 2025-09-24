@@ -133,7 +133,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
 
         if (target_x < _X[0])
         {
-            switch (I_Interpolator<XYType, XYType>::_extr_mode)
+            switch (I_Interpolator<XYType, XYType>::_extr_mode.value)
             {
                 case t_extr_mode::nearest:
                     return _Y[0];
@@ -154,7 +154,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         }
         else if (target_x > _X.back())
         {
-            switch (I_Interpolator<XYType, XYType>::_extr_mode)
+            switch (I_Interpolator<XYType, XYType>::_extr_mode.value)
             {
                 case t_extr_mode::nearest:
                     return _Y.back();
@@ -418,7 +418,7 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
     {
         classhelper::ObjectPrinter printer(this->class_name(), float_precision, superscript_exponents);
 
-        printer.register_enum("extr_mode", this->_extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode.value);
         printer.register_section("data lists");
         printer.register_container("X", this->_X);
         printer.register_container("Y", this->_Y);

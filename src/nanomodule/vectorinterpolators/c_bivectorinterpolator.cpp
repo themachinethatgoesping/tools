@@ -36,7 +36,7 @@ void init_BiVectorInterpolator(nanobind::module_& m, const std::string& name)
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, BiVectorInterpolator))
-        .def(nb::init<t_extr_mode>(),
+        .def(nb::init<o_extr_mode>(),
              DOC_BiVectorInterpolator(BiVectorInterpolator),
              nb::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("clear", &t_BiVectorInterpolator::clear, DOC_BiVectorInterpolator(clear))

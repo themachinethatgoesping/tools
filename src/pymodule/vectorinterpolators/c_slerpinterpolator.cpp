@@ -30,7 +30,7 @@ void init_slerpinterpolator(pybind11::module& m, const std::string& name)
                       const std::vector<YType>&,
                       const std::vector<YType>&,
                       bool,
-                      t_extr_mode>(),
+                      o_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

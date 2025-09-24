@@ -29,7 +29,7 @@ void init_linearinterpolator(nanobind::module_& m, const std::string& name)
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, LinearInterpolator))
-        .def(nb::init<const std::vector<XType>&, const std::vector<YType>&, t_extr_mode>(),
+        .def(nb::init<const std::vector<XType>&, const std::vector<YType>&, o_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

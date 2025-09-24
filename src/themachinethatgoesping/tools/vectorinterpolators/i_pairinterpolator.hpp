@@ -90,19 +90,19 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
      *
      * @param X X vector; must be unique and sorted in ascending order. same size as Y!
      * @param Y Y vector; must be unique and sorted in ascending order. same size as X!
-     * @param extrapolation_mode :py:class:`t_extr_mode
+     * @param extrapolation_mode :option o_extr_mode
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object that describes the
      * extrapolation mode
      */
     I_PairInterpolator(std::vector<XType> X,
                        std::vector<YType> Y,
-                       t_extr_mode        extrapolation_mode = t_extr_mode::extrapolate)
+                       o_extr_mode        extrapolation_mode = t_extr_mode::extrapolate)
         : I_Interpolator<XType, YType>(extrapolation_mode)
     {
         set_data_XY(std::move(X), std::move(Y));
     }
 
-    I_PairInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    I_PairInterpolator(o_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_Interpolator<XType, YType>(extrapolation_mode)
     {
     }
@@ -287,7 +287,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
 
         if (it == _X.begin())
         {
-            switch (I_Interpolator<XType, YType>::_extr_mode)
+            switch (I_Interpolator<XType, YType>::_extr_mode.value)
             {
                 case t_extr_mode::fail: {
                     // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too
@@ -310,7 +310,7 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
         {
             size_t last = _X.size() - 1;
 
-            switch (I_Interpolator<XType, YType>::_extr_mode)
+            switch (I_Interpolator<XType, YType>::_extr_mode.value)
             {
                 case t_extr_mode::fail: {
                     // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too

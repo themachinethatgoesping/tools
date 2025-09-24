@@ -71,7 +71,7 @@ TEST_CASE("LinearInterpolator: should perform basic interpolations correctly", T
 
     SECTION("extrapolation mode should cause:")
     {
-        for (auto mode : vectorinterpolators::t_extr_mode_all)
+        for (auto mode : vectorinterpolators::o_extr_mode::values())
         {
             interpolator.set_extrapolation_mode(mode);
 

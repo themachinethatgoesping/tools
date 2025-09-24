@@ -1,4 +1,4 @@
-//sourcehash: 2da3085fb1d2075d2dc8df12f783b452223e233bae71fceb0a4439b5a21a9dae
+//sourcehash: c2fff5aa87b121ee92c8b95f4fca9a51f9f3960dbc7e9235fff065a1daa06638
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,8 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_249_67 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -105,9 +107,7 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Inte
 R"doc(Get the currently set extrapolation mode
 
 Returns:
-    :py:class:`t_extr_mode
-    <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
-    object (enumerator) that describes the extrapolation mode)doc";
+    :o_extr_mode)doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string =
 R"doc(\ return an info string using the class __printer__ object \

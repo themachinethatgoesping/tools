@@ -27,7 +27,7 @@ void init_akimainterpolator(nanobind::module_& m, const std::string& name)
 
     nb::class_<t_AkimaInterpolator>(
         m, name.c_str(), DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator))
-        .def(nb::init<const std::vector<XYType>&, const std::vector<XYType>&, t_extr_mode>(),
+        .def(nb::init<const std::vector<XYType>&, const std::vector<XYType>&, o_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

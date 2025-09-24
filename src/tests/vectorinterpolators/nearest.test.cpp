@@ -84,7 +84,7 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
 
     SECTION("extrapolation mode should cause:")
     {
-        for (auto mode : vectorinterpolators::t_extr_mode_all)
+        for (auto mode : vectorinterpolators::o_extr_mode::values())
         {
             interpolator.set_extrapolation_mode(mode);
 

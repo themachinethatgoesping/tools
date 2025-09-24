@@ -18,206 +18,63 @@
 #include <fmt/core.h>
 #include <magic_enum/magic_enum.hpp>
 #include <nanobind/nanobind.h>
+#include <nanobind/operators.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/string_view.h>
 #include <string>
+
+#include <themachinethatgoesping/tools/classhelper/option.hpp>
+#include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace nanobind_helper {
 
-// Your from_string function (assuming it returns std::optional<T_ENUM>)
-template<typename T_ENUM>
-T_ENUM from_string(const std::string& str)
+template<typename T_OPTION>
+void make_option_class(nanobind::module_& m, const std::string& name)
 {
-    auto enum_value = magic_enum::enum_cast<T_ENUM>(str);
-    if (!enum_value.has_value())
-    {
+    using t_enum       = typename T_OPTION::t_enum;
+    using t_underlying = typename T_OPTION::t_underlying;
 
-        constexpr auto enum_values = magic_enum::enum_names<T_ENUM>();
-        std::string    enum_info;
-        for (size_t i = 0; i < enum_values.size(); ++i)
-        {
-            if (i != 0)
-                enum_info += ", ";
-
-            enum_info += "\"";
-            enum_info += enum_values[i];
-            enum_info += "\"";
-        }
-
-        nanobind::print(
-            fmt::format("ERROR: unknown value option '{}'! Try: [{}]", str, enum_info).c_str());
-
-        throw std::invalid_argument(
-            fmt::format("ERROR: unknown value option '{}'! Try: [{}]", str, enum_info));
-    }
-
-    return T_ENUM(enum_value.value());
-}
-
-template<typename T_ENUM>
-void add_string_to_enum_conversion(nanobind::enum_<T_ENUM>& enum_class)
-{
-    enum_class.def("__init__",
-                   [](T_ENUM* self, const std::string& str) {
-                       new (self) T_ENUM(from_string<T_ENUM>(str));
-                   },
-                   "Construct from string",
-                   nanobind::arg("str"));
-    enum_class.def("__init__",
-                   [](T_ENUM* self, uint8_t value) {
-                       // Validate that the uint8_t value corresponds to a valid enum value
-                       if (value >= magic_enum::enum_count<T_ENUM>())
-                       {
-                           throw std::invalid_argument(
-                               fmt::format("Invalid enum value {}. Valid range is 0-{}",
-                                           value,
-                                           magic_enum::enum_count<T_ENUM>() - 1));
-                       }
-                       new (self) T_ENUM(static_cast<T_ENUM>(value));
-                   },
-                   "Construct from int",
-                   nanobind::arg("int"));
-
-    //nb::implicitly_convertible<std::string, T_ENUM>();
-    //nb::implicitly_convertible<uint8_t, T_ENUM>();
-}
-
-template<typename T_ENUM>
-void make_enum_string_class(nanobind::module_& m, const std::string& name)
-{
-    auto enum_class =
-        nb::class_<T_ENUM>(
+    static auto enum_class =
+        nb::class_<T_OPTION>(
             m,
             name.c_str(),
             fmt::format("Helper class to convert between strings and enum values of type '{}'",
-                        magic_enum::enum_type_name<T_ENUM>())
+                        magic_enum::enum_type_name<t_enum>())
                 .c_str())
-            .def(nb::init<>(), "Default constructor")
-            .def(nb::init<T_ENUM>(), "Construct from enum value", nb::arg("value"))
-            .def(
-                "__init__",
-                [](T_ENUM* self, uint8_t value) {
-                    // Validate that the uint8_t value corresponds to a valid enum value
-                    if (value >= magic_enum::enum_count<T_ENUM>())
-                    {
-                        throw std::invalid_argument(
-                            fmt::format("Invalid enum value {}. Valid range is 0-{}",
-                                        value,
-                                        magic_enum::enum_count<T_ENUM>() - 1));
-                    }
-                    new (self) T_ENUM(static_cast<T_ENUM>(value));
-                },
-                "Construct from int",
-                nb::arg("int"))
-            .def(
-                "__init__",
-                [](T_ENUM* self, const std::string& str) {
-                    new (self) T_ENUM(from_string<T_ENUM>(str));
-                },
-                "Construct from string",
-                nb::arg("str"))
-            // .def(nb::init_implicit<const std::string&>())
-            .def(
-                "__eq__",
-                [](const T_ENUM& e, const T_ENUM& other) { return e == e; },
-                "Equality operator",
-                nb::arg("other"))
-            .def("to_string", [](const T_ENUM& e) { return std::string(magic_enum::enum_name(e)); })
-            .def("__str__", [](const T_ENUM& e) { return std::string(magic_enum::enum_name(e)); })
-            .def("__repr__", [](const T_ENUM& e) { return fmt::format("{}",magic_enum::enum_name(e)); })
+            .def(nb::init_implicit<t_enum>(),
+                 "Construct from enum value",
+                 nb::arg("value") = T_OPTION::default_value)
+            .def(nb::init_implicit<std::string_view>(), "Construct from string", nb::arg("value"))
+            .def(nb::init_implicit<t_underlying>(), "Construct from string", nb::arg("value"))
 
+            .def_rw("value", &T_OPTION::value, "enum value", nb::rv_policy::reference_internal)
+            .def_ro_static("__default_value__",
+                           &T_OPTION::default_value,
+                           "default enum value when constructing without arguments")
+            .def("__str__", &T_OPTION::operator std::string)
+
+            // __eq__ operators
+            .def(nb::self == nb::self)
+            .def(nb::self == t_enum())
+            .def(nb::self == t_underlying())
+            .def(nb::self == std::string_view())
+
+        // default copy functions
+        __PYCLASS_DEFAULT_COPY__(T_OPTION)
+        // default binary functions
+        __PYCLASS_DEFAULT_BINARY__(T_OPTION)
+        // default printing functions
+        __PYCLASS_DEFAULT_PRINTING__(T_OPTION)
+            .def("__repr__",
+                 [](T_OPTION& self) {
+                     nb::print(fmt::format("{}.{}", self.type_name(), self.name()).c_str());
+                 })
+        // end
         ;
-
-    // Add implicit conversion from string
-    //nb::implicitly_convertible<std::string, T_ENUM>();
-    //nb::implicitly_convertible<uint8_t, T_ENUM>();
-
-    // Automatically create enum-like interface for all values
-    constexpr auto enum_values = magic_enum::enum_values<T_ENUM>();
-    for (auto value : enum_values)
-    {
-        auto name = magic_enum::enum_name(value);
-        enum_class.def_prop_ro_static(name.data(), [value](nanobind::handle) { return value; });
-    }
-
-    // Add from_string static method
-    enum_class.def_static(
-        "from_string",
-        [](const std::string& str) { return from_string<T_ENUM>(str); },
-        "Convert string to enum value",
-        nb::arg("str"));
-
-    // Add get_all_values static method
-    enum_class.def_static(
-        "values",
-        []() {
-            std::vector<T_ENUM> values;
-            for (auto value : magic_enum::enum_values<T_ENUM>())
-            {
-                values.push_back(value);
-            }
-            return values;
-        },
-        "Get all possible enum values");
-
-    // Add get_all_names static method
-    enum_class.def_static(
-        "names",
-        []() {
-            std::vector<std::string> names;
-            for (auto name : magic_enum::enum_names<T_ENUM>())
-            {
-                names.emplace_back(name);
-            }
-            return names;
-        },
-        "Get all possible enum names");
-
-    enum_class.def_static(
-        "count",
-        []() { return magic_enum::enum_count<T_ENUM>(); },
-        "Get the number of enum values");
 }
 
 }
 }
 }
-
-
-NAMESPACE_BEGIN(NB_NAMESPACE)
-NAMESPACE_BEGIN(detail)
-template<typename EnumType>
-struct type_caster<EnumType, std::enable_if_t<std::is_enum_v<EnumType>>>
-{
-    NB_TYPE_CASTER(EnumType, const_name<EnumType>())
-
-    bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
-    {
-        // First try normal enum conversion (for actual enum values)
-        if (isinstance<EnumType>(src))
-        {
-            value = cast<EnumType>(src);
-            return true;
-        }
-
-        // Then try string conversion
-        if (isinstance<str>(src))
-        {
-            value = themachinethatgoesping::tools::nanobind_helper::from_string<EnumType>(cast<std::string>(src));
-            return true;
-        }
-
-        return false;
-    }
-
-    static handle from_cpp(EnumType src, rv_policy policy, cleanup_list* cleanup) noexcept
-    {
-        return cast(src, policy, cleanup);
-    }
-};
-
-
-NAMESPACE_END(detail)
-NAMESPACE_END(NB_NAMESPACE)

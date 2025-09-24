@@ -20,15 +20,14 @@ using namespace themachinethatgoesping;
 #include <nanobind/nanobind.h>
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
 
-// Make the enum opaque so we can bind it as a class instead of using the built-in enum type caster
-NB_MAKE_OPAQUE(themachinethatgoesping::tools::vectorinterpolators::t_extr_mode);
-
 // -- submodule declarations --
 void init_c_nearestinterpolator(nanobind::module_& m);  // c_nearestinterpolator.cpp
 void init_c_linearinterpolator(nanobind::module_& m);   // c_linearinterpolator.cpp
 void init_c_akimainterpolator(nanobind::module_& m);    // c_linearinterpolator.cpp
 void init_c_slerpinterpolator(nanobind::module_& m);    // c_linearinterpolator.cpp
 void init_c_bivectorinterpolator(nanobind::module_& m); // c_bivectorinterpolator.cpp
+
+#define DOC_extr_mode(ARG) DOC(themachinethatgoesping, tools, vectorinterpolators, t_extr_mode, ARG)
 
 // -- create submodule --
 void init_m_vectorinterpolators(nanobind::module_& m)
@@ -43,15 +42,12 @@ void init_m_vectorinterpolators(nanobind::module_& m)
             m_vectorinterpolators,
             "t_extr_mode",
             DOC(themachinethatgoesping, tools, vectorinterpolators, t_extr_mode))
-            .value("extrapolate", t_extr_mode::extrapolate)
-            .value("nearest", t_extr_mode::nearest)
-            .value("fail", t_extr_mode::fail)
-            .export_values()
+            .value("extrapolate", t_extr_mode::extrapolate, DOC_extr_mode(extrapolate))
+            .value("nearest", t_extr_mode::nearest, DOC_extr_mode(nearest))
+            .value("fail", t_extr_mode::fail, DOC_extr_mode(fail))
         // end
         ;
-    tools::nanobind_helper::add_string_to_enum_conversion<t_extr_mode>(pyenum_extr_mode);
-    // tools::nanobind_helper::make_enum_string_class<t_extr_mode>(
-    //     m_vectorinterpolators, "t_extr_mode");
+    tools::nanobind_helper::make_option_class<o_extr_mode>(m_vectorinterpolators, "o_extr_mode");
 
     // interpolator classes
     init_c_nearestinterpolator(m_vectorinterpolators);

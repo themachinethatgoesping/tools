@@ -9,6 +9,7 @@ testcomponent = 'tools'
 sources = [
   'timeconv.test.cpp',
   'tutorial.test.cpp',
+  'classhelper/option.test.cpp',
   'vectorinterpolators/akima.test.cpp',
   'vectorinterpolators/bivector.test.cpp',
   'vectorinterpolators/common.test.cpp',

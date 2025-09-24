@@ -16,7 +16,6 @@
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
 
 #include "module.hpp"
-#include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
 
 namespace nb = nanobind;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
@@ -29,7 +28,7 @@ void init_nearestinterpolator(nanobind::module_& m, const std::string& name)
     nb::class_<t_NearestInterpolator>(
         m, name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, NearestInterpolator))
-        .def(nb::init<const std::vector<XType>&, const std::vector<YType>&, t_extr_mode>(),
+        .def(nb::init<const std::vector<XType>&, const std::vector<YType>&, o_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

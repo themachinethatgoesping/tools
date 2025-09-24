@@ -372,7 +372,7 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         classhelper::ObjectPrinter printer(
             this->class_name(), float_precision, superscript_exponents);
 
-        printer.register_enum("extr_mode", this->_extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode.value);
         printer.register_section("data lists");
         printer.register_container("X", this->_X);
 

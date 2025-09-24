@@ -36,7 +36,7 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, BiVectorInterpolator))
-        .def(py::init<t_extr_mode>(),
+        .def(py::init<o_extr_mode>(),
              DOC_BiVectorInterpolator(BiVectorInterpolator),
              py::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("clear", &t_BiVectorInterpolator::clear, DOC_BiVectorInterpolator(clear))

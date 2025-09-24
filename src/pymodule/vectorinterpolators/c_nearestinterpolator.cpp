@@ -27,7 +27,7 @@ void init_nearestinterpolator(pybind11::module& m, const std::string& name)
         m,
         name.c_str(),
         DOC(themachinethatgoesping, tools, vectorinterpolators, NearestInterpolator))
-        .def(py::init<const std::vector<XType>&, const std::vector<YType>&, t_extr_mode>(),
+        .def(py::init<const std::vector<XType>&, const std::vector<YType>&, o_extr_mode>(),
              DOC(themachinethatgoesping,
                  tools,
                  vectorinterpolators,

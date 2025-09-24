@@ -39,14 +39,14 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
 {
 
   public:
-    LinearInterpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    LinearInterpolator(o_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<XType, YType>(extrapolation_mode)
     {
     }
 
     LinearInterpolator(const std::vector<XType>& X,
                        const std::vector<YType>& Y,
-                       t_extr_mode               extrapolation_mode = t_extr_mode::extrapolate)
+                       o_extr_mode               extrapolation_mode = t_extr_mode::extrapolate)
         : I_PairInterpolator<XType, YType>(X, Y, extrapolation_mode)
     {
     }
@@ -116,7 +116,7 @@ class LinearInterpolator : public I_PairInterpolator<XType, YType>
         classhelper::ObjectPrinter printer(
             this->class_name(), float_precision, superscript_exponents);
 
-        printer.register_enum("extr_mode", this->_extr_mode);
+        printer.register_enum("extr_mode", this->_extr_mode.value);
         printer.register_section("data lists");
         printer.register_container("X", this->_X);
         printer.register_container("Y", this->_Y);

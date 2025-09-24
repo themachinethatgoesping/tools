@@ -1,4 +1,4 @@
-//sourcehash: d31ae414e14ae3a871f8089dedf4ba4561dc33daec2e5b563b7908038ab2894c
+//sourcehash: 2bc5f368598650466b6cfd0d5f7d2fcf56f4432e8abce7a486edff3f27dc4a3b
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -67,7 +67,7 @@ Parameter ``Y``:
     as X!
 
 Parameter ``extrapolation_mode``:
-    :py:class:`t_extr_mode
+    :option o_extr_mode
     <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>`
     object that describes the extrapolation mode)doc";
 

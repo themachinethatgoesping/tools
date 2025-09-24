@@ -16,13 +16,14 @@
 /* generated doc strings */
 #include ".docstrings/i_interpolator.doc.hpp"
 
+#include <array>
+#include <cmath>
 #include <concepts>
 #include <stdexcept>
 #include <vector>
-#include <array>
-#include <cmath>
 
 #include "../classhelper/objectprinter.hpp"
+#include "../classhelper/option.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -39,9 +40,7 @@ enum class t_extr_mode : uint8_t
     nearest = 2, ///< return nearest value in the vector.
 };
 
-static const std::array<t_extr_mode, 3> t_extr_mode_all = { t_extr_mode::extrapolate,
-                                                            t_extr_mode::fail,
-                                                            t_extr_mode::nearest };
+using o_extr_mode = classhelper::Option<t_extr_mode>;
 
 /**
  * @brief Interface class for interpolator classes
@@ -57,11 +56,11 @@ template<std::floating_point XType, typename YType>
 class I_Interpolator
 {
   public:
-        using t_XType = XType;
-        using t_YType = YType;
+    using t_XType = XType;
+    using t_YType = YType;
 
   protected:
-    t_extr_mode _extr_mode; ///< extrapolation mode
+    o_extr_mode _extr_mode; ///< extrapolation mode
 
   public:
     /**
@@ -70,7 +69,7 @@ class I_Interpolator
      *
      * @param extrapolation_mode extrapolation mode (nearest or fail)
      */
-    I_Interpolator(t_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
+    I_Interpolator(o_extr_mode extrapolation_mode = t_extr_mode::extrapolate)
         : _extr_mode(extrapolation_mode)
     {
     }
@@ -118,7 +117,7 @@ class I_Interpolator
      * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object (enumerator) that
      * describes the extrapolation mode
      */
-    void set_extrapolation_mode(const t_extr_mode extrapolation_mode)
+    void set_extrapolation_mode(const o_extr_mode extrapolation_mode)
     {
         _extr_mode = extrapolation_mode;
     }
@@ -126,11 +125,9 @@ class I_Interpolator
     /**
      * @brief Get the currently set extrapolation mode
      *
-     * @return :py:class:`t_extr_mode
-     * <themachinethatgoesping.tools.vectorinterpolators.t_extr_mode>` object (enumerator) that
-     * describes the extrapolation mode
+     * @return :o_extr_mode
      */
-    t_extr_mode get_extrapolation_mode() const { return _extr_mode; }
+    o_extr_mode get_extrapolation_mode() const { return _extr_mode; }
 
     //-------------------------
     // interpolation functions
@@ -247,3 +244,7 @@ class I_Interpolator
 } // namespace interpolation
 } // namespace tools
 } // namespace themachinethatgoesping
+
+// Explicit template instantiation declaration
+extern template class themachinethatgoesping::tools::classhelper::Option<
+    themachinethatgoesping::tools::vectorinterpolators::t_extr_mode>;
