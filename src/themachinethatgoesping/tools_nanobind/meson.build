@@ -14,9 +14,11 @@ headers = [
   'classhelper.hpp',
   'datetime.hpp',
   'enumhelper.hpp',
+  'nanobind_xtensor.hpp',
   '.docstrings/classhelper.doc.hpp',
   '.docstrings/datetime.doc.hpp',
   '.docstrings/enumhelper.doc.hpp',
+  '.docstrings/nanobind_xtensor.doc.hpp',
 ]
 
 # -- targets --
@@ -58,7 +60,8 @@ tools_nanobind_dep = declare_dependency(
                 tools_dep,
                 nanobind_dep,
                 python3_dep,
-                xtensor_python_dep,
+                xtensor_dep,
+                #xtensor_python_dep,
                 numpy_dep
   ],
   #link_with : [tools_nanobind_lib],
