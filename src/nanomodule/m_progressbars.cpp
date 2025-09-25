@@ -5,14 +5,18 @@
 // -- c++ library headers
 #include <memory>
 #include <random>
+#include <type_traits>
 
 // -- include nanobind headers
 #include <nanobind/nanobind.h>
-#include <nanobind/stl/string.h>
 #include <nanobind/stl/chrono.h>
+#include <nanobind/stl/string.h>
 #include <nanobind/trampoline.h>
 
 // ping headers
+#include <themachinethatgoesping/tools_nanobind/ostream_redirect.hpp>
+#include <themachinethatgoesping/tools_nanobind/scoped_ostream_redirect.hpp>
+
 #include <themachinethatgoesping/tools/progressbars/consoleprogressbar.hpp>
 #include <themachinethatgoesping/tools/progressbars/i_progressbar.hpp>
 #include <themachinethatgoesping/tools/progressbars/noindicator.hpp>
@@ -33,25 +37,16 @@ class I_ProgressBar_NanobindTrampoline : public I_ProgressBar
     NB_TRAMPOLINE(I_ProgressBar, 8);
 
     /* Override the virtual functions */
-    bool is_initialized() const override
-    {
-        NB_OVERRIDE_PURE(is_initialized);
-    }
+    bool is_initialized() const override { NB_OVERRIDE_PURE(is_initialized); }
 
     void init(double first, double last, const std::string& process_name = "process") override
     {
         NB_OVERRIDE_PURE(init, first, last, process_name);
     }
 
-    void close(const std::string& msg = "done") override
-    {
-        NB_OVERRIDE_PURE(close, msg);
-    }
+    void close(const std::string& msg = "done") override { NB_OVERRIDE_PURE(close, msg); }
 
-    void tick(double increment = 1) override
-    {
-        NB_OVERRIDE_PURE(tick, increment);
-    }
+    void tick(double increment = 1) override { NB_OVERRIDE_PURE(tick, increment); }
 
     void set_progress(double new_progress) override
     {
@@ -63,15 +58,9 @@ class I_ProgressBar_NanobindTrampoline : public I_ProgressBar
         NB_OVERRIDE_PURE(set_postfix, postfix);
     }
 
-    void set_prefix(const std::string& prefix) override
-    {
-        NB_OVERRIDE_PURE(set_prefix, prefix);
-    }
+    void set_prefix(const std::string& prefix) override { NB_OVERRIDE_PURE(set_prefix, prefix); }
 
-    double current() const override
-    {
-        NB_OVERRIDE_PURE(current);
-    }
+    double current() const override { NB_OVERRIDE_PURE(current); }
 };
 
 // nanobind trampoline class for virtual I_ProgressBarTimed class
@@ -113,10 +102,7 @@ class I_ProgressBarTimed_NanobindTrampoline : public I_ProgressBarTimed
         NB_OVERRIDE_PURE(callback_set_prefix, prefix);
     }
 
-    double callback_current() const override
-    {
-        NB_OVERRIDE_PURE(callback_current);
-    }
+    double callback_current() const override { NB_OVERRIDE_PURE(callback_current); }
 };
 
 // dummy config class
@@ -125,9 +111,51 @@ class config
 
 void init_m_progressbars(nb::module_& m)
 {
+    using ostream_redirect =
+        themachinethatgoesping::tools::nanobind_helper::scoped_ostream_redirect;
+
     auto m_progressbars = m.def_submodule("progressbars",
                                           "Progress indicators that can be called directly or "
                                           "passed to specific themachinethatgoesping functions");
+
+    // // Expose ostream_redirect class for direct use (like pybind11's scoped_ostream_redirect)
+    // nb::class_<themachinethatgoesping::tools::nanobind_helper::ostream_redirect>(
+    //     m_progressbars,
+    //     "ostream_redirect",
+    //     "Context manager that redirects C++ stdout/stderr to Python sys.stdout/sys.stderr. "
+    //     "Use as 'with ostream_redirect():' to capture C++ output in Python.")
+    //     .def(nb::init<>(), "Create ostream redirect with automatic start (RAII behavior)")
+    //     .def(nb::init<bool>(),
+    //          "Create ostream redirect with optional auto-start",
+    //          nb::arg("auto_start") = true)
+    //     .def("enter",
+    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::enter,
+    //          "Start redirection")
+    //     .def("exit",
+    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::exit,
+    //          "Stop redirection")
+    //     .def(
+    //         "__enter__",
+    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self)
+    //             -> themachinethatgoesping::tools::nanobind_helper::ostream_redirect& {
+    //             self.enter();
+    //             return self;
+    //         },
+    //         nb::rv_policy::reference_internal,
+    //         "Enter the runtime context")
+    //     .def(
+    //         "__exit__",
+    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
+    //            nb::handle                                                        exc_type,
+    //            nb::handle                                                        exc_value,
+    //            nb::handle traceback) -> bool {
+    //             self.exit();
+    //             return false; // Don't suppress exceptions - return Python bool explicitly
+    //         },
+    //         "Exit the runtime context",
+    //         nb::arg("exc_type")  = nb::none(),
+    //         nb::arg("exc_value") = nb::none(),
+    //         nb::arg("traceback") = nb::none());
 
     // // BuiltInProgressBars enum
     // py::native_enum<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
@@ -154,30 +182,37 @@ void init_m_progressbars(nb::module_& m)
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, init),
              nb::arg("first"),
              nb::arg("last"),
-             nb::arg("process_name") = "process")
+             nb::arg("process_name") = "process") //,
+        //             nb::call_guard<scoped_ostream_redirect>())
         .def("close",
              &I_ProgressBar::close,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, close),
-             nb::arg("msg") = "done")
+             nb::arg("msg") = "done") //,
+                                      //             nb::call_guard<scoped_ostream_redirect>())
         .def("tick",
              &I_ProgressBar::tick,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, tick),
-             nb::arg("increment") = 1)
+             nb::arg("increment") = 1) //,
+                                       //             nb::call_guard<scoped_ostream_redirect>())
         .def("set_progress",
              &I_ProgressBar::set_progress,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_progress),
-             nb::arg("progress"))
+             nb::arg("progress")) //,
+                                  //             nb::call_guard<scoped_ostream_redirect>())
         .def("set_postfix",
              &I_ProgressBar::set_postfix,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_postfix),
-             nb::arg("postfix"))
+             nb::arg("postfix")) //,
+                                 //             nb::call_guard<scoped_ostream_redirect>())
         .def("set_prefix",
              &I_ProgressBar::set_prefix,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, set_prefix),
-             nb::arg("prefix"))
+             nb::arg("prefix")) //,
+                                //             nb::call_guard<scoped_ostream_redirect>())
         .def("current",
              &I_ProgressBar::current,
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, current))
+             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBar, current)) //,
+        //             nb::call_guard<scoped_ostream_redirect>())
         // end I_ProgressBar
         ;
 
@@ -197,15 +232,18 @@ void init_m_progressbars(nb::module_& m)
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_init),
              nb::arg("first"),
              nb::arg("last"),
-             nb::arg("process_name") = "process")
+             nb::arg("process_name") = "process") //,
+        //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_close",
              &I_ProgressBarTimed::callback_close,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_close),
-             nb::arg("msg") = "done")
+             nb::arg("msg") = "done") //,
+                                      //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_tick",
              &I_ProgressBarTimed::callback_tick,
              DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_tick),
-             nb::arg("increment") = 1)
+             nb::arg("increment") = 1) //,
+                                       //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_set_progress",
              &I_ProgressBarTimed::callback_set_progress,
              DOC(themachinethatgoesping,
@@ -213,7 +251,8 @@ void init_m_progressbars(nb::module_& m)
                  progressbars,
                  I_ProgressBarTimed,
                  callback_set_progress),
-             nb::arg("progress"))
+             nb::arg("progress")) //,
+                                  //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_set_postfix",
              &I_ProgressBarTimed::callback_set_postfix,
              DOC(themachinethatgoesping,
@@ -221,7 +260,8 @@ void init_m_progressbars(nb::module_& m)
                  progressbars,
                  I_ProgressBarTimed,
                  callback_set_postfix),
-             nb::arg("postfix"))
+             nb::arg("postfix")) //,
+                                 //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_set_prefix",
              &I_ProgressBarTimed::callback_set_prefix,
              DOC(themachinethatgoesping,
@@ -229,10 +269,16 @@ void init_m_progressbars(nb::module_& m)
                  progressbars,
                  I_ProgressBarTimed,
                  callback_set_prefix),
-             nb::arg("prefix"))
+             nb::arg("prefix")) //,
+                                //             nb::call_guard<scoped_ostream_redirect>())
         .def("callback_current",
              &I_ProgressBarTimed::callback_current,
-             DOC(themachinethatgoesping, tools, progressbars, I_ProgressBarTimed, callback_current))
+             DOC(themachinethatgoesping,
+                 tools,
+                 progressbars,
+                 I_ProgressBarTimed,
+                 callback_current)) //,
+                                    //             nb::call_guard<scoped_ostream_redirect>())
         // end I_ProgressBar
         ;
 
@@ -319,4 +365,43 @@ void init_m_progressbars(nb::module_& m)
         nb::arg("loops")         = 1000,
         nb::arg("sleep_us")      = 10,
         nb::arg("show_progress") = true);
+
+    // for some reason stream redirection only works if we define it here again?
+    nb::class_<themachinethatgoesping::tools::nanobind_helper::ostream_redirect>(
+        m_progressbars,
+        "ostream_redirect_progressbars",
+        "Context manager that redirects C++ stdout/stderr to Python sys.stdout/sys.stderr. "
+        "Use as 'with ostream_redirect():' to capture C++ output in Python.")
+        .def(nb::init<>(), "Create ostream redirect with automatic start (RAII behavior)")
+        .def(nb::init<bool>(),
+             "Create ostream redirect with optional auto-start",
+             nb::arg("auto_start") = true)
+        .def("enter",
+             &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::enter,
+             "Start redirection")
+        .def("exit",
+             &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::exit,
+             "Stop redirection")
+        .def(
+            "__enter__",
+            [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self)
+                -> themachinethatgoesping::tools::nanobind_helper::ostream_redirect& {
+                self.enter();
+                return self;
+            },
+            nb::rv_policy::reference_internal,
+            "Enter the runtime context")
+        .def(
+            "__exit__",
+            [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
+               nb::handle                                                        exc_type,
+               nb::handle                                                        exc_value,
+               nb::handle traceback) -> bool {
+                self.exit();
+                return false; // Don't suppress exceptions - return Python bool explicitly
+            },
+            "Exit the runtime context",
+            nb::arg("exc_type")  = nb::none(),
+            nb::arg("exc_value") = nb::none(),
+            nb::arg("traceback") = nb::none());
 }
