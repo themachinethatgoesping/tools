@@ -15,6 +15,8 @@
 #include ".docstrings/classhelper.doc.hpp"
 
 #include <nanobind/nanobind.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/string_view.h>
 
 namespace nb = nanobind;
 
@@ -54,7 +56,7 @@ namespace nb = nanobind;
         "to_binary", /*&T_CLASS::to_binary,  */                                                    \
         [](T_CLASS& self, bool resize_buffer) {                                                    \
             auto binary_data = self.to_binary(resize_buffer);                                      \
-            return nb::bytes(binary_data.c_str(), binary_data.size());                             \
+            return nb::bytes(binary_data.data(), binary_data.size());                              \
         },                                                                                         \
         "convert object to bytearray",                                                             \
         nb::arg("resize_buffer") = true)
@@ -63,34 +65,31 @@ namespace nb = nanobind;
     .def_static(                                                                                   \
         "from_binary",                                                                             \
         [](const nb::bytes& buffer, bool check_buffer_is_read_completely) {                        \
-            std::string_view buffer_view(static_cast<const char*>(buffer.c_str()), buffer.size()); \
-            return T_CLASS::from_binary(buffer_view, check_buffer_is_read_completely);              \
+            std::string_view buffer_view(static_cast<const char*>(buffer.data()), buffer.size());  \
+            return T_CLASS::from_binary(buffer_view, check_buffer_is_read_completely);             \
         },                                                                                         \
         "create T_CLASS object from bytearray",                                                    \
         nb::arg("buffer"),                                                                         \
         nb::arg("check_buffer_is_read_completely") = true)
 
 #define __PYCLASS_DEFAULT_PICKLE__(T_CLASS)                                                        \
-    .def("__getstate__",                                                                       \
-         [](T_CLASS& self) {                                                                   \
-             auto binary_data = self.to_binary();                                              \
-             return nb::bytes(binary_data.c_str(), binary_data.size());                        \
-         })                                                                                    \
-    .def("__setstate__",                                                                       \
-         [](T_CLASS& self, const nb::bytes& state) {                                           \
-             std::string_view buffer_view(static_cast<const char*>(state.c_str()), state.size()); \
-             self = T_CLASS::from_binary(buffer_view);                                          \
-         })
+    .def("__getstate__", [](T_CLASS& self) {                                                       \
+        auto binary_data = self.to_binary();                                                       \
+        return nb::bytes(binary_data.data(), binary_data.size());                                  \
+    }).def("__setstate__", [](T_CLASS& self, const nb::bytes& state) {                             \
+        std::string_view sv(reinterpret_cast<const char*>(state.data()), state.size());            \
+        new (&self) T_CLASS(std::move(T_CLASS::from_binary(sv)));                                  \
+    })
 
 // --- print functions (need objectprinter __printer__ function) ---
 #define __PYCLASS_DEFAULT_PRINTING__(T_CLASS)                                                      \
     .def(                                                                                          \
         "__str__",                                                                                 \
-        [](T_CLASS& self) { return self.__printer__(3, true).create_str(); },                            \
+        [](T_CLASS& self) { return self.__printer__(3, true).create_str(); },                      \
         "Return object information as string")                                                     \
         .def(                                                                                      \
             "__repr__",                                                                            \
-            [](T_CLASS& self) { return self.__printer__(3, true).class_name(); },                        \
+            [](T_CLASS& self) { return self.__printer__(3, true).class_name(); },                  \
             "Return object information as string")                                                 \
         .def(                                                                                      \
             "info_string",                                                                         \
@@ -103,10 +102,10 @@ namespace nb = nanobind;
         .def(                                                                                      \
             "print",                                                                               \
             [](T_CLASS& self, unsigned int float_precision, bool superscript_exponents) {          \
-                auto output_str = self.__printer__(float_precision, superscript_exponents).create_str(); \
-                nb::print(output_str.c_str());  \
+                auto output_str =                                                                  \
+                    self.__printer__(float_precision, superscript_exponents).create_str();         \
+                nb::print(output_str.c_str());                                                     \
             },                                                                                     \
             "Print object information",                                                            \
             nb::arg("float_precision")       = 3,                                                  \
             nb::arg("superscript_exponents") = true)
-
