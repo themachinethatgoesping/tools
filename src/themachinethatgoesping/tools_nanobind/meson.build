@@ -15,6 +15,7 @@ headers = [
   'datetime.hpp',
   'enumhelper.hpp',
   'nanobind_xtensor.hpp',
+  'pytensor_nanobind.hpp',
   'ostream_redirect.hpp',
   'scoped_ostream_redirect.hpp',
   '.docstrings/classhelper.doc.hpp',
