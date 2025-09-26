@@ -12,6 +12,9 @@
 
 #pragma once
 
+/* generated doc strings */
+#include ".docstrings/ostream_redirect.doc.hpp"
+
 // -- c++ library headers
 #include <iostream>
 #include <memory>

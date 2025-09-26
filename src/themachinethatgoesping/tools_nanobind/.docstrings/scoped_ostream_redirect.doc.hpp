@@ -1,4 +1,4 @@
-//sourcehash: 6843c97e67d58e2da074075b90d65ec39aa6f6a3255d6208892269e7ca7a3a44
+//sourcehash: 94933eb601062e79e4a99cc0f81e5ef539a3af28ea92df728b1b224c8a425531
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,34 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_cerr_buf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_cout_buf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_operator_call = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_orig_cerr_buf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_orig_cout_buf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_ostream_redirect_scoped_ostream_redirect = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_buffer = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_overflow = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_py_flush = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_py_write = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_scoped_python_streambuf = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_scoped_python_streambuf_sync = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

@@ -118,44 +118,6 @@ void init_m_progressbars(nb::module_& m)
                                           "Progress indicators that can be called directly or "
                                           "passed to specific themachinethatgoesping functions");
 
-    // // Expose ostream_redirect class for direct use (like pybind11's scoped_ostream_redirect)
-    // nb::class_<themachinethatgoesping::tools::nanobind_helper::ostream_redirect>(
-    //     m_progressbars,
-    //     "ostream_redirect",
-    //     "Context manager that redirects C++ stdout/stderr to Python sys.stdout/sys.stderr. "
-    //     "Use as 'with ostream_redirect():' to capture C++ output in Python.")
-    //     .def(nb::init<>(), "Create ostream redirect with automatic start (RAII behavior)")
-    //     .def(nb::init<bool>(),
-    //          "Create ostream redirect with optional auto-start",
-    //          nb::arg("auto_start") = true)
-    //     .def("enter",
-    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::enter,
-    //          "Start redirection")
-    //     .def("exit",
-    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::exit,
-    //          "Stop redirection")
-    //     .def(
-    //         "__enter__",
-    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self)
-    //             -> themachinethatgoesping::tools::nanobind_helper::ostream_redirect& {
-    //             self.enter();
-    //             return self;
-    //         },
-    //         nb::rv_policy::reference_internal,
-    //         "Enter the runtime context")
-    //     .def(
-    //         "__exit__",
-    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
-    //            nb::handle                                                        exc_type,
-    //            nb::handle                                                        exc_value,
-    //            nb::handle traceback) -> bool {
-    //             self.exit();
-    //             return false; // Don't suppress exceptions - return Python bool explicitly
-    //         },
-    //         "Exit the runtime context",
-    //         nb::arg("exc_type")  = nb::none(),
-    //         nb::arg("exc_value") = nb::none(),
-    //         nb::arg("traceback") = nb::none());
 
     // // BuiltInProgressBars enum
     // py::native_enum<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
@@ -366,42 +328,42 @@ void init_m_progressbars(nb::module_& m)
         nb::arg("sleep_us")      = 10,
         nb::arg("show_progress") = true);
 
-    // for some reason stream redirection only works if we define it here again?
-    nb::class_<themachinethatgoesping::tools::nanobind_helper::ostream_redirect>(
-        m_progressbars,
-        "ostream_redirect_progressbars",
-        "Context manager that redirects C++ stdout/stderr to Python sys.stdout/sys.stderr. "
-        "Use as 'with ostream_redirect():' to capture C++ output in Python.")
-        .def(nb::init<>(), "Create ostream redirect with automatic start (RAII behavior)")
-        .def(nb::init<bool>(),
-             "Create ostream redirect with optional auto-start",
-             nb::arg("auto_start") = true)
-        .def("enter",
-             &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::enter,
-             "Start redirection")
-        .def("exit",
-             &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::exit,
-             "Stop redirection")
-        .def(
-            "__enter__",
-            [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self)
-                -> themachinethatgoesping::tools::nanobind_helper::ostream_redirect& {
-                self.enter();
-                return self;
-            },
-            nb::rv_policy::reference_internal,
-            "Enter the runtime context")
-        .def(
-            "__exit__",
-            [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
-               nb::handle                                                        exc_type,
-               nb::handle                                                        exc_value,
-               nb::handle traceback) -> bool {
-                self.exit();
-                return false; // Don't suppress exceptions - return Python bool explicitly
-            },
-            "Exit the runtime context",
-            nb::arg("exc_type")  = nb::none(),
-            nb::arg("exc_value") = nb::none(),
-            nb::arg("traceback") = nb::none());
+    // // for some reason stream redirection only works if we define it here again?
+    // nb::class_<themachinethatgoesping::tools::nanobind_helper::ostream_redirect>(
+    //     m_progressbars,
+    //     "ostream_redirect_progressbars",
+    //     "Context manager that redirects C++ stdout/stderr to Python sys.stdout/sys.stderr. "
+    //     "Use as 'with ostream_redirect():' to capture C++ output in Python.")
+    //     .def(nb::init<>(), "Create ostream redirect with automatic start (RAII behavior)")
+    //     .def(nb::init<bool>(),
+    //          "Create ostream redirect with optional auto-start",
+    //          nb::arg("auto_start") = true)
+    //     .def("enter",
+    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::enter,
+    //          "Start redirection")
+    //     .def("exit",
+    //          &themachinethatgoesping::tools::nanobind_helper::ostream_redirect::exit,
+    //          "Stop redirection")
+    //     .def(
+    //         "__enter__",
+    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self)
+    //             -> themachinethatgoesping::tools::nanobind_helper::ostream_redirect& {
+    //             self.enter();
+    //             return self;
+    //         },
+    //         nb::rv_policy::reference_internal,
+    //         "Enter the runtime context")
+    //     .def(
+    //         "__exit__",
+    //         [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
+    //            nb::handle                                                        exc_type,
+    //            nb::handle                                                        exc_value,
+    //            nb::handle traceback) -> bool {
+    //             self.exit();
+    //             return false; // Don't suppress exceptions - return Python bool explicitly
+    //         },
+    //         "Exit the runtime context",
+    //         nb::arg("exc_type")  = nb::none(),
+    //         nb::arg("exc_value") = nb::none(),
+    //         nb::arg("traceback") = nb::none());
 }
