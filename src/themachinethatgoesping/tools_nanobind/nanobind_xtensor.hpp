@@ -36,6 +36,7 @@
 #include "nanobind/nanobind.h"
 #include "nanobind/ndarray.h"
 #include <type_traits>
+#include <vector>
 
 NAMESPACE_BEGIN(NB_NAMESPACE)
 NAMESPACE_BEGIN(detail)
@@ -196,6 +197,25 @@ struct type_caster<T, enable_if_t<
         cleanup_list *cleanup
     ) noexcept
     {
+        const auto ndim = static_cast<size_t>(tensor.dimension());
+
+        std::vector<size_t> shape;
+        shape.reserve(ndim);
+        for (auto extent : tensor.shape())
+        {
+            shape.push_back(static_cast<size_t>(extent));
+        }
+
+        std::vector<int64_t> stride_buffer;
+        stride_buffer.reserve(ndim);
+        if (ndim > 0)
+        {
+            for (auto stride_value : tensor.strides())
+            {
+                stride_buffer.push_back(static_cast<int64_t>(stride_value));
+            }
+        }
+
         void* ptr = (void *) tensor.data();
 
         switch (policy) {
@@ -222,14 +242,17 @@ struct type_caster<T, enable_if_t<
             policy = rv_policy::reference;
         }
 
+        const size_t* shape_ptr = shape.empty() ? nullptr : shape.data();
+        const int64_t* stride_ptr = stride_buffer.empty() ? nullptr : stride_buffer.data();
+
         object o = steal(
             make_caster<NDArray_return_t>::from_cpp(
                 NDArray_return_t(
                     ptr,
-                    tensor.dimension(),
-                    tensor.shape().begin(),
+                    ndim,
+                    shape_ptr,
                     owner,
-                    (tensor.dimension() == 0) ? nullptr : tensor.strides().begin()
+                    stride_ptr
                     ),
                 policy,
                 cleanup
