@@ -1,4 +1,4 @@
-//sourcehash: b64db76ffc8836148e63a6d029622ac20d93324d5f3ffa14554d1bef21852b78
+//sourcehash: 4bf04e26fd520664cb6c23c2375ab06e8f9600efbb7a2474ad69bc5aa20d42af
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -40,6 +40,10 @@
 
 static const char *__doc_type_caster = R"doc()doc";
 
+static const char *__doc_xt_has_assign_conversion = R"doc()doc";
+
+static const char *__doc_xt_index_view = R"doc()doc";
+
 static const char *__doc_xt_nanobind_detail_compute_contiguous_strides_column_major = R"doc()doc";
 
 static const char *__doc_xt_nanobind_detail_compute_contiguous_strides_row_major = R"doc()doc";
@@ -47,6 +51,20 @@ static const char *__doc_xt_nanobind_detail_compute_contiguous_strides_row_major
 static const char *__doc_xt_nanobind_detail_is_column_major = R"doc()doc";
 
 static const char *__doc_xt_nanobind_detail_is_row_major = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_assign_element = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_assign_element_impl = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_m_indices = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_m_tensor = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_operator_assign = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_pytensor_index_view_pytensor_index_view = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor = R"doc()doc";
 
@@ -85,6 +103,10 @@ static const char *__doc_xt_nanobind_pytensor_reset_from_ndarray = R"doc()doc";
 static const char *__doc_xt_nanobind_pytensor_reset_from_ndarray_2 = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor_scalar_type = R"doc()doc";
+
+static const char *__doc_xt_xcontainer_inner_types = R"doc()doc";
+
+static const char *__doc_xt_xiterable_inner_types = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

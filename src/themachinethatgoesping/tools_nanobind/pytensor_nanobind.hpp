@@ -20,11 +20,65 @@
 #include <xtensor/containers/xtensor.hpp>
 #include <xtensor/containers/xarray.hpp>
 #include <xtensor/containers/xbuffer_adaptor.hpp>
+#include <xtensor/containers/xscalar.hpp>
+#include <xtensor/core/xeval.hpp>
+#include <xtensor/core/xassign.hpp>
 
 namespace xt
 {
     namespace nanobind
     {
+        namespace detail
+        {
+            template <class TensorRef, class IndicesContainer, std::size_t Dim>
+            class pytensor_index_view
+            {
+            public:
+                using tensor_type = std::remove_reference_t<TensorRef>;
+                using value_type = typename tensor_type::value_type;
+                using size_type = typename tensor_type::size_type;
+
+                pytensor_index_view(TensorRef tensor, IndicesContainer& indices)
+                    : m_tensor(tensor)
+                    , m_indices(indices)
+                {
+                }
+
+                template <class Expression>
+                pytensor_index_view& operator=(const Expression& expression)
+                {
+                    auto evaluated = xt::eval(expression);
+                    auto expected_size = m_indices.size();
+                    if (evaluated.size() != expected_size)
+                    {
+                        throw std::runtime_error("pytensor index_view assignment size mismatch");
+                    }
+
+                    for (std::size_t idx = 0; idx < expected_size; ++idx)
+                    {
+                        assign_element(m_indices[idx], static_cast<value_type>(evaluated(idx)));
+                    }
+                    return *this;
+                }
+
+            private:
+                template <class Index>
+                void assign_element(const Index& index, const value_type& value)
+                {
+                    assign_element_impl(index, value, std::make_index_sequence<Dim>{});
+                }
+
+                template <class Index, std::size_t... Axis>
+                void assign_element_impl(const Index& index, const value_type& value, std::index_sequence<Axis...>)
+                {
+                    m_tensor(static_cast<size_type>(index[Axis])...) = value;
+                }
+
+                TensorRef m_tensor;
+                IndicesContainer& m_indices;
+            };
+        } // namespace detail
+
         namespace detail
         {
             template <class Strides, class Shape>
@@ -312,6 +366,48 @@ namespace xt
         };
     } // namespace nanobind
 } // namespace xt
+
+namespace xt
+{
+    template <class T, std::size_t N, layout_type Layout>
+    struct xcontainer_inner_types<nanobind::pytensor<T, N, Layout>>
+    {
+        using tensor_type = nanobind::pytensor<T, N, Layout>;
+        using storage_type = typename tensor_type::buffer_type;
+        using reference = typename tensor_type::reference;
+        using const_reference = typename tensor_type::const_reference;
+        using size_type = typename tensor_type::size_type;
+        using shape_type = typename tensor_type::shape_type;
+        using strides_type = typename tensor_type::strides_type;
+        using backstrides_type = typename tensor_type::strides_type;
+        using inner_shape_type = shape_type;
+        using inner_strides_type = strides_type;
+        using inner_backstrides_type = backstrides_type;
+        using temporary_type = tensor_type;
+        static constexpr layout_type layout = Layout;
+    };
+
+    template <class T, std::size_t N, layout_type Layout>
+    struct xiterable_inner_types<nanobind::pytensor<T, N, Layout>>
+        : xcontainer_iterable_types<nanobind::pytensor<T, N, Layout>>
+    {
+    };
+
+    template <class From, class T, std::size_t N, layout_type Layout>
+    struct has_assign_conversion<From, nanobind::pytensor<T, N, Layout>> : std::false_type
+    {
+    };
+
+}
+
+namespace xt
+{
+    template <class T, std::size_t N, layout_type Layout, class Indices>
+    inline auto index_view(nanobind::pytensor<T, N, Layout>& tensor, Indices& indices)
+    {
+        return nanobind::detail::pytensor_index_view<nanobind::pytensor<T, N, Layout>&, Indices, N>(tensor, indices);
+    }
+}
 
 namespace themachinethatgoesping::tools_nanobind
 {
