@@ -15,10 +15,14 @@ headers = [
   'datetime.hpp',
   'enumhelper.hpp',
   'nanobind_xtensor.hpp',
+  'ostream_redirect.hpp',
+  'scoped_ostream_redirect.hpp',
   '.docstrings/classhelper.doc.hpp',
   '.docstrings/datetime.doc.hpp',
   '.docstrings/enumhelper.doc.hpp',
   '.docstrings/nanobind_xtensor.doc.hpp',
+  '.docstrings/ostream_redirect.doc.hpp',
+  '.docstrings/scoped_ostream_redirect.doc.hpp',
 ]
 
 # -- targets --
