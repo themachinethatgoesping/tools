@@ -1,4 +1,4 @@
-//sourcehash: 4bf04e26fd520664cb6c23c2375ab06e8f9600efbb7a2474ad69bc5aa20d42af
+//sourcehash: ed83ea5bc8d8f2a4680f0df1438199f602fc71ac42dd6dbc69442dff3a3593de
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -39,6 +39,8 @@
 
 
 static const char *__doc_type_caster = R"doc()doc";
+
+static const char *__doc_xt_detail_is_crtp_base_of_impl = R"doc()doc";
 
 static const char *__doc_xt_has_assign_conversion = R"doc()doc";
 

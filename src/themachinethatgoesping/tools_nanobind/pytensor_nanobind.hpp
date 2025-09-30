@@ -224,6 +224,12 @@ namespace xt
             pytensor& operator=(const pytensor&) = default;
             pytensor& operator=(pytensor&&) noexcept = default;
 
+            using base_type::operator=;
+            using base_type::operator+=;
+            using base_type::operator-=;
+            using base_type::operator*=;
+            using base_type::operator/=;
+
             ~pytensor() = default;
 
             template <class Array>
@@ -392,6 +398,14 @@ namespace xt
         : xcontainer_iterable_types<nanobind::pytensor<T, N, Layout>>
     {
     };
+
+    namespace detail
+    {
+        template <class T, std::size_t N, layout_type Layout>
+        struct is_crtp_base_of_impl<xexpression, nanobind::pytensor<T, N, Layout>> : std::true_type
+        {
+        };
+    }
 
     template <class From, class T, std::size_t N, layout_type Layout>
     struct has_assign_conversion<From, nanobind::pytensor<T, N, Layout>> : std::false_type
