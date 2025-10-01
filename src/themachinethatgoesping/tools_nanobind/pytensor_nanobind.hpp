@@ -261,7 +261,7 @@ namespace xt
 
                 if constexpr (Layout == layout_type::dynamic)
                 {
-                    this->mutable_layout() = deduce_layout(shape, strides);
+                    this->mutable_layout() = deduce_layout(m_array, shape, strides);
                 }
                 else
                 {
@@ -338,13 +338,29 @@ namespace xt
                 {
                     for (std::size_t axis = 0; axis < strides.size(); ++axis)
                     {
-                        strides[axis] = static_cast<typename strides_type::value_type>(strides_ptr[axis]);
+                        const auto raw_stride = strides_ptr[axis];
+
+                        using stride_value_type = typename strides_type::value_type;
+                        if constexpr (std::is_signed_v<stride_value_type>)
+                        {
+                            strides[axis] = static_cast<stride_value_type>(raw_stride);
+                        }
+                        else
+                        {
+                            if (raw_stride < 0)
+                            {
+                                throw std::runtime_error("pytensor: negative strides are not supported");
+                            }
+                            strides[axis] = static_cast<stride_value_type>(raw_stride);
+                        }
                     }
                 }
                 return strides;
             }
 
-            static layout_type deduce_layout(const shape_type& shape, const strides_type& strides)
+            static layout_type deduce_layout(const ndarray_type& array,
+                                             const shape_type& shape,
+                                             const strides_type& strides)
             {
                 if constexpr (Layout != layout_type::dynamic)
                 {
@@ -352,6 +368,11 @@ namespace xt
                 }
 
                 if constexpr (std::tuple_size_v<shape_type> <= 1)
+                {
+                    return layout_type::row_major;
+                }
+
+                if (array.stride_ptr() == nullptr)
                 {
                     return layout_type::row_major;
                 }
