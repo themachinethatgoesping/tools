@@ -111,8 +111,8 @@ class config
 
 void init_m_progressbars(nb::module_& m)
 {
-    using ostream_redirect =
-        themachinethatgoesping::tools::nanobind_helper::scoped_ostream_redirect;
+    // using ostream_redirect =
+    //     themachinethatgoesping::tools::nanobind_helper::scoped_ostream_redirect;
 
     auto m_progressbars = m.def_submodule("progressbars",
                                           "Progress indicators that can be called directly or "

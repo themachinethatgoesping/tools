@@ -49,9 +49,9 @@ NB_MODULE(MODULE_NAME, m)
         .def(
             "__exit__",
             [](themachinethatgoesping::tools::nanobind_helper::ostream_redirect& self,
-               nb::handle                                                        exc_type,
-               nb::handle                                                        exc_value,
-               nb::handle traceback) -> bool {
+               [[maybe_unused]] nb::handle                                       exc_type,
+               [[maybe_unused]] nb::handle                                       exc_value,
+               [[maybe_unused]] nb::handle traceback) -> bool {
                 self.exit();
                 return false; // Don't suppress exceptions - return Python bool explicitly
             },

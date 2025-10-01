@@ -4,6 +4,9 @@
 #pragma once
 
 /* generated doc strings */
+#include ".docstrings/pytensor_nanobind.old.doc.hpp"
+
+/* generated doc strings */
 #include ".docstrings/pytensor_nanobind.doc.hpp"
 
 #include <algorithm>
@@ -17,12 +20,12 @@
 #include <nanobind/nanobind.h>
 #include <nanobind/ndarray.h>
 
+#include <xtensor/containers/xtensor.hpp>
 #include <xtensor/containers/xarray.hpp>
 #include <xtensor/containers/xbuffer_adaptor.hpp>
-#include <xtensor/containers/xtensor.hpp>
 #include <xtensor/containers/xscalar.hpp>
-#include <xtensor/core/xassign.hpp>
 #include <xtensor/core/xeval.hpp>
+#include <xtensor/core/xassign.hpp>
 
 namespace xt
 {
@@ -368,7 +371,6 @@ namespace xt
 
                 return layout_type::dynamic;
             }
-
             ndarray_type m_array;
         };
     } // namespace nanobind
@@ -413,6 +415,10 @@ namespace xt
     {
     };
 
+}
+
+namespace xt
+{
     template <class T, std::size_t N, layout_type Layout, class Indices>
     inline auto index_view(nanobind::pytensor<T, N, Layout>& tensor, Indices& indices)
     {
@@ -470,8 +476,8 @@ NAMESPACE_BEGIN(detail)
     };
 
     template <class T, std::size_t N, xt::layout_type Layout>
-    struct type_caster<xt::xexpression<xt::nanobind::pytensor<T, N, Layout>>>
-        : type_caster<xt::nanobind::pytensor<T, N, Layout>>
+    struct type_caster<xt::xexpression<xt::nanobind::pytensor<T, N, Layout>>> :
+        type_caster<xt::nanobind::pytensor<T, N, Layout>>
     {
         using expression_type = xt::xexpression<xt::nanobind::pytensor<T, N, Layout>>;
         using base_caster = type_caster<xt::nanobind::pytensor<T, N, Layout>>;
