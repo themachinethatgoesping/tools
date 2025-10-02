@@ -7,8 +7,8 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef PY_TENSOR_REFERENCE_HPP
-#define PY_TENSOR_REFERENCE_HPP
+#ifndef PY_TENSOR_HPP
+#define PY_TENSOR_HPP
 
 #include <algorithm>
 #include <array>

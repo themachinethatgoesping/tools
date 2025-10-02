@@ -1,4 +1,4 @@
-//sourcehash: 3f13a753df899c47ceff669b538b4a51acee5cb603ea7611b879b79a0bcb09f6
+//sourcehash: 0bef1c9642d47d608276d1ceb54105d30d1baf1ebb47a3aa1d2401a57a48e5a9
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -46,13 +46,11 @@ static const char *__doc_xt_derived_cast_2 = R"doc()doc";
 
 static const char *__doc_xt_detail_check_array = R"doc()doc";
 
-static const char *__doc_xt_detail_check_array_type = R"doc()doc";
-
-static const char *__doc_xt_detail_check_array_type_2 = R"doc()doc";
-
 static const char *__doc_xt_detail_check_dims = R"doc()doc";
 
 static const char *__doc_xt_detail_check_dims_run = R"doc()doc";
+
+static const char *__doc_xt_detail_compute_numpy_type_num = R"doc()doc";
 
 static const char *__doc_xt_detail_default_initialize = R"doc()doc";
 
@@ -60,9 +58,9 @@ static const char *__doc_xt_detail_default_initialize_impl = R"doc()doc";
 
 static const char *__doc_xt_detail_default_initialize_impl_2 = R"doc()doc";
 
-static const char *__doc_xt_detail_is_fmt_numeric = R"doc()doc";
+static const char *__doc_xt_detail_numpy_descr = R"doc()doc";
 
-static const char *__doc_xt_detail_log2 = R"doc()doc";
+static const char *__doc_xt_detail_numpy_dtype_callable = R"doc()doc";
 
 static const char *__doc_xt_detail_numpy_enum_adjuster = R"doc()doc";
 
@@ -72,11 +70,7 @@ static const char *__doc_xt_detail_numpy_enum_adjuster_pyarray_type = R"doc()doc
 
 static const char *__doc_xt_detail_numpy_enum_adjuster_pyarray_type_2 = R"doc()doc";
 
-static const char *__doc_xt_detail_numpy_traits = R"doc()doc";
-
 static const char *__doc_xt_detail_pyarray_type = R"doc()doc";
-
-static const char *__doc_xt_detail_satisfies_any_of = R"doc()doc";
 
 static const char *__doc_xt_ensure = R"doc()doc";
 

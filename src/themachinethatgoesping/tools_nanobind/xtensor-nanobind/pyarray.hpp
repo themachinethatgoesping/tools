@@ -41,21 +41,21 @@ namespace nanobind
         template <class T, xt::layout_type L>
         struct type_caster<xt::pyarray<T, L>>
         {
-            using Value = xt::pyarray<T, L>;
+            using PyArrayValue = xt::pyarray<T, L>;
 
-            NB_TYPE_CASTER(Value, make_caster<ndarray<numpy>>::Name)
+            NB_TYPE_CASTER(PyArrayValue, make_caster<ndarray<numpy>>::Name);
 
             bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
             {
-                NB_UNUSED(cleanup);
+                static_cast<void>(cleanup);
 
-                if (!(flags & NB_IS_CONVERTIBLE) && !xt::detail::check_array<T>(src))
+                if (!(flags & static_cast<uint8_t>(cast_flags::convert)) && !xt::detail::check_array<T>(src))
                 {
                     return false;
                 }
 
                 Value tmp = Value::ensure(src);
-                if (!tmp)
+                if (tmp.ptr() == nullptr)
                 {
                     return false;
                 }
@@ -66,7 +66,7 @@ namespace nanobind
 
             static handle from_cpp(const Value& src, rv_policy, cleanup_list* cleanup) noexcept
             {
-                NB_UNUSED(cleanup);
+                static_cast<void>(cleanup);
                 return handle(src.ptr()).inc_ref();
             }
         };
@@ -149,7 +149,8 @@ namespace xt
         using inner_shape_type = typename base_type::inner_shape_type;
         using inner_strides_type = typename base_type::inner_strides_type;
         using inner_backstrides_type = typename base_type::inner_backstrides_type;
-        constexpr static std::size_t rank = SIZE_MAX;
+    constexpr static std::size_t rank = SIZE_MAX;
+    static constexpr bool nb_typed = true;
 
         pyarray();
         pyarray(const value_type& t);
@@ -471,19 +472,18 @@ namespace xt
             flags |= NPY_ARRAY_WRITEABLE;
         }
 
-    auto dtype_obj = nb::dtype<T>();
-        PyObject* dtype_ptr = dtype_obj.ptr();
-        Py_INCREF(dtype_ptr);
+        PyArray_Descr* dtype_descr = detail::numpy_descr<T>();
 
         npy_intp* shape_data = reinterpret_cast<npy_intp*>(const_cast<size_type*>(shape.data()));
         npy_intp* strides_data = reinterpret_cast<npy_intp*>(adapted_strides.data());
 
         PyObject* raw = reinterpret_cast<PyObject*>(
-            PyArray_NewFromDescr(&PyArray_Type, reinterpret_cast<PyArray_Descr*>(dtype_ptr), static_cast<int>(shape.size()), shape_data, strides_data,
+            PyArray_NewFromDescr(&PyArray_Type, dtype_descr, static_cast<int>(shape.size()), shape_data, strides_data,
                                  nullptr, flags, nullptr));
 
         if (raw == nullptr)
         {
+            Py_DECREF(reinterpret_cast<PyObject*>(dtype_descr));
             throw std::runtime_error("NumPy: unable to create ndarray");
         }
 

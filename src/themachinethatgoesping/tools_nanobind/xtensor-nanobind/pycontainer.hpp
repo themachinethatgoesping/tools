@@ -137,60 +137,104 @@ namespace xt
 
     namespace detail
     {
-        inline constexpr int log2(std::size_t n, int k = 0)
+        template <class T>
+        constexpr int compute_numpy_type_num()
         {
-            return (n <= 1) ? k : log2(n >> 1, k + 1);
+            using value_type = std::remove_cv_t<T>;
+
+            if constexpr (std::is_same_v<value_type, bool>)
+            {
+                return NPY_BOOL;
+            }
+            else if constexpr (std::is_integral_v<value_type> && !std::is_same_v<value_type, bool>)
+            {
+                if constexpr (sizeof(value_type) == 1)
+                {
+                    return std::is_signed_v<value_type> ? NPY_BYTE : NPY_UBYTE;
+                }
+                else if constexpr (sizeof(value_type) == 2)
+                {
+                    return std::is_signed_v<value_type> ? NPY_SHORT : NPY_USHORT;
+                }
+                else if constexpr (sizeof(value_type) == 4)
+                {
+                    return std::is_signed_v<value_type> ? NPY_INT32 : NPY_UINT32;
+                }
+                else if constexpr (sizeof(value_type) == 8)
+                {
+                    return std::is_signed_v<value_type> ? NPY_INT64 : NPY_UINT64;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else if constexpr (std::is_same_v<value_type, float>)
+            {
+                return NPY_FLOAT;
+            }
+            else if constexpr (std::is_same_v<value_type, double>)
+            {
+                return NPY_DOUBLE;
+            }
+            else if constexpr (std::is_same_v<value_type, long double>)
+            {
+                return NPY_LONGDOUBLE;
+            }
+            else if constexpr (xtl::is_complex<value_type>::value)
+            {
+                using real_type = typename value_type::value_type;
+                if constexpr (std::is_same_v<real_type, float>)
+                {
+                    return NPY_CFLOAT;
+                }
+                else if constexpr (std::is_same_v<real_type, double>)
+                {
+                    return NPY_CDOUBLE;
+                }
+                else if constexpr (std::is_same_v<real_type, long double>)
+                {
+                    return NPY_CLONGDOUBLE;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
         }
 
-        template <class T, class Enable = void>
-        struct is_fmt_numeric
-        {
-            static constexpr bool value = false;
-        };
+        template <class T>
+        constexpr bool has_numpy_type_num_v = compute_numpy_type_num<T>() != -1;
 
         template <class T>
-        struct is_fmt_numeric<T, std::enable_if_t<std::is_arithmetic_v<std::remove_cv_t<T>>>>
+        constexpr int numpy_type_num_v = compute_numpy_type_num<T>();
+
+        inline nb::object& numpy_dtype_callable()
         {
-            static constexpr bool value = true;
-            using plain_t = std::remove_cv_t<T>;
-            static constexpr int index = std::is_same_v<plain_t, bool>
-                                             ? 0
-                                             : 1 + (std::is_integral_v<plain_t>
-                                                        ? log2(sizeof(plain_t)) * 2 + std::is_unsigned_v<plain_t>
-                                                        : 8 + (std::is_same_v<plain_t, double>
-                                                                   ? 1
-                                                                   : std::is_same_v<plain_t, long double> ? 2 : 0));
-        };
+            static nb::object callable = nb::module_::import_("numpy").attr("dtype");
+            return callable;
+        }
 
         template <class T>
-        struct is_fmt_numeric<std::complex<T>, std::enable_if_t<std::is_floating_point_v<T>>>
+        PyArray_Descr* numpy_descr()
         {
-            static constexpr bool value = true;
-            static constexpr int index = is_fmt_numeric<T>::index + 3;
-        };
+            static_assert(has_numpy_type_num_v<T>, "NumPy dtype conversion is only supported for arithmetic and complex types.");
+            static PyArray_Descr* cached_descr = []() {
+                nb::object dtype_obj = numpy_dtype_callable()(nb::int_(numpy_type_num_v<T>));
+                if (!dtype_obj.is_valid() || dtype_obj.ptr() == nullptr)
+                {
+                    throw std::runtime_error("NumPy: unable to obtain dtype descriptor");
+                }
+                return reinterpret_cast<PyArray_Descr*>(dtype_obj.release().ptr());
+            }();
 
-        template <class T, template <class> class... Predicates>
-        struct satisfies_any_of
-            : std::bool_constant<(Predicates<std::decay_t<T>>::value || ...)>;
-
-        template <class T, class E = void>
-        struct numpy_traits;
-
-        template <class T>
-        struct numpy_traits<T, std::enable_if_t<satisfies_any_of<T, std::is_arithmetic, xtl::is_complex>::value>>
-        {
-        private:
-            using value_type = std::remove_const_t<T>;
-            constexpr static const int value_list[15] = {
-                NPY_BOOL,
-                NPY_BYTE, NPY_UBYTE, NPY_SHORT, NPY_USHORT,
-                NPY_INT32, NPY_UINT32, NPY_INT64, NPY_UINT64,
-                NPY_FLOAT, NPY_DOUBLE, NPY_LONGDOUBLE,
-                NPY_CFLOAT, NPY_CDOUBLE, NPY_CLONGDOUBLE};
-
-        public:
-            static constexpr int type_num = value_list[is_fmt_numeric<value_type>::index];
-        };
+            Py_INCREF(reinterpret_cast<PyObject*>(cached_descr));
+            return cached_descr;
+        }
 
         template <bool>
         struct numpy_enum_adjuster
@@ -240,29 +284,22 @@ namespace xt
         }
 
         template <class T>
-        bool check_array_type(const nb::handle& src, std::true_type)
-        {
-            int type_num = numpy_traits<T>::type_num;
-            return pyarray_type(reinterpret_cast<PyArrayObject*>(src.ptr())) == type_num;
-        }
-
-        template <class T>
-        bool check_array_type(const nb::handle& src, std::false_type)
-        {
-            nb::object dtype = nb::dtype<T>();
-            return PyArray_EquivTypes(PyArray_DESCR(reinterpret_cast<PyArrayObject*>(src.ptr())),
-                                      reinterpret_cast<PyArray_Descr*>(dtype.ptr())) != 0;
-        }
-
-        template <class T>
         bool check_array(const nb::handle& src)
         {
             if (!src || !PyArray_Check(src.ptr()))
             {
                 return false;
             }
-            using has_numpy_traits = satisfies_any_of<T, std::is_arithmetic, xtl::is_complex>;
-            return check_array_type<T>(src, has_numpy_traits{});
+
+            if constexpr (has_numpy_type_num_v<T>)
+            {
+                return pyarray_type(reinterpret_cast<PyArrayObject*>(src.ptr())) == numpy_type_num_v<T>;
+            }
+            else
+            {
+                static_assert(has_numpy_type_num_v<T>, "NumPy dtype conversion is only supported for arithmetic and complex types.");
+                return false;
+            }
         }
     }
 
@@ -324,11 +361,13 @@ namespace xt
             return nullptr;
         }
 
-        auto dtype_obj = nb::dtype<value_type>();
-        PyObject* dtype_ptr = dtype_obj.ptr();
-        Py_INCREF(dtype_ptr);
-        auto res = PyArray_FromAny(ptr, reinterpret_cast<PyArray_Descr*>(dtype_ptr), 0, 0,
+        PyArray_Descr* dtype_descr = detail::numpy_descr<value_type>();
+        auto res = PyArray_FromAny(ptr, dtype_descr, 0, 0,
                                    NPY_ARRAY_ENSUREARRAY | NPY_ARRAY_FORCECAST, nullptr);
+        if (res == nullptr)
+        {
+            Py_DECREF(reinterpret_cast<PyObject*>(dtype_descr));
+        }
         return res;
     }
 

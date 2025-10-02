@@ -199,7 +199,7 @@ namespace nanobind
 
 			bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
 			{
-				if (!(flags & NB_IS_CONVERTIBLE) && !xt::detail::check_array<scalar_type>(src))
+				if (!(flags & static_cast<uint8_t>(cast_flags::convert)) && !xt::detail::check_array<scalar_type>(src))
 				{
 					return false;
 				}
