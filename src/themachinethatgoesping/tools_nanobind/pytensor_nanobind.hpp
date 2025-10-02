@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <array>
 #include <cstddef>
+#include <initializer_list>
 #include <stdexcept>
 #include <tuple>
 #include <type_traits>
@@ -16,6 +17,8 @@
 
 #include <nanobind/nanobind.h>
 #include <nanobind/ndarray.h>
+
+#include <xtl/xsequence.hpp>
 
 #include <xtensor/containers/xarray.hpp>
 #include <xtensor/containers/xbuffer_adaptor.hpp>
@@ -231,6 +234,103 @@ namespace xt
             using base_type::operator/=;
 
             ~pytensor() = default;
+
+            template <class ShapeLike>
+            static self_type from_shape(ShapeLike&& shape_like)
+            {
+                static_assert(!std::is_const_v<T>, "pytensor::from_shape requires a mutable tensor type");
+
+                shape_type shape = xtl::forward_sequence<shape_type, ShapeLike>(std::forward<ShapeLike>(shape_like));
+
+                strides_type strides{};
+                if constexpr (std::tuple_size_v<strides_type> > 0)
+                {
+                    if constexpr (Layout == layout_type::column_major)
+                    {
+                        detail::compute_contiguous_strides_column_major(shape, strides);
+                    }
+                    else
+                    {
+                        detail::compute_contiguous_strides_row_major(shape, strides);
+                    }
+                }
+
+                constexpr std::size_t rank = std::tuple_size_v<shape_type>;
+                std::array<size_t, rank> shape_buffer{};
+                size_t total_size = 1;
+                if constexpr (rank > 0)
+                {
+                    for (std::size_t axis = 0; axis < rank; ++axis)
+                    {
+                        size_t extent = static_cast<size_t>(shape[axis]);
+                        shape_buffer[axis] = extent;
+                        total_size *= extent;
+                    }
+                }
+
+                constexpr std::size_t stride_rank = std::tuple_size_v<strides_type>;
+                std::array<int64_t, stride_rank> stride_buffer{};
+                if constexpr (stride_rank > 0)
+                {
+                    for (std::size_t axis = 0; axis < stride_rank; ++axis)
+                    {
+                        stride_buffer[axis] = static_cast<int64_t>(strides[axis]);
+                    }
+                }
+
+                scalar_type* raw_ptr = nullptr;
+                ::nanobind::object owner;
+                if (total_size > 0)
+                {
+                    raw_ptr = new scalar_type[total_size]();
+                    owner = ::nanobind::capsule(
+                        raw_ptr,
+                        [](void* p) noexcept { delete[] static_cast<scalar_type*>(p); });
+                }
+
+                char order = 'C';
+                if constexpr (Layout == layout_type::column_major)
+                {
+                    order = 'F';
+                }
+
+                ndarray_type array(
+                    static_cast<pointer>(raw_ptr),
+                    rank,
+                    rank > 0 ? shape_buffer.data() : nullptr,
+                    owner.ptr(),
+                    stride_rank > 0 ? stride_buffer.data() : nullptr,
+                    ::nanobind::dtype<ndarray_scalar_type>(),
+                    (int) ::nanobind::device::cpu::value,
+                    0,
+                    order);
+
+                return self_type(std::move(array));
+            }
+
+            template <class Integral,
+                      std::enable_if_t<std::is_integral_v<std::decay_t<Integral>>, int> = 0>
+            static self_type from_shape(std::initializer_list<Integral> shape_list)
+            {
+                shape_type shape{};
+                std::size_t axis = 0;
+
+                for (auto extent : shape_list)
+                {
+                    if (axis >= shape.size())
+                    {
+                        throw std::runtime_error("pytensor::from_shape received too many dimensions");
+                    }
+                    shape[axis++] = static_cast<size_type>(extent);
+                }
+
+                for (; axis < shape.size(); ++axis)
+                {
+                    shape[axis] = size_type(0);
+                }
+
+                return from_shape(std::move(shape));
+            }
 
             template <class Array>
             void reset_from_ndarray(Array&& array [[maybe_unused]])
