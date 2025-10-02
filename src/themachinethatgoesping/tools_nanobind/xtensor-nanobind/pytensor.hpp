@@ -36,8 +36,8 @@ namespace nanobind
 {
     namespace detail
     {
-        template <class T, std::size_t N, xt::layout_type L>
-        struct type_caster<xt::pytensor<T, N, L>>
+        template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
+        struct type_caster<xt::pytensor<T, N, L>, SFINAE>
         {
             using Value = xt::pytensor<T, N, L>;
 
@@ -75,10 +75,11 @@ namespace nanobind
             }
         };
 
-        template <class T, std::size_t N, xt::layout_type L>
-        struct type_caster<xt::xexpression<xt::pytensor<T, N, L>>> : type_caster<xt::pytensor<T, N, L>>
+        template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
+        struct type_caster<xt::xexpression<xt::pytensor<T, N, L>>, SFINAE>
+            : type_caster<xt::pytensor<T, N, L>, SFINAE>
         {
-            using Base = type_caster<xt::pytensor<T, N, L>>;
+            using Base = type_caster<xt::pytensor<T, N, L>, SFINAE>;
             using Type = xt::xexpression<xt::pytensor<T, N, L>>;
 
             operator Type&()
@@ -175,8 +176,8 @@ namespace xt
 
         pytensor();
         pytensor(nested_initializer_list_t<T, N> t);
-        pytensor(nb::handle h, nb::borrowed_t);
-        pytensor(nb::handle h, nb::steal_t);
+    pytensor(nb::handle h, nb::detail::borrow_t);
+    pytensor(nb::handle h, nb::detail::steal_t);
         pytensor(const nb::object& o);
 
         explicit pytensor(const shape_type& shape, layout_type l = layout_type::row_major);
@@ -262,14 +263,14 @@ namespace xt
     }
 
     template <class T, std::size_t N, layout_type L>
-    inline pytensor<T, N, L>::pytensor(nb::handle h, nb::borrowed_t b)
+    inline pytensor<T, N, L>::pytensor(nb::handle h, nb::detail::borrow_t b)
         : base_type(h, b)
     {
         init_from_python();
     }
 
     template <class T, std::size_t N, layout_type L>
-    inline pytensor<T, N, L>::pytensor(nb::handle h, nb::steal_t s)
+    inline pytensor<T, N, L>::pytensor(nb::handle h, nb::detail::steal_t s)
         : base_type(h, s)
     {
         init_from_python();

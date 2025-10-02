@@ -159,8 +159,8 @@ namespace xt
         pyarray(nested_initializer_list_t<T, 4> t);
         pyarray(nested_initializer_list_t<T, 5> t);
 
-        pyarray(nb::handle h, nb::borrowed_t);
-        pyarray(nb::handle h, nb::steal_t);
+    pyarray(nb::handle h, nb::detail::borrow_t);
+    pyarray(nb::handle h, nb::detail::steal_t);
         pyarray(const nb::object& o);
 
         explicit pyarray(const shape_type& shape, layout_type l = layout_type::row_major);
@@ -283,14 +283,14 @@ namespace xt
     }
 
     template <class T, layout_type L>
-    inline pyarray<T, L>::pyarray(nb::handle h, nb::borrowed_t b)
+    inline pyarray<T, L>::pyarray(nb::handle h, nb::detail::borrow_t b)
         : base_type(h, b)
     {
         init_from_python();
     }
 
     template <class T, layout_type L>
-    inline pyarray<T, L>::pyarray(nb::handle h, nb::steal_t s)
+    inline pyarray<T, L>::pyarray(nb::handle h, nb::detail::steal_t s)
         : base_type(h, s)
     {
         init_from_python();

@@ -19,17 +19,15 @@
 #include <vector>
 
 #include "xtensor/containers/xarray.hpp"
-#include "xtensor/containers/xarray_adaptor.hpp"
+#include "xtensor/containers/xadapt.hpp"
 #include "xtensor/containers/xtensor.hpp"
-#include "xtensor/containers/xtensor_adaptor.hpp"
 #include "xtensor/containers/xfixed.hpp"
-#include "xtensor/containers/xstrided_view.hpp"
+#include "xtensor/views/xstrided_view.hpp"
 
 #include "pycontainer.hpp"
 
 #include <nanobind/nanobind.h>
 #include <nanobind/ndarray.h>
-#include <nanobind/numpy.h>
 
 namespace nanobind
 {

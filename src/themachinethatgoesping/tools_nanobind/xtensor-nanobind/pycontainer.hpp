@@ -114,8 +114,8 @@ namespace xt
         pycontainer();
         ~pycontainer() = default;
 
-        pycontainer(nb::handle h, nb::borrowed_t);
-        pycontainer(nb::handle h, nb::steal_t);
+    pycontainer(nb::handle h, nb::detail::borrow_t);
+    pycontainer(nb::handle h, nb::detail::steal_t);
         pycontainer(const nb::object& o);
 
         pycontainer(const pycontainer&) = default;
@@ -277,13 +277,13 @@ namespace xt
     }
 
     template <class D>
-    inline pycontainer<D>::pycontainer(nb::handle h, nb::borrowed_t b)
+    inline pycontainer<D>::pycontainer(nb::handle h, nb::detail::borrow_t b)
         : nb::object(h, b)
     {
     }
 
     template <class D>
-    inline pycontainer<D>::pycontainer(nb::handle h, nb::steal_t s)
+    inline pycontainer<D>::pycontainer(nb::handle h, nb::detail::steal_t s)
         : nb::object(h, s)
     {
     }
