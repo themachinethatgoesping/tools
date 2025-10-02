@@ -32,68 +32,71 @@ namespace xt
     class pytensor;
 }
 
-namespace nanobind
-{
-    namespace detail
+NAMESPACE_BEGIN(NB_NAMESPACE)
+NAMESPACE_BEGIN(detail)
+    template <class T, std::size_t N, xt::layout_type L>
+    struct pytensor_type_caster
     {
-        template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
-        struct type_caster<xt::pytensor<T, N, L>, SFINAE>
+        using Value = xt::pytensor<T, N, L>;
+
+        NB_TYPE_CASTER(Value, make_caster<ndarray<numpy>>::Name)
+
+        bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
         {
-            using Value = xt::pytensor<T, N, L>;
+            NB_UNUSED(cleanup);
 
-            NB_TYPE_CASTER(Value, make_caster<ndarray<numpy>>::Name)
-
-            bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
+            if (!(flags & NB_IS_CONVERTIBLE) && !xt::detail::check_array<T>(src))
             {
-                NB_UNUSED(cleanup);
+                return false;
+            }
 
-                if (!(flags & NB_IS_CONVERTIBLE) && !xt::detail::check_array<T>(src))
+            try
+            {
+                Value tmp = Value::ensure(src);
+                if (!tmp)
                 {
                     return false;
                 }
-
-                try
-                {
-                    Value tmp = Value::ensure(src);
-                    if (!tmp)
-                    {
-                        return false;
-                    }
-                    value = std::move(tmp);
-                    return true;
-                }
-                catch (const std::runtime_error&)
-                {
-                    return false;
-                }
+                value = std::move(tmp);
+                return true;
             }
-
-            static handle from_cpp(const Value& src, rv_policy, cleanup_list* cleanup) noexcept
+            catch (const std::runtime_error&)
             {
-                NB_UNUSED(cleanup);
-                return handle(src.ptr()).inc_ref();
+                return false;
             }
-        };
+        }
 
-        template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
-        struct type_caster<xt::xexpression<xt::pytensor<T, N, L>>, SFINAE>
-            : type_caster<xt::pytensor<T, N, L>, SFINAE>
+        static handle from_cpp(const Value& src, rv_policy, cleanup_list* cleanup) noexcept
         {
-            using Base = type_caster<xt::pytensor<T, N, L>, SFINAE>;
-            using Type = xt::xexpression<xt::pytensor<T, N, L>>;
+            NB_UNUSED(cleanup);
+            return handle(src.ptr()).inc_ref();
+        }
+    };
 
-            operator Type&()
-            {
-                return this->value;
-            }
+    template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
+    struct type_caster<xt::pytensor<T, N, L>, SFINAE> : pytensor_type_caster<T, N, L>
+    {
+    };
 
-            operator const Type&()
-            {
-                return this->value;
-            }
-        };
-    }
-}
+    template <class T, std::size_t N, xt::layout_type L, typename SFINAE>
+    struct type_caster<xt::xexpression<xt::pytensor<T, N, L>>, SFINAE>
+        : type_caster<xt::pytensor<T, N, L>, SFINAE>
+    {
+        using Base = type_caster<xt::pytensor<T, N, L>, SFINAE>;
+        using Type = xt::xexpression<xt::pytensor<T, N, L>>;
+
+        operator Type&()
+        {
+            return Base::value;
+        }
+
+        operator const Type&()
+        {
+            return Base::value;
+        }
+    };
+NAMESPACE_END(detail)
+NAMESPACE_END(NB_NAMESPACE)
 
 namespace xt
 {

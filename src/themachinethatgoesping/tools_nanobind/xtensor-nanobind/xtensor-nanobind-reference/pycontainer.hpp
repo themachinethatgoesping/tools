@@ -7,8 +7,8 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef PY_CONTAINER_HPP
-#define PY_CONTAINER_HPP
+#ifndef PY_CONTAINER_REFERENCE_HPP
+#define PY_CONTAINER_REFERENCE_HPP
 
 #include <cmath>
 #include <functional>

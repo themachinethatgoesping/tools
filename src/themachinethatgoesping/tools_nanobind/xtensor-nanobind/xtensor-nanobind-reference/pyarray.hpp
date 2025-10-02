@@ -7,8 +7,8 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef PY_ARRAY_HPP
-#define PY_ARRAY_HPP
+#ifndef PY_ARRAY_REFERENCE_HPP
+#define PY_ARRAY_REFERENCE_HPP
 
 #include <algorithm>
 #include <cstddef>
