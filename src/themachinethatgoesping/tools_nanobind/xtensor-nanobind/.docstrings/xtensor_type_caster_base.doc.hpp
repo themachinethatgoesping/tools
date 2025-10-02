@@ -1,4 +1,4 @@
-//sourcehash: a9d5355d169f65c40f053a37cc700bfbda9d8380a75ebbce3645a19a03d08b50
+//sourcehash: 5ee5d27588b262ecc57b7979365e6cfad73ad9fb50680ae1790319d9f8ecf0bf
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,23 +38,29 @@
 #endif
 
 
-static const char *__doc_NDArray_for_xtensor = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_array_scalar = R"doc()doc";
 
-static const char *__doc_constNDArray_for_xtensor = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_check_fixed_shape = R"doc()doc";
 
-static const char *__doc_is_xarray = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_is_xarray = R"doc()doc";
 
-static const char *__doc_is_xtensor = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_is_xstrided_view = R"doc()doc";
 
-static const char *__doc_is_xtensor_fixed = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_is_xtensor = R"doc()doc";
 
-static const char *__doc_nb_shape_param = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_is_xtensor_fixed = R"doc()doc";
 
-static const char *__doc_type_caster = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_nb_shape_param = R"doc()doc";
 
-static const char *__doc_type_caster_NB_TYPE_CASTER = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_ndarray_for_xtensor = R"doc()doc";
 
-static const char *__doc_type_caster_from_cpp = R"doc()doc";
+static const char *__doc_nanobind_detail_xt_nb_detail_shape_from_ndarray = R"doc()doc";
+
+static const char *__doc_nanobind_detail_xt_nb_detail_strides_from_ndarray = R"doc()doc";
+
+static const char *__doc_nanobind_detail_xtensor_type_caster_base = R"doc()doc";
+
+static const char *__doc_nanobind_detail_xtensor_type_caster_base_NB_TYPE_CASTER = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

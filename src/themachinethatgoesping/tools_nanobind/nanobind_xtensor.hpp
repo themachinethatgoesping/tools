@@ -35,6 +35,7 @@
 #include "xtensor/containers/xtensor.hpp"
 #include "nanobind/nanobind.h"
 #include "nanobind/ndarray.h"
+#include <cstring>
 #include <type_traits>
 #include <vector>
 

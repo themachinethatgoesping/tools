@@ -1,4 +1,4 @@
-//sourcehash: a9d5355d169f65c40f053a37cc700bfbda9d8380a75ebbce3645a19a03d08b50
+//sourcehash: b97cf23f4a0885e80cc955040aa038b326aa95f3350da7e66aed565471097434
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,23 +38,7 @@
 #endif
 
 
-static const char *__doc_NDArray_for_xtensor = R"doc()doc";
-
-static const char *__doc_constNDArray_for_xtensor = R"doc()doc";
-
-static const char *__doc_is_xarray = R"doc()doc";
-
-static const char *__doc_is_xtensor = R"doc()doc";
-
-static const char *__doc_is_xtensor_fixed = R"doc()doc";
-
-static const char *__doc_nb_shape_param = R"doc()doc";
-
-static const char *__doc_type_caster = R"doc()doc";
-
-static const char *__doc_type_caster_NB_TYPE_CASTER = R"doc()doc";
-
-static const char *__doc_type_caster_from_cpp = R"doc()doc";
+static const char *__doc_pybind11_detail_type_caster = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

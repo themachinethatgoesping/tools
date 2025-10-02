@@ -1,4 +1,4 @@
-//sourcehash: a9d5355d169f65c40f053a37cc700bfbda9d8380a75ebbce3645a19a03d08b50
+//sourcehash: 586eb54bcb7755572672b49ea0371dd165c6193fbc0750571ad3a6d3bc6e5fb5
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,23 +38,15 @@
 #endif
 
 
-static const char *__doc_NDArray_for_xtensor = R"doc()doc";
+static const char *__doc_xt_pyvectorize = R"doc(Create numpy universal function from scalar function.)doc";
 
-static const char *__doc_constNDArray_for_xtensor = R"doc()doc";
+static const char *__doc_xt_pyvectorize_2 = R"doc(@cond DOXYGEN_INCLUDE_OVERLOADS)doc";
 
-static const char *__doc_is_xarray = R"doc()doc";
+static const char *__doc_xt_pyvectorize_3 = R"doc()doc";
 
-static const char *__doc_is_xtensor = R"doc()doc";
+static const char *__doc_xt_pyvectorizer = R"doc()doc";
 
-static const char *__doc_is_xtensor_fixed = R"doc()doc";
-
-static const char *__doc_nb_shape_param = R"doc()doc";
-
-static const char *__doc_type_caster = R"doc()doc";
-
-static const char *__doc_type_caster_NB_TYPE_CASTER = R"doc()doc";
-
-static const char *__doc_type_caster_from_cpp = R"doc()doc";
+static const char *__doc_xt_pyvectorizer_m_vectorizer = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

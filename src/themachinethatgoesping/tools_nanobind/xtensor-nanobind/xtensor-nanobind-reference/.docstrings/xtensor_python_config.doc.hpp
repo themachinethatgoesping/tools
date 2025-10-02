@@ -1,4 +1,4 @@
-//sourcehash: a9d5355d169f65c40f053a37cc700bfbda9d8380a75ebbce3645a19a03d08b50
+//sourcehash: 5bcdb5c1dcef041643ab9444bc837eb8a2668f52ed7f15f3cb2a9028ff917619
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,24 +37,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
-
-static const char *__doc_NDArray_for_xtensor = R"doc()doc";
-
-static const char *__doc_constNDArray_for_xtensor = R"doc()doc";
-
-static const char *__doc_is_xarray = R"doc()doc";
-
-static const char *__doc_is_xtensor = R"doc()doc";
-
-static const char *__doc_is_xtensor_fixed = R"doc()doc";
-
-static const char *__doc_nb_shape_param = R"doc()doc";
-
-static const char *__doc_type_caster = R"doc()doc";
-
-static const char *__doc_type_caster_NB_TYPE_CASTER = R"doc()doc";
-
-static const char *__doc_type_caster_from_cpp = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

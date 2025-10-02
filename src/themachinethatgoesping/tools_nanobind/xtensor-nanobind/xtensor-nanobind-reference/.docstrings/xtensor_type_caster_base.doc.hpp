@@ -1,4 +1,4 @@
-//sourcehash: a9d5355d169f65c40f053a37cc700bfbda9d8380a75ebbce3645a19a03d08b50
+//sourcehash: 21abc3ede5d8b170e6ed7ae0954bb4b00a23409879d03d0fbd6bd9705b058a7c
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,23 +38,45 @@
 #endif
 
 
-static const char *__doc_NDArray_for_xtensor = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_dim_checker = R"doc()doc";
 
-static const char *__doc_constNDArray_for_xtensor = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_dim_checker_run = R"doc()doc";
 
-static const char *__doc_is_xarray = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_getter = R"doc()doc";
 
-static const char *__doc_is_xtensor = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_getter_impl = R"doc()doc";
 
-static const char *__doc_is_xtensor_fixed = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_getter_impl_run = R"doc()doc";
 
-static const char *__doc_nb_shape_param = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_shape_checker = R"doc()doc";
 
-static const char *__doc_type_caster = R"doc()doc";
+static const char *__doc_pybind11_detail_pybind_array_shape_checker_run = R"doc()doc";
 
-static const char *__doc_type_caster_NB_TYPE_CASTER = R"doc()doc";
+static const char *__doc_pybind11_detail_xtensor_array_cast = R"doc()doc";
 
-static const char *__doc_type_caster_from_cpp = R"doc()doc";
+static const char *__doc_pybind11_detail_xtensor_encapsulate = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_ref_array = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_PYBIND11_TYPE_CASTER = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_2 = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_3 = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_4 = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_5 = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_6 = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_cast_impl = R"doc()doc";
+
+static const char *__doc_pybind11_detail_xtensor_type_caster_base_load = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
