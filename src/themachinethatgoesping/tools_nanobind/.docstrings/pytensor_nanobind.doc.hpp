@@ -1,4 +1,4 @@
-//sourcehash: f0795250d4e4ccc492018fffe5679e3e2bc5fc64a44c8c80cec0b5c2027917a1
+//sourcehash: f240ce3b1991a5055cc61756c9b6811cfbb8be9c51c6a78b440325db20873dbe
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -49,6 +49,8 @@ static const char *__doc_xt_detail_is_crtp_base_of_impl = R"doc()doc";
 static const char *__doc_xt_detail_select_xfunction_expression = R"doc()doc";
 
 static const char *__doc_xt_extension_nanobind_expression_base = R"doc()doc";
+
+static const char *__doc_xt_extension_xbroadcast_base_impl = R"doc()doc";
 
 static const char *__doc_xt_extension_xfunction_base_impl = R"doc()doc";
 

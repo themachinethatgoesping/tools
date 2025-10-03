@@ -11,7 +11,6 @@
 #include <themachinethatgoesping/tools/helper/stringconversion.hpp>
 
 #include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
-// #include <themachinethatgoesping/tools_nanobind/nanobind_xtensor.hpp>
 
 // extra
 #include <themachinethatgoesping/tools/helper/xtensor.hpp>

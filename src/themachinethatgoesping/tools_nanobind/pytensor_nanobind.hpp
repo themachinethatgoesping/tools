@@ -763,6 +763,12 @@ namespace xt
         {
             using type = nanobind_expression_base;
         };
+
+        template <class CT, class X>
+        struct xbroadcast_base_impl<nanobind::pytensor_expression_tag, CT, X>
+        {
+            using type = nanobind_expression_base;
+        };
     }
 
     template <>
