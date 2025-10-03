@@ -10,6 +10,7 @@
 #include <array>
 #include <cstddef>
 #include <initializer_list>
+#include <memory>
 #include <stdexcept>
 #include <tuple>
 #include <type_traits>
@@ -253,10 +254,32 @@ namespace xt
                 reset_from_ndarray(std::move(array));
             }
 
+            template <class EC,
+                      xt::layout_type TensorLayout,
+                      class Tag,
+                      std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor(xt::xtensor_container<EC, N, TensorLayout, Tag> tensor)
+                : base_type(buffer_type{})
+            {
+                adopt_xtensor_container(
+                    std::make_unique<xt::xtensor_container<EC, N, TensorLayout, Tag>>(std::move(tensor)));
+            }
+
             pytensor(const pytensor&) = default;
             pytensor(pytensor&&) noexcept = default;
             pytensor& operator=(const pytensor&) = default;
             pytensor& operator=(pytensor&&) noexcept = default;
+
+            template <class EC,
+                      xt::layout_type TensorLayout,
+                      class Tag,
+                      std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor& operator=(xt::xtensor_container<EC, N, TensorLayout, Tag> tensor)
+            {
+                adopt_xtensor_container(
+                    std::make_unique<xt::xtensor_container<EC, N, TensorLayout, Tag>>(std::move(tensor)));
+                return *this;
+            }
 
             using base_type::operator=;
             using base_type::operator+=;
@@ -432,6 +455,92 @@ namespace xt
             }
 
         private:
+            template <class XTensor>
+            void adopt_xtensor_container(std::unique_ptr<XTensor> owned_tensor)
+            {
+                static_assert(!std::is_const_v<T>, "pytensor::adopt_xtensor_container requires mutable tensor");
+                static_assert(XTensor::rank == N, "xtensor rank mismatch for pytensor adoption");
+
+                using xtensor_value_type = typename XTensor::value_type;
+                static_assert(
+                    std::is_same_v<std::remove_const_t<xtensor_value_type>, scalar_type>,
+                    "xtensor value_type mismatch for pytensor adoption");
+
+                auto* raw_tensor = owned_tensor.get();
+
+                std::array<size_t, N> shape{};
+                if constexpr (N > 0)
+                {
+                    const auto& xt_shape = raw_tensor->shape();
+                    for (std::size_t axis = 0; axis < N; ++axis)
+                    {
+                        shape[axis] = static_cast<size_t>(xt_shape[axis]);
+                    }
+                }
+
+                std::array<int64_t, N> stride_buffer{};
+                if constexpr (N > 0)
+                {
+                    const auto& xt_strides = raw_tensor->strides();
+                    for (std::size_t axis = 0; axis < N; ++axis)
+                    {
+                        stride_buffer[axis] = static_cast<int64_t>(xt_strides[axis]);
+                    }
+                }
+
+                const bool xtensor_row_major = detail::is_row_major(stride_buffer, shape);
+                const bool xtensor_column_major = detail::is_column_major(stride_buffer, shape);
+
+                if (!xtensor_row_major && !xtensor_column_major)
+                {
+                    throw std::runtime_error("pytensor requires contiguous xtensor to adopt storage");
+                }
+
+                if constexpr (Layout == layout_type::row_major)
+                {
+                    if (!xtensor_row_major)
+                    {
+                        throw std::runtime_error("Expected row-major xtensor for pytensor row-major layout");
+                    }
+                }
+                else if constexpr (Layout == layout_type::column_major)
+                {
+                    if (!xtensor_column_major)
+                    {
+                        throw std::runtime_error("Expected column-major xtensor for pytensor column-major layout");
+                    }
+                }
+
+                char order = 'C';
+                if constexpr (Layout == layout_type::column_major)
+                {
+                    order = 'F';
+                }
+                else if constexpr (Layout == layout_type::dynamic)
+                {
+                    order = xtensor_column_major ? 'F' : 'C';
+                }
+
+                ::nanobind::object owner = ::nanobind::capsule(
+                    raw_tensor,
+                    [](void* raw) noexcept { delete static_cast<XTensor*>(raw); });
+
+                owned_tensor.release();
+
+                ndarray_type array(
+                    static_cast<pointer>(raw_tensor->data()),
+                    static_cast<size_t>(N),
+                    N > 0 ? shape.data() : nullptr,
+                    owner.ptr(),
+                    N > 0 ? stride_buffer.data() : nullptr,
+                    ::nanobind::dtype<ndarray_scalar_type>(),
+                    ::nanobind::device::cpu::value,
+                    0,
+                    order);
+
+                reset_from_ndarray(std::move(array));
+            }
+
             static shape_type compute_shape(const ndarray_type& array)
             {
                 shape_type shape{};

@@ -60,17 +60,20 @@ void init_m_helper(nb::module_& m)
     });
 
     m_helper.def("pytensor_loop_ref", [](xt::nanobind::pytensor<double, 2>& t) {
-        for (auto i = 0; i < t.size(); i += 1)
+        using tensor_type = xt::nanobind::pytensor<double, 2>;
+        for (tensor_type::size_type i = 0; i < t.size(); i += 1)
             t.flat(i) += 1.0;
     });
     m_helper.def("pytensor_loop_ref2", [](xt::nanobind::pytensor<double, 2>& t) {
-        for (auto i = 0; i < t.size(); i += 1)
+        using tensor_type = xt::nanobind::pytensor<double, 2>;
+        for (tensor_type::size_type i = 0; i < t.size(); i += 1)
             t.data()[i] += 1.0;
     });
     m_helper.def("pytensor_sum_ref", [](xt::nanobind::pytensor<double, 2>& t) {
         t+= xt::sum(t)();
     });
     m_helper.def("pytensor_sum_const_ref", [](const xt::nanobind::pytensor<double, 2>& t) {
-        return xt::eval(t+xt::sum(t)());
+        xt::nanobind::pytensor<double, 2> t2 = xt::eval(t + xt::sum(t)());
+        return t2;
     });
 }

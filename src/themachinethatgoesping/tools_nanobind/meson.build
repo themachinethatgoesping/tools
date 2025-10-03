@@ -24,6 +24,8 @@ headers = [
   '.docstrings/nanobind_xtensor.doc.hpp',
   '.docstrings/ostream_redirect.doc.hpp',
   '.docstrings/pytensor_nanobind.doc.hpp',
+  '.docstrings/pytensor_nanobind.old.doc.hpp',
+  '.docstrings/pytensor_nanobind2.doc.hpp',
   '.docstrings/scoped_ostream_redirect.doc.hpp',
 ]
 

@@ -1,4 +1,4 @@
-//sourcehash: 51fc9c9035c455a3160c95414dbfe5d75137cb4bcd244a219f06eb2b931a55b6
+//sourcehash: f7446f8dd386d1dfe2dcd49c4e789d61da4d4c91988ec78c3326e74f82509431
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -83,8 +83,6 @@ static const char *__doc_xt_nanobind_pytensor_pytensor = R"doc()doc";
 static const char *__doc_xt_nanobind_pytensor_pytensor_2 = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor_pytensor_3 = R"doc()doc";
-
-static const char *__doc_xt_nanobind_pytensor_pytensor_4 = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor_scalar_type = R"doc()doc";
 
