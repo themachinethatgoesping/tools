@@ -1,4 +1,4 @@
-//sourcehash: 31e3b44644affd43a83079b46503ccb3c1235ad4c954bac1cd57708aafb540de
+//sourcehash: 72fead1912254d9745ef6034194df2fe908319dd35b832c827d3b0578804a747
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,10 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_pytensor_xtensor_caster_impl = R"doc()doc";
+
+static const char *__doc_pytensor_xtensor_caster_impl_NB_TYPE_CASTER = R"doc()doc";
 
 static const char *__doc_type_caster = R"doc()doc";
 

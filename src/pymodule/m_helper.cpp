@@ -17,6 +17,7 @@
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 #include <xtensor-python/pytensor.hpp>
+#include <xtensor/views/xview.hpp>
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::helper;
@@ -76,5 +77,18 @@ void init_m_helper(py::module& m)
     });
     m_helper.def("pytensor_sum_const_ref3", [](const xt::pytensor<double, 2>& t) {
         return xt::pytensor<double, 2>(t + xt::sum(t)());
+    });
+    m_helper.def("pytensor_view_ref", [](xt::pytensor<double, 2>& t) {
+        auto shape = t.shape();
+        xt::view(t,
+                 xt::range(int(0.1 * shape[0]), int(0.9 * shape[0])),
+                 xt::range(int(0.1 * shape[1]), int(0.9 * shape[1]))) += 1.0;
+    });
+
+    m_helper.def("pytensor_make", [](size_t rows, size_t cols) {
+        return xt::pytensor<double, 2>::from_shape({rows, cols});
+    });
+    m_helper.def("pytensor_make_xtensor", [](size_t rows, size_t cols) {
+        return xt::xtensor<double, 2>::from_shape({rows, cols});
     });
 }

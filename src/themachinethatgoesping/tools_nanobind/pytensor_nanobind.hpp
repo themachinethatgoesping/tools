@@ -728,7 +728,9 @@ namespace xt
         using shape_type = typename I::shape_type;
         static constexpr std::size_t rank = std::tuple_size<shape_type>::value;
         static constexpr layout_type base_layout = layout_remove_any(I::static_layout);
-        using type = nanobind::pytensor<value_type, rank, base_layout>;
+        static constexpr layout_type tensor_layout =
+            base_layout == layout_type::dynamic ? layout_type::row_major : base_layout;
+        using type = xt::xtensor<value_type, rank, tensor_layout>;
     };
 
     namespace extension
@@ -870,6 +872,209 @@ NAMESPACE_BEGIN(detail)
         {
             return this->value;
         }
+    };
+
+    template <class Tensor>
+    class pytensor_xtensor_caster_impl
+    {
+    public:
+        using tensor_type = Tensor;
+        using value_type = typename tensor_type::value_type;
+        using scalar_type = std::remove_const_t<value_type>;
+        static constexpr std::size_t rank = tensor_type::rank;
+        static constexpr xt::layout_type layout = tensor_type::static_layout;
+
+        using pytensor_bridge = xt::nanobind::pytensor<value_type, rank, layout>;
+        using ndarray_type = typename pytensor_bridge::ndarray_type;
+        using ndarray_scalar_type = typename pytensor_bridge::ndarray_scalar_type;
+
+        NB_TYPE_CASTER(tensor_type, type_caster<ndarray_type>::Name)
+
+        bool from_python(handle src, uint8_t flags, cleanup_list* cleanup) noexcept
+        {
+            ::nanobind::detail::make_caster<pytensor_bridge> caster;
+            flags = ::nanobind::detail::flags_for_local_caster<pytensor_bridge>(flags);
+            if (!caster.from_python(src, flags, cleanup))
+            {
+                return false;
+            }
+
+            try
+            {
+                value = tensor_type(caster.value);
+            }
+            catch (...)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        static handle from_cpp(const tensor_type& tensor, rv_policy policy, cleanup_list* cleanup) noexcept
+        {
+            rv_policy effective_policy = policy;
+            if (effective_policy == rv_policy::automatic)
+            {
+                effective_policy = rv_policy::move;
+            }
+            else if (effective_policy == rv_policy::automatic_reference)
+            {
+                effective_policy = rv_policy::reference;
+            }
+
+            std::array<size_t, rank> shape{};
+            std::array<int64_t, rank> stride_buffer{};
+
+            if constexpr (rank > 0)
+            {
+                const auto& tensor_shape = tensor.shape();
+                const auto& tensor_strides = tensor.strides();
+                for (std::size_t axis = 0; axis < rank; ++axis)
+                {
+                    shape[axis] = static_cast<size_t>(tensor_shape[axis]);
+                    stride_buffer[axis] = static_cast<int64_t>(tensor_strides[axis]);
+                }
+            }
+
+            auto deduce_order = [&]() -> char {
+                if constexpr (layout == xt::layout_type::row_major)
+                {
+                    return 'C';
+                }
+                else if constexpr (layout == xt::layout_type::column_major)
+                {
+                    return 'F';
+                }
+                else
+                {
+                    if constexpr (rank <= 1)
+                    {
+                        return 'C';
+                    }
+
+                    auto compute_expected = [](const std::array<size_t, rank>& extents,
+                                               bool reverse) {
+                        std::array<int64_t, rank> expected{};
+                        if constexpr (rank == 0)
+                        {
+                            return expected;
+                        }
+
+                        int64_t accumulator = 1;
+                        if (reverse)
+                        {
+                            for (std::ptrdiff_t axis = static_cast<std::ptrdiff_t>(rank) - 1; axis >= 0; --axis)
+                            {
+                                expected[static_cast<std::size_t>(axis)] = accumulator;
+                                accumulator *= static_cast<int64_t>(std::max<size_t>(extents[static_cast<std::size_t>(axis)], 1));
+                            }
+                        }
+                        else
+                        {
+                            for (std::size_t axis = 0; axis < rank; ++axis)
+                            {
+                                expected[axis] = accumulator;
+                                accumulator *= static_cast<int64_t>(std::max<size_t>(extents[axis], 1));
+                            }
+                        }
+                        return expected;
+                    };
+
+                    const auto expected_row = compute_expected(shape, true);
+                    const auto expected_col = compute_expected(shape, false);
+
+                    bool row_major = true;
+                    bool column_major = true;
+
+                    for (std::size_t axis = 0; axis < rank; ++axis)
+                    {
+                        if (stride_buffer[axis] != expected_row[axis])
+                        {
+                            row_major = false;
+                        }
+                        if (stride_buffer[axis] != expected_col[axis])
+                        {
+                            column_major = false;
+                        }
+                    }
+
+                    if (row_major)
+                    {
+                        return 'C';
+                    }
+                    if (column_major)
+                    {
+                        return 'F';
+                    }
+                    return 'A';
+                }
+            };
+
+            auto create_array = [&](auto* data_ptr,
+                                    ::nanobind::handle owner_handle,
+                                    rv_policy array_policy) -> handle {
+                const size_t* shape_ptr = nullptr;
+                const int64_t* stride_ptr = nullptr;
+                if constexpr (rank > 0)
+                {
+                    shape_ptr = shape.data();
+                    stride_ptr = stride_buffer.data();
+                }
+
+                ndarray_type array(
+                    data_ptr,
+                    static_cast<size_t>(rank),
+                    shape_ptr,
+                    owner_handle,
+                    stride_ptr,
+                    ::nanobind::dtype<ndarray_scalar_type>(),
+                    ::nanobind::device::cpu::value,
+                    0,
+                    deduce_order());
+
+                return ::nanobind::detail::make_caster<ndarray_type>::from_cpp(array, array_policy, cleanup);
+            };
+
+            using non_const_tensor = std::remove_const_t<tensor_type>;
+
+            if (effective_policy == rv_policy::move)
+            {
+                if constexpr (!std::is_const_v<typename tensor_type::value_type>)
+                {
+                    auto* moved_tensor = new non_const_tensor(std::move(const_cast<non_const_tensor&>(tensor)));
+                    ::nanobind::object owner = ::nanobind::capsule(
+                        moved_tensor,
+                        [](void* raw) noexcept { delete static_cast<non_const_tensor*>(raw); });
+                    return create_array(moved_tensor->data(), owner, rv_policy::reference);
+                }
+                else
+                {
+                    effective_policy = rv_policy::reference;
+                }
+            }
+
+            if (effective_policy == rv_policy::copy)
+            {
+                auto* copied_tensor = new non_const_tensor(tensor);
+                ::nanobind::object owner = ::nanobind::capsule(
+                    copied_tensor,
+                    [](void* raw) noexcept { delete static_cast<non_const_tensor*>(raw); });
+                return create_array(copied_tensor->data(), owner, rv_policy::reference);
+            }
+
+            if (effective_policy == rv_policy::reference_internal && cleanup != nullptr && cleanup->self() != nullptr)
+            {
+                return create_array(const_cast<scalar_type*>(tensor.data()), ::nanobind::borrow(cleanup->self()), rv_policy::reference);
+            }
+
+            return create_array(const_cast<scalar_type*>(tensor.data()), ::nanobind::handle(), effective_policy);
+        }
+    };
+
+    template <class T, std::size_t N, xt::layout_type Layout>
+    struct type_caster<xt::xtensor<T, N, Layout>>
+        : pytensor_xtensor_caster_impl<xt::xtensor<T, N, Layout>>
+    {
     };
 
 NAMESPACE_END(detail)
