@@ -360,7 +360,7 @@ namespace xt
                 ::nanobind::object owner;
                 if (total_size > 0)
                 {
-                    raw_ptr = new scalar_type[total_size]();
+                    raw_ptr = new scalar_type[total_size];
                     owner = ::nanobind::capsule(
                         raw_ptr,
                         [](void* p) noexcept { delete[] static_cast<scalar_type*>(p); });

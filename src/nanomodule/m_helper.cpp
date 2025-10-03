@@ -122,6 +122,10 @@ void init_m_helper(nb::module_& m)
     m_helper.def("pytensor_make", [](size_t rows, size_t cols) {
         return xt::nanobind::pytensor<double, 2>::from_shape({ rows, cols });
     });
+
+    m_helper.def("pytensor_from", [](size_t rows, size_t cols) {
+         xt::nanobind::pytensor<double, 2>::from_shape({ rows, cols });
+    });
     m_helper.def("pytensor_make_xtensor", [](size_t rows, size_t cols) {
         return xt::xtensor<double, 2>::from_shape({ rows, cols });
     });
