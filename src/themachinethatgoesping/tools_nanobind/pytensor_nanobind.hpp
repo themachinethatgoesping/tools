@@ -165,6 +165,31 @@ namespace xt
             }
         } // namespace detail
 
+        namespace detail
+        {
+            template <class Scalar, std::size_t N, layout_type Layout>
+            struct ndarray_type_helper
+            {
+                using type = ::nanobind::ndarray<
+                    Scalar,
+                    ::nanobind::ndim<N>,
+                    ::nanobind::numpy,
+                    ::nanobind::any_contig>;
+            };
+
+            template <class Scalar, std::size_t N>
+            struct ndarray_type_helper<Scalar, N, layout_type::row_major>
+            {
+                using type = ::nanobind::ndarray<Scalar, ::nanobind::ndim<N>, ::nanobind::numpy, ::nanobind::c_contig>;
+            };
+
+            template <class Scalar, std::size_t N>
+            struct ndarray_type_helper<Scalar, N, layout_type::column_major>
+            {
+                using type = ::nanobind::ndarray<Scalar, ::nanobind::ndim<N>, ::nanobind::numpy, ::nanobind::f_contig>;
+            };
+        }
+
         template <class T, std::size_t N, layout_type Layout = layout_type::dynamic>
         class pytensor
             : public xtensor_adaptor<
@@ -188,11 +213,17 @@ namespace xt
             using self_type = pytensor<T, N, Layout>;
             using scalar_type = std::remove_const_t<T>;
             using ndarray_scalar_type = std::conditional_t<std::is_const_v<T>, const scalar_type, scalar_type>;
-            using ndarray_type = ::nanobind::ndarray<
-                ndarray_scalar_type,
-                ::nanobind::ndim<N>,
-                ::nanobind::numpy,
-                ::nanobind::any_contig>;
+            using ndarray_type = typename detail::ndarray_type_helper<ndarray_scalar_type, N, Layout>::type;
+            static_assert(
+                Layout != layout_type::dynamic
+                    || std::is_same_v<
+                        ndarray_type,
+                        ::nanobind::ndarray<
+                            ndarray_scalar_type,
+                            ::nanobind::ndim<N>,
+                            ::nanobind::numpy,
+                            ::nanobind::any_contig>>,
+                "pytensor ndarray_type helper mismatch for dynamic layout");
             using buffer_type = typename base_type::storage_type;
             using size_type = typename base_type::size_type;
             using shape_type = typename base_type::shape_type;
@@ -586,7 +617,8 @@ NAMESPACE_BEGIN(detail)
 
         static handle from_cpp(const tensor_type& tensor, rv_policy policy, cleanup_list* cleanup) noexcept
         {
-            return make_caster<ndarray_type>::from_cpp(tensor.ndarray(), policy, cleanup);
+            const ndarray_type& array = tensor.ndarray();
+            return make_caster<ndarray_type>::from_cpp(&array, policy, cleanup);
         }
     };
 

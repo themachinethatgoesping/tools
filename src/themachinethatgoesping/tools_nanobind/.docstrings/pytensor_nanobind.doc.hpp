@@ -1,4 +1,4 @@
-//sourcehash: d72e6f9c363e95d6f532edb9fd879b64fa71d47f3ef7a272fe14187171862fef
+//sourcehash: 51fc9c9035c455a3160c95414dbfe5d75137cb4bcd244a219f06eb2b931a55b6
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -53,6 +53,8 @@ static const char *__doc_xt_nanobind_detail_compute_contiguous_strides_row_major
 static const char *__doc_xt_nanobind_detail_is_column_major = R"doc()doc";
 
 static const char *__doc_xt_nanobind_detail_is_row_major = R"doc()doc";
+
+static const char *__doc_xt_nanobind_detail_ndarray_type_helper = R"doc()doc";
 
 static const char *__doc_xt_nanobind_detail_pytensor_index_view = R"doc()doc";
 

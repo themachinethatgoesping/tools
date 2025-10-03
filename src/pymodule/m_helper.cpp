@@ -7,8 +7,8 @@
 // automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
-#include <themachinethatgoesping/tools/helper/stringconversion.hpp>
 #include <themachinethatgoesping/tools/helper/printing.hpp>
+#include <themachinethatgoesping/tools/helper/stringconversion.hpp>
 
 // -- include system headers
 #include <sstream>
@@ -16,6 +16,7 @@
 // -- include pybind11 headers
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
+#include <xtensor-python/pytensor.hpp>
 
 namespace py = pybind11;
 using namespace themachinethatgoesping::tools::helper;
@@ -42,4 +43,31 @@ void init_m_helper(py::module& m)
                  py::arg("value"));
     m_helper.def(
         "superscript", &superscript, "convert integer number to superscript", py::arg("exponent"));
+
+    // performance tests
+    m_helper.def("pytensor_load_ref", [](xt::pytensor<double, 2>& t) { t.unchecked(0, 0) += 1.0; });
+    m_helper.def("pytensor_const_load_ref", [](const xt::pytensor<double, 2>& t) {
+        auto t2 = t;
+        t2.unchecked(0, 0) += 1.0;
+        return t2;
+    });
+    m_helper.def("pytensor_load_copy", [](xt::pytensor<double, 2> t) {
+        t.unchecked(0, 0) += 1.0;
+        return t;
+    });
+
+    m_helper.def("pytensor_loop_ref", [](xt::pytensor<double, 2>& t) {
+        for (auto i = 0; i < t.size(); i += 1)
+            t.flat(i) += 1.0;
+    });
+    m_helper.def("pytensor_loop_ref2", [](xt::pytensor<double, 2>& t) {
+        for (auto i = 0; i < t.size(); i += 1)
+            t.data()[i] += 1.0;
+    });
+    m_helper.def("pytensor_sum_ref", [](xt::pytensor<double, 2>& t) {
+        t += xt::sum(t)();
+    });
+    m_helper.def("pytensor_sum_const_ref", [](const xt::pytensor<double, 2>& t) {
+        return xt::eval(t + xt::sum(t)());
+    });
 }
