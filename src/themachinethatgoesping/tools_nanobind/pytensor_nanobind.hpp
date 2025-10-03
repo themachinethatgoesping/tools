@@ -316,7 +316,13 @@ namespace xt
                 return *this;
             }
 
-            using base_type::operator=;
+            template <std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor& operator=(typename base_type::temporary_type&& rhs)
+            {
+                base_type::operator=(std::move(rhs));
+                return *this;
+            }
+
             using base_type::operator+=;
             using base_type::operator-=;
             using base_type::operator*=;

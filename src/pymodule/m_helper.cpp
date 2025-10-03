@@ -58,11 +58,11 @@ void init_m_helper(py::module& m)
     });
 
     m_helper.def("pytensor_loop_ref", [](xt::pytensor<double, 2>& t) {
-        for (auto i = 0; i < t.size(); i += 1)
+        for (size_t i = 0; i < t.size(); i += 1)
             t.flat(i) += 1.0;
     });
     m_helper.def("pytensor_loop_ref2", [](xt::pytensor<double, 2>& t) {
-        for (auto i = 0; i < t.size(); i += 1)
+        for (size_t i = 0; i < t.size(); i += 1)
             t.data()[i] += 1.0;
     });
     m_helper.def("pytensor_sum_ref", [](xt::pytensor<double, 2>& t) {
