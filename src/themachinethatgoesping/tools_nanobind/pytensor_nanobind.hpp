@@ -264,6 +264,17 @@ namespace xt
                 reset_from_ndarray(std::move(array));
             }
 
+            template <class ShapeLike,
+                      std::enable_if_t<!std::is_same_v<std::decay_t<ShapeLike>, self_type>
+                                            && !std::is_same_v<std::decay_t<ShapeLike>, ndarray_type>,
+                                        int> = 0>
+            explicit pytensor(ShapeLike&& shape_like)
+                : base_type(buffer_type{})
+            {
+                auto temporary = from_shape(std::forward<ShapeLike>(shape_like));
+                *this = std::move(temporary);
+            }
+
             template <class EC,
                       xt::layout_type TensorLayout,
                       class Tag,
