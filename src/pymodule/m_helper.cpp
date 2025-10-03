@@ -71,4 +71,10 @@ void init_m_helper(py::module& m)
         xt::pytensor<double, 2> t2= xt::eval(t+xt::sum(t)());
         return xt::eval(t + xt::sum(t)());
     });
+    m_helper.def("pytensor_sum_const_ref2", [](const xt::pytensor<double, 2>& t) {
+        return xt::eval(t + xt::sum(t)());
+    });
+    m_helper.def("pytensor_sum_const_ref3", [](const xt::pytensor<double, 2>& t) {
+        return xt::pytensor<double, 2>(t + xt::sum(t)());
+    });
 }

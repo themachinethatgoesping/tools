@@ -1,4 +1,4 @@
-//sourcehash: f7446f8dd386d1dfe2dcd49c4e789d61da4d4c91988ec78c3326e74f82509431
+//sourcehash: 31e3b44644affd43a83079b46503ccb3c1235ad4c954bac1cd57708aafb540de
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -42,6 +42,18 @@ static const char *__doc_type_caster = R"doc()doc";
 
 static const char *__doc_xt_detail_is_crtp_base_of_impl = R"doc()doc";
 
+static const char *__doc_xt_detail_select_xfunction_expression = R"doc()doc";
+
+static const char *__doc_xt_extension_nanobind_expression_base = R"doc()doc";
+
+static const char *__doc_xt_extension_xfunction_base_impl = R"doc()doc";
+
+static const char *__doc_xt_extension_xindex_view_base_impl = R"doc()doc";
+
+static const char *__doc_xt_extension_xreducer_base_impl = R"doc()doc";
+
+static const char *__doc_xt_extension_xview_base_impl = R"doc()doc";
+
 static const char *__doc_xt_has_assign_conversion = R"doc()doc";
 
 static const char *__doc_xt_index_view = R"doc()doc";
@@ -72,6 +84,8 @@ static const char *__doc_xt_nanobind_detail_pytensor_index_view_pytensor_index_v
 
 static const char *__doc_xt_nanobind_pytensor = R"doc()doc";
 
+static const char *__doc_xt_nanobind_pytensor_expression_tag = R"doc()doc";
+
 static const char *__doc_xt_nanobind_pytensor_from_shape = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor_operator_assign = R"doc()doc";
@@ -86,7 +100,11 @@ static const char *__doc_xt_nanobind_pytensor_pytensor_3 = R"doc()doc";
 
 static const char *__doc_xt_nanobind_pytensor_scalar_type = R"doc()doc";
 
+static const char *__doc_xt_temporary_type_from_tag = R"doc()doc";
+
 static const char *__doc_xt_xcontainer_inner_types = R"doc()doc";
+
+static const char *__doc_xt_xexpression_assigner_base = R"doc()doc";
 
 static const char *__doc_xt_xiterable_inner_types = R"doc()doc";
 

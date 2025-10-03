@@ -20,6 +20,7 @@
 
 #include "module.hpp"
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
+#include <themachinethatgoesping/tools_nanobind/nanobind_xtensor.hpp>
 
 #define DOC_BiVectorInterpolator(ARG)                                                              \
     DOC(themachinethatgoesping, tools, vectorinterpolators, BiVectorInterpolator, ARG)

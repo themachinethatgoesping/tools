@@ -11,6 +11,7 @@
 #include <themachinethatgoesping/tools/helper/stringconversion.hpp>
 
 #include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
+//#include <themachinethatgoesping/tools_nanobind/nanobind_xtensor.hpp>
 
 // -- include system headers
 #include <sstream>
@@ -76,4 +77,10 @@ void init_m_helper(nb::module_& m)
         xt::nanobind::pytensor<double, 2> t2 = xt::eval(t + xt::sum(t)());
         return t2;
     });
+    m_helper.def("pytensor_sum_const_ref2", [](const xt::nanobind::pytensor<double, 2>& t) {
+        return xt::eval(t + xt::sum(t)());
+    });
+    // m_helper.def("pytensor_sum_const_ref3", [](const xt::nanobind::pytensor<double, 2>& t) {
+    //     return xt::nanobind::pytensor<double, 2>(t + xt::sum(t)());
+    // });
 }

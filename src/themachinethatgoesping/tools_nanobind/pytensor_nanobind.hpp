@@ -26,12 +26,20 @@
 #include <xtensor/containers/xtensor.hpp>
 #include <xtensor/containers/xscalar.hpp>
 #include <xtensor/core/xassign.hpp>
+#include <xtensor/core/xfunction.hpp>
 #include <xtensor/core/xeval.hpp>
+#include <xtensor/reducers/xreducer.hpp>
+#include <xtensor/views/xindex_view.hpp>
+#include <xtensor/views/xview.hpp>
 
 namespace xt
 {
     namespace nanobind
     {
+        struct pytensor_expression_tag : xt::xtensor_expression_tag
+        {
+        };
+
         namespace detail
         {
             template <class TensorRef, class IndicesContainer, std::size_t Dim>
@@ -234,6 +242,8 @@ namespace xt
             using const_reference = const scalar_type&;
             using pointer = std::conditional_t<std::is_const_v<T>, const scalar_type*, scalar_type*>;
             using const_pointer = const scalar_type*;
+            using expression_tag = pytensor_expression_tag;
+            static constexpr layout_type static_layout = Layout;
 
             pytensor()
                 : base_type(buffer_type{})
@@ -269,6 +279,20 @@ namespace xt
             pytensor(pytensor&&) noexcept = default;
             pytensor& operator=(const pytensor&) = default;
             pytensor& operator=(pytensor&&) noexcept = default;
+
+            template <class E, std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor(const xexpression<E>& expression)
+                : base_type(buffer_type{})
+            {
+                assign_expression(expression.derived_cast());
+            }
+
+            template <class E, std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor& operator=(const xexpression<E>& expression)
+            {
+                assign_expression(expression.derived_cast());
+                return *this;
+            }
 
             template <class EC,
                       xt::layout_type TensorLayout,
@@ -455,6 +479,47 @@ namespace xt
             }
 
         private:
+            template <class Expression>
+            void assign_expression(const Expression& expression)
+            {
+                using expression_type = std::decay_t<Expression>;
+                static_assert(!std::is_same_v<expression_type, self_type>, "pytensor expression assignment should use copy/move operators");
+
+                if constexpr (Layout == layout_type::column_major)
+                {
+                    auto owned_tensor = std::make_unique<xt::xtensor<scalar_type, N, layout_type::column_major>>(expression);
+                    adopt_xtensor_container(std::move(owned_tensor));
+                }
+                else if constexpr (Layout == layout_type::row_major)
+                {
+                    auto owned_tensor = std::make_unique<xt::xtensor<scalar_type, N, layout_type::row_major>>(expression);
+                    adopt_xtensor_container(std::move(owned_tensor));
+                }
+                else
+                {
+                    layout_type selected_layout = layout_type::row_major;
+                    if constexpr (requires { expression.layout(); })
+                    {
+                        auto expression_layout = expression.layout();
+                        if (expression_layout == layout_type::column_major)
+                        {
+                            selected_layout = layout_type::column_major;
+                        }
+                    }
+
+                    if (selected_layout == layout_type::column_major)
+                    {
+                        auto owned_tensor = std::make_unique<xt::xtensor<scalar_type, N, layout_type::column_major>>(expression);
+                        adopt_xtensor_container(std::move(owned_tensor));
+                    }
+                    else
+                    {
+                        auto owned_tensor = std::make_unique<xt::xtensor<scalar_type, N, layout_type::row_major>>(expression);
+                        adopt_xtensor_container(std::move(owned_tensor));
+                    }
+                }
+            }
+
             template <class XTensor>
             void adopt_xtensor_container(std::unique_ptr<XTensor> owned_tensor)
             {
@@ -655,6 +720,55 @@ namespace xt
         static constexpr layout_type layout = Layout;
     };
 
+    template <class T>
+    struct temporary_type_from_tag<nanobind::pytensor_expression_tag, T>
+    {
+        using I = std::decay_t<T>;
+        using value_type = std::remove_const_t<typename I::value_type>;
+        using shape_type = typename I::shape_type;
+        static constexpr std::size_t rank = std::tuple_size<shape_type>::value;
+        static constexpr layout_type base_layout = layout_remove_any(I::static_layout);
+        using type = nanobind::pytensor<value_type, rank, base_layout>;
+    };
+
+    namespace extension
+    {
+        struct nanobind_expression_base
+        {
+            using expression_tag = nanobind::pytensor_expression_tag;
+        };
+
+        template <class F, class... CT>
+        struct xfunction_base_impl<nanobind::pytensor_expression_tag, F, CT...>
+        {
+            using type = nanobind_expression_base;
+        };
+
+        template <class CT, class... S>
+        struct xview_base_impl<nanobind::pytensor_expression_tag, CT, S...>
+        {
+            using type = nanobind_expression_base;
+        };
+
+        template <class F, class CT, class X, class O>
+        struct xreducer_base_impl<nanobind::pytensor_expression_tag, F, CT, X, O>
+        {
+            using type = nanobind_expression_base;
+        };
+
+        template <class CT, class I>
+        struct xindex_view_base_impl<nanobind::pytensor_expression_tag, CT, I>
+        {
+            using type = nanobind_expression_base;
+        };
+    }
+
+    template <>
+    class xexpression_assigner_base<nanobind::pytensor_expression_tag>
+        : public xexpression_assigner_base<xtensor_expression_tag>
+    {
+    };
+
     template <class T, std::size_t N, layout_type Layout>
     struct xiterable_inner_types<nanobind::pytensor<T, N, Layout>>
         : xcontainer_iterable_types<nanobind::pytensor<T, N, Layout>>
@@ -666,6 +780,15 @@ namespace xt
         template <class T, std::size_t N, layout_type Layout>
         struct is_crtp_base_of_impl<xexpression, nanobind::pytensor<T, N, Layout>> : std::true_type
         {
+        };
+    }
+
+    namespace detail
+    {
+        template <class F, class... E>
+        struct select_xfunction_expression<nanobind::pytensor_expression_tag, F, E...>
+        {
+            using type = xfunction<F, E...>;
         };
     }
 
