@@ -86,7 +86,7 @@ void init_m_helper(py::module& m)
     });
 
     m_helper.def("pytensor_make", [](size_t rows, size_t cols) {
-        return xt::pytensor<double, 2>::from_shape({rows, cols});
+        return xt::pytensor<double, 2>::from_shape({static_cast<long long>(rows), static_cast<long long>(cols)});
     });
     m_helper.def("pytensor_make_xtensor", [](size_t rows, size_t cols) {
         return xt::xtensor<double, 2>::from_shape({rows, cols});
