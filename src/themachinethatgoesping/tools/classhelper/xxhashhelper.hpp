@@ -19,7 +19,16 @@
 // #else
 // #define _MM_PERM_ENUM int
 // #endif
+#if defined(__GNUC__)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Warray-bounds"
+#endif
+
 #include <xxhash.hpp>
+
+#if defined(__GNUC__)
+#  pragma GCC diagnostic pop
+#endif
 
 class XXHashSink : public boost::iostreams::sink
 {
