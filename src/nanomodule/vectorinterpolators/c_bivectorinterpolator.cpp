@@ -32,6 +32,8 @@ template<typename t_interpolator>
 void init_BiVectorInterpolator(nanobind::module_& m, const std::string& name)
 {
     using t_BiVectorInterpolator = BiVectorInterpolator<t_interpolator>;
+    using CoordinateType         = typename t_BiVectorInterpolator::CoordinateType;
+    using ValueType              = typename t_BiVectorInterpolator::ValueType;
 
     nb::class_<t_BiVectorInterpolator>(
         m,
@@ -50,7 +52,11 @@ void init_BiVectorInterpolator(nanobind::module_& m, const std::string& name)
              DOC_BiVectorInterpolator(get_col_interpolators))
         // interpolation function
         .def("__call__",
-             &t_BiVectorInterpolator::operator(),
+             nb::overload_cast<const xt::nanobind::pytensor<CoordinateType, 1>&,
+                               const xt::nanobind::pytensor<CoordinateType, 1>&,
+                               int>(&t_BiVectorInterpolator::template
+                                    operator()<xt::nanobind::pytensor<CoordinateType, 1>>,
+                                    nb::const_),
              DOC_BiVectorInterpolator(operator_call),
              nb::arg("row_coordinates"),
              nb::arg("column_coordinates"),
@@ -64,7 +70,8 @@ void init_BiVectorInterpolator(nanobind::module_& m, const std::string& name)
              &t_BiVectorInterpolator::get_extrapolation_mode,
              DOC_BiVectorInterpolator(get_extrapolation_mode))
         .def("append_row",
-             &t_BiVectorInterpolator::append_row,
+             &t_BiVectorInterpolator::template append_row<xt::nanobind::pytensor<CoordinateType, 1>,
+                                                          xt::nanobind::pytensor<ValueType, 1>>,
              DOC_BiVectorInterpolator(append_row),
              nb::arg("row_coordinate"),
              nb::arg("column_coordinates"),

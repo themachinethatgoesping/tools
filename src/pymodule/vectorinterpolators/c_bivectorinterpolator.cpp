@@ -31,6 +31,8 @@ template<typename t_interpolator>
 void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
 {
     using t_BiVectorInterpolator = BiVectorInterpolator<t_interpolator>;
+    using CoordinateType         = typename t_BiVectorInterpolator::CoordinateType;
+    using ValueType              = typename t_BiVectorInterpolator::ValueType;
 
     py::classh<t_BiVectorInterpolator>(
         m,
@@ -49,7 +51,11 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
              DOC_BiVectorInterpolator(get_col_interpolators))
         // interpolation function
         .def("__call__",
-             &t_BiVectorInterpolator::operator(),
+             py::overload_cast<const xt::pytensor<CoordinateType, 1>&,
+                               const xt::pytensor<CoordinateType, 1>&,
+                               int>(
+                 &t_BiVectorInterpolator::template operator()<xt::pytensor<CoordinateType, 1>>,
+                 py::const_),
              DOC_BiVectorInterpolator(operator_call),
              py::arg("row_coordinates"),
              py::arg("column_coordinates"),
@@ -63,7 +69,8 @@ void init_BiVectorInterpolator(pybind11::module& m, const std::string& name)
              &t_BiVectorInterpolator::get_extrapolation_mode,
              DOC_BiVectorInterpolator(get_extrapolation_mode))
         .def("append_row",
-             &t_BiVectorInterpolator::append_row,
+             &t_BiVectorInterpolator::template append_row<xt::pytensor<CoordinateType, 1>,
+                                                          xt::pytensor<ValueType, 1>>,
              DOC_BiVectorInterpolator(append_row),
              py::arg("row_coordinate"),
              py::arg("column_coordinates"),

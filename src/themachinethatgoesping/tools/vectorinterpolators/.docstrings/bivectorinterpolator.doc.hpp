@@ -1,4 +1,4 @@
-//sourcehash: d688fd583f2a6ca072cf34e91e3af721c64de8088a8d60ff7a426b2417b6027f
+//sourcehash: 6777fc435163bb62e9812d82c170430e908d164c0807734dd3cad19906c87352
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -43,6 +43,8 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVect
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_BiVectorInterpolator = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_append_row = R"doc()doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_append_row_2 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_binary_hash =
 R"doc(compute a 64 bit hash of the object using xxhash and the \ to_binary
@@ -101,6 +103,16 @@ Returns:
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_insert_row = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_operator_call =
+R"doc(get interpolated y values for given x targets (vectorized call)
+
+Parameter ``targets_x``:
+    vector of x values. For each of these values find the corrsponding
+    y value
+
+Returns:
+    corresponding y value)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_BiVectorInterpolator_operator_call_2 =
 R"doc(get interpolated y values for given x targets (vectorized call)
 
 Parameter ``targets_x``:

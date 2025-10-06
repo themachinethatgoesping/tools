@@ -23,6 +23,7 @@
 
 #include "../classhelper/objectprinter.hpp"
 #include "../classhelper/stream.hpp"
+#include "../helper/xtensor.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -79,6 +80,29 @@ class BiVectorInterpolator
                 _row_coordinates.back()));
         _col_interpolator_per_row.push_back(t_interpolator(_extr_mode));
         _col_interpolator_per_row.back().set_data_XY(column_coordinates, values);
+        _row_coordinates.push_back(row_coordinate);
+    }
+
+    template<typename t_xtensor_1d_1, typename t_xtensor_1d_2>
+    void append_row(CoordinateType        row_coordinate,
+                    const t_xtensor_1d_1& column_coordinates,
+                    const t_xtensor_1d_2& values)
+    {
+        if (!_row_coordinates.empty() && row_coordinate <= _row_coordinates.back())
+            throw std::domain_error(fmt::format(
+                "ERROR[BiVectorInterpolator::append_row]: appended row coordinate {} must be > "
+                "than the last existing row coordinate {}!",
+                row_coordinate,
+                _row_coordinates.back()));
+
+        std::vector<tools::helper::xtensor_datatype_t<t_xtensor_1d_1>> column_coords(
+            column_coordinates.begin(), column_coordinates.end());
+        std::vector<tools::helper::xtensor_datatype_t<t_xtensor_1d_2>> value_vec(values.begin(),
+                                                                                 values.end());
+
+        _col_interpolator_per_row.push_back(t_interpolator(_extr_mode));
+        _col_interpolator_per_row.back().set_data_XY(std::move(column_coords),
+                                                     std::move(value_vec));
         _row_coordinates.push_back(row_coordinate);
     }
 
@@ -159,6 +183,44 @@ class BiVectorInterpolator
      */
     // ValueType operator()(CoordinateType row_coordinate, CoordinateType column_coordinate) const =
     // 0;
+
+    /**
+     * @brief get interpolated y values for given x targets (vectorized call)
+     *
+     * @param targets_x vector of x values. For each of these values find the corrsponding y value
+     * @return corresponding y value
+     */
+    template<tools::helper::c_xtensor_1d t_xtensor_1d>
+    xt::xtensor<ValueType, 2> operator()(const t_xtensor_1d& row_coordinates,
+                                         const t_xtensor_1d& column_coordinates,
+                                         int                 mp_cores = 1) const
+    {
+        // output tensor with the requested row and row size
+        auto interpolated_values = xt::xtensor<ValueType, 2>::from_shape(
+            { row_coordinates.size(), column_coordinates.size() });
+
+// interpolate each column for the requested column coordinates
+#pragma omp parallel for num_threads(mp_cores)
+        for (size_t c = 0; c < column_coordinates.size(); ++c)
+        {
+            // interpolate values for each internal row
+            std::vector<ValueType> value_per_row(_row_coordinates.size());
+
+            for (size_t r = 0; r < _row_coordinates.size(); ++r)
+                value_per_row[r] = _col_interpolator_per_row[r](column_coordinates.unchecked(c));
+
+            t_interpolator interpolator(_extr_mode);
+            interpolator.set_data_XY(
+                std::vector<CoordinateType>(_row_coordinates.begin(), _row_coordinates.end()),
+                std::move(value_per_row));
+
+            // interpolate the values for each requested row coordinate
+            for (size_t r = 0; r < row_coordinates.size(); ++r)
+                interpolated_values.unchecked(r, c) = interpolator(row_coordinates.unchecked(r));
+        }
+
+        return interpolated_values;
+    }
 
     /**
      * @brief get interpolated y values for given x targets (vectorized call)
