@@ -99,7 +99,7 @@ struct Option
     operator t_enum() const { return value; }
     operator t_underlying() const { return static_cast<t_underlying>(value); }
     operator std::string() const { return std::string(magic_enum::enum_name(value)); }
-    bool operator==(Option<t_enum> other) const { return value == other.value; }
+    bool operator==(const Option& other) const { return value == other.value; }
     bool operator==(t_enum other) const { return value == other; }
     bool operator==(t_underlying other) const { return static_cast<t_underlying>(value) == other; }
     bool operator==(std::string_view other) const
