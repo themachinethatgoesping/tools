@@ -1,4 +1,4 @@
-//sourcehash: 2efef74dccb795bbb23a51dccc83256eb04b8662cd5d6b0aea0700285b38a6ba
+//sourcehash: 876e0a9c83ce16a1d0a0540bbe54b12d15cf745c1d76c99273a9c486f49795b1
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -37,6 +37,8 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *__doc_themachinethatgoesping_tools_nanobind_helper_add_string_to_enum_conversion = R"doc(Extend a nanobind enum with string conversion helpers using magic_enum)doc";
 
 static const char *__doc_themachinethatgoesping_tools_nanobind_helper_make_option_class = R"doc()doc";
 

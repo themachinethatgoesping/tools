@@ -50,9 +50,9 @@ class BiVectorInterpolator
 
     bool operator==(const BiVectorInterpolator& other) const = default;
 
-    auto get_row_coordinates() const { return _row_coordinates; }
-    auto get_col_interpolators() const { return _col_interpolator_per_row; }
-    void clear()
+    const auto& get_row_coordinates() const { return _row_coordinates; }
+    const auto& get_col_interpolators() const { return _col_interpolator_per_row; }
+    void        clear()
     {
         _col_interpolator_per_row.clear();
         _row_coordinates.clear();
@@ -174,15 +174,6 @@ class BiVectorInterpolator
     //-------------------------
     // interpolation functions
     //-------------------------
-
-    /**
-     * @brief get the interpolated y value for given x target
-     *
-     * @param target_x find the corresponding y value for this x value
-     * @return corresponding y value
-     */
-    // ValueType operator()(CoordinateType row_coordinate, CoordinateType column_coordinate) const =
-    // 0;
 
     /**
      * @brief get interpolated y values for given x targets (vectorized call)

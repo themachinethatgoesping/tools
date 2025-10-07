@@ -21,10 +21,12 @@
 #include <nanobind/operators.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/string_view.h>
+#include <new>
 #include <string>
 
 #include <themachinethatgoesping/tools/classhelper/option.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
+#include <stdexcept>
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -73,6 +75,47 @@ void make_option_class(nanobind::module_& m, const std::string& name)
                  })
         // end
         ;
+}
+
+/**
+ * @brief Extend a nanobind enum with string conversion helpers using magic_enum
+ */
+template<typename T_ENUM, typename T_NB_ENUM>
+void add_string_to_enum_conversion(T_NB_ENUM& t_enum)
+{
+    t_enum.def("__init__",
+               [](T_ENUM* self, const std::string& str) {
+                   auto enum_value = magic_enum::enum_cast<T_ENUM>(str);
+                   if (!enum_value.has_value())
+                   {
+                       constexpr auto enum_values = magic_enum::enum_names<T_ENUM>();
+                       std::string    enum_info;
+                       for (size_t i = 0; i < enum_values.size(); ++i)
+                       {
+                           if (i != 0)
+                               enum_info += ", ";
+
+                           enum_info += "\"";
+                           enum_info += enum_values[i];
+                           enum_info += "\"";
+                       }
+
+                       auto error_message =
+                           fmt::format("ERROR: unknown value option '{}'! Try: [{}]",
+                                       str,
+                                       enum_info);
+                       nb::print(error_message.c_str());
+                       throw std::invalid_argument(error_message);
+                   }
+
+                   new (self) T_ENUM(enum_value.value());
+               },
+               nb::arg("str"),
+               "Construct this enum type from string");
+
+    t_enum.def("str", [](const T_ENUM& self) { return magic_enum::enum_name(self); });
+
+    nb::implicitly_convertible<std::string, T_ENUM>();
 }
 
 }
