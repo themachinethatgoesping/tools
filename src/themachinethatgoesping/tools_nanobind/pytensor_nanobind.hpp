@@ -69,12 +69,16 @@
 #include <cstddef>
 #include <initializer_list>
 #include <memory>
+#include <functional>
+#include <numeric>
 #include <stdexcept>
 #include <tuple>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include <nanobind/nanobind.h>
+#include <nanobind/nb_python.h>
 #include <nanobind/ndarray.h>
 
 #include <xtl/xsequence.hpp>
@@ -954,19 +958,26 @@ NAMESPACE_BEGIN(detail)
         {
             make_caster<ndarray_type> caster;
             flags = flags_for_local_caster<ndarray_type>(flags);
-            if (!caster.from_python(src, flags, cleanup))
+            if (caster.from_python(src, flags, cleanup))
+            {
+                try
+                {
+                    value.reset_from_ndarray(std::move(caster.value));
+                }
+                catch (...)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            tensor_type sequence_tensor;
+            if (!try_convert_sequence(src.ptr(), sequence_tensor))
             {
                 return false;
             }
 
-            try
-            {
-                value.reset_from_ndarray(std::move(caster.value));
-            }
-            catch (...)
-            {
-                return false;
-            }
+            value = std::move(sequence_tensor);
             return true;
         }
 
@@ -974,6 +985,114 @@ NAMESPACE_BEGIN(detail)
         {
             const ndarray_type& array = tensor.ndarray();
             return make_caster<ndarray_type>::from_cpp(&array, policy, cleanup);
+        }
+
+    private:
+        static bool try_convert_sequence(PyObject* obj, tensor_type& result)
+        {
+            if constexpr (tensor_type::rank == 0)
+            {
+                try
+                {
+                    result = tensor_type{};
+                    result() = ::nanobind::cast<scalar_type>(::nanobind::handle(obj));
+                    return true;
+                }
+                catch (...)
+                {
+                    PyErr_Clear();
+                    return false;
+                }
+            }
+            else
+            {
+                std::array<size_t, tensor_type::rank> shape{};
+                std::vector<scalar_type> values;
+                values.reserve(8);
+
+                if (!flatten_sequence(obj, 0, shape, values))
+                {
+                    return false;
+                }
+
+                size_t expected_size = std::accumulate(shape.begin(), shape.end(), size_t{1}, std::multiplies<size_t>{});
+                if (expected_size != values.size())
+                {
+                    if (!(expected_size == 0 && values.empty()))
+                    {
+                        return false;
+                    }
+                }
+
+                typename tensor_type::shape_type xt_shape{};
+                for (size_t axis = 0; axis < tensor_type::rank; ++axis)
+                {
+                    xt_shape[axis] = static_cast<typename tensor_type::size_type>(shape[axis]);
+                }
+
+                tensor_type tmp = tensor_type::from_shape(xt_shape);
+                std::copy(values.begin(), values.end(), tmp.begin());
+                result = std::move(tmp);
+                return true;
+            }
+        }
+
+        static bool flatten_sequence(PyObject* obj,
+                                     size_t axis,
+                                     std::array<size_t, tensor_type::rank>& shape,
+                                     std::vector<scalar_type>& values)
+        {
+            if (axis == tensor_type::rank)
+            {
+                try
+                {
+                    values.push_back(::nanobind::cast<scalar_type>(::nanobind::handle(obj)));
+                    return true;
+                }
+                catch (...)
+                {
+                    PyErr_Clear();
+                    return false;
+                }
+            }
+
+            if (!PySequence_Check(obj) || PyUnicode_Check(obj) || PyBytes_Check(obj))
+            {
+                return false;
+            }
+
+            PyObject* seq = PySequence_Fast(obj, "pytensor expects a sequence");
+            if (seq == nullptr)
+            {
+                PyErr_Clear();
+                return false;
+            }
+
+            Py_ssize_t length = PySequence_Fast_GET_SIZE(seq);
+            size_t extent = static_cast<size_t>(length);
+
+            if (shape[axis] == 0)
+            {
+                shape[axis] = extent;
+            }
+            else if (shape[axis] != extent)
+            {
+                Py_DECREF(seq);
+                return false;
+            }
+
+            PyObject** items = PySequence_Fast_ITEMS(seq);
+            for (Py_ssize_t i = 0; i < length; ++i)
+            {
+                if (!flatten_sequence(items[i], axis + 1, shape, values))
+                {
+                    Py_DECREF(seq);
+                    return false;
+                }
+            }
+
+            Py_DECREF(seq);
+            return true;
         }
     };
 

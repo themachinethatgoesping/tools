@@ -11,8 +11,8 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 # import c++ module
-from themachinethatgoesping.tools_cppy.timeconv import *  # # flake8: noqa
-from themachinethatgoesping.tools_cppy.timeconv import (
+from themachinethatgoesping.tools_nanopy.timeconv import *  # # flake8: noqa
+from themachinethatgoesping.tools_nanopy.timeconv import (
     unixtime_to_datestring,
     datestring_to_unixtime,
 )
