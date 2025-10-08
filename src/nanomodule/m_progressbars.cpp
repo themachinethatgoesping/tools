@@ -120,7 +120,7 @@ void init_m_progressbars(nb::module_& m)
 
 
     // // BuiltInProgressBars enum
-    // py::native_enum<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
+    // nb::native_enum<t_BuiltInProgressBar>(m_progressbars, "t_BuiltInProgressBar")
     //     .value("pbar_NoIndicator", t_BuiltInProgressBar::pbar_NoIndicator)
     //     .value("pbar_Indicator", t_BuiltInProgressBar::pbar_Indicator)
     //     .value("pbar_Classic", t_BuiltInProgressBar::pbar_Classic)
@@ -130,7 +130,7 @@ void init_m_progressbars(nb::module_& m)
     //     // end
     //     ;
 
-    // py::implicitly_convertible<std::string, t_BuiltInProgressBar>();
+    // nb::implicitly_convertible<std::string, t_BuiltInProgressBar>();
 
     // interface class
     nb::class_<I_ProgressBar, I_ProgressBar_NanobindTrampoline>(
@@ -285,9 +285,9 @@ void init_m_progressbars(nb::module_& m)
         // end ProgressIndicator
         ;
 
-    // py::implicitly_convertible<ProgressTqdmNano,I_ProgressBar>();
+    // nb::implicitly_convertible<ProgressTqdmNano,I_ProgressBar>();
     nb::implicitly_convertible<nanobind::object, ProgressTqdmNano>();
-    // py::implicitly_convertible<ProgressTqdmNano,py::object&>();
+    // nb::implicitly_convertible<ProgressTqdmNano,nb::object&>();
 
     m_progressbars.def(
         "test_loop",

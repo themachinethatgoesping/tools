@@ -116,8 +116,8 @@ void init_c_bivectorinterpolator(nanobind::module_& m)
                                                                     "BiNearestInterpolatorDI");
     init_BiVectorInterpolator<NearestInterpolator<float, int64_t>>(m_biv,
                                                                    "BiNearestInterpolatorFI");
-    // init_BiVectorInterpolator<NearestInterpolator<double, py::object>>(m_biv,
+    // init_BiVectorInterpolator<NearestInterpolator<double, nb::object>>(m_biv,
     //                                                                    "BiNearestInterpolatorDO");
-    // init_BiVectorInterpolator<NearestInterpolator<float, py::object>>(m_biv,
+    // init_BiVectorInterpolator<NearestInterpolator<float, nb::object>>(m_biv,
     //                                                                   "BiNearestInterpolatorFO");
 }

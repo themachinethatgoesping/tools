@@ -1,5 +1,63 @@
-// SPDX-FileCopyrightText: 2025 Peter Urban, Ghent University
-// SPDX-License-Identifier: MPL-2.0
+/***************************************************************************
+ * Copyright (c) 2025 Peter Urban, Ghent University, Urcoustics             *
+ *                                                                          *
+ * This code was derived with assistance from ChatGPT-5 Codex, utilizing    *
+ * xtensor-python's pytensor.hpp, pycontainer.hpp, and related components.  *
+ *                                                                          *
+ * Original xtensor-python copyright:                                       *
+ * Copyright (c) 2016-2024 Wolf Vollprecht, Johan Mabille,                  *
+ *                         Sylvain Corlay, and QuantStack                   *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * This file adapts xtensor-python's pytensor implementation for use with   *
+ * nanobind instead of pybind11. The original pytensor.hpp is licensed      *
+ * under the BSD 3-Clause License (see below).                              *
+ *                                                                          *
+ * Note: This code requires a C++20 compiler (tested with GCC 14, clang 16, *
+ *       clang 17,clang-cl 19).                                             *
+ *                                                                          *
+ * Usage: Include this header in your C++ project to utilize the pytensor   *
+ *        class for seamless interoperability between C++ and Python using  *
+ *        nanobind. The header provides:                                    *
+ *        - A pytensor class compatible with xt::xtensor for numpy array    *
+ *          access as references (for speed and in-place operations).       *
+ *          (with namespace this is xt::nanobind::pytensor)                 *
+ *        - Type casters for xt::xtensor (which always copy/move memory)    *
+ *          and pytensor expressions.                                       *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+/*                                                                          *
+ * BSD 3-Clause License (for xtensor-python derived portions)              *
+ *                                                                          *
+ * Redistribution and use in source and binary forms, with or without       *
+ * modification, are permitted provided that the following conditions       *
+ * are met:                                                                 *
+ *                                                                          *
+ * 1. Redistributions of source code must retain the above copyright        *
+ *    notice, this list of conditions and the following disclaimer.         *
+ *                                                                          *
+ * 2. Redistributions in binary form must reproduce the above copyright     *
+ *    notice, this list of conditions and the following disclaimer in the   *
+ *    documentation and/or other materials provided with the distribution.  *
+ *                                                                          *
+ * 3. Neither the name of the copyright holder nor the names of its         *
+ *    contributors may be used to endorse or promote products derived       *
+ *    from this software without specific prior written permission.         *
+ *                                                                          *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      *
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        *
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    *
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     *
+ * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,   *
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED *
+ * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR   *
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF   *
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING     *
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS       *
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.             *
+ ****************************************************************************/
 
 #pragma once
 
@@ -266,12 +324,52 @@ namespace xt
 
             template <class ShapeLike,
                       std::enable_if_t<!std::is_same_v<std::decay_t<ShapeLike>, self_type>
-                                            && !std::is_same_v<std::decay_t<ShapeLike>, ndarray_type>,
+                                            && !std::is_same_v<std::decay_t<ShapeLike>, ndarray_type>
+                                            && !std::is_base_of_v<xt::xexpression<std::decay_t<ShapeLike>>, std::decay_t<ShapeLike>>,
                                         int> = 0>
             explicit pytensor(ShapeLike&& shape_like)
                 : base_type(buffer_type{})
             {
                 auto temporary = from_shape(std::forward<ShapeLike>(shape_like));
+                *this = std::move(temporary);
+            }
+
+            template <class ShapeLike,
+                      class Value,
+                      std::enable_if_t<!std::is_same_v<std::decay_t<ShapeLike>, self_type>
+                                            && !std::is_same_v<std::decay_t<ShapeLike>, ndarray_type>
+                                            && !std::is_base_of_v<xt::xexpression<std::decay_t<ShapeLike>>, std::decay_t<ShapeLike>>
+                                            && std::is_convertible_v<Value, scalar_type>
+                                            && !std::is_const_v<T>,
+                                        int> = 0>
+            pytensor(ShapeLike&& shape_like, Value&& value)
+                : base_type(buffer_type{})
+            {
+                auto temporary = from_shape(std::forward<ShapeLike>(shape_like));
+                temporary.fill(static_cast<scalar_type>(std::forward<Value>(value)));
+                *this = std::move(temporary);
+            }
+
+            template <std::enable_if_t<!std::is_const_v<T>, int> = 0>
+            pytensor(const shape_type& shape, const value_type& value)
+                : base_type(buffer_type{})
+            {
+                auto temporary = from_shape(shape);
+                temporary.fill(value);
+                *this = std::move(temporary);
+            }
+
+            template <class Integral,
+                      class Value,
+                      std::enable_if_t<std::is_integral_v<std::decay_t<Integral>>
+                                           && std::is_convertible_v<Value, scalar_type>
+                                           && !std::is_const_v<T>,
+                                       int> = 0>
+            pytensor(std::initializer_list<Integral> shape_list, Value&& value)
+                : base_type(buffer_type{})
+            {
+                auto temporary = from_shape(shape_list);
+                temporary.fill(static_cast<scalar_type>(std::forward<Value>(value)));
                 *this = std::move(temporary);
             }
 
