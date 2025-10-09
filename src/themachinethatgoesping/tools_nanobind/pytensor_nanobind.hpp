@@ -979,13 +979,13 @@ NAMESPACE_BEGIN(detail)
                 return false;
             }
 
-            tensor_type sequence_tensor;
-            if (!try_convert_sequence(src.ptr(), sequence_tensor))
+            tensor_type converted_tensor;
+            if (!try_convert_via_numpy(src, flags, cleanup, converted_tensor))
             {
                 return false;
             }
 
-            value = std::move(sequence_tensor);
+            value = std::move(converted_tensor);
             return true;
         }
 
@@ -996,111 +996,59 @@ NAMESPACE_BEGIN(detail)
         }
 
     private:
-        static bool try_convert_sequence(PyObject* obj, tensor_type& result)
+        static bool try_convert_via_numpy(handle src,
+                                          uint8_t flags,
+                                          cleanup_list* cleanup,
+                                          tensor_type& out_tensor)
         {
-            if constexpr (tensor_type::rank == 0)
+            try
             {
-                try
-                {
-                    result = tensor_type{};
-                    result() = ::nanobind::cast<scalar_type>(::nanobind::handle(obj));
-                    return true;
-                }
-                catch (...)
-                {
-                    PyErr_Clear();
-                    return false;
-                }
-            }
-            else
-            {
-                std::array<size_t, tensor_type::rank> shape{};
-                std::vector<scalar_type> values;
-                values.reserve(8);
+                static ::nanobind::object numpy_module = ::nanobind::module_::import_("numpy");
+                ::nanobind::object array_object;
 
-                if (!flatten_sequence(obj, 0, shape, values))
+                if (::nanobind::hasattr(src, "to_numpy"))
                 {
-                    return false;
-                }
-
-                size_t expected_size = std::accumulate(shape.begin(), shape.end(), size_t{1}, std::multiplies<size_t>{});
-                if (expected_size != values.size())
-                {
-                    if (!(expected_size == 0 && values.empty()))
+                    try
                     {
-                        return false;
+                        array_object = src.attr("to_numpy")(
+                            ::nanobind::arg("copy") = false);
+                    }
+                    catch (...)
+                    {
+                        PyErr_Clear();
+                        array_object = ::nanobind::object();
                     }
                 }
 
-                typename tensor_type::shape_type xt_shape{};
-                for (size_t axis = 0; axis < tensor_type::rank; ++axis)
+                if (!array_object.is_valid())
                 {
-                    xt_shape[axis] = static_cast<typename tensor_type::size_type>(shape[axis]);
+                    array_object = numpy_module.attr("asarray")(src);
                 }
 
-                tensor_type tmp = tensor_type::from_shape(xt_shape);
-                std::copy(values.begin(), values.end(), tmp.begin());
-                result = std::move(tmp);
-                return true;
-            }
-        }
+                make_caster<ndarray_type> numpy_caster;
+                if (!numpy_caster.from_python(array_object.ptr(), flags, cleanup))
+                {
+                    return false;
+                }
 
-        static bool flatten_sequence(PyObject* obj,
-                                     size_t axis,
-                                     std::array<size_t, tensor_type::rank>& shape,
-                                     std::vector<scalar_type>& values)
-        {
-            if (axis == tensor_type::rank)
-            {
                 try
                 {
-                    values.push_back(::nanobind::cast<scalar_type>(::nanobind::handle(obj)));
-                    return true;
+                    tensor_type tmp;
+                    tmp.reset_from_ndarray(std::move(numpy_caster.value));
+                    out_tensor = std::move(tmp);
                 }
                 catch (...)
                 {
-                    PyErr_Clear();
                     return false;
                 }
-            }
 
-            if (!PySequence_Check(obj) || PyUnicode_Check(obj) || PyBytes_Check(obj))
-            {
-                return false;
+                return true;
             }
-
-            PyObject* seq = PySequence_Fast(obj, "pytensor expects a sequence");
-            if (seq == nullptr)
+            catch (...)
             {
                 PyErr_Clear();
                 return false;
             }
-
-            Py_ssize_t length = PySequence_Fast_GET_SIZE(seq);
-            size_t extent = static_cast<size_t>(length);
-
-            if (shape[axis] == 0)
-            {
-                shape[axis] = extent;
-            }
-            else if (shape[axis] != extent)
-            {
-                Py_DECREF(seq);
-                return false;
-            }
-
-            PyObject** items = PySequence_Fast_ITEMS(seq);
-            for (Py_ssize_t i = 0; i < length; ++i)
-            {
-                if (!flatten_sequence(items[i], axis + 1, shape, values))
-                {
-                    Py_DECREF(seq);
-                    return false;
-                }
-            }
-
-            Py_DECREF(seq);
-            return true;
         }
     };
 
