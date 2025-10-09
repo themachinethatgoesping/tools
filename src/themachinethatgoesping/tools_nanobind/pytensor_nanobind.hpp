@@ -958,6 +958,9 @@ NAMESPACE_BEGIN(detail)
         {
             make_caster<ndarray_type> caster;
             flags = flags_for_local_caster<ndarray_type>(flags);
+            const bool allow_conversion =
+                (flags & static_cast<uint8_t>(::nanobind::detail::cast_flags::convert)) != 0;
+
             if (caster.from_python(src, flags, cleanup))
             {
                 try
@@ -969,6 +972,11 @@ NAMESPACE_BEGIN(detail)
                     return false;
                 }
                 return true;
+            }
+
+            if (!allow_conversion)
+            {
+                return false;
             }
 
             tensor_type sequence_tensor;
