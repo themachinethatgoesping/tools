@@ -6,6 +6,7 @@
 sources = [
   'themachinethatgoesping/tools/__init__.py',
   'themachinethatgoesping/tools/timeconv.py',
+  'themachinethatgoesping/tools/_submodule_helper.py',
   'themachinethatgoesping/scripts/__init__.py',
   'themachinethatgoesping/scripts/mbes.py',
   'themachinethatgoesping/scripts/nearfield.py',
