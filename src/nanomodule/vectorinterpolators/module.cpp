@@ -45,6 +45,7 @@ void init_m_vectorinterpolators(nanobind::module_& m)
             .value("extrapolate", t_extr_mode::extrapolate, DOC_extr_mode(extrapolate))
             .value("nearest", t_extr_mode::nearest, DOC_extr_mode(nearest))
             .value("fail", t_extr_mode::fail, DOC_extr_mode(fail))
+            .value("nan", t_extr_mode::fail, DOC_extr_mode(nan))
         // end
         ;
     tools::nanobind_helper::make_option_class<o_extr_mode>(m_vectorinterpolators, "o_extr_mode");

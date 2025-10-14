@@ -121,7 +121,7 @@ if build_machine.system() != 'linux'
                         override_options: [
                           'b_lundef=false'
                       ],
-                        # cpp_pch : 'pch/pch.hpp',
+                        cpp_pch : '../../pch/tools_themachinethatgoesping_tools.hpp',
                         install : true
                         )
 else  
@@ -141,7 +141,7 @@ else
                         override_options: [
                           'b_lundef=false'
                       ],
-                        # cpp_pch : 'pch/pch.hpp',
+                        cpp_pch : '../../pch/tools_themachinethatgoesping_tools.hpp',
                         install : true
                         )
 endif

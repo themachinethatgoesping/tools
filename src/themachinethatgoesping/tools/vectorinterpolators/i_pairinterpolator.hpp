@@ -301,6 +301,13 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
                 }
                 case t_extr_mode::nearest:
                     return _Y[0];
+
+                case t_extr_mode::nan:
+                    if constexpr (std::is_floating_point<YType>())
+                        return std::numeric_limits<YType>::quiet_NaN();
+                    else
+                        throw(std::domain_error("ERROR[INTERPOLATE]: cannot return NaN for non"
+                                                "floating point YType."));
                 default:
                     pair = std::make_unique<_t_x_pair>(0, 1, _X[0], _X[1]);
                     break;
@@ -325,6 +332,13 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
 
                 case t_extr_mode::nearest:
                     return _Y[last];
+
+                case t_extr_mode::nan:
+                    if constexpr (std::is_floating_point<YType>())
+                        return std::numeric_limits<YType>::quiet_NaN();
+                    else
+                        throw(std::domain_error("ERROR[INTERPOLATE]: cannot return NaN for non"
+                                                "floating point YType."));
 
                 default:
                     pair = std::make_unique<_t_x_pair>(last - 1, last, _X[last - 1], _X[last]);

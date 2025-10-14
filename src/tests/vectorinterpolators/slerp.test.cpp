@@ -9,7 +9,6 @@
 #include <chrono>
 #include <numbers>
 
-
 #include <themachinethatgoesping/tools/vectorinterpolators/slerpinterpolator.hpp>
 
 // using namespace testing;
@@ -238,6 +237,13 @@ TEST_CASE("SlerpInterpolator: should perform basic interpolations correctly", TE
                         REQUIRE(too_large_ypr[0] == Catch::Approx(ypr_append[0]));
                         REQUIRE(too_large_ypr[1] == Catch::Approx(ypr_append[1]));
                         REQUIRE(too_large_ypr[2] == Catch::Approx(ypr_append[2]));
+                    }
+                    break;
+
+                case vectorinterpolators::t_extr_mode::nan:
+                    SECTION(" - return NaN when set")
+                    {
+                        REQUIRE_THROWS_AS(interpolator(-11), std::domain_error);
                     }
                     break;
 

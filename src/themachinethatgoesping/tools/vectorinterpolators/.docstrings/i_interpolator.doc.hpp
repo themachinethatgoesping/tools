@@ -1,4 +1,4 @@
-//sourcehash: c2fff5aa87b121ee92c8b95f4fca9a51f9f3960dbc7e9235fff065a1daa06638
+//sourcehash: 310e36cf071b647418ad7e7acd0405a34ada9d02bd16fa9e6eefc538e846818a
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -38,7 +38,7 @@
 #endif
 
 
-static const char *__doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_249_67 = R"doc()doc";
+static const char *__doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_251_67 = R"doc()doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -201,6 +201,10 @@ static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_fail =
 R"doc(< throw out_of_range exception if x value exceeds boundaries of
 internal vector)doc";
+
+static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nan =
+R"doc(< return NaN if x value exceeds boundaries of internal vector (only
+for floating < point types))doc";
 
 static const char *__doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode_nearest = R"doc(< return nearest value in the vector.)doc";
 

@@ -100,6 +100,21 @@ TEST_CASE("NearestInterpolator: should perform basic interpolations correctly", 
                     }
                     break;
 
+                case vectorinterpolators::t_extr_mode::nan:
+                    SECTION(" - return NaN when set")
+                    {
+                        if constexpr (!std::is_floating_point<decltype(interpolator.get_y(0))>())
+                            REQUIRE_THROWS_AS(interpolator(-11), std::domain_error);
+                        else
+                        {
+                            REQUIRE(std::isnan(interpolator(-11)));
+                            REQUIRE(std::isnan(interpolator(13)));
+                            REQUIRE(std::isnan(interpolator.get_y(-11)));
+                            REQUIRE(std::isnan(interpolator.get_y(13)));
+                        }
+                    }
+                    break;
+
                 default:
                     SECTION(" - nearest extrapolation in all other cases")
                     REQUIRE(interpolator(-11) == Catch::Approx(1));

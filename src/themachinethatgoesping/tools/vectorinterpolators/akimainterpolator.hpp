@@ -141,8 +141,16 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                 case t_extr_mode::extrapolate:
                     return _min_linearextrapolator.get_y(target_x);
 
+                case t_extr_mode::nan:
+                    if constexpr (std::is_floating_point<XYType>())
+                        return std::numeric_limits<XYType>::quiet_NaN();
+                    else
+                        throw(std::domain_error("ERROR[INTERPOLATE]: cannot return NaN for non"
+                                                "floating point XYType."));
+
                 default: // fail
-                    // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too small), "
+                    // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too
+                    // small), "
                     //                         "while fail on extrapolate was set!");
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too small)({}/{})! "
@@ -162,8 +170,16 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
                 case t_extr_mode::extrapolate:
                     return _max_linearextrapolator.get_y(target_x);
 
+                case t_extr_mode::nan:
+                    if constexpr (std::is_floating_point<XYType>())
+                        return std::numeric_limits<XYType>::quiet_NaN();
+                    else
+                        throw(std::domain_error("ERROR[INTERPOLATE]: cannot return NaN for non"
+                                                "floating point XYType."));
+
                 default: // fail
-                    // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too large), "
+                    // throw std::out_of_range("ERROR[INTERPOLATE]: x value out of range (too
+                    // large), "
                     //                         "while fail on extrapolate was set!");
                     throw std::out_of_range(fmt::format(
                         "ERROR[INTERPOLATE]: x value [{}] is out of range (too large)({}/{})! "
@@ -414,9 +430,11 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
         container_to_stream(os, this->_Y);
     }
 
-    classhelper::ObjectPrinter __printer__(unsigned int float_precision, bool superscript_exponents) const override
+    classhelper::ObjectPrinter __printer__(unsigned int float_precision,
+                                           bool         superscript_exponents) const override
     {
-        classhelper::ObjectPrinter printer(this->class_name(), float_precision, superscript_exponents);
+        classhelper::ObjectPrinter printer(
+            this->class_name(), float_precision, superscript_exponents);
 
         printer.register_enum("extr_mode", this->_extr_mode.value);
         printer.register_section("data lists");

@@ -38,6 +38,8 @@ enum class t_extr_mode : uint8_t
     extrapolate = 0, ///< interpolate using the closest value pair in the internal x vector
     fail    = 1, ///< throw out_of_range exception if x value exceeds boundaries of internal vector
     nearest = 2, ///< return nearest value in the vector.
+    nan     = 3  ///< return NaN if x value exceeds boundaries of internal vector (only for floating
+            ///< point types)
 };
 
 using o_extr_mode = classhelper::Option<t_extr_mode>;
