@@ -33,7 +33,7 @@ py_tools = pymod.extension_module(
         python3_dep],
     #link_with : [tools],
     link_language: 'cpp',
-    #cpp_pch : '../pch/tools_tools_nanopy.hpp',
+    cpp_pch : '../pch/tools_tools_nanopy.hpp',
     cpp_args: ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
     install: true,
     subdir: projectnamespace,
