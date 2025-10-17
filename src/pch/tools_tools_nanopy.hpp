@@ -2,7 +2,9 @@
 // Target: tools:tools_nanopy
 #pragma once
 
-#include <nanobind/nanobind.h>
+#if !defined(__WIN32__) && !defined(_WIN32) && !defined(__WIN64__) && !defined(_WIN64)
+    #include <nanobind/nanobind.h>
+#endif
 #include <nanobind/stl/string.h>
 #include <sstream>
 #include <vector>

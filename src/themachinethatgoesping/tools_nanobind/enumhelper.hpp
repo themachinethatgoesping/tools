@@ -23,7 +23,6 @@
 #include <nanobind/stl/string_view.h>
 #include <new>
 #include <string>
-#include <nanobind/nb_error.h>
 
 #include <themachinethatgoesping/tools/classhelper/option.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
