@@ -1,7 +1,4 @@
 // Auto-generated precompiled header
+// Target: tools:themachinethatgoesping_tools_pybind
 #pragma once
 
-#include <pybind11/embed.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/pytypes.h>
-#include <pybind11/stl.h>
