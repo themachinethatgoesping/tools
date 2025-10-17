@@ -51,10 +51,6 @@ elif meson.get_compiler('cpp').get_id() == 'clang'
   # Note: -Wno-maybe-uninitialized and -Wno-stringop-overflow are GCC-specific
   # and not recognized by Clang, so we don't include them here
 
-elif meson.get_compiler('cpp').get_id() == 'clang-cl'
-  # Ensure clang-cl retains inline definitions needed when PCH is enabled
-  tools_compile_args += '/clang:-fkeep-inline-functions'
-
 endif
 
 # # boost
