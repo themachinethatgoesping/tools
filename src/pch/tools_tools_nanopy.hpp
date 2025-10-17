@@ -4,8 +4,11 @@
 
 #if !defined(__WIN32__) && !defined(_WIN32) && !defined(__WIN64__) && !defined(_WIN64)
     #include <nanobind/nanobind.h>
+    #include <nanobind/stl/string.h>
+    #include <nanobind/stl/chrono.h>
+    #include <nanobind/stl/optional.h>
+    #include <nanobind/stl/string_view.h>
 #endif
-#include <nanobind/stl/string.h>
 #include <sstream>
 #include <vector>
 #include <tuple>
@@ -23,7 +26,4 @@
 #include <string_view>
 #include <magic_enum/magic_enum.hpp>
 #include <istream>
-#include <nanobind/stl/string_view.h>
 #include <type_traits>
-#include <nanobind/stl/chrono.h>
-#include <nanobind/stl/optional.h>
