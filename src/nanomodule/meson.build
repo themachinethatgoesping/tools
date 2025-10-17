@@ -23,16 +23,6 @@ sources = [
   'pyhelper/module.cpp',
 ]
 
-# -- compiler specific arguments --
-cpp_args_module = [
-  '-DMODULE_NAME=' + module_name,
-  '-DMODULE_VERSION=' + '"' + meson.project_version() + '"',
-]
-
-if meson.get_compiler('cpp').get_argument_syntax() == 'msvc'
-  cpp_args_module += ['/Zc:inline-']
-endif
-
 # define python module
 py_tools = pymod.extension_module(
     module_name,
@@ -43,8 +33,8 @@ py_tools = pymod.extension_module(
         python3_dep],
     #link_with : [tools],
     link_language: 'cpp',
-    cpp_pch : '../pch/tools_tools_nanopy.hpp',
-  cpp_args: cpp_args_module,
+    #cpp_pch : '../pch/tools_tools_nanopy.hpp',
+    cpp_args: ['-DMODULE_NAME='+module_name, '-DMODULE_VERSION=' + '"' + meson.project_version() + '"'],
     install: true,
     subdir: projectnamespace,
     install_tag: 'python-runtime',
