@@ -8,11 +8,11 @@
     #include <nanobind/stl/chrono.h>
     #include <nanobind/stl/optional.h>
     #include <nanobind/stl/string_view.h>
+    #include <nanobind/stl/vector.h>
 #endif
 #include <sstream>
 #include <vector>
 #include <tuple>
-#include <nanobind/stl/vector.h>
 #include <string>
 #include <xxhash.hpp>
 #include <fmt/format.h>
