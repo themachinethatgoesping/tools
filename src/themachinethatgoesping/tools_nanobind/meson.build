@@ -21,6 +21,7 @@ headers = [
   '.docstrings/classhelper.doc.hpp',
   '.docstrings/datetime.doc.hpp',
   '.docstrings/enumhelper.doc.hpp',
+  '.docstrings/module.doc.hpp',
   '.docstrings/nanobind_xtensor.doc.hpp',
   '.docstrings/ostream_redirect.doc.hpp',
   '.docstrings/pytensor_nanobind.doc.hpp',

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 # Reusable workflow for setting up dependencies for GitHub Copilot CI
-# Based on the Ubuntu 22.04 matrix job from ci-linux.yml
+# Based on the Ubuntu 24.04 matrix job from ci-linux.yml
 
 name: Setup Dependencies for Copilot
 

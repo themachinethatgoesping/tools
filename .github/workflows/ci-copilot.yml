@@ -65,9 +65,9 @@ jobs:
         path: builddir/meson-logs/meson-log.txt
         retention-days: 7
 
-  # Comprehensive test job - following ci-linux.yml Ubuntu 22.04 pattern
+  # Comprehensive test job - following ci-linux.yml Ubuntu 24.04 pattern
   comprehensive-test:
-    name: Comprehensive tests (Ubuntu 22.04)
+    name: Comprehensive tests (Ubuntu 24.04)
     runs-on: ubuntu-latest
     # Only run this if quick-check passes
     needs: quick-check
@@ -84,17 +84,17 @@ jobs:
       with:
         key: copilot-ci-ubuntu-22-04
 
-    - name: install system dependencies (Ubuntu 22.04 matrix job pattern)
+    - name: install system dependencies (Ubuntu 24.04 matrix job pattern)
       run: |
         sudo apt update
         sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
           build-essential ccache pkg-config cmake python3-pip \
           libboost-all-dev libcurl4-openssl-dev libeigen3-dev libfmt-dev
 
-    - name: install python dependencies (from Ubuntu 22.04 matrix job)  
+    - name: install python dependencies (from Ubuntu 24.04 matrix job)  
       run: pip install meson meson-python ninja pytest numpy
 
-    - name: configure meson (matching ci-linux.yml Ubuntu 22.04 settings)
+    - name: configure meson (matching ci-linux.yml Ubuntu 24.04 settings)
       run: |
         meson setup builddir \
           -Dunity=on \
@@ -111,7 +111,7 @@ jobs:
     - name: install project - big tests include meson install (compiles Python interface)
       run: meson install -C builddir/
       
-    - name: install pip requirements (matching ci-linux.yml Ubuntu 22.04)
+    - name: install pip requirements (matching ci-linux.yml Ubuntu 24.04)
       run: pip install -r requirements.txt
       
     - name: test (pytest) - big tests run pytest in src directory
