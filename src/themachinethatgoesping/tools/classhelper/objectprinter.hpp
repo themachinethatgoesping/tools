@@ -23,6 +23,7 @@
 #include ".docstrings/objectprinter.doc.hpp"
 
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 #include <iosfwd>
 #include <magic_enum/magic_enum.hpp>
 #include <optional>
@@ -178,10 +179,10 @@ class ObjectPrinter
     void append(ObjectPrinter printer, char remove_sections = false, char section_underliner = 0);
 
     // --- functions to register values for printing ----
-    void _register_enum_string(const std::string& name,
-                               const std::string& value_str,
-                               std::string        value_info = "",
-                               int                pos        = -1);
+    void _register_enum_string(std::string_view name,
+                               std::string_view value_str,
+                               std::string_view value_info = "",
+                               int              pos        = -1);
     /**
      * @brief register an enumeration for printing
      *
@@ -193,27 +194,21 @@ class ObjectPrinter
      */
     // Template implementations
     template<typename t_value>
-    void register_enum(const std::string& name,
-                       t_value            value,
-                       std::string        value_info = "",
-                       int                pos        = -1)
+    void register_enum(std::string_view name,
+                       t_value          value,
+                       std::string_view value_info = "",
+                       int              pos        = -1)
     {
         std::string str;
 
         // convert enum value to string using magic_enum library
         str = magic_enum::enum_name(value);
 
-        // create string of all possible enum values
-        constexpr auto enum_values = magic_enum::enum_names<t_value>();
-        for (unsigned int i = 0; i < enum_values.size(); ++i)
-        {
-            if (i != 0)
-                value_info += ", ";
-
-            value_info += enum_values[i];
-        }
-
-        _register_enum_string(name, str, value_info, pos);
+        _register_enum_string(
+            name,
+            str,
+            fmt::format("{}{}", value_info, fmt::join(magic_enum::enum_names<t_value>(), ", ")),
+            pos);
     }
 
     /**
@@ -230,7 +225,7 @@ class ObjectPrinter
      * @param pos The position to register the value at (default is -1).
      */
     template<typename t_value>
-    void register_optional_value(const std::string&     name,
+    void register_optional_value(std::string_view       name,
                                  std::optional<t_value> value,
                                  std::string_view       value_info     = "",
                                  std::string_view       optional_value = "Not set",
@@ -246,10 +241,10 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     template<typename t_value>
-    void register_value(const std::string& name,
-                        t_value            value,
-                        std::string_view   value_info = "",
-                        int                pos        = -1);
+    void register_value(std::string_view name,
+                        t_value          value,
+                        std::string_view value_info = "",
+                        int              pos        = -1);
 
     /**
      * @brief register a single integer of floating point value for printing
@@ -259,7 +254,7 @@ class ObjectPrinter
      * @param value value of the variable in bytes
      * @param pos position where the value is registers (if negative, the value is appended)
      */
-    void register_value_bytes(const std::string& name, size_t value, int pos = -1);
+    void register_value_bytes(std::string_view name, size_t value, int pos = -1);
 
     /**
      * @brief register a 1D container for printing
@@ -271,7 +266,7 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     template<typename t_container>
-    void register_container(const std::string& name,
+    void register_container(std::string_view   name,
                             const t_container& values,
                             std::string_view   value_info = "",
                             int                pos        = -1);
@@ -288,13 +283,13 @@ class ObjectPrinter
      * @param max_visible_elements maximum of chars that are printed (if 0, all elements are
      * printed)
      */
-    void register_string_with_delimiters(const std::string& name,
-                                         std::string        value,
-                                         std::string        value_info           = "",
-                                         std::string        delimiter_left       = "\"",
-                                         std::string        delimiter_right      = "\"",
-                                         int                pos                  = -1,
-                                         size_t             max_visible_elements = 0);
+    void register_string_with_delimiters(std::string_view name,
+                                         std::string_view value,
+                                         std::string_view value_info           = "",
+                                         std::string_view delimiter_left       = "\"",
+                                         std::string_view delimiter_right      = "\"",
+                                         int              pos                  = -1,
+                                         size_t           max_visible_elements = 0);
 
     /**
      * @brief register a formatted string field for printing
@@ -306,11 +301,11 @@ class ObjectPrinter
      * @param max_visible_elements maximum of chars that are printed (if 0, all elements are
      * printed)
      */
-    void register_string(const std::string& name,
-                         std::string        value,
-                         std::string        value_info           = "",
-                         int                pos                  = -1,
-                         size_t             max_visible_elements = 0);
+    void register_string(std::string_view name,
+                         std::string_view value_str,
+                         std::string_view value_info           = "",
+                         int              pos                  = -1,
+                         size_t           max_visible_elements = 0);
 
     /**
      * @brief register a section break for printing
@@ -319,7 +314,7 @@ class ObjectPrinter
      * @param underliner character used to underline the section name
      * @param pos position where the value is registers (if negative, the value is appended)
      */
-    void register_section(const std::string& name, char underliner = '-', int pos = -1);
+    void register_section(std::string_view name, char underliner = '-', int pos = -1);
 
     /**
      * @brief Get the registered name of the object
@@ -341,7 +336,7 @@ class ObjectPrinter
      * @param line input string
      * @return std::string
      */
-    static std::string underline(const std::string& line, char underliner);
+    static std::string underline(std::string_view line, char underliner);
 };
 
 }

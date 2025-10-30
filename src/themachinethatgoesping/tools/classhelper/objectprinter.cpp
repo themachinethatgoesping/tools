@@ -18,6 +18,7 @@
 #include <iostream>
 #include <limits>
 #include <numeric>
+#include <ranges>
 
 // Add proper xtensor includes for the types you're instantiating
 #include <xtensor/containers/xtensor.hpp>
@@ -213,7 +214,7 @@ void ObjectPrinter::append(ObjectPrinter printer, char remove_sections, char sec
 }
 
 template<typename t_value>
-void ObjectPrinter::register_optional_value(const std::string&     name,
+void ObjectPrinter::register_optional_value(std::string_view       name,
                                             std::optional<t_value> value,
                                             std::string_view       value_info,
                                             std::string_view       optional_value,
@@ -222,14 +223,14 @@ void ObjectPrinter::register_optional_value(const std::string&     name,
     if (value.has_value())
         register_value(name, value.value(), value_info, pos);
     else
-        register_string(name, std::string(optional_value), std::string(value_info), pos);
+        register_string(name, optional_value, value_info, pos);
 }
 
 template<typename t_value>
-void ObjectPrinter::register_value(const std::string& name,
-                                   t_value            value,
-                                   std::string_view   value_info,
-                                   int                pos)
+void ObjectPrinter::register_value(std::string_view name,
+                                   t_value          value,
+                                   std::string_view value_info,
+                                   int              pos)
 {
     std::string str;
 
@@ -270,7 +271,7 @@ void ObjectPrinter::register_value(const std::string& name,
 
     if (pos < 0 || pos >= int(_fields.size()))
     {
-        _fields.push_back(name);
+        _fields.push_back(std::string(name));
         _lines.push_back({ str });
         _field_types.push_back(t_field::tvalue);
         _value_infos.push_back(value_info_str);
@@ -278,7 +279,7 @@ void ObjectPrinter::register_value(const std::string& name,
     }
     else
     {
-        _fields.insert(_fields.begin() + pos, name);
+        _fields.insert(_fields.begin() + pos, std::string(name));
         _lines.insert(_lines.begin() + pos, { str });
         _field_types.insert(_field_types.begin() + pos, t_field::tvalue);
         _value_infos.insert(_value_infos.begin() + pos, value_info_str);
@@ -286,10 +287,10 @@ void ObjectPrinter::register_value(const std::string& name,
     }
 }
 
-void ObjectPrinter::_register_enum_string(const std::string& name,
-                                          const std::string& value_str,
-                                          std::string        value_info,
-                                          int                pos)
+void ObjectPrinter::_register_enum_string(std::string_view name,
+                                          std::string_view value_str,
+                                          std::string_view value_info,
+                                          int              pos)
 {
     // attach all possible enum values as value_info
     std::string value_info_str = "";
@@ -298,23 +299,23 @@ void ObjectPrinter::_register_enum_string(const std::string& name,
 
     if (pos < 0 || pos >= int(_fields.size()))
     {
-        _fields.push_back(name);
-        _lines.push_back({ value_str }); // only one line (value)
+        _fields.push_back(std::string(name));
+        _lines.push_back({ std::string(value_str) }); // only one line (value)
         _field_types.push_back(t_field::tenum);
         _value_infos.push_back(value_info_str);
         _section_underliner.push_back(' ');
     }
     else
     {
-        _fields.insert(_fields.begin() + pos, name);
-        _lines.insert(_lines.begin() + pos, { value_str }); // only one line (value)
+        _fields.insert(_fields.begin() + pos, std::string(name));
+        _lines.insert(_lines.begin() + pos, { std::string(value_str) }); // only one line (value)
         _field_types.insert(_field_types.begin() + pos, t_field::tenum);
         _value_infos.insert(_value_infos.begin() + pos, value_info_str);
         _section_underliner.insert(_section_underliner.begin() + pos, ' ');
     }
 }
 
-void ObjectPrinter::register_value_bytes(const std::string& name, size_t value, int pos)
+void ObjectPrinter::register_value_bytes(std::string_view name, size_t value, int pos)
 {
     if (value < 1024)
         register_value(name, value, "bytes", pos);
@@ -327,7 +328,7 @@ void ObjectPrinter::register_value_bytes(const std::string& name, size_t value, 
 }
 
 template<typename t_container>
-void ObjectPrinter::register_container(const std::string& name,
+void ObjectPrinter::register_container(std::string_view   name,
                                        const t_container& values,
                                        std::string_view   value_info,
                                        int                pos)
@@ -376,7 +377,7 @@ void ObjectPrinter::register_container(const std::string& name,
 
     if (pos < 0 || pos >= int(_fields.size()))
     {
-        _fields.push_back(name);
+        _fields.push_back(std::string(name));
         _lines.push_back({ str });
         _field_types.push_back(t_field::tcontainer);
         _value_infos.push_back(value_info_str);
@@ -384,7 +385,7 @@ void ObjectPrinter::register_container(const std::string& name,
     }
     else
     {
-        _fields.insert(_fields.begin() + pos, name);
+        _fields.insert(_fields.begin() + pos, std::string(name));
         _lines.insert(_lines.begin() + pos, { str });
         _field_types.insert(_field_types.begin() + pos, t_field::tcontainer);
         _value_infos.insert(_value_infos.begin() + pos, value_info_str);
@@ -506,24 +507,29 @@ void ObjectPrinter::register_container(const std::string& name,
     }
 }
 
-void ObjectPrinter::register_string_with_delimiters(const std::string& name,
-                                                    std::string        value,
-                                                    std::string        value_info,
-                                                    std::string        delimiter_left,
-                                                    std::string        delimiter_right,
-                                                    int                pos,
-                                                    size_t             max_visible_elements)
+void ObjectPrinter::register_string_with_delimiters(std::string_view name,
+                                                    std::string_view value,
+                                                    std::string_view value_info,
+                                                    std::string_view delimiter_left,
+                                                    std::string_view delimiter_right,
+                                                    int              pos,
+                                                    size_t           max_visible_elements)
 {
-    value = delimiter_left + value + delimiter_right;
-    register_string(name, value, value_info, pos, max_visible_elements);
+    // concatinate string views
+    auto joined_view = std::views::join(std::array{ delimiter_left, value, delimiter_right });
+    std::string value_str(joined_view.begin(), joined_view.end());
+
+    register_string(name, value_str, value_info, pos, max_visible_elements);
 }
 
-void ObjectPrinter::register_string(const std::string& name,
-                                    std::string        value,
-                                    std::string        value_info,
-                                    int                pos,
-                                    size_t             max_visible_elements)
+void ObjectPrinter::register_string(std::string_view name,
+                                    std::string_view value_str,
+                                    std::string_view value_info,
+                                    int              pos,
+                                    size_t           max_visible_elements)
 {
+    std::string value = std::string(value_str);
+
     if (value_info.size() > 0)
         value_info = fmt::format("[{}]", value_info);
 
@@ -546,27 +552,27 @@ void ObjectPrinter::register_string(const std::string& name,
 
     if (pos < 0 || pos >= int(_fields.size()))
     {
-        _fields.push_back(name);
+        _fields.push_back(std::string(name));
         _lines.push_back(lines);
         _field_types.push_back(t_field::tstring);
-        _value_infos.push_back(value_info);
+        _value_infos.push_back(std::string(value_info));
         _section_underliner.push_back(' ');
     }
     else
     {
-        _fields.insert(_fields.begin() + pos, name);
+        _fields.insert(_fields.begin() + pos, std::string(name));
         _lines.insert(_lines.begin() + pos, lines);
         _field_types.insert(_field_types.begin() + pos, t_field::tstring);
-        _value_infos.insert(_value_infos.begin() + pos, value_info);
+        _value_infos.insert(_value_infos.begin() + pos, std::string(value_info));
         _section_underliner.insert(_section_underliner.begin() + pos, ' ');
     }
 }
 
-void ObjectPrinter::register_section(const std::string& name, char underliner, int pos)
+void ObjectPrinter::register_section(std::string_view name, char underliner, int pos)
 {
     if (pos < 0 || pos >= int(_fields.size()))
     {
-        _fields.push_back(name);
+        _fields.push_back(std::string(name));
         _lines.push_back({ "" });
         _value_infos.push_back({ "" });
         _field_types.push_back(t_field::tsection);
@@ -574,7 +580,7 @@ void ObjectPrinter::register_section(const std::string& name, char underliner, i
     }
     else
     {
-        _fields.insert(_fields.begin() + pos, name);
+        _fields.insert(_fields.begin() + pos, std::string(name));
         _lines.insert(_lines.begin() + pos, { "" });
         _value_infos.insert(_value_infos.begin() + pos, { "" });
         _field_types.insert(_field_types.begin() + pos, t_field::tsection);
@@ -704,9 +710,9 @@ std::string ObjectPrinter::create_str() const
     return str;
 }
 
-std::string ObjectPrinter::underline(const std::string& line, char underliner)
+std::string ObjectPrinter::underline(std::string_view line, char underliner)
 {
-    std::string str = line;
+    std::string str = std::string(line);
     for (unsigned int i = 0; i < line.size(); ++i)
     {
         if (i == 0)
@@ -719,85 +725,82 @@ std::string ObjectPrinter::underline(const std::string& line, char underliner)
 }
 
 // Explicit template instantiations for common types
-template void ObjectPrinter::register_value<bool>(const std::string&, bool, std::string_view, int);
-template void ObjectPrinter::register_value<std::string_view>(const std::string&,
+template void ObjectPrinter::register_value<bool>(std::string_view, bool, std::string_view, int);
+template void ObjectPrinter::register_value<std::string_view>(std::string_view,
                                                               std::string_view,
                                                               std::string_view,
                                                               int);
-template void ObjectPrinter::register_value<uint8_t>(const std::string&,
+template void ObjectPrinter::register_value<uint8_t>(std::string_view,
                                                      uint8_t,
                                                      std::string_view,
                                                      int);
-template void ObjectPrinter::register_value<uint16_t>(const std::string&,
+template void ObjectPrinter::register_value<uint16_t>(std::string_view,
                                                       uint16_t,
                                                       std::string_view,
                                                       int);
-template void ObjectPrinter::register_value<unsigned int>(const std::string&,
+template void ObjectPrinter::register_value<unsigned int>(std::string_view,
                                                           unsigned int,
                                                           std::string_view,
                                                           int);
-template void ObjectPrinter::register_value<unsigned long>(const std::string&,
+template void ObjectPrinter::register_value<unsigned long>(std::string_view,
                                                            unsigned long,
                                                            std::string_view,
                                                            int);
-template void ObjectPrinter::register_value<unsigned long long>(const std::string&,
+template void ObjectPrinter::register_value<unsigned long long>(std::string_view,
                                                                 unsigned long long,
                                                                 std::string_view,
                                                                 int);
-template void ObjectPrinter::register_value<int8_t>(const std::string&,
+template void ObjectPrinter::register_value<int8_t>(std::string_view,
                                                     int8_t,
                                                     std::string_view,
                                                     int);
-template void ObjectPrinter::register_value<int16_t>(const std::string&,
+template void ObjectPrinter::register_value<int16_t>(std::string_view,
                                                      int16_t,
                                                      std::string_view,
                                                      int);
-template void ObjectPrinter::register_value<int>(const std::string&, int, std::string_view, int);
-template void ObjectPrinter::register_value<long>(const std::string&, long, std::string_view, int);
-template void ObjectPrinter::register_value<long long>(const std::string&,
+template void ObjectPrinter::register_value<int>(std::string_view, int, std::string_view, int);
+template void ObjectPrinter::register_value<long>(std::string_view, long, std::string_view, int);
+template void ObjectPrinter::register_value<long long>(std::string_view,
                                                        long long,
                                                        std::string_view,
                                                        int);
-template void ObjectPrinter::register_value<float>(const std::string&,
-                                                   float,
-                                                   std::string_view,
-                                                   int);
-template void ObjectPrinter::register_value<double>(const std::string&,
+template void ObjectPrinter::register_value<float>(std::string_view, float, std::string_view, int);
+template void ObjectPrinter::register_value<double>(std::string_view,
                                                     double,
                                                     std::string_view,
                                                     int);
 
 // Add missing char instantiation
-template void ObjectPrinter::register_value<char>(const std::string&, char, std::string_view, int);
+template void ObjectPrinter::register_value<char>(std::string_view, char, std::string_view, int);
 
 // Add missing std::string instantiation
-template void ObjectPrinter::register_value<std::string>(const std::string&,
+template void ObjectPrinter::register_value<std::string>(std::string_view,
                                                          std::string,
                                                          std::string_view,
                                                          int);
 // Standard containers
-template void ObjectPrinter::register_container<std::vector<int>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<int>>(std::string_view,
                                                                   const std::vector<int>&,
                                                                   std::string_view,
                                                                   int);
-template void ObjectPrinter::register_container<std::vector<float>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<float>>(std::string_view,
                                                                     const std::vector<float>&,
                                                                     std::string_view,
                                                                     int);
-template void ObjectPrinter::register_container<std::vector<double>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<double>>(std::string_view,
                                                                      const std::vector<double>&,
                                                                      std::string_view,
                                                                      int);
 template void ObjectPrinter::register_container<std::vector<std::string>>(
-    const std::string&,
+    std::string_view,
     const std::vector<std::string>&,
     std::string_view,
     int);
-template void ObjectPrinter::register_container<std::vector<uint16_t>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<uint16_t>>(std::string_view,
                                                                        const std::vector<uint16_t>&,
                                                                        std::string_view,
                                                                        int);
-template void ObjectPrinter::register_container<std::array<float, 3>>(const std::string&,
+template void ObjectPrinter::register_container<std::array<float, 3>>(std::string_view,
                                                                       const std::array<float, 3>&,
                                                                       std::string_view,
                                                                       int);
@@ -808,7 +811,7 @@ template void ObjectPrinter::register_container<
                           1ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
                                 1ul,
                                 xt::layout_type::row_major,
@@ -821,7 +824,7 @@ template void ObjectPrinter::register_container<
                           1ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<double, xsimd::aligned_allocator<double, 16ul>>,
                                 1ul,
                                 xt::layout_type::row_major,
@@ -834,7 +837,7 @@ template void ObjectPrinter::register_container<
                           1ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<
         xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
         1ul,
@@ -849,7 +852,7 @@ template void ObjectPrinter::register_container<
                           2ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
                                 2ul,
                                 xt::layout_type::row_major,
@@ -862,7 +865,7 @@ template void ObjectPrinter::register_container<
                           2ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
                                 2ul,
                                 xt::layout_type::row_major,
@@ -875,7 +878,7 @@ template void ObjectPrinter::register_container<
                           2ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<
         xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
         2ul,
@@ -886,13 +889,13 @@ template void ObjectPrinter::register_container<
 
 // Add missing std::array instantiations
 template void ObjectPrinter::register_container<std::array<unsigned char, 4>>(
-    const std::string&,
+    std::string_view,
     const std::array<unsigned char, 4>&,
     std::string_view,
     int);
 
 template void ObjectPrinter::register_container<std::array<unsigned char, 7>>(
-    const std::string&,
+    std::string_view,
     const std::array<unsigned char, 7>&,
     std::string_view,
     int);
@@ -903,124 +906,124 @@ template void ObjectPrinter::register_container<std::array<unsigned char, 7>>(
 // unsigned long and unsigned long long are seen as base types and at least one of them should cover
 // uint64_t
 template void ObjectPrinter::register_container<std::vector<unsigned long>>(
-    const std::string&,
+    std::string_view,
     const std::vector<unsigned long>&,
     std::string_view,
     int);
 template void ObjectPrinter::register_container<std::vector<unsigned long long>>(
-    const std::string&,
+    std::string_view,
     const std::vector<unsigned long long>&,
     std::string_view,
     int);
 
 // Add missing std::vector<unsigned int> instantiation
 template void ObjectPrinter::register_container<std::vector<unsigned int>>(
-    const std::string&,
+    std::string_view,
     const std::vector<unsigned int>&,
     std::string_view,
     int);
 
 // Add missing std::vector<int64_t> instantiation
-template void ObjectPrinter::register_container<std::vector<long>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<long>>(std::string_view,
                                                                    const std::vector<long>&,
                                                                    std::string_view,
                                                                    int);
 template void ObjectPrinter::register_container<std::vector<long long>>(
-    const std::string&,
+    std::string_view,
     const std::vector<long long>&,
     std::string_view,
     int);
 
 // Add missing char vector instantiations
 template void ObjectPrinter::register_container<std::vector<unsigned char>>(
-    const std::string&,
+    std::string_view,
     const std::vector<unsigned char>&,
     std::string_view,
     int);
 
 template void ObjectPrinter::register_container<std::vector<signed char>>(
-    const std::string&,
+    std::string_view,
     const std::vector<signed char>&,
     std::string_view,
     int);
 
-template void ObjectPrinter::register_container<std::vector<int16_t>>(const std::string&,
+template void ObjectPrinter::register_container<std::vector<int16_t>>(std::string_view,
                                                                       const std::vector<int16_t>&,
                                                                       std::string_view,
                                                                       int);
 
 // Add missing optional value instantiations
-template void ObjectPrinter::register_optional_value<unsigned char>(const std::string&,
+template void ObjectPrinter::register_optional_value<unsigned char>(std::string_view,
                                                                     std::optional<unsigned char>,
                                                                     std::string_view,
                                                                     std::string_view,
                                                                     int);
 // Add missing optional value instantiations
-template void ObjectPrinter::register_optional_value<std::string>(const std::string&,
+template void ObjectPrinter::register_optional_value<std::string>(std::string_view,
                                                                   std::optional<std::string>,
                                                                   std::string_view,
                                                                   std::string_view,
                                                                   int);
 
-template void ObjectPrinter::register_optional_value<float>(const std::string&,
+template void ObjectPrinter::register_optional_value<float>(std::string_view,
                                                             std::optional<float>,
                                                             std::string_view,
                                                             std::string_view,
                                                             int);
-template void ObjectPrinter::register_optional_value<double>(const std::string&,
+template void ObjectPrinter::register_optional_value<double>(std::string_view,
                                                              std::optional<double>,
                                                              std::string_view,
                                                              std::string_view,
                                                              int);
 
-// template void ObjectPrinter::register_optional_value<uint8_t>(const std::string&,
+// template void ObjectPrinter::register_optional_value<uint8_t>(std::string_view,
 //                                                               std::optional<uint8_t>,
 //                                                               std::string_view,
 //                                                               std::string_view,
 //                                                               int);
-template void ObjectPrinter::register_optional_value<uint16_t>(const std::string&,
+template void ObjectPrinter::register_optional_value<uint16_t>(std::string_view,
                                                                std::optional<uint16_t>,
                                                                std::string_view,
                                                                std::string_view,
                                                                int);
-template void ObjectPrinter::register_optional_value<unsigned int>(const std::string&,
+template void ObjectPrinter::register_optional_value<unsigned int>(std::string_view,
                                                                    std::optional<unsigned int>,
                                                                    std::string_view,
                                                                    std::string_view,
                                                                    int);
-template void ObjectPrinter::register_optional_value<unsigned long>(const std::string&,
+template void ObjectPrinter::register_optional_value<unsigned long>(std::string_view,
                                                                     std::optional<unsigned long>,
                                                                     std::string_view,
                                                                     std::string_view,
                                                                     int);
 template void ObjectPrinter::register_optional_value<unsigned long long>(
-    const std::string&,
+    std::string_view,
     std::optional<unsigned long long>,
     std::string_view,
     std::string_view,
     int);
 
-// template void ObjectPrinter::register_optional_value<int8_t>(const std::string&,
+// template void ObjectPrinter::register_optional_value<int8_t>(std::string_view,
 //                                                              std::optional<int8_t>,
 //                                                              std::string_view,
 //                                                              std::string_view,
 //                                                              int);
-template void ObjectPrinter::register_optional_value<int16_t>(const std::string&,
+template void ObjectPrinter::register_optional_value<int16_t>(std::string_view,
                                                               std::optional<int16_t>,
                                                               std::string_view,
                                                               std::string_view,
                                                               int);
-template void ObjectPrinter::register_optional_value<int>(const std::string&,
+template void ObjectPrinter::register_optional_value<int>(std::string_view,
                                                           std::optional<int>,
                                                           std::string_view,
                                                           std::string_view,
                                                           int);
-template void ObjectPrinter::register_optional_value<long>(const std::string&,
+template void ObjectPrinter::register_optional_value<long>(std::string_view,
                                                            std::optional<long>,
                                                            std::string_view,
                                                            std::string_view,
                                                            int);
-template void ObjectPrinter::register_optional_value<long long>(const std::string&,
+template void ObjectPrinter::register_optional_value<long long>(std::string_view,
                                                                 std::optional<long long>,
                                                                 std::string_view,
                                                                 std::string_view,
@@ -1032,7 +1035,7 @@ template void ObjectPrinter::register_container<
                           1ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<
         xt::uvector<signed char, xsimd::aligned_allocator<signed char, 16ul>>,
         1ul,
@@ -1047,7 +1050,7 @@ template void ObjectPrinter::register_container<
                           1ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
                                 1ul,
                                 xt::layout_type::row_major,
@@ -1061,7 +1064,7 @@ template void ObjectPrinter::register_container<
                           3ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
                                 3ul,
                                 xt::layout_type::row_major,
@@ -1075,7 +1078,7 @@ template void ObjectPrinter::register_container<
                           3ul,
                           xt::layout_type::row_major,
                           xt::xtensor_expression_tag>>(
-    const std::string&,
+    std::string_view,
     const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
                                 3ul,
                                 xt::layout_type::row_major,
@@ -1083,13 +1086,12 @@ template void ObjectPrinter::register_container<
     std::string_view,
     int);
 
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<
-        xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
-        1ul,
-        xt::layout_type::row_major,
-        xt::xtensor_expression_tag>>(
-    const std::string&,
+template void ObjectPrinter::register_container<xt::xtensor_container<
+    xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
+    1ul,
+    xt::layout_type::row_major,
+    xt::xtensor_expression_tag>>(
+    std::string_view,
     const xt::xtensor_container<
         xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
         1ul,

@@ -25,7 +25,7 @@ void init_c_objectprinter(nanobind::module_& m)
 
     nb::class_<ObjectPrinter>(
         m, "ObjectPrinter", DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter))
-        .def(nb::init<const std::string&, unsigned int, bool>(),
+        .def(nb::init<std::string_view, unsigned int, bool>(),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, ObjectPrinter),
              nb::arg("name"),
              nb::arg("float_precission"),
@@ -37,7 +37,7 @@ void init_c_objectprinter(nanobind::module_& m)
              &ObjectPrinter::create_str,
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, create_str))
         .def("register_value",
-             nb::overload_cast<const std::string&, double, std::string_view, int>(
+             nb::overload_cast<std::string_view, double, std::string_view, int>(
                  &ObjectPrinter::register_value<double>),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_value),
              nb::arg("name"),
@@ -45,7 +45,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("value_info") = "",
              nb::arg("pos")        = -1)
         .def("register_value",
-             nb::overload_cast<const std::string&, int, std::string_view, int>(
+             nb::overload_cast<std::string_view, int, std::string_view, int>(
                  &ObjectPrinter::register_value<int>),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_value),
              nb::arg("name"),
@@ -53,7 +53,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("value_info") = "",
              nb::arg("pos")        = -1)
         .def("register_value",
-             nb::overload_cast<const std::string&, std::string, std::string_view, int>(
+             nb::overload_cast<std::string_view, std::string, std::string_view, int>(
                  &ObjectPrinter::register_value<std::string>),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_value),
              nb::arg("name"),
@@ -62,7 +62,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("pos")        = -1)
         .def(
             "register_optional_value",
-            nb::overload_cast<const std::string&,
+            nb::overload_cast<std::string_view,
                               std::optional<double>,
                               std::string_view,
                               std::string_view,
@@ -75,7 +75,7 @@ void init_c_objectprinter(nanobind::module_& m)
             nb::arg("pos")            = -1)
         .def(
             "register_optional_value",
-            nb::overload_cast<const std::string&,
+            nb::overload_cast<std::string_view,
                               std::optional<int>,
                               std::string_view,
                               std::string_view,
@@ -88,7 +88,7 @@ void init_c_objectprinter(nanobind::module_& m)
             nb::arg("pos")            = -1)
         .def(
             "register_optional_value",
-            nb::overload_cast<const std::string&,
+            nb::overload_cast<std::string_view,
                               std::optional<std::string>,
                               std::string_view,
                               std::string_view,
@@ -106,7 +106,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("value"),
              nb::arg("pos") = -1)
         .def("register_container",
-             nb::overload_cast<const std::string&,
+             nb::overload_cast<std::string_view,
                                const std::vector<double>&,
                                std::string_view,
                                int>(&ObjectPrinter::register_container<std::vector<double>>),
@@ -116,7 +116,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("value_info") = "",
              nb::arg("pos")        = -1)
         .def("register_container",
-             nb::overload_cast<const std::string&, const std::vector<int>&, std::string_view, int>(
+             nb::overload_cast<std::string_view, const std::vector<int>&, std::string_view, int>(
                  &ObjectPrinter::register_container<std::vector<int>>),
              DOC(themachinethatgoesping, tools, classhelper, ObjectPrinter, register_container),
              nb::arg("name"),
@@ -124,7 +124,7 @@ void init_c_objectprinter(nanobind::module_& m)
              nb::arg("value_info") = "",
              nb::arg("pos")        = -1)
         .def("register_container",
-             nb::overload_cast<const std::string&,
+             nb::overload_cast<std::string_view,
                                const std::vector<std::string>&,
                                std::string_view,
                                int>(&ObjectPrinter::register_container<std::vector<std::string>>),

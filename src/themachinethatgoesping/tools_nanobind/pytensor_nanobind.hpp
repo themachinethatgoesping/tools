@@ -168,11 +168,27 @@ namespace xt
                 auto expected = static_cast<std::make_signed_t<size_type>>(1);
                 for (std::ptrdiff_t axis = static_cast<std::ptrdiff_t>(rank) - 1; axis >= 0; --axis)
                 {
-                    if (static_cast<std::make_signed_t<size_type>>(strides[static_cast<size_type>(axis)]) != expected)
+                    const auto extent = shape[static_cast<size_type>(axis)];
+                    const auto stride_value = static_cast<std::make_signed_t<size_type>>(
+                        strides[static_cast<size_type>(axis)]);
+
+                    if (stride_value != expected)
                     {
-                        return false;
+                        if (extent <= size_type(1) && stride_value == 0)
+                        {
+                            // singleton or empty dimensions may legally report zero stride
+                        }
+                        else if (extent == size_type(0))
+                        {
+                            // zero-extent dimensions do not contribute to contiguity
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
-                    expected *= static_cast<std::make_signed_t<size_type>>(shape[static_cast<size_type>(axis)]);
+                    expected *= static_cast<std::make_signed_t<size_type>>(
+                        std::max(extent, size_type(1)));
                 }
                 return true;
             }
@@ -190,11 +206,25 @@ namespace xt
                 auto expected = static_cast<std::make_signed_t<size_type>>(1);
                 for (size_type axis = 0; axis < rank; ++axis)
                 {
-                    if (static_cast<std::make_signed_t<size_type>>(strides[axis]) != expected)
+                    const auto extent = shape[axis];
+                    const auto stride_value = static_cast<std::make_signed_t<size_type>>(strides[axis]);
+
+                    if (stride_value != expected)
                     {
-                        return false;
+                        if (extent <= size_type(1) && stride_value == 0)
+                        {
+                            // singleton or empty dimensions may legally report zero stride
+                        }
+                        else if (extent == size_type(0))
+                        {
+                            // zero-extent dimensions do not contribute to contiguity
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
-                    expected *= static_cast<std::make_signed_t<size_type>>(shape[axis]);
+                    expected *= static_cast<std::make_signed_t<size_type>>(std::max(extent, size_type(1)));
                 }
                 return true;
             }
