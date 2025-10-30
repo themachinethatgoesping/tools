@@ -529,9 +529,10 @@ void ObjectPrinter::register_string(std::string_view name,
                                     size_t           max_visible_elements)
 {
     std::string value = std::string(value_str);
+    std::string value_info_str;
 
-    if (value_info.size() > 0)
-        value_info = fmt::format("[{}]", value_info);
+    if (!value_info.empty())
+        value_info_str = fmt::format("[{}]", value_info);
 
     if (max_visible_elements > 0 && value.size() > max_visible_elements)
     {
@@ -555,7 +556,7 @@ void ObjectPrinter::register_string(std::string_view name,
         _fields.push_back(std::string(name));
         _lines.push_back(lines);
         _field_types.push_back(t_field::tstring);
-        _value_infos.push_back(std::string(value_info));
+        _value_infos.push_back(value_info_str);
         _section_underliner.push_back(' ');
     }
     else
@@ -563,7 +564,7 @@ void ObjectPrinter::register_string(std::string_view name,
         _fields.insert(_fields.begin() + pos, std::string(name));
         _lines.insert(_lines.begin() + pos, lines);
         _field_types.insert(_field_types.begin() + pos, t_field::tstring);
-        _value_infos.insert(_value_infos.begin() + pos, std::string(value_info));
+        _value_infos.insert(_value_infos.begin() + pos, value_info_str);
         _section_underliner.insert(_section_underliner.begin() + pos, ' ');
     }
 }
