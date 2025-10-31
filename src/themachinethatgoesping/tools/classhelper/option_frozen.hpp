@@ -50,6 +50,15 @@ struct OptionFrozen
         return frozen::string{ text.data(), text.size() };
     }
 
+    static constexpr bool has_duplicate_strings(const std::array<std::string_view, __size>& arr)
+    {
+        for (std::size_t i = 0; i < __size; ++i)
+            for (std::size_t j = i + 1; j < __size; ++j)
+                if (arr[i] == arr[j])
+                    return true;
+        return false;
+    }
+
     template<std::size_t... I>
     static constexpr auto make_enum_to_name_pairs(std::index_sequence<I...>)
     {
@@ -67,8 +76,10 @@ struct OptionFrozen
     template<std::size_t... I>
     static constexpr auto make_name_to_enum_pairs(std::index_sequence<I...>)
     {
-        return std::array<std::pair<frozen::string, t_enum>, __size>{ { std::pair{
-            make_frozen_string(__enum_names[I]), __enum_values[I] }... } };
+        return std::array<std::pair<frozen::string, t_enum>, __size * 2>{
+            { std::pair{ make_frozen_string(__enum_names[I]), __enum_values[I] }...,
+              std::pair{ make_frozen_string(__enum_alt_names[I]), __enum_values[I] }... }
+        };
     }
 
     static constexpr std::size_t find_index(t_enum needle)
@@ -87,8 +98,8 @@ struct OptionFrozen
         frozen::make_unordered_map(make_enum_to_name_pairs(std::make_index_sequence<__size>{}));
     static constexpr auto _s_enum_to_alt_name =
         frozen::make_unordered_map(make_enum_to_alt_name_pairs(std::make_index_sequence<__size>{}));
-    static constexpr auto _s_name_to_enum =
-        frozen::make_unordered_map(make_name_to_enum_pairs(std::make_index_sequence<__size>{}));
+    static constexpr auto _s_name_to_enum = frozen::make_unordered_map<frozen::string, t_enum>(
+        make_name_to_enum_pairs(std::make_index_sequence<__size>{}));
 
   public:
     t_enum value;
@@ -123,32 +134,24 @@ struct OptionFrozen
         value = converted;
     }
 
-    void set(std::string_view v)
-    {
-        if (auto it = _s_name_to_enum.find(v); it != _s_name_to_enum.end())
-        {
-            value = it->second;
-            return;
-        }
-
-        for (std::size_t i = 0; i < __size; ++i)
-        {
-            if (std::string_view{ __enum_alt_names[i] } == v)
-            {
-                value = __enum_values[i];
-                return;
-            }
-        }
-
-        throw std::invalid_argument(
-            fmt::format("Invalid enum name: '{}'. Valid names are: [{}]. Alt names: [{}]",
-                        v,
-                        fmt::join(__enum_names, ", "),
-                        fmt::join(__enum_alt_names, ", ")));
-    }
+    void set(std::string_view v) { value = to_value(v); }
 
     auto name() const { return _s_enum_to_name.at(value); }
     auto alt_name() const { return _s_enum_to_alt_name.at(value); }
+
+    static constexpr auto to_name(t_enum val) { return _s_enum_to_name.at(val); }
+    static constexpr auto to_alt_name(t_enum val) { return _s_enum_to_alt_name.at(val); }
+    static constexpr auto to_value(std::string_view name)
+    {
+        if (auto it = _s_name_to_enum.find(name); it != _s_name_to_enum.end())
+            return it->second;
+
+        throw std::invalid_argument(
+            fmt::format("Invalid enum name: '{}'. Valid names are: [{}]. Alt names: [{}]",
+                        name,
+                        fmt::join(__enum_names, ", "),
+                        fmt::join(__enum_alt_names, ", ")));
+    }
 
     [[nodiscard]] static constexpr auto underlying_values()
     {
