@@ -1059,6 +1059,20 @@ template void ObjectPrinter::register_container<
     std::string_view,
     int);
 
+// Add missing 1D xtensor container for uint8_t
+template void ObjectPrinter::register_container<
+    xt::xtensor_container<xt::uvector<uint8_t, xsimd::aligned_allocator<uint8_t, 16ul>>,
+                          1ul,
+                          xt::layout_type::row_major,
+                          xt::xtensor_expression_tag>>(
+    std::string_view,
+    const xt::xtensor_container<xt::uvector<uint8_t, xsimd::aligned_allocator<uint8_t, 16ul>>,
+                                1ul,
+                                xt::layout_type::row_major,
+                                xt::xtensor_expression_tag>&,
+    std::string_view,
+    int);
+
 // Add missing 3D xtensor container for float
 template void ObjectPrinter::register_container<
     xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
@@ -1098,6 +1112,20 @@ template void ObjectPrinter::register_container<xt::xtensor_container<
         1ul,
         xt::layout_type::row_major,
         xt::xtensor_expression_tag>&,
+    std::string_view,
+    int);
+
+// Add missing 1D xtensor container for int16_t
+template void ObjectPrinter::register_container<
+    xt::xtensor_container<xt::uvector<int16_t, xsimd::aligned_allocator<int16_t, 16ul>>,
+                          1ul,
+                          xt::layout_type::row_major,
+                          xt::xtensor_expression_tag>>(
+    std::string_view,
+    const xt::xtensor_container<xt::uvector<int16_t, xsimd::aligned_allocator<int16_t, 16ul>>,
+                                1ul,
+                                xt::layout_type::row_major,
+                                xt::xtensor_expression_tag>&,
     std::string_view,
     int);
 
