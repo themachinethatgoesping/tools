@@ -131,6 +131,9 @@ jobs:
       run: pip install meson meson-python pytest numpy 
       #run: pip install meson meson-python pytest numpy ninja
 
+    - name: install custom meson
+      run: pip install --upgrade "git+https://github.com/peter-urban/meson.git@add_c++23_clangcl"
+
     - name: download ninja long path
       run : |
         Invoke-WebRequest -Uri https://raw.githubusercontent.com/themachinethatgoesping/tools/main/ninja-windows/ninja.exe -OutFile c:\ninja.exe
