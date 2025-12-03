@@ -5,7 +5,7 @@
 
 project('hinnant-date', ['cpp'],
         default_options: ['cpp_std=c++23'],
-        version: '3.0.4',
+        version: '3.0.2',
         license: 'MIT')
 
 pkg = import('pkgconfig')
