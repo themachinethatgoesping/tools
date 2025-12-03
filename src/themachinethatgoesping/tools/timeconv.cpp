@@ -5,14 +5,12 @@
 
 #include "timeconv.hpp"
 
-#include <chrono>
+#include <date/date.h>
 #include <cmath>
-#include <iomanip>
 #include <sstream>
+#include <iomanip>
 #include <string_view>
 #include <utility>
-
-#include <fmt/chrono.h>
 
 #include "helper/isviewstream.hpp"
 
@@ -39,19 +37,17 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint)
 
 double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_seconds)
 {
-    auto ymd = std::chrono::year{ year } / std::chrono::month{ static_cast<unsigned>(month) } /
-               std::chrono::day{ static_cast<unsigned>(day) };
-    auto tp = std::chrono::sys_days{ ymd } + std::chrono::microseconds{ micro_seconds };
+    auto X  = date::year{ year } / month / day;
+    auto tp = date::sys_days{ X } + std::chrono::microseconds{ micro_seconds };
     return timepoint_to_unixtime(tp);
 }
 
 double datestring_to_unixtime(std::string_view DateString, const std::string& format)
 {
-    std::chrono::sys_time<std::chrono::microseconds> tp;
-    helper::isviewstream                             is(DateString);
-    is >> std::chrono::parse(format, tp);
-
-    return std::chrono::duration<double>(tp.time_since_epoch()).count();
+    date::sys_time<std::chrono::microseconds> timePoint;
+    helper::isviewstream is(DateString);
+    is >> date::parse(format, timePoint);
+    return timepoint_to_unixtime(timePoint);
 }
 
 std::string unixtime_to_datestring(double             unixtime,
@@ -69,9 +65,8 @@ std::string unixtime_to_datestring(double             unixtime,
     unixtime = std::round(unixtime * digits);
     unixtime /= digits;
 
-    auto time       = unixtime_to_timepoint(unixtime);
-    auto fmt_spec   = std::string("{:") + format + "}";
-    auto datestring = fmt::format(fmt::runtime(fmt_spec), time);
+    auto time = unixtime_to_timepoint(unixtime);
+    auto datestring = date::format(format, time);
 
     if (auto pos = datestring.find_last_of('.'); pos != std::string::npos)
     {
@@ -93,9 +88,9 @@ std::string unixtime_to_datestring(double             unixtime,
 
 double windows_filetime_to_unixtime(uint32_t highDateTime, uint32_t lowDateTime)
 {
-    uint64_t              date     = (static_cast<int64_t>(highDateTime) << 32) + lowDateTime;
-    static const uint64_t adjust   = 11644473600000ULL * 10000ULL;
-    double                unixtime = static_cast<double>(date - adjust) / 10000000.0;
+    uint64_t date = (static_cast<int64_t>(highDateTime) << 32) + lowDateTime;
+    static const uint64_t adjust = 11644473600000ULL * 10000ULL;
+    double unixtime = static_cast<double>(date - adjust) / 10000000.0;
     return unixtime;
 }
 
@@ -103,7 +98,7 @@ std::pair<uint32_t, uint32_t> unixtime_to_windows_filetime(double unixtime)
 {
     static const int64_t adjust = int64_t(11644473600000. * 10000.);
     unixtime *= 10000000.;
-    uint64_t date         = static_cast<uint64_t>(std::llround(unixtime)) + adjust;
+    uint64_t date = static_cast<uint64_t>(std::llround(unixtime)) + adjust;
     uint32_t lowDateTime  = static_cast<uint32_t>(date & 0xFFFFFFFF);
     uint32_t highDateTime = static_cast<uint32_t>(date >> 32);
     return std::make_pair(highDateTime, lowDateTime);

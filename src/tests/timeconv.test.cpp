@@ -87,7 +87,9 @@ TEST_CASE("datestring_to_unixtime: should convert zone to UTC by default", TESTT
 TEST_CASE("unixtime_to_datestring: should round fractional seconds correctly", TESTTAG)
 {
     auto datestring  = "+0000__05-06-2017__08:09:12.123456";
+    auto datestring2 = "+0000__05-06-2017__08:09:12.1234567";
     auto unixtime    = timeconv::datestring_to_unixtime(datestring);
+    auto unixtime2   = timeconv::datestring_to_unixtime(datestring2, "%z__%d-%m-%Y__%H:%M:%11S");
 
     CHECK("+0000__05-06-2017__08:09:12" == timeconv::unixtime_to_datestring(unixtime, 0));
     CHECK("+0000__05-06-2017__08:09:12.1" == timeconv::unixtime_to_datestring(unixtime, 1));
@@ -97,14 +99,32 @@ TEST_CASE("unixtime_to_datestring: should round fractional seconds correctly", T
     CHECK("+0000__05-06-2017__08:09:12.12346" == timeconv::unixtime_to_datestring(unixtime, 5));
     CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime, 6));
     CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime, 7));
+
+    CHECK("+0000__05-06-2017__08:09:12.123457" == timeconv::unixtime_to_datestring(unixtime2, 6));
 }
 
 TEST_CASE("datestring_to_unixtime: should read fractional second digits correctly", TESTTAG)
 {
     auto datestring = "+0000__05-06-2017__08:09:12.123456";
-    auto unixtime1  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%S");
+    auto unixtime1  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%3S");
+    auto unixtime2  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%4S");
+    auto unixtime3  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%5S");
+    auto unixtime4  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%6S");
+    auto unixtime5  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%7S");
+    auto unixtime6  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%8S");
+    auto unixtime7  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%9S");
+    auto unixtime8  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%10S");
+    auto unixtime9  = timeconv::datestring_to_unixtime(datestring, "%z__%d-%m-%Y__%H:%M:%11S");
 
-    CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime1, 6));
+    CHECK("+0000__05-06-2017__08:09:12.000000" == timeconv::unixtime_to_datestring(unixtime1, 6));
+    CHECK("+0000__05-06-2017__08:09:12.100000" == timeconv::unixtime_to_datestring(unixtime2, 6));
+    CHECK("+0000__05-06-2017__08:09:12.120000" == timeconv::unixtime_to_datestring(unixtime3, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123000" == timeconv::unixtime_to_datestring(unixtime4, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123400" == timeconv::unixtime_to_datestring(unixtime5, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123450" == timeconv::unixtime_to_datestring(unixtime6, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime7, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime8, 6));
+    CHECK("+0000__05-06-2017__08:09:12.123456" == timeconv::unixtime_to_datestring(unixtime9, 6));
 }
 
 TEST_CASE("datestring_to_unixtime: should use UTC0 as default", TESTTAG)
