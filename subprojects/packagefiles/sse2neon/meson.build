@@ -5,7 +5,7 @@
 
 project(
     'sse2neon', ['cpp'],
-    default_options: ['cpp_std=c++20'],
+    default_options: ['cpp_std=c++23'],
     version: 'v1.8.0',
 )
 

@@ -28,7 +28,7 @@ void init_m_timeconv(py::module& m)
         m.def_submodule("timeconv", "Convenient functions for converting time strings.");
 
     // this does not yet work the way I want it
-    // maybe when c++20 chrono is finally avaliable to all compilers (utc_time instead of system
+    // maybe when c++23 chrono is finally avaliable to all compilers (utc_time instead of system
     // time) m_timeconv.def("UnixTime_to_TimePoint",
     // &pingtools::timeconv::UnixTime_to_TimePoint,
     //            // doc.str().c_str(),

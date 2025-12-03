@@ -5,7 +5,7 @@
 
 project(
     'flat_map', ['cpp'],
-    default_options: ['cpp_std=c++20'],
+    default_options: ['cpp_std=c++23'],
     version: '0.1.0',
 )
 

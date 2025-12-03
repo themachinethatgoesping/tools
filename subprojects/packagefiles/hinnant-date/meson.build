@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 project('hinnant-date', ['cpp'],
-        default_options: ['cpp_std=c++20'],
+        default_options: ['cpp_std=c++23'],
         version: '3.0.4',
         license: 'MIT')
 

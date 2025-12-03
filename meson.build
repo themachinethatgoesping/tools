@@ -10,7 +10,7 @@ project(
   license: 'MPL-2.0',
 
   version: '0.31.0',
-  default_options: ['warning_level=0', 'buildtype=release', 'cpp_std=c++20'],
+  default_options: ['warning_level=0', 'buildtype=release', 'cpp_std=c++23'],
   meson_version: '>=1.8.1' #there is a problem with meson 1.8.0 so just use a higher version,
 )
 
@@ -32,6 +32,15 @@ tools_compile_args = ['-D_USE_MATH_DEFINES',
 ]
 
 if meson.get_compiler('cpp').get_id() == 'gcc'
+  # require minimum gcc version 14
+  gcc_version = meson.get_compiler('cpp').version()
+  if not gcc_version.version_compare('>=14.0')
+    error(
+      'GCC version 14.0 or newer is required for building the tools module. Found version '
+      + gcc_version,
+    )
+  endif
+
   # TODO: find a way to include these warnings again
   # these are generated in xtensor and I don't know how to deal with them ...
   tools_compile_args += '-Wno-array-bounds'
@@ -78,7 +87,7 @@ frozen_dep = subproject('frozen', default_options: 'default_library=static').get
 # indicators for pretty progress bars
 indicators_dep = dependency('indicators', static: true)
 
-#date (to be replaced with c++20 features)
+#date (to be replaced with c++23 features)
 #hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #magic_enum (for enum reflection)
