@@ -85,13 +85,13 @@ jobs:
       with:
         key: super-ci-mac-2  # name for the cache
         
-    - run: brew install libomp boost coreutils llvm@18
+    - run: brew install libomp boost coreutils llvm@19
     
     - run: pip install meson meson-python ninja pytest numpy
     
     - name: configure meson
       run: |
-        LLVM_PATH=$(brew --prefix llvm@18)
+        LLVM_PATH=$(brew --prefix llvm@19)
         LIBOMP_PATH=$(brew --prefix libomp)
         BOOST_PATH=$(brew --prefix boost)
         export CC="$LLVM_PATH/bin/clang"
@@ -104,6 +104,7 @@ jobs:
         export BOOST_INCLUDEDIR="$BOOST_PATH/include"
         export BOOST_LIBRARYDIR="$BOOST_PATH/lib"
         export PKG_CONFIG_PATH="$BOOST_PATH/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
+        
         meson setup builddir -Dpython.install_env=auto
         # CXX=${{ matrix.llvm }}/bin/clang++ CC=${{ matrix.llvm }}/bin/clang \
         # LDFLAGS="-L${{ matrix.llvm }}/lib \
