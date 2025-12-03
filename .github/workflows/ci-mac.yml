@@ -60,9 +60,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        boost: ["$(brew --prefix boost)"]
-        libomp: ["$(brew --prefix libomp)"]
-        llvm: ["$(brew --prefix llvm@18)"]
         os: ["macos-15"] 
         
     steps:
@@ -94,7 +91,19 @@ jobs:
     
     - name: configure meson
       run: |
-        # meson setup builddir -Dunity=on -Dunity_size=9999999 -Dpython.install_env=auto
+        LLVM_PATH=$(brew --prefix llvm@18)
+        LIBOMP_PATH=$(brew --prefix libomp)
+        BOOST_PATH=$(brew --prefix boost)
+        export CC="$LLVM_PATH/bin/clang"
+        export CXX="$LLVM_PATH/bin/clang++"
+        export CPPFLAGS="-I$LLVM_PATH/include -I$LLVM_PATH/include/c++/v1 -I$LIBOMP_PATH/include -I$BOOST_PATH/include"
+        export LDFLAGS="-L$LLVM_PATH/lib -L$LLVM_PATH/lib/c++ -L$LIBOMP_PATH/lib -L$BOOST_PATH/lib -Wl,-rpath,$LLVM_PATH/lib"
+        export LIBRARY_PATH="$LLVM_PATH/lib:$LIBOMP_PATH/lib:$BOOST_PATH/lib"
+        export CPATH="$LLVM_PATH/include:$LIBOMP_PATH/include:$BOOST_PATH/include"
+        export BOOST_ROOT="$BOOST_PATH"
+        export BOOST_INCLUDEDIR="$BOOST_PATH/include"
+        export BOOST_LIBRARYDIR="$BOOST_PATH/lib"
+        export PKG_CONFIG_PATH="$BOOST_PATH/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
         meson setup builddir -Dpython.install_env=auto
         # CXX=${{ matrix.llvm }}/bin/clang++ CC=${{ matrix.llvm }}/bin/clang \
         # LDFLAGS="-L${{ matrix.llvm }}/lib \
