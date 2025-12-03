@@ -53,11 +53,7 @@ class Test_tools_timeconv_ext:
     # test case 4
     def test_datetime_to_datestring_should_round_fractional_seconds_correctly(self):
         datestring = "+0000__05-06-2017__08:09:12.123456"
-        datestring2 = "+0000__05-06-2017__08:09:12.1234567"
         dt1 = timeconv.datestring_to_datetime(datestring)
-        dt2 = timeconv.datestring_to_datetime(
-            datestring2, format="%z__%d-%m-%Y__%H:%M:%11S"
-        )
 
         assert "+0000__05-06-2017__08:09:12" == timeconv.datetime_to_datestring(dt1, 0)
         assert "+0000__05-06-2017__08:09:12.1" == timeconv.datetime_to_datestring(
@@ -82,49 +78,14 @@ class Test_tools_timeconv_ext:
             dt1, 7
         )
 
-        assert "+0000__05-06-2017__08:09:12.123457" == timeconv.datetime_to_datestring(
-            dt2, 6
-        )
 
     # test case 5
     def test_datestring_to_datetime_should_read_fractional_second_digits_correctly(
         self,
     ):
         datestring = "+0000__05-06-2017__08:09:12.123456"
-        dt1 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%3S")
-        dt2 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%4S")
-        dt3 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%5S")
-        dt4 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%6S")
-        dt5 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%7S")
-        dt6 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%8S")
-        dt7 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%9S")
-        dt8 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%10S")
-        dt9 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%11S")
-
-        assert "+0000__05-06-2017__08:09:12.000000" == timeconv.datetime_to_datestring(
+        dt1 = timeconv.datestring_to_datetime(datestring, "%z__%d-%m-%Y__%H:%M:%S")
+\
+        assert "+0000__05-06-2017__08:09:12.123456" == timeconv.datetime_to_datestring(
             dt1, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.100000" == timeconv.datetime_to_datestring(
-            dt2, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.120000" == timeconv.datetime_to_datestring(
-            dt3, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123000" == timeconv.datetime_to_datestring(
-            dt4, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123400" == timeconv.datetime_to_datestring(
-            dt5, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123450" == timeconv.datetime_to_datestring(
-            dt6, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123456" == timeconv.datetime_to_datestring(
-            dt7, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123456" == timeconv.datetime_to_datestring(
-            dt8, 6
-        )
-        assert "+0000__05-06-2017__08:09:12.123456" == timeconv.datetime_to_datestring(
-            dt9, 6
         )

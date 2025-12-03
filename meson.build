@@ -79,7 +79,7 @@ frozen_dep = subproject('frozen', default_options: 'default_library=static').get
 indicators_dep = dependency('indicators', static: true)
 
 #date (to be replaced with c++20 features)
-hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
+#hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum')

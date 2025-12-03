@@ -1,4 +1,4 @@
-project('xsimd', 'cpp', version:'13.2.0', license:'BSD-3-Clause', default_options : ['warning_level=0', 'cpp_std=c++17'])
+project('xsimd', 'cpp', version:'14.0.0', license:'BSD-3-Clause', default_options : ['warning_level=0', 'cpp_std=c++17'])
 
 
 xsimd_dep = declare_dependency(
