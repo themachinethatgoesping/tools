@@ -68,7 +68,7 @@ jobs:
         include:
           - toolset: vc143
             compiler: clang-cl
-            cpp_std: c++23
+            cpp_std: c++latest
           # - toolset: msvc
           #   compiler: sccache cl
           #   cpp_std: c++23
@@ -130,9 +130,6 @@ jobs:
     - name: install dependencies (meson & python)
       run: pip install meson meson-python pytest numpy 
       #run: pip install meson meson-python pytest numpy ninja
-
-    - name: install custom meson
-      run: pip install --upgrade "git+https://github.com/peter-urban/meson.git@add_c++23_clangcl"
 
     - name: download ninja long path
       run : |
