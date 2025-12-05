@@ -77,7 +77,7 @@ std::array<t_float, 3> ypr_from_quaternion(EigenQuaternion<t_float> q, bool outp
 {
     q.normalize();
 
-    auto Me = q.toRotationMatrix().eulerAngles(2, 1, 0);
+    auto Me = q.toRotationMatrix().canonicalEulerAngles(2, 1, 0);
     std::array<t_float, 3> ypr{ Me[0], Me[1], Me[2] };
 
     ypr = normalize_angles_rad(ypr);
@@ -97,7 +97,7 @@ std::array<t_float, 3> rpy_from_quaternion(EigenQuaternion<t_float> q, bool outp
 {
     q.normalize();
 
-    auto Me = q.toRotationMatrix().eulerAngles(0, 1, 2);
+    auto Me = q.toRotationMatrix().canonicalEulerAngles(0, 1, 2);
     std::array<t_float, 3> rpy{ Me[0], Me[1], Me[2] };
 
     rpy = normalize_angles_rad(rpy);
