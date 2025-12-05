@@ -74,7 +74,7 @@ boost_modules = dependency(
 boost_dep = dependency('boost', version: boost_version, include_type: 'system')
 
 # eigen 3
-eigen3_dep = dependency('eigen3', version: '>=3.4', include_type: 'system')
+eigen3_dep = dependency('eigen3', version: '>=5.0', include_type: 'system')
 
 # fmt for pretty printing
 #fmt_dep = dependency('fmt', static: true, version: 10.0)
