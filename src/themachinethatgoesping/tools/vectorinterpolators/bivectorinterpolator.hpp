@@ -318,7 +318,35 @@ class BiVectorInterpolator
     classhelper::ObjectPrinter __printer__(unsigned int float_precision,
                                            bool         superscript_exponents) const
     {
-        return classhelper::ObjectPrinter(class_name(), float_precision, superscript_exponents);
+        classhelper::ObjectPrinter printer(class_name(), float_precision, superscript_exponents);
+
+        printer.register_enum("extr_mode", _extr_mode);
+        printer.register_value("number of rows", _row_coordinates.size());
+
+        if (!_row_coordinates.empty())
+        {
+            printer.register_section("row coordinates");
+            printer.register_container("rows", _row_coordinates);
+
+            printer.register_section("column ranges per row");
+            for (size_t i = 0; i < _col_interpolator_per_row.size(); ++i)
+            {
+                const auto& col_interp = _col_interpolator_per_row[i];
+                const auto& col_x      = col_interp.get_data_X();
+                if (!col_x.empty())
+                {
+                    printer.register_string(
+                        fmt::format("row {}", i),
+                        fmt::format("[{}, {}] ({} points)", col_x.front(), col_x.back(), col_x.size()));
+                }
+                else
+                {
+                    printer.register_string(fmt::format("row {}", i), "empty");
+                }
+            }
+        }
+
+        return printer;
     }
 
     // define info_string and print functions (needs the __printer__ function)
