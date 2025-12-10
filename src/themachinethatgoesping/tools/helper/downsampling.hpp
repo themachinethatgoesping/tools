@@ -71,14 +71,15 @@ xt::xtensor<size_t, 1> get_index_downsampling(const T& data,
  * @param max_gap Maximum allowed gap in the original data before considering it a data gap.
  *                When a gap larger than this is encountered, sampling restarts after the gap.
  *                If <= 0 or NaN, defaults to 2x downsample_interval (or 10 if no downsampling)
- * @return std::vector<double> containing the downsampled values at exact intervals
+ * @return xt::xtensor<value_type, 1> containing the downsampled values at exact intervals,
+ *         where value_type is determined from the input container (e.g., float for vector<float>)
  *
  * @note The data must be sorted in ascending order. Behavior is undefined for unsorted input.
  */
 template<typename T>
-std::vector<double> get_value_downsampling(const T& data,
-                                           double   downsample_interval,
-                                           double   max_gap);
+xt::xtensor<typename T::value_type, 1> get_value_downsampling(const T& data,
+                                                              double   downsample_interval,
+                                                              double   max_gap);
 
 // Explicit instantiation declarations for common types
 extern template xt::xtensor<size_t, 1> get_index_downsampling(const std::vector<float>& data,
@@ -97,21 +98,21 @@ extern template xt::xtensor<size_t, 1> get_index_downsampling(const xt::xtensor<
                                                               double downsample_interval,
                                                               double max_gap);
 
-extern template std::vector<double> get_value_downsampling(const std::vector<float>& data,
-                                                           double downsample_interval,
-                                                           double max_gap);
+extern template xt::xtensor<float, 1> get_value_downsampling(const std::vector<float>& data,
+                                                             double downsample_interval,
+                                                             double max_gap);
 
-extern template std::vector<double> get_value_downsampling(const std::vector<double>& data,
-                                                           double downsample_interval,
-                                                           double max_gap);
+extern template xt::xtensor<double, 1> get_value_downsampling(const std::vector<double>& data,
+                                                              double downsample_interval,
+                                                              double max_gap);
 
-extern template std::vector<double> get_value_downsampling(const xt::xtensor<float, 1>& data,
-                                                           double downsample_interval,
-                                                           double max_gap);
+extern template xt::xtensor<float, 1> get_value_downsampling(const xt::xtensor<float, 1>& data,
+                                                             double downsample_interval,
+                                                             double max_gap);
 
-extern template std::vector<double> get_value_downsampling(const xt::xtensor<double, 1>& data,
-                                                           double downsample_interval,
-                                                           double max_gap);
+extern template xt::xtensor<double, 1> get_value_downsampling(const xt::xtensor<double, 1>& data,
+                                                              double downsample_interval,
+                                                              double max_gap);
 
 } // namespace helper
 } // namespace tools

@@ -21,9 +21,11 @@
 #include <concepts>
 #include <stdexcept>
 #include <vector>
+#include <xtensor/containers/xtensor.hpp>
 
 #include "../classhelper/objectprinter.hpp"
 #include "../classhelper/option.hpp"
+#include "../helper/downsampling.hpp"
 
 namespace themachinethatgoesping {
 namespace tools {
@@ -39,7 +41,7 @@ enum class t_extr_mode : uint8_t
     fail    = 1, ///< throw out_of_range exception if x value exceeds boundaries of internal vector
     nearest = 2, ///< return nearest value in the vector.
     nan     = 3  ///< return NaN if x value exceeds boundaries of internal vector (only for floating
-            ///< point types)
+                 ///< point types)
 };
 
 using o_extr_mode = classhelper::Option<t_extr_mode>;
@@ -108,6 +110,11 @@ class I_Interpolator
      * @return std::vector<YType>
      */
     virtual const std::vector<YType>& get_data_Y() const = 0;
+
+    xt::xtensor<XType, 1> get_sampled_X(double downsample_interval, double max_gap) const
+    {
+        return helper::get_value_downsampling(get_data_X(), downsample_interval, max_gap);\
+    }
 
     // -----------------------
     // getter setter functions

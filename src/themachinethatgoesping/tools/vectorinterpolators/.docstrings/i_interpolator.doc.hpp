@@ -1,4 +1,4 @@
-//sourcehash: 310e36cf071b647418ad7e7acd0405a34ada9d02bd16fa9e6eefc538e846818a
+//sourcehash: d9528301b1766f02a575b975891caf21061f0a5b7f3157701a86720430a96b7f
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,7 +41,7 @@
 #endif
 
 
-static const char *mkd_doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_251_67 = R"doc()doc";
+static const char *mkd_doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_258_67 = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -106,6 +106,8 @@ R"doc(Get the currently set extrapolation mode
 
 Returns:
     :o_extr_mode)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_sampled_X = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string =
 R"doc(                                                                                           \

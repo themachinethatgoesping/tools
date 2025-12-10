@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include <limits>
+#include <type_traits>
 #include <vector>
 
 #include <xtensor/containers/xtensor.hpp>
@@ -229,12 +230,12 @@ TEST_CASE("get_value_downsampling: basic functionality", TESTTAG)
     auto result = get_value_downsampling(data, 0.25, -1.0);
 
     REQUIRE(result.size() >= 4);
-    REQUIRE(result[0] == Catch::Approx(0.0));
+    REQUIRE(result(0) == Catch::Approx(0.0));
 
     // Verify spacing
     for (size_t i = 1; i < result.size(); ++i)
     {
-        double diff = result[i] - result[i - 1];
+        double diff = result(i) - result(i - 1);
         REQUIRE(diff >= 0.25 - 0.01);
     }
 }
@@ -248,7 +249,7 @@ TEST_CASE("get_value_downsampling: returns all with 0 interval", TESTTAG)
     REQUIRE(result.size() == 6);
     for (size_t i = 0; i < 6; ++i)
     {
-        REQUIRE(result[i] == Catch::Approx(data[i]));
+        REQUIRE(result(i) == Catch::Approx(data[i]));
     }
 }
 
@@ -261,7 +262,7 @@ TEST_CASE("get_value_downsampling: returns all with NaN interval", TESTTAG)
     REQUIRE(result.size() == 6);
     for (size_t i = 0; i < 6; ++i)
     {
-        REQUIRE(result[i] == Catch::Approx(data[i]));
+        REQUIRE(result(i) == Catch::Approx(data[i]));
     }
 }
 
@@ -272,5 +273,17 @@ TEST_CASE("get_value_downsampling: with xtensor", TESTTAG)
     auto result = get_value_downsampling(data, 0.25, -1.0);
 
     REQUIRE(result.size() >= 4);
-    REQUIRE(result[0] == Catch::Approx(0.0));
+    REQUIRE(result(0) == Catch::Approx(0.0));
+}
+
+TEST_CASE("get_value_downsampling: preserves value type for float", TESTTAG)
+{
+    std::vector<float> data = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
+
+    auto result = get_value_downsampling(data, 0.25, -1.0);
+
+    // Result should be xt::xtensor<float, 1>
+    static_assert(std::is_same_v<decltype(result), xt::xtensor<float, 1>>);
+    REQUIRE(result.size() >= 2);
+    REQUIRE(result(0) == Catch::Approx(0.0f));
 }

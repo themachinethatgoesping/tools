@@ -1,4 +1,4 @@
-//sourcehash: 5aa6a5f973b3e682d04cf37ea63fe0718f1ae0e6a11e3ab3f4fccf2c2704c932
+//sourcehash: 61de8173f350ddecf500c748fc4a60afdf268cc2683cb86f89cfbddb70515222
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -104,8 +104,9 @@ Template Args:
        contain floating point values)
 
 Returns:
-    std::vector<double> containing the downsampled values at exact
-        intervals
+    xt::xtensor<value_type, 1> containing the downsampled values at
+       exact intervals, where value_type is determined from the input
+       container (e.g., float for vector<float>)
 
 @note The data must be sorted in ascending order. Behavior is
 undefined for unsorted input.)doc";
