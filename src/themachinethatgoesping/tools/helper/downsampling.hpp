@@ -52,7 +52,7 @@ namespace helper {
 template<typename T>
 xt::xtensor<size_t, 1> get_index_downsampling(const T& data,
                                               double   downsample_interval,
-                                              double   max_gap);
+                                              double   max_gap = std::numeric_limits<double>::quiet_NaN());
 
 /**
  * @brief Downsample a sorted data container and return the downsampled values
@@ -79,28 +79,28 @@ xt::xtensor<size_t, 1> get_index_downsampling(const T& data,
 template<typename T>
 xt::xtensor<typename T::value_type, 1> get_value_downsampling(const T& data,
                                                               double   downsample_interval,
-                                                              double   max_gap);
+                                                              double   max_gap = std::numeric_limits<double>::quiet_NaN());
 
 // Explicit instantiation declarations for common types
 extern template xt::xtensor<size_t, 1> get_index_downsampling(const std::vector<float>& data,
                                                               double downsample_interval,
-                                                              double max_gap);
+                                                              double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<size_t, 1> get_index_downsampling(const std::vector<double>& data,
                                                               double downsample_interval,
-                                                              double max_gap);
+                                                              double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<size_t, 1> get_index_downsampling(const xt::xtensor<float, 1>& data,
                                                               double downsample_interval,
-                                                              double max_gap);
+                                                              double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<size_t, 1> get_index_downsampling(const xt::xtensor<double, 1>& data,
                                                               double downsample_interval,
-                                                              double max_gap);
+                                                              double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<float, 1> get_value_downsampling(const std::vector<float>& data,
                                                              double downsample_interval,
-                                                             double max_gap);
+                                                             double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<double, 1> get_value_downsampling(const std::vector<double>& data,
                                                               double downsample_interval,
@@ -108,11 +108,11 @@ extern template xt::xtensor<double, 1> get_value_downsampling(const std::vector<
 
 extern template xt::xtensor<float, 1> get_value_downsampling(const xt::xtensor<float, 1>& data,
                                                              double downsample_interval,
-                                                             double max_gap);
+                                                             double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 extern template xt::xtensor<double, 1> get_value_downsampling(const xt::xtensor<double, 1>& data,
                                                               double downsample_interval,
-                                                              double max_gap);
+                                                              double max_gap = std::numeric_limits<double>::quiet_NaN());
 
 } // namespace helper
 } // namespace tools

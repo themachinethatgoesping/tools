@@ -13,6 +13,7 @@
 
 #include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
+#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
 
 #include "module.hpp"
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
@@ -39,21 +40,31 @@ void init_linearinterpolator(nanobind::module_& m, const std::string& name)
              nb::arg("Y")                  = std::vector<YType>({}),
              nb::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
-             nb::overload_cast<XType>(&t_LinearInterpolator::operator(), nb::const_),
+             [](const t_LinearInterpolator& self, XType target_x) { return self(target_x); },
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              nb::arg("target_x"))
         .def("get_y",
-             nb::overload_cast<XType>(&t_LinearInterpolator::get_y, nb::const_),
+             [](const t_LinearInterpolator& self, XType target_x) { return self.get_y(target_x); },
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_y),
              nb::arg("target_x"))
-        .def("__call__",
-             nb::overload_cast<const std::vector<XType>&>(&t_LinearInterpolator::operator(), nb::const_),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 I_Interpolator,
-                 operator_call_2),
-             nb::arg("targets_x"))
+        .def(
+            "__call__",
+            [](const t_LinearInterpolator& self, const xt::nanobind::pytensor<XType, 1>& targets_x, int mp_cores) {
+                return self.operator()(targets_x, mp_cores);
+            },
+            DOC(themachinethatgoesping,
+                tools,
+                vectorinterpolators,
+                I_Interpolator,
+                operator_call_2),
+            nb::arg("targets_x"),
+            nb::arg("mp_cores") = 1)
+        .def(
+            "get_sampled_X",
+            &t_LinearInterpolator::get_sampled_X,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_sampled_X),
+            nb::arg("downsample_interval"),
+            nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN())
         .def("empty",
              &t_LinearInterpolator::empty,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
@@ -85,17 +96,17 @@ void init_linearinterpolator(nanobind::module_& m, const std::string& name)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
         .def("append",
              &t_LinearInterpolator::append,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, append),
              nb::arg("x"),
              nb::arg("y"))
         .def("extend",
              &t_LinearInterpolator::extend,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, extend),
              nb::arg("X"),
              nb::arg("Y"))
         .def("insert",
              &t_LinearInterpolator::insert,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, insert),
              nb::arg("X"),
              nb::arg("Y"),
              nb::arg("bool") = false)

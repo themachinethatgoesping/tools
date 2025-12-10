@@ -366,12 +366,33 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
     /**
      * @brief get nearest y values for given x targets (vectorized call)
      *
-     * @param targets_x vector of x values. For each of these values find the corrsponding y value
-     * @return corresponding y value
+     * This function delegates to the base class I_Interpolator's vectorized operator().
+     *
+     * @param targets_x vector of x values. For each of these values find the corresponding y value
+     * @param mp_cores Number of OpenMP threads to use for parallelization. Default is 1.
+     * @return corresponding y values
      */
-    std::vector<YType> operator()(const std::vector<XType>& targetsX) const
+    std::vector<YType> operator()(const std::vector<XType>& targetsX, int mp_cores = 1) const
     {
-        return I_Interpolator<XType, YType>::operator()(targetsX);
+        return I_Interpolator<XType, YType>::operator()(targetsX, mp_cores);
+    }
+
+    /**
+     * @brief get interpolated y values for given x targets (xtensor vectorized call)
+     *
+     * This overload accepts xtensor containers and returns an xtensor result.
+     * Only available when YType is a scalar type.
+     *
+     * @tparam XTensor An xtensor-compatible 1D container type
+     * @param targets_x xtensor of x values. For each of these values find the corresponding y value
+     * @param mp_cores Number of OpenMP threads to use for parallelization. Default is 1.
+     * @return xt::xtensor<YType, 1> corresponding y values as a 1D xtensor
+     */
+    template<typename XTensor>
+        requires helper::c_xtensor_1d<XTensor> && std::is_scalar_v<YType>
+    xt::xtensor<YType, 1> operator()(const XTensor& targetsX, int mp_cores = 1) const
+    {
+        return I_Interpolator<XType, YType>::template operator()<XTensor>(targetsX, mp_cores);
     }
 
     //--------------------------------

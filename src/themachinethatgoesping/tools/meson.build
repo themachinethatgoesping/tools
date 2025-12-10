@@ -21,6 +21,7 @@ sources = [
   'progressbars/noindicator.cpp',
   'progressbars/progressbarchooser.cpp',
   'progressbars/progressindicator.cpp',
+  'helper/container_intersection.cpp',
   'helper/downsampling.cpp',
 ]
 
@@ -78,6 +79,7 @@ headers = [
   'progressbars/.docstrings/progresstqdm.doc.hpp',
   'progressbars/.docstrings/progresstqdm_nano.doc.hpp',
   'helper/approx.hpp',
+  'helper/container_intersection.hpp',
   'helper/defaultmap.hpp',
   'helper/defaultsharedpointermap.hpp',
   'helper/downsampling.hpp',
@@ -92,6 +94,7 @@ headers = [
   'helper/xtensor.hpp',
   'helper/xtensor_hash.hpp',
   'helper/.docstrings/approx.doc.hpp',
+  'helper/.docstrings/container_intersection.doc.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
   'helper/.docstrings/downsampling.doc.hpp',

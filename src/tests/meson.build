@@ -19,6 +19,7 @@ sources = [
   'rotationfunctions/helper.test.cpp',
   'rotationfunctions/quaternions.test.cpp',
   'pyhelper/pyindexer.test.cpp',
+  'helper/container_intersection.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',
   'helper/downsampling.test.cpp',
 ]

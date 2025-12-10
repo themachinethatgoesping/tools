@@ -14,8 +14,8 @@
 
 #include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
 
-namespace nb          = nanobind;
-namespace pingtools   = themachinethatgoesping::tools;
+namespace nb        = nanobind;
+namespace pingtools = themachinethatgoesping::tools;
 
 void init_m_downsampling(nb::module_& m)
 {
@@ -34,8 +34,8 @@ void init_m_downsampling(nb::module_& m)
         },
         DOC(themachinethatgoesping, tools, helper, get_index_downsampling),
         nb::arg("data"),
-        nb::arg("downsample_interval") = 1.0,
-        nb::arg("max_gap")             = -1.0);
+        nb::arg("downsample_interval"),
+        nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN());
 
     // Bind get_index_downsampling for pytensor<float, 1>
     m_helper.def(
@@ -50,8 +50,8 @@ void init_m_downsampling(nb::module_& m)
         },
         DOC(themachinethatgoesping, tools, helper, get_index_downsampling),
         nb::arg("data"),
-        nb::arg("downsample_interval") = 1.0,
-        nb::arg("max_gap")             = -1.0);
+        nb::arg("downsample_interval"),
+        nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN());
 
     // Bind get_value_downsampling for pytensor<double, 1>
     m_helper.def(
@@ -66,8 +66,8 @@ void init_m_downsampling(nb::module_& m)
         },
         DOC(themachinethatgoesping, tools, helper, get_value_downsampling),
         nb::arg("data"),
-        nb::arg("downsample_interval") = 1.0,
-        nb::arg("max_gap")             = -1.0);
+        nb::arg("downsample_interval"),
+        nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN());
 
     // Bind get_value_downsampling for pytensor<float, 1>
     m_helper.def(
@@ -82,6 +82,6 @@ void init_m_downsampling(nb::module_& m)
         },
         DOC(themachinethatgoesping, tools, helper, get_value_downsampling),
         nb::arg("data"),
-        nb::arg("downsample_interval") = 1.0,
-        nb::arg("max_gap")             = -1.0);
+        nb::arg("downsample_interval"),
+        nb::arg("max_gap")             = std::numeric_limits<double>::quiet_NaN());
 }

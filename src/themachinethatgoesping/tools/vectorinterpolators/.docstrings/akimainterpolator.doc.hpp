@@ -1,4 +1,4 @@
-//sourcehash: 24869a4b9889bf8ea4e927ed19a9c1060a1853729a0acb3274e24f0ac4266c9b
+//sourcehash: a7fc6f871bed2514e8d1a44565867b283ced9795aa46373de7013334d7ea2698
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -73,8 +73,6 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_Akim
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_akima_spline = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
-
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash =
 R"doc(compute a 64 bit hash of the object using xxhash and the       \
 to_binary function. This  function is called binary because the
@@ -83,8 +81,6 @@ to_binary function. This  function is called binary because the
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_class_name = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary =
 R"doc(convert object to vector of bytes
@@ -99,20 +95,6 @@ Args:
 Returns:
     vector of bytes
     \)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_stream = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_X =
-R"doc(return the x component of the internal data vector
-
-Returns:
-    std::vector<XYType>)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_Y =
-R"doc(return the y component of the internal data vector
-
-Returns:
-    std::vector<XYType>)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_y = R"doc()doc";
 
@@ -129,13 +111,6 @@ Args:
 Returns:
     std::string
         \)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
-R"doc(internal function to initialize the linear extrapolation objects _X,
-_Y and the _akima_spline must be set/initialized before calling this
-function)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_insert = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator = R"doc()doc";
 
@@ -155,10 +130,12 @@ R"doc(get nearest y values for given x targets (vectorized call)
 
 Args:
     targets_x: vector of x values. For each of these values find the
-               corrsponding y value
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1.
 
 Returns:
-    corresponding y value)doc";
+    corresponding y values)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_eq = R"doc()doc";
 
@@ -176,29 +153,6 @@ Args:
                      \
     superscript_exponents: print exponents in superscript
                            \)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_printer = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
-R"doc(change the input data to these X and Y vectors
-
-Args:
-    X:: x vector (must be same size)
-    Y:: y vector (must be same size))doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary =
-R"doc(convert object to vector of bytes
-\
-                                                                                            \
-Args:
-    resize_buffer: variable for interface compatibility, does not do
-                   anything             \ \
-
-Returns:
-    vector of bytes
-    \)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_stream = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

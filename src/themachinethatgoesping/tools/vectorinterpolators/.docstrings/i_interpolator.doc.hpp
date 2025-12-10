@@ -1,4 +1,4 @@
-//sourcehash: d9528301b1766f02a575b975891caf21061f0a5b7f3157701a86720430a96b7f
+//sourcehash: 1047b093c516e5786754fb9e973c309a2afc038237505969871d04214836e715
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,7 +41,7 @@
 #endif
 
 
-static const char *mkd_doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_258_67 = R"doc()doc";
+static const char *mkd_doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_310_67 = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -107,7 +107,28 @@ R"doc(Get the currently set extrapolation mode
 Returns:
     :o_extr_mode)doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_sampled_X = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_sampled_X =
+R"doc(Get downsampled x values from the interpolator data.
+
+This function returns x values at regular intervals, respecting gaps
+in the data. Useful for reducing the number of interpolation points
+when dealing with large datasets.
+
+Args:
+    downsample_interval: The interval between consecutive sampled x
+                         values
+    max_gap: Maximum allowed gap between consecutive x values. If the
+             gap between consecutive x values exceeds this, a new
+             sampling segment is started.
+
+Returns:
+    xt::xtensor<XType, 1> A 1D tensor containing the downsampled x
+       values
+
+@note The returned values are actual x values from the data, not
+interpolated positions.
+      Use these values with the interpolator to get corresponding y
+      values.)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string =
 R"doc(                                                                                           \
@@ -146,14 +167,43 @@ Returns:
     corresponding y value)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call_2 =
-R"doc(get nearest y values for given x targets (vectorized call)
+R"doc(get interpolated y values for given x targets (vectorized call)
 
 Args:
     targets_x: vector of x values. For each of these values find the
-               corrsponding y value
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1 (no parallelism). Set to higher values to
+              enable parallel interpolation.
 
 Returns:
-    corresponding y value)doc";
+    std::vector<YType> corresponding y values)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call_3 =
+R"doc(get interpolated y values for given x targets (xtensor vectorized
+call)
+
+This overload accepts xtensor containers and returns an xtensor
+result. The return type matches the value type of the interpolator
+(YType).
+
+Args:
+    targets_x: xtensor of x values. For each of these values find the
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1 (no parallelism). Set to higher values to
+              enable parallel interpolation.
+
+Template Args:
+    XTensor: An xtensor-compatible 1D container type
+
+Returns:
+    xt::xtensor<YType, 1> corresponding y values as a 1D xtensor
+
+@note This function requires YType to be a scalar type (not a compound
+type like Quaternion).
+      For SlerpInterpolator, use the vector overload or the ypr()
+      method instead.)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_print =
 R"doc(                                                                                           \

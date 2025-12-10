@@ -8,6 +8,7 @@
 #include <themachinethatgoesping/tools_nanobind/ostream_redirect.hpp>
 
 #include "classhelper/module.hpp"
+#include "m_container_intersection.hpp"
 #include "m_downsampling.hpp"
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
@@ -62,6 +63,7 @@ NB_MODULE(MODULE_NAME, m)
             nb::arg("traceback") = nb::none());
 
     init_m_helper(m);
+    init_m_container_intersection(m);
     init_m_downsampling(m);
     init_m_timeconv(m);
     init_m_progressbars(m);

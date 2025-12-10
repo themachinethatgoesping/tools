@@ -117,6 +117,12 @@ void init_slerpinterpolator(nanobind::module_& m, const std::string& name)
             "get_data_X",
             &t_SlerpInterpolator::get_data_X,
             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_data_X))
+        .def(
+            "get_sampled_X",
+            &t_SlerpInterpolator::get_sampled_X,
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_sampled_X),
+            nb::arg("downsample_interval"),
+            nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN())
         .def("get_data_YPR",
              &t_SlerpInterpolator::get_data_YPR,
              DOC(themachinethatgoesping,

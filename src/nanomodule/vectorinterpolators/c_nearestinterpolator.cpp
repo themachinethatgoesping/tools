@@ -9,51 +9,91 @@
 
 #include <sstream>
 #include <tuple>
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 #include <themachinethatgoesping/tools/vectorinterpolators/nearestinterpolator.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
+#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
 
 #include "module.hpp"
 
 namespace nb = nanobind;
 using namespace themachinethatgoesping::tools::vectorinterpolators;
 
+// Helper to check if YType is scalar and suitable for xtensor
+template<typename YType>
+constexpr bool is_xtensor_compatible_ytype()
+{
+    return std::is_scalar_v<YType>;
+}
+
 template<std::floating_point XType, typename YType>
 void init_nearestinterpolator(nanobind::module_& m, const std::string& name)
 {
     using t_NearestInterpolator = NearestInterpolator<XType, YType>;
 
-    nb::class_<t_NearestInterpolator>(
-        m, name.c_str(),
-        DOC(themachinethatgoesping, tools, vectorinterpolators, NearestInterpolator))
-        .def(nb::init<const std::vector<XType>&, const std::vector<YType>&, o_extr_mode>(),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 I_PairInterpolator,
-                 I_PairInterpolator),
-             nb::arg("X")                  = std::vector<XType>({}),
-             nb::arg("Y")                  = std::vector<YType>({}),
-             nb::arg("extrapolation_mode") = t_extr_mode::extrapolate)
+    auto cls = nb::class_<t_NearestInterpolator>(
+        m,
+        name.c_str(),
+        DOC(themachinethatgoesping, tools, vectorinterpolators, NearestInterpolator));
+
+    cls.def(nb::init<const std::vector<XType>&, const std::vector<YType>&, o_extr_mode>(),
+            DOC(themachinethatgoesping,
+                tools,
+                vectorinterpolators,
+                I_PairInterpolator,
+                I_PairInterpolator),
+            nb::arg("X")                  = std::vector<XType>({}),
+            nb::arg("Y")                  = std::vector<YType>({}),
+            nb::arg("extrapolation_mode") = t_extr_mode::extrapolate)
         .def("__call__",
-             nb::overload_cast<XType>(&t_NearestInterpolator::operator(), nb::const_),
+             [](const t_NearestInterpolator& self, XType target_x) { return self(target_x); },
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
              nb::arg("target_x"))
         .def("get_y",
-             nb::overload_cast<XType>(&t_NearestInterpolator::get_y, nb::const_),
+             [](const t_NearestInterpolator& self, XType target_x) { return self.get_y(target_x); },
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, get_y),
-             nb::arg("target_x"))
-        .def("__call__",
-             nb::overload_cast<const std::vector<XType>&>(&t_NearestInterpolator::operator(),
-                                                          nb::const_),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 I_Interpolator,
-                 operator_call_2),
-             nb::arg("targets_x"))
+             nb::arg("target_x"));
+
+    // Add xtensor overload for scalar YTypes, vector overload for non-scalar
+    if constexpr (is_xtensor_compatible_ytype<YType>())
+    {
+        cls.def(
+            "__call__",
+            &t_NearestInterpolator::template operator()<xt::nanobind::pytensor<XType, 1>>,
+            DOC(themachinethatgoesping,
+                tools,
+                vectorinterpolators,
+                I_Interpolator,
+                operator_call_2),
+            nb::arg("targets_x"),
+            nb::arg("mp_cores") = 1);
+    }
+    else
+    {
+        // For non-scalar YTypes (like nb::object), use the vector overload via lambda
+        // (nb::overload_cast has issues with inherited methods)
+        cls.def(
+            "__call__",
+            [](const t_NearestInterpolator& self,
+               const std::vector<XType>&    targets_x,
+               int                          mp_cores) { return self.operator()(targets_x, mp_cores); },
+            DOC(themachinethatgoesping,
+                tools,
+                vectorinterpolators,
+                I_Interpolator,
+                operator_call_2),
+            nb::arg("targets_x"),
+            nb::arg("mp_cores") = 1);
+    }
+
+    cls.def(
+           "get_sampled_X",
+           &t_NearestInterpolator::get_sampled_X,
+           DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_sampled_X),
+           nb::arg("downsample_interval"),
+           nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN())
         .def("empty",
              &t_NearestInterpolator::empty,
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, empty))
@@ -85,17 +125,17 @@ void init_nearestinterpolator(nanobind::module_& m, const std::string& name)
              DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_data_Y))
         .def("append",
              &t_NearestInterpolator::append,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, append),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, append),
              nb::arg("x"),
              nb::arg("y"))
         .def("extend",
              &t_NearestInterpolator::extend,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, extend),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, extend),
              nb::arg("X"),
              nb::arg("Y"))
         .def("insert",
              &t_NearestInterpolator::insert,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, insert),
              nb::arg("X"),
              nb::arg("Y"),
              nb::arg("bool") = false)

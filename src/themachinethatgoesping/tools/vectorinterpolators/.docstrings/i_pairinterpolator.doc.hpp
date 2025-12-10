@@ -1,4 +1,4 @@
-//sourcehash: 9304eb07025f2233e4e024bb8227c08104dba07519e95ca80a28b94fce567298
+//sourcehash: 5b38e8381844ce10c24c0ac281b8eff5d3098f4af415c84a08fe19dbff45a0b1
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -76,8 +76,6 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Pa
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_class_name = R"doc()doc";
-
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
@@ -98,18 +96,6 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Pa
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_insert = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
-R"doc(Interface for implementing an interpolation between two y values using
-a given interpolation factor
-
-Args:
-    target_x: interpolation factor. 0 means return smaller y value, 1
-              means return larger y value
-    y1: larger y value
-
-Returns:
-    interpolated y value)doc";
-
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
 R"doc(get the interpolated y value for given x target
 
@@ -122,12 +108,17 @@ Returns:
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call_2 =
 R"doc(get nearest y values for given x targets (vectorized call)
 
+This function delegates to the base class I_Interpolator's vectorized
+operator().
+
 Args:
     targets_x: vector of x values. For each of these values find the
-               corrsponding y value
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1.
 
 Returns:
-    corresponding y value)doc";
+    corresponding y values)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors

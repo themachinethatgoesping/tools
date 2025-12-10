@@ -13,6 +13,7 @@
 
 #include <themachinethatgoesping/tools/vectorinterpolators/akimainterpolator.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
+#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
 
 #include "module.hpp"
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
@@ -36,23 +37,33 @@ void init_akimainterpolator(nanobind::module_& m, const std::string& name)
              nb::arg("X")                  = std::vector<XYType>({}),
              nb::arg("Y")                  = std::vector<XYType>({}),
              nb::arg("extrapolation_mode") = t_extr_mode::extrapolate)
-        .def("__call__",
-             nb::overload_cast<XYType>(&t_AkimaInterpolator::operator(), nb::const_),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
-             nb::arg("target_x"))
-        .def("get_y",
-             nb::overload_cast<XYType>(&t_AkimaInterpolator::get_y, nb::const_),
-             DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, get_y),
-             nb::arg("target_x"))
-        .def("__call__",
-             nb::overload_cast<const std::vector<XYType>&>(&t_AkimaInterpolator::operator(),
-                                                           nb::const_),
-             DOC(themachinethatgoesping,
-                 tools,
-                 vectorinterpolators,
-                 I_Interpolator,
-                 operator_call_2),
-             nb::arg("targets_x"))
+        .def(
+            "__call__",
+            [](const t_AkimaInterpolator& self, XYType target_x) { return self(target_x); },
+            DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, operator_call),
+            nb::arg("target_x"))
+        .def(
+            "get_y",
+            [](const t_AkimaInterpolator& self, XYType target_x) { return self.get_y(target_x); },
+            DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, get_y),
+            nb::arg("target_x"))
+        .def(
+            "__call__",
+            [](const t_AkimaInterpolator&               self,
+               const xt::nanobind::pytensor<XYType, 1>& targets_x,
+               int mp_cores) { return self.operator()(targets_x, mp_cores); },
+            DOC(themachinethatgoesping,
+                tools,
+                vectorinterpolators,
+                I_Interpolator,
+                operator_call_2),
+            nb::arg("targets_x"),
+            nb::arg("mp_cores") = 1)
+        .def("get_sampled_X",
+             &t_AkimaInterpolator::get_sampled_X,
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, get_sampled_X),
+             nb::arg("downsample_interval"),
+             nb::arg("max_gap") = std::numeric_limits<double>::quiet_NaN())
         .def("empty",
              &t_AkimaInterpolator::empty,
              DOC(themachinethatgoesping, tools, vectorinterpolators, AkimaInterpolator, empty))

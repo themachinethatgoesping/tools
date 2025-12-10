@@ -205,12 +205,28 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
      * @brief get nearest y values for given x targets (vectorized call)
      *
      * @param targets_x vector of x values. For each of these values find the
-     * corrsponding y value
-     * @return corresponding y value
+     * corresponding y value
+     * @param mp_cores Number of OpenMP threads to use for parallelization. Default is 1.
+     * @return corresponding y values
      */
-    std::vector<XYType> operator()(const std::vector<XYType>& targetsX) const
+    std::vector<XYType> operator()(const std::vector<XYType>& targetsX, int mp_cores = 1) const
     {
-        return I_Interpolator<XYType, XYType>::operator()(targetsX);
+        return I_Interpolator<XYType, XYType>::operator()(targetsX, mp_cores);
+    }
+
+    /**
+     * @brief get interpolated y values for given x targets (xtensor vectorized call)
+     *
+     * @tparam XTensor An xtensor-compatible 1D container type
+     * @param targets_x xtensor of x values. For each of these values find the corresponding y value
+     * @param mp_cores Number of OpenMP threads to use for parallelization. Default is 1.
+     * @return xt::xtensor<XYType, 1> corresponding y values as a 1D xtensor
+     */
+    template<typename XTensor>
+        requires helper::c_xtensor_1d<XTensor> && std::is_scalar_v<XYType>
+    xt::xtensor<XYType, 1> operator()(const XTensor& targetsX, int mp_cores = 1) const
+    {
+        return I_Interpolator<XYType, XYType>::template operator()<XTensor>(targetsX, mp_cores);
     }
 
     /**
