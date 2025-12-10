@@ -7,6 +7,7 @@ module_name = 'tools_nanopy'
         
 # -- sources
 sources = [
+  'm_downsampling.cpp',
   'm_helper.cpp',
   'm_progressbars.cpp',
   'm_timeconv.cpp',

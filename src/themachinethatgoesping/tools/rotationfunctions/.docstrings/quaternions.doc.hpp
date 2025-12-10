@@ -10,291 +10,246 @@
 #pragma once
 
 #ifndef __DOCSTRINGS_HPP__
+#define __DOCSTRINGS_HPP__
 
-#define __EXPAND(x)                                                  x
-#define __COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, COUNT, ...) COUNT
-#define __VA_SIZE(...)                                               __EXPAND(__COUNT(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1))
-#define __CAT1(a, b)                                                 a##b
-#define __CAT2(a, b)                                                 __CAT1(a, b)
-#define __DOC1(n1)                                                   __doc_##n1
-#define __DOC2(n1, n2)                                               __doc_##n1##_##n2
-#define __DOC3(n1, n2, n3)                                           __doc_##n1##_##n2##_##n3
-#define __DOC4(n1, n2, n3, n4)                                       __doc_##n1##_##n2##_##n3##_##n4
-#define __DOC5(n1, n2, n3, n4, n5)                                   __doc_##n1##_##n2##_##n3##_##n4##_##n5
-#define __DOC6(n1, n2, n3, n4, n5, n6)                               __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
-#define __DOC7(n1, n2, n3, n4, n5, n6, n7)                           __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
-#define __DOC8(n1, n2, n3, n4, n5, n6, n7, n8)                                                     \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8
-#define __DOC9(n1, n2, n3, n4, n5, n6, n7, n8, n9)                                                 \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9
-#define __DOC10(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10)                                           \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9##_##n10
-#define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
+#define MKD_EXPAND(x)                                      x
+#define MKD_COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, COUNT, ...)  COUNT
+#define MKD_VA_SIZE(...)                                   MKD_EXPAND(MKD_COUNT(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+#define MKD_CAT1(a, b)                                     a ## b
+#define MKD_CAT2(a, b)                                     MKD_CAT1(a, b)
+#define MKD_DOC1(n1)                                       mkd_doc_##n1
+#define MKD_DOC2(n1, n2)                                   mkd_doc_##n1##_##n2
+#define MKD_DOC3(n1, n2, n3)                               mkd_doc_##n1##_##n2##_##n3
+#define MKD_DOC4(n1, n2, n3, n4)                           mkd_doc_##n1##_##n2##_##n3##_##n4
+#define MKD_DOC5(n1, n2, n3, n4, n5)                       mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5
+#define MKD_DOC6(n1, n2, n3, n4, n5, n6)                   mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
+#define MKD_DOC7(n1, n2, n3, n4, n5, n6, n7)               mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
+#define MKD_DOC8(n1, n2, n3, n4, n5, n6, n7, n8)           mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8
+#define MKD_DOC9(n1, n2, n3, n4, n5, n6, n7, n8, n9)       mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9
+#define MKD_DOC10(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10) mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9##_##n10
+#define DOC(...)                                           MKD_EXPAND(MKD_EXPAND(MKD_CAT2(MKD_DOC, MKD_VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
-#endif // NEW_DOC_HEADER_HPP
+#if defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
+#endif // __DOCSTRINGS_HPP__
 #if defined(__GNUG__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector =
 R"doc(Create a quaternion that stores a 3D vector (x, y, z) in its imaginary
 part and w.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    x: X component
+    y: Y component
+    z: Z component
+    w: W component (default 0)
 
-Parameter ``x``:
-    X component
-
-Parameter ``y``:
-    Y component
-
-Parameter ``z``:
-    Z component
-
-Parameter ``w``:
-    W component (default 0)
+Template Args:
+    t_float: floating point type
 
 Returns:
     quaternion [w, x, y, z])doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector_2 =
 R"doc(Create a quaternion that stores a 3D vector (x, y, z) in its imaginary
 part and w.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    xyz: array {x, y, z}
+    w: W component (default 0)
 
-Parameter ``xyz``:
-    array {x, y, z}
-
-Parameter ``w``:
-    W component (default 0)
+Template Args:
+    t_float: floating point type
 
 Returns:
     quaternion [w, x, y, z])doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_wxyz =
 R"doc(Extract [w, x, y, z] as a std::vector from a quaternion.
 
-Template parameter ``t_float``:
-    floating point type)doc";
+Template Args:
+    t_float: floating point type)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy =
 R"doc(Create an Eigen quaternion by rotating roll (X), pitch (Y) and yaw
 (Z).
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    rpy: array containing roll, pitch, yaw
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``rpy``:
-    array containing roll, pitch, yaw
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     EigenQuaternion<t_float>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_2 =
 R"doc(Create an Eigen quaternion by rotating roll (X), pitch (Y) and yaw
 (Z).
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    roll: rotation around X [deg or rad]
+    pitch: rotation around Y [deg or rad]
+    yaw: rotation around Z [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``roll``:
-    rotation around X [deg or rad]
-
-Parameter ``pitch``:
-    rotation around Y [deg or rad]
-
-Parameter ``yaw``:
-    rotation around Z [deg or rad]
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     EigenQuaternion<t_float>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_3 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_3 =
 R"doc(Vectorized: create quaternions from roll/pitch/yaw triplets.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    RPY: vector of {roll, pitch, yaw} [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``RPY``:
-    vector of {roll, pitch, yaw} [deg or rad]
+Template Args:
+    t_float: floating point type)doc";
 
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_4 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_rpy_4 =
 R"doc(Vectorized: create quaternions from separate roll/pitch/yaw vectors.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    roll: rotations around X [deg or rad]
+    pitch: rotations around Y [deg or rad]
+    yaw: rotations around Z [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``roll``:
-    rotations around X [deg or rad]
+Template Args:
+    t_float: floating point type)doc";
 
-Parameter ``pitch``:
-    rotations around Y [deg or rad]
-
-Parameter ``yaw``:
-    rotations around Z [deg or rad]
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr =
 R"doc(Create an Eigen quaternion by rotating yaw (Z), pitch (Y) and roll
 (X).
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    ypr: array containing yaw, pitch, roll
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``ypr``:
-    array containing yaw, pitch, roll
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     EigenQuaternion<t_float>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_2 =
 R"doc(Create an Eigen quaternion by rotating yaw (Z), pitch (Y) and roll
 (X).
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    yaw: rotation around Z [deg or rad]
+    pitch: rotation around Y [deg or rad]
+    roll: rotation around X [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``yaw``:
-    rotation around Z [deg or rad]
-
-Parameter ``pitch``:
-    rotation around Y [deg or rad]
-
-Parameter ``roll``:
-    rotation around X [deg or rad]
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     EigenQuaternion<t_float>)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_3 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_3 =
 R"doc(Vectorized: create quaternions from yaw/pitch/roll triplets.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    YPR: vector of {yaw, pitch, roll} [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``YPR``:
-    vector of {yaw, pitch, roll} [deg or rad]
+Template Args:
+    t_float: floating point type)doc";
 
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_4 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_quaternion_from_ypr_4 =
 R"doc(Vectorized: create quaternions from separate yaw/pitch/roll vectors.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    yaw: rotations around Z [deg or rad]
+    pitch: rotations around Y [deg or rad]
+    roll: rotations around X [deg or rad]
+    input_in_degrees: if true, inputs are degrees; otherwise radians
 
-Parameter ``yaw``:
-    rotations around Z [deg or rad]
+Template Args:
+    t_float: floating point type)doc";
 
-Parameter ``pitch``:
-    rotations around Y [deg or rad]
-
-Parameter ``roll``:
-    rotations around X [deg or rad]
-
-Parameter ``input_in_degrees``:
-    if true, inputs are degrees; otherwise radians)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ =
 R"doc(Rotate a 3D vector (x, y, z) by quaternion q.
 
-Template parameter ``t_float``:
-    floating point type
+Template Args:
+    t_float: floating point type
 
 Returns:
     rotated vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_2 =
 R"doc(Rotate a quaternion-encoded vector v by quaternion q.
 
-Template parameter ``t_float``:
-    floating point type
+Template Args:
+    t_float: floating point type
 
 Returns:
     rotated vector)doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion =
 R"doc(Convert quaternion to roll, pitch, yaw.
 
 Pitch is constrained to [-90°, 90°) to avoid ambiguities and gimbal
 lock notes apply.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    q: quaternion
+    output_to_degrees: if true, outputs are degrees; otherwise radians
 
-Parameter ``q``:
-    quaternion
-
-Parameter ``output_to_degrees``:
-    if true, outputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     {roll, pitch, yaw})doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion_2 =
 R"doc(Vectorized: convert quaternions to roll/pitch/yaw.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    Q: vector of quaternions
+    output_to_degrees: if true, outputs are degrees; otherwise radians
 
-Parameter ``Q``:
-    vector of quaternions
+Template Args:
+    t_float: floating point type)doc";
 
-Parameter ``output_to_degrees``:
-    if true, outputs are degrees; otherwise radians)doc";
-
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion =
 R"doc(Convert quaternion to yaw, pitch, roll.
 
 Pitch is constrained to [-90°, 90°) to avoid ambiguities and gimbal
 lock notes apply.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    q: quaternion
+    output_to_degrees: if true, outputs are degrees; otherwise radians
 
-Parameter ``q``:
-    quaternion
-
-Parameter ``output_to_degrees``:
-    if true, outputs are degrees; otherwise radians
+Template Args:
+    t_float: floating point type
 
 Returns:
     {yaw, pitch, roll})doc";
 
-static const char *__doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion_2 =
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_ypr_from_quaternion_2 =
 R"doc(Vectorized: convert quaternions to yaw/pitch/roll.
 
-Template parameter ``t_float``:
-    floating point type
+Args:
+    Q: vector of quaternions
+    output_to_degrees: if true, outputs are degrees; otherwise radians
 
-Parameter ``Q``:
-    vector of quaternions
-
-Parameter ``output_to_degrees``:
-    if true, outputs are degrees; otherwise radians)doc";
+Template Args:
+    t_float: floating point type)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

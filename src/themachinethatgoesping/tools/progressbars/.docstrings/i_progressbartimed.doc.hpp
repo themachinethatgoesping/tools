@@ -10,38 +10,42 @@
 #pragma once
 
 #ifndef __DOCSTRINGS_HPP__
+#define __DOCSTRINGS_HPP__
 
-#define __EXPAND(x)                                                  x
-#define __COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, COUNT, ...) COUNT
-#define __VA_SIZE(...)                                               __EXPAND(__COUNT(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1))
-#define __CAT1(a, b)                                                 a##b
-#define __CAT2(a, b)                                                 __CAT1(a, b)
-#define __DOC1(n1)                                                   __doc_##n1
-#define __DOC2(n1, n2)                                               __doc_##n1##_##n2
-#define __DOC3(n1, n2, n3)                                           __doc_##n1##_##n2##_##n3
-#define __DOC4(n1, n2, n3, n4)                                       __doc_##n1##_##n2##_##n3##_##n4
-#define __DOC5(n1, n2, n3, n4, n5)                                   __doc_##n1##_##n2##_##n3##_##n4##_##n5
-#define __DOC6(n1, n2, n3, n4, n5, n6)                               __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
-#define __DOC7(n1, n2, n3, n4, n5, n6, n7)                           __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
-#define __DOC8(n1, n2, n3, n4, n5, n6, n7, n8)                                                     \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8
-#define __DOC9(n1, n2, n3, n4, n5, n6, n7, n8, n9)                                                 \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9
-#define __DOC10(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10)                                           \
-    __doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9##_##n10
-#define DOC(...) __EXPAND(__EXPAND(__CAT2(__DOC, __VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
+#define MKD_EXPAND(x)                                      x
+#define MKD_COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, COUNT, ...)  COUNT
+#define MKD_VA_SIZE(...)                                   MKD_EXPAND(MKD_COUNT(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+#define MKD_CAT1(a, b)                                     a ## b
+#define MKD_CAT2(a, b)                                     MKD_CAT1(a, b)
+#define MKD_DOC1(n1)                                       mkd_doc_##n1
+#define MKD_DOC2(n1, n2)                                   mkd_doc_##n1##_##n2
+#define MKD_DOC3(n1, n2, n3)                               mkd_doc_##n1##_##n2##_##n3
+#define MKD_DOC4(n1, n2, n3, n4)                           mkd_doc_##n1##_##n2##_##n3##_##n4
+#define MKD_DOC5(n1, n2, n3, n4, n5)                       mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5
+#define MKD_DOC6(n1, n2, n3, n4, n5, n6)                   mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6
+#define MKD_DOC7(n1, n2, n3, n4, n5, n6, n7)               mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7
+#define MKD_DOC8(n1, n2, n3, n4, n5, n6, n7, n8)           mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8
+#define MKD_DOC9(n1, n2, n3, n4, n5, n6, n7, n8, n9)       mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9
+#define MKD_DOC10(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10) mkd_doc_##n1##_##n2##_##n3##_##n4##_##n5##_##n6##_##n7##_##n8##_##n9##_##n10
+#define DOC(...)                                           MKD_EXPAND(MKD_EXPAND(MKD_CAT2(MKD_DOC, MKD_VA_SIZE(__VA_ARGS__)))(__VA_ARGS__))
 
-#endif // NEW_DOC_HEADER_HPP
+#if defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
+#endif // __DOCSTRINGS_HPP__
 #if defined(__GNUG__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed =
-R"doc(This is a generic (abstract) class for progress bars. Usage: call
-init() and close() to initialize and finalize the progress bar. Then
-call set_progress() or tick() to update the progress bar.
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed =
+R"doc(This is a generic (abstract) class for progress bars.
+Usage: call init() and close() to initialize and finalize the progress
+       bar.
+Then call set_progress() or tick() to update the progress bar.
 set_postfix() can be used to set a postfix message.
 
 The above name functions are guarded by a timer (100ms). The timer is
@@ -56,59 +60,59 @@ All functions are thread-safe.
 To implement this interface the abstract callback_ functions must be
 implemented.)doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_I_ProgressBarTimed = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_I_ProgressBarTimed = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_state = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_apply_state = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_close = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_current = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_init = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_init = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_postfix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_postfix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_prefix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_prefix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_progress = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_set_progress = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_tick = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_callback_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_check_timer_every_step = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_check_timer_every_step = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_close = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_current = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_current = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_init = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized_2 = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_is_initialized_2 = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_max_skips = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_max_skips = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_postfix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_prefix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_prefix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_set_progress = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skip = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skips = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_skips = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_increment = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_postfix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_postfix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_prefix = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_prefix = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_progress = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_state_progress = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_tick = R"doc()doc";
 
-static const char *__doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_x_ms = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_progressbars_I_ProgressBarTimed_x_ms = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

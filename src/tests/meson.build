@@ -20,6 +20,7 @@ sources = [
   'rotationfunctions/quaternions.test.cpp',
   'pyhelper/pyindexer.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',
+  'helper/downsampling.test.cpp',
 ]
 
 foreach source : sources

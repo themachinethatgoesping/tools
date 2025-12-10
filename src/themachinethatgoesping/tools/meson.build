@@ -21,6 +21,7 @@ sources = [
   'progressbars/noindicator.cpp',
   'progressbars/progressbarchooser.cpp',
   'progressbars/progressindicator.cpp',
+  'helper/downsampling.cpp',
 ]
 
 headers = [
@@ -79,6 +80,7 @@ headers = [
   'helper/approx.hpp',
   'helper/defaultmap.hpp',
   'helper/defaultsharedpointermap.hpp',
+  'helper/downsampling.hpp',
   'helper/floatcompare.hpp',
   'helper/integermath.hpp',
   'helper/isviewstream.hpp',
@@ -92,6 +94,7 @@ headers = [
   'helper/.docstrings/approx.doc.hpp',
   'helper/.docstrings/defaultmap.doc.hpp',
   'helper/.docstrings/defaultsharedpointermap.doc.hpp',
+  'helper/.docstrings/downsampling.doc.hpp',
   'helper/.docstrings/floatcompare.doc.hpp',
   'helper/.docstrings/integermath.doc.hpp',
   'helper/.docstrings/isviewstream.doc.hpp',
