@@ -21,57 +21,67 @@ void init_m_downsampling(nb::module_& m)
 {
     auto m_helper = m.def_submodule("helper");
 
-    // Bind the DownsamplingResult structure
-    nb::class_<pingtools::helper::DownsamplingResult>(
-        m_helper,
-        "DownsamplingResult",
-        "Result structure for downsampling operations containing indices to keep")
-        .def(nb::init<>())
-        .def_rw("indices",
-                &pingtools::helper::DownsamplingResult::indices,
-                "Indices into the original timestamps that should be kept")
-        .def("empty",
-             &pingtools::helper::DownsamplingResult::empty,
-             "Check if the result is empty")
-        .def("size",
-             &pingtools::helper::DownsamplingResult::size,
-             "Get the number of selected indices")
-        .def("__len__",
-             &pingtools::helper::DownsamplingResult::size,
-             "Get the number of selected indices")
-        .def("__bool__",
-             [](const pingtools::helper::DownsamplingResult& self) { return !self.empty(); },
-             "Check if the result is non-empty");
-
-    // Bind compute_downsampling_indices for pytensor<double, 1>
+    // Bind get_index_downsampling for pytensor<double, 1>
     m_helper.def(
-        "compute_downsampling_indices",
-        [](const xt::nanobind::pytensor<double, 1>& timestamps,
-           double                                   downsample_interval_sec,
-           double                                   max_gap_sec) {
+        "get_index_downsampling",
+        [](const xt::nanobind::pytensor<double, 1>& data,
+           double                                   downsample_interval,
+           double                                   max_gap) {
             // Adapt the pytensor to work with our template function
-            xt::xtensor<double, 1> ts_copy = timestamps;
-            return pingtools::helper::compute_downsampling_indices(
-                ts_copy, downsample_interval_sec, max_gap_sec);
+            xt::xtensor<double, 1> data_copy = data;
+            return pingtools::helper::get_index_downsampling(
+                data_copy, downsample_interval, max_gap);
         },
-        DOC(themachinethatgoesping, tools, helper, compute_downsampling_indices),
-        nb::arg("timestamps"),
-        nb::arg("downsample_interval_sec") = 1.0,
-        nb::arg("max_gap_sec")             = -1.0);
+        DOC(themachinethatgoesping, tools, helper, get_index_downsampling),
+        nb::arg("data"),
+        nb::arg("downsample_interval") = 1.0,
+        nb::arg("max_gap")             = -1.0);
 
-    // Bind compute_downsampling_indices for pytensor<float, 1>
+    // Bind get_index_downsampling for pytensor<float, 1>
     m_helper.def(
-        "compute_downsampling_indices",
-        [](const xt::nanobind::pytensor<float, 1>& timestamps,
-           double                                  downsample_interval_sec,
-           double                                  max_gap_sec) {
+        "get_index_downsampling",
+        [](const xt::nanobind::pytensor<float, 1>& data,
+           double                                  downsample_interval,
+           double                                  max_gap) {
             // Adapt the pytensor to work with our template function
-            xt::xtensor<float, 1> ts_copy = timestamps;
-            return pingtools::helper::compute_downsampling_indices(
-                ts_copy, downsample_interval_sec, max_gap_sec);
+            xt::xtensor<float, 1> data_copy = data;
+            return pingtools::helper::get_index_downsampling(
+                data_copy, downsample_interval, max_gap);
         },
-        DOC(themachinethatgoesping, tools, helper, compute_downsampling_indices),
-        nb::arg("timestamps"),
-        nb::arg("downsample_interval_sec") = 1.0,
-        nb::arg("max_gap_sec")             = -1.0);
+        DOC(themachinethatgoesping, tools, helper, get_index_downsampling),
+        nb::arg("data"),
+        nb::arg("downsample_interval") = 1.0,
+        nb::arg("max_gap")             = -1.0);
+
+    // Bind get_value_downsampling for pytensor<double, 1>
+    m_helper.def(
+        "get_value_downsampling",
+        [](const xt::nanobind::pytensor<double, 1>& data,
+           double                                   downsample_interval,
+           double                                   max_gap) {
+            // Adapt the pytensor to work with our template function
+            xt::xtensor<double, 1> data_copy = data;
+            return pingtools::helper::get_value_downsampling(
+                data_copy, downsample_interval, max_gap);
+        },
+        DOC(themachinethatgoesping, tools, helper, get_value_downsampling),
+        nb::arg("data"),
+        nb::arg("downsample_interval") = 1.0,
+        nb::arg("max_gap")             = -1.0);
+
+    // Bind get_value_downsampling for pytensor<float, 1>
+    m_helper.def(
+        "get_value_downsampling",
+        [](const xt::nanobind::pytensor<float, 1>& data,
+           double                                  downsample_interval,
+           double                                  max_gap) {
+            // Adapt the pytensor to work with our template function
+            xt::xtensor<float, 1> data_copy = data;
+            return pingtools::helper::get_value_downsampling(
+                data_copy, downsample_interval, max_gap);
+        },
+        DOC(themachinethatgoesping, tools, helper, get_value_downsampling),
+        nb::arg("data"),
+        nb::arg("downsample_interval") = 1.0,
+        nb::arg("max_gap")             = -1.0);
 }

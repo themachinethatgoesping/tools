@@ -1,4 +1,4 @@
-//sourcehash: e0d9f52b7750b21e90ba00930a88a8049bfc493d2e08d28509c55684974079f4
+//sourcehash: 5aa6a5f973b3e682d04cf37ea63fe0718f1ae0e6a11e3ab3f4fccf2c2704c932
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,63 +41,73 @@
 #endif
 
 
-static const char *mkd_doc_themachinethatgoesping_tools_helper_DownsamplingResult =
-R"doc(Result structure for downsampling operations
+static const char *mkd_doc_themachinethatgoesping_tools_helper_get_index_downsampling =
+R"doc(Compute indices for downsampling a sorted data container
 
-Contains the indices of timestamps that should be kept after
-downsampling, respecting both the downsample interval and maximum gap
-constraints.)doc";
+This function takes a container of sorted values and returns indices
+of values that should be kept when downsampling at a specified
+interval. It also detects gaps in the data and does not bridge them
+(i.e., does not return indices that would require interpolating across
+a gap larger than max_gap).
 
-static const char *mkd_doc_themachinethatgoesping_tools_helper_DownsamplingResult_empty =
-R"doc(Check if the result is empty
-Returns:
-    true if no indices were selected)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_helper_DownsamplingResult_indices = R"doc(Indices into the original timestamps that should be kept)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_helper_DownsamplingResult_size =
-R"doc(Get the number of selected indices
-Returns:
-    Number of indices)doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_helper_compute_downsampling_indices =
-R"doc(Compute indices for downsampling a sorted timestamp container
-
-This function takes a container of sorted timestamps and returns
-indices of timestamps that should be kept when downsampling at a
-specified interval. It also detects gaps in the data and does not
-bridge them (i.e., does not return indices that would require
-interpolating across a gap larger than max_gap_sec).
-
-The function selects the first timestamp, then selects subsequent
-timestamps that are at least downsample_interval_sec apart from the
-last selected timestamp. When a gap larger than max_gap_sec is
-encountered, the sampling restarts from the first timestamp after the
-gap.
+The function selects the first value, then selects subsequent values
+that are at least downsample_interval apart from the last selected
+value. When a gap larger than max_gap is encountered, the sampling
+restarts from the first value after the gap.
 
 Args:
-    timestamps: Container of timestamps in seconds, must be sorted in
-                ascending order
-    downsample_interval_sec: Time interval between samples in seconds.
-                             Use 0 or negative to disable downsampling
-                             (return all indices)
-    max_gap_sec: Maximum allowed gap in the original data before
-                 considering it a data gap. When a gap larger than
-                 this is encountered, sampling restarts after the gap.
-                 If <= 0, defaults to 2x downsample_interval_sec (or
-                 10 seconds if no downsampling)
+    data: Container of values, must be sorted in ascending order
+    downsample_interval: Interval between samples. Use 0, negative, or
+                         NaN to disable downsampling (return all
+                         indices)
+    max_gap: Maximum allowed gap in the original data before
+             considering it a data gap. When a gap larger than this is
+             encountered, sampling restarts after the gap. If <= 0 or
+             NaN, defaults to 2x downsample_interval (or 10 if no
+             downsampling)
 
 Template Args:
-    T: Container type (must support .size(), .begin(), .end() and
+    T: Container type (must support .size() and element access,
        contain floating point values)
 
 Returns:
-    DownsamplingResult containing indices of timestamps to keep
+    xt::xtensor<size_t, 1> containing indices of values to keep
 
-Raises:
-    std::invalid_argument: if timestamps container is empty
+@note The data must be sorted in ascending order. Behavior is
+undefined for unsorted input.)doc";
 
-@note The timestamps must be sorted in ascending order. Behavior is
+static const char *mkd_doc_themachinethatgoesping_tools_helper_get_value_downsampling =
+R"doc(Downsample a sorted data container and return the downsampled values
+
+This function takes a container of sorted values and returns a new
+container with values at exact intervals starting from the first
+value. It also detects gaps in the data and restarts sampling after
+gaps.
+
+Unlike get_index_downsampling which returns indices into the original
+data, this function generates exact sample points at regular
+intervals.
+
+Args:
+    data: Container of values, must be sorted in ascending order
+    downsample_interval: Interval between samples. Use 0, negative, or
+                         NaN to disable downsampling (return copy of
+                         data)
+    max_gap: Maximum allowed gap in the original data before
+             considering it a data gap. When a gap larger than this is
+             encountered, sampling restarts after the gap. If <= 0 or
+             NaN, defaults to 2x downsample_interval (or 10 if no
+             downsampling)
+
+Template Args:
+    T: Container type (must support .size() and element access,
+       contain floating point values)
+
+Returns:
+    std::vector<double> containing the downsampled values at exact
+        intervals
+
+@note The data must be sorted in ascending order. Behavior is
 undefined for unsorted input.)doc";
 
 #if defined(__GNUG__)
