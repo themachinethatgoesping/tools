@@ -6,7 +6,7 @@
 project(
     'fast_float', ['cpp'],
     default_options: ['cpp_std=c++23'],
-    version: '8.1.0',
+    version: '8.2.1',
 )
 
 fast_float_include = include_directories('include')
