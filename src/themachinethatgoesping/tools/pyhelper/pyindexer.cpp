@@ -51,7 +51,7 @@ PyIndexer::Slice PyIndexer::to_slice() const
 PyIndexer::PyIndexer(size_t vector_size)
     : _vector_size(vector_size)
     , _slice_size(vector_size)
-    , _index_max(int64_t(vector_size - 1))
+    , _index_max(vector_size > 0 ? int64_t(vector_size - 1) : 0)
     , _index_stop(int64_t(vector_size))
 {
 }
@@ -90,6 +90,19 @@ void PyIndexer::set_slice_indexing(int64_t start, int64_t stop, int64_t step)
         throw(std::out_of_range("PyIndexer: step is zero!"));
     else if (step == PyIndexer::None)
         step = 1;
+
+    // Handle empty vector case - return empty indexer without throwing
+    if (_vector_size == 0)
+    {
+        _is_slice    = true;
+        _index_start = 0;
+        _index_stop  = 0;
+        _index_step  = step;
+        _slice_size  = 0;
+        _index_min   = 0;
+        _index_max   = 0;
+        return;
+    }
 
     if (stop < 0)
         stop += int64_t(_vector_size);
@@ -190,7 +203,7 @@ void PyIndexer::reset(size_t vector_size)
     _index_stop  = int64_t(vector_size);
     _slice_size  = vector_size;
     _index_min   = 0;
-    _index_max   = vector_size - 1;
+    _index_max   = vector_size > 0 ? vector_size - 1 : 0;
 
     if (_is_slice)
     {
