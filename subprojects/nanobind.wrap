@@ -13,10 +13,10 @@
 ; nanobind = nanobind_dep
 
 [wrap-file]
-directory = nanobind-2.10.2
-source_url = https://github.com/wjakob/nanobind/archive/refs/tags/v2.10.2.tar.gz
-source_filename = nanobind-v2.10.2.tar.gz
-source_hash = 5bb7f866f6c9c64405308b69de7e7681d8f779323e345bd71a00199c1eaec073
+directory = nanobind-2.11.0
+source_url = https://github.com/wjakob/nanobind/archive/refs/tags/v2.11.0.tar.gz
+source_filename = nanobind-v2.11.0.tar.gz
+source_hash = 62ba05e5f720c76c510d6ab2a77f8ccc17a76c5cea951bea47355a7dfa460449
 patch_directory = nanobind
 
 [provide]
