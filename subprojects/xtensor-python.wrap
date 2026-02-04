@@ -8,9 +8,9 @@
 ; patch_directory = xtensor-python
 
 [wrap-git]
-url = https://github.com/xtensor-stack/xtensor-python.git
-revision = master
-directory = xtensor-git
+url = https://github.com/peter-urban/xtensor-python
+revision = xtensor-nanobind
+directory = xtensor-python-0.29.0.nanobind4
 patch_directory = xtensor-python
 
 

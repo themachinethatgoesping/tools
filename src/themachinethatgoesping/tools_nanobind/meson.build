@@ -66,8 +66,8 @@ tools_nanobind_dep = declare_dependency(
                 tools_dep,
                 nanobind_dep,
                 python3_dep,
+                xtensor_python_dep, 
                 xtensor_dep,
-                #xtensor_python_dep,
                 numpy_dep
   ],
   #link_with : [tools_nanobind_lib],

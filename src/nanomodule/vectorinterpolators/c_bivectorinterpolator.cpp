@@ -20,7 +20,7 @@
 
 #include "module.hpp"
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
-#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
+#include <xtensor-python/nanobind/pytensor.hpp>
 
 #define DOC_BiVectorInterpolator(ARG)                                                              \
     DOC(themachinethatgoesping, tools, vectorinterpolators, BiVectorInterpolator, ARG)

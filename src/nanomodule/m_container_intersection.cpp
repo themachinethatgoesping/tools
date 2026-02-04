@@ -12,7 +12,7 @@
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/vector.h>
 
-#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
+#include <xtensor-python/nanobind/pytensor.hpp>
 
 namespace nb        = nanobind;
 namespace pingtools = themachinethatgoesping::tools;

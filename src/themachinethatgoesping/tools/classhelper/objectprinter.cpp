@@ -23,6 +23,19 @@
 // Add proper xtensor includes for the types you're instantiating
 #include <xtensor/containers/xtensor.hpp>
 
+#include <xtl/xsequence.hpp>
+// #include <xtensor/containers/xarray.hpp>
+// #include <xtensor/containers/xbuffer_adaptor.hpp>
+// #include <xtensor/containers/xtensor.hpp>
+// #include <xtensor/containers/xscalar.hpp>
+// #include <xtensor/core/xassign.hpp>
+// #include <xtensor/core/xfunction.hpp>
+// #include <xtensor/core/xeval.hpp>
+// #include <xtensor/reducers/xreducer.hpp>
+// #include <xtensor/views/xindex_view.hpp>
+// #include <xtensor/views/xview.hpp>
+
+
 #include "../helper/printing.hpp"
 
 // // fmt::formatter implementations

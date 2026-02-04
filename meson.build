@@ -95,7 +95,8 @@ magic_enum_dep = dependency('magic_enum')
 tools_compile_args += '-DMAGIC_ENUM_ENABLE_HASH' #reduce complexity of enum_name and enum_switch at the price of increased memory and compilation time
 
 #xtensor (for numpy array support)
-xtensor_dep = dependency('xtensor', static: true, default_options: ['xsimd=enabled']).as_system('system')
+#xtensor_dep = dependency('xtensor', version: '==0.27.1.themachinethatgoesping', static: true, default_options: ['xsimd=enabled']).as_system('system')
+xtensor_dep = subproject('xtensor', default_options: ['xsimd=enabled', 'default_library=static']).get_variable('xtensor_dep').as_system('system')
 
 #fast_float (for fast locale independent float parsing)
 fast_float_dep = dependency('fast_float')
@@ -111,7 +112,7 @@ if get_option('build_pythonmodule').enabled()
   python3_dep = pymod.dependency()
   pybind11_dep = dependency('pybind11',  version : '>=3.0.1')
   nanobind_dep = dependency('nanobind', static: true, version: '>=2.9.2') 
-  xtensor_python_dep = dependency('xtensor-python', static: true).as_system('system')
+  xtensor_python_dep = dependency('xtensor-python', static: true, version: '==0.29.0.nanobind').as_system('system')
 
   # -- numpy (necessary for xtensor_python) --
   #numpy (copied from https://github.com/mesonbuild/meson/issues/9598)

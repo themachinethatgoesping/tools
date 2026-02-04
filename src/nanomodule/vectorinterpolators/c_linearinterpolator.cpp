@@ -13,7 +13,7 @@
 
 #include <themachinethatgoesping/tools/vectorinterpolators/linearinterpolator.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
-#include <themachinethatgoesping/tools_nanobind/pytensor_nanobind.hpp>
+#include <xtensor-python/nanobind/pytensor.hpp>
 
 #include "module.hpp"
 #include <themachinethatgoesping/tools_nanobind/enumhelper.hpp>
