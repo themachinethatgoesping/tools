@@ -10,7 +10,7 @@
 [wrap-git]
 url = https://github.com/peter-urban/xtensor-python
 revision = xtensor-nanobind
-directory = xtensor-python-0.29.0.nanobind5
+directory = xtensor-python-0.29.0.nanobind
 patch_directory = xtensor-python
 
 
