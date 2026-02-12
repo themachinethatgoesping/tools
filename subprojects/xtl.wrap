@@ -6,10 +6,10 @@
 ; patch_directory = xtl
 
 [wrap-file]
-directory = xtl-0.8.1
-source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.8.1.tar.gz
-source_filename = xtl-0.8.1.tar.gz
-source_hash = e69a696068ccffd2b435539d583665981b6c6abed596a72832bffbe3e13e1f49
+directory = xtl-0.8.2
+source_url = https://github.com/xtensor-stack/xtl/archive/refs/tags/0.8.2.tar.gz
+source_filename = xtl-0.8.2.tar.gz
+source_hash = 8fb38d6a5856aab5740d2ccb3d791d289f648d4cc506b94a1338fe5fce100c11
 patch_directory = xtl
 
 [provide]

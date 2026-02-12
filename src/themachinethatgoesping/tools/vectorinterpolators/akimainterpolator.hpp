@@ -388,6 +388,66 @@ class AkimaInterpolator : public I_Interpolator<XYType, XYType>
     }
 
     // -----------------------
+    // deferred merge functions
+    // -----------------------
+
+    /**
+     * @brief Append data without sorting, validation, or spline rebuild (for deferred merge).
+     *
+     * Data is simply concatenated to the internal X/Y vectors.
+     * The akima spline is NOT updated. Call sort_and_finalize() after all data has been appended.
+     *
+     * @param X x values to append
+     * @param Y corresponding y values to append
+     */
+    void extend_unsorted(const std::vector<XYType>& X, const std::vector<XYType>& Y)
+    {
+        _X.insert(_X.end(), X.begin(), X.end());
+        _Y.insert(_Y.end(), Y.begin(), Y.end());
+    }
+
+    /**
+     * @brief Sort accumulated data by X and rebuild the akima spline.
+     *
+     * Call this once after all extend_unsorted() calls are complete.
+     * If data is already sorted, no sorting is performed.
+     */
+    void sort_and_finalize()
+    {
+        if (_X.size() < 2)
+        {
+            if (!_X.empty())
+                set_data_XY(std::move(_X), std::move(_Y));
+            return;
+        }
+
+        if (!std::is_sorted(_X.begin(), _X.end()))
+        {
+            // Sort X,Y pairs by X (ascending)
+            std::vector<std::pair<XYType, XYType>> XY;
+            XY.reserve(_X.size());
+            for (size_t i = 0; i < _X.size(); ++i)
+                XY.emplace_back(_X[i], _Y[i]);
+
+            std::sort(XY.begin(), XY.end(),
+                      [](const auto& a, const auto& b) { return a.first < b.first; });
+
+            std::vector<XYType> X_new(_X.size());
+            std::vector<XYType> Y_new(_Y.size());
+            for (size_t i = 0; i < XY.size(); ++i)
+            {
+                X_new[i] = XY[i].first;
+                Y_new[i] = XY[i].second;
+            }
+            set_data_XY(std::move(X_new), std::move(Y_new));
+        }
+        else
+        {
+            set_data_XY(std::move(_X), std::move(_Y));
+        }
+    }
+
+    // -----------------------
     // getter functions
     // -----------------------
     /**

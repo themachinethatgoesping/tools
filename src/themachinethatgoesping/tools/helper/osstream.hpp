@@ -48,13 +48,21 @@ class string_output_buf : public std::streambuf
     std::streamsize xsputn(const char* s, std::streamsize n) override
     {
         const auto count = static_cast<std::size_t>(n);
-        const auto end   = _pos + count;
 
-        if (end > _buffer.size())
-            _buffer.resize(end);
-
-        std::memcpy(_buffer.data() + _pos, s, count);
-        _pos = end;
+        if (_pos == _buffer.size())
+        {
+            // Fast path: appending at end (common case, no zero-fill overhead)
+            _buffer.append(s, count);
+        }
+        else
+        {
+            // Seek-back path: overwriting previously written bytes
+            const auto end = _pos + count;
+            if (end > _buffer.size())
+                _buffer.resize(end);
+            std::memcpy(_buffer.data() + _pos, s, count);
+        }
+        _pos += count;
         return n;
     }
 

@@ -1,4 +1,4 @@
-//sourcehash: 5b38e8381844ce10c24c0ac281b8eff5d3098f4af415c84a08fe19dbff45a0b1
+//sourcehash: 87ac5cea64cdea7a28f52e4e9b386d03023f7e1fb645c86e6640db5a3c7b8d94
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -80,6 +80,16 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Pa
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend = R"doc()doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_extend_unsorted =
+R"doc(Append data without sorting or validation (for deferred merge).
+
+Data is simply concatenated to the internal vectors. Call
+sort_and_finalize() after all data has been appended.
+
+Args:
+    X: x values to append
+    Y: corresponding y values to append)doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_X =
 R"doc(return the x component of the internal data vector
 
@@ -128,6 +138,12 @@ Args:
     X:: x vector (must be same size, must be sorted in ascending
       order)
     Y:: y vector (must be same size))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_sort_and_finalize =
+R"doc(Sort accumulated data by X and rebuild the interpolator.
+
+Call this once after all extend_unsorted() calls are complete. If data
+is already sorted, no sorting is performed.)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair = R"doc()doc";
 
