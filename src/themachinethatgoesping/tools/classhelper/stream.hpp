@@ -21,6 +21,7 @@
 #include <sstream>
 
 #include "../helper/isviewstream.hpp"
+#include "../helper/osstream.hpp"
 
 #define __STREAM_DEFAULT_TO_BINARY__                                                               \
     /** @brief convert object to vector of bytes                                                   \
@@ -31,10 +32,11 @@
      * */                                                                                          \
     std::string to_binary([[maybe_unused]] bool resize_buffer = true) const                        \
     {                                                                                              \
-        std::stringstream buffer_stream;                                                           \
+        std::string result;                                                                        \
+        themachinethatgoesping::tools::helper::osstream buffer_stream(result);                     \
                                                                                                    \
         to_stream(buffer_stream);                                                                  \
-        return buffer_stream.str();                                                                \
+        return result;                                                                             \
     };
 
 #define __STREAM_DEFAULT_TO_BINARY_NOT_CONST__                                                     \
@@ -46,10 +48,11 @@
      * */                                                                                          \
     std::string to_binary([[maybe_unused]] bool resize_buffer = true)                              \
     {                                                                                              \
-        std::stringstream buffer_stream;                                                           \
+        std::string result;                                                                        \
+        themachinethatgoesping::tools::helper::osstream buffer_stream(result);                     \
                                                                                                    \
         to_stream(buffer_stream);                                                                  \
-        return buffer_stream.str();                                                                \
+        return result;                                                                             \
     };
 
 #define __STREAM_DEFAULT_FROM_BINARY__(T_CLASS)                                                    \

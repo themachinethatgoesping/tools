@@ -1,4 +1,4 @@
-//sourcehash: 006ccad80e60f115a60b614ea29f00b0c11f2e626fb06adbcab3ab7eb291a31c
+//sourcehash: 60be23ffab95b5ffdfed2cfcc3fb9748e42d7fbfa2bbbb6bf680744ec17e3d03
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,37 +41,40 @@
 #endif
 
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_container_container_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_osstream =
+R"doc(A fast std::ostream that writes directly into a caller-owned
+std::string. Drop-in replacement for std::ostringstream in
+serialization code.
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_container_container_to_stream = R"doc()doc";
+Usage:
+  std::string result;
+  osstream os(result); obj.to_stream(os); return result;  // NRVO,
+  zero copies)doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_container_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_osstream_osstream = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_container_to_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf =
+R"doc(std::streambuf implementation that writes into a caller-owned
+    std::string.
+Supports seekp/tellp for serialization code that uses two-pass write
+patterns (e.g. writing placeholder values, then seeking back to fill
+them in).)doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_map_container_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_buffer = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_map_container_to_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_overflow = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_map_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_pos = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_map_to_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_seekoff = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_container_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_seekpos = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_container_to_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_size = R"doc(Get the current size of the buffer.)doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_from_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_string_output_buf = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_set_from_stream = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_set_to_stream = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_optional_to_stream = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_set_from_stream = R"doc()doc";
-
-static const char *mkd_doc_themachinethatgoesping_tools_classhelper_stream_set_to_stream = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_helper_string_output_buf_xsputn = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
