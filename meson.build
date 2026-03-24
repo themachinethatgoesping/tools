@@ -24,11 +24,17 @@ if meson.get_compiler('cpp').get_id() != 'clang-cl' or get_option('force_openmp'
   omp_dep = dependency('openmp')
 endif
 
-# extra compiler args when for the tools target
-tools_compile_args = ['-D_USE_MATH_DEFINES', 
-#'-march=x86-64-v3',
-#'-mtune=generic',
-#'-funroll-loops'
+# extra compiler args for the tools target
+# Safe performance flags (preserve NaN/Inf — no -ffinite-math-only or -ffast-math)
+tools_compile_args = [
+  '-D_USE_MATH_DEFINES',
+  '-fno-math-errno',      # don't set errno on math calls (allows inlining sqrt, exp, etc.)
+  '-fno-trapping-math',   # assume no FP traps (already default in Clang, not GCC)
+  '-fno-signed-zeros',    # treat -0.0 == +0.0
+  #'-funroll-loops',        # more aggressive loop unrolling (helps SIMD pipe saturation)
+  #'-ffp-contract=fast',   # allow a*b+c → single FMA instruction across expressions can change results
+  #'-fassociative-math',   # can change results
+  #'-freciprocal-math',   # can change results
 ]
 
 if meson.get_compiler('cpp').get_id() == 'gcc'

@@ -11,6 +11,7 @@ sources = [
   'm_downsampling.cpp',
   'm_helper.cpp',
   'm_progressbars.cpp',
+  'm_simd.cpp',
   'm_timeconv.cpp',
   'module.cpp',
   'classhelper/c_objectprinter.cpp',

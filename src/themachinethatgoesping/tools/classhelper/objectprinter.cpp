@@ -820,86 +820,24 @@ template void ObjectPrinter::register_container<std::array<float, 3>>(std::strin
                                                                       int);
 
 // 1D xtensor containers
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                                1ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<float, 1>>(
+    std::string_view, const xt::xtensor<float, 1>&, std::string_view, int);
 
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<double, xsimd::aligned_allocator<double, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<double, xsimd::aligned_allocator<double, 16ul>>,
-                                1ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<double, 1>>(
+    std::string_view, const xt::xtensor<double, 1>&, std::string_view, int);
 
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<
-        xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
-        1ul,
-        xt::layout_type::row_major,
-        xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<unsigned int, 1>>(
+    std::string_view, const xt::xtensor<unsigned int, 1>&, std::string_view, int);
 
 // 2D xtensor containers
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                          2ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                                2ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<float, 2>>(
+    std::string_view, const xt::xtensor<float, 2>&, std::string_view, int);
 
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                          2ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                                2ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<uint16_t, 2>>(
+    std::string_view, const xt::xtensor<uint16_t, 2>&, std::string_view, int);
 
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
-                          2ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<
-        xt::uvector<unsigned int, xsimd::aligned_allocator<unsigned int, 16ul>>,
-        2ul,
-        xt::layout_type::row_major,
-        xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<unsigned int, 2>>(
+    std::string_view, const xt::xtensor<unsigned int, 2>&, std::string_view, int);
 
 // Add missing std::array instantiations
 template void ObjectPrinter::register_container<std::array<unsigned char, 4>>(
@@ -1044,103 +982,31 @@ template void ObjectPrinter::register_optional_value<long long>(std::string_view
                                                                 int);
 
 // Add missing 1D xtensor container for signed char
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<signed char, xsimd::aligned_allocator<signed char, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<
-        xt::uvector<signed char, xsimd::aligned_allocator<signed char, 16ul>>,
-        1ul,
-        xt::layout_type::row_major,
-        xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<signed char, 1>>(
+    std::string_view, const xt::xtensor<signed char, 1>&, std::string_view, int);
 
 // Add missing 1D xtensor container for uint16_t
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                                1ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<uint16_t, 1>>(
+    std::string_view, const xt::xtensor<uint16_t, 1>&, std::string_view, int);
 
 // Add missing 1D xtensor container for uint8_t
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<uint8_t, xsimd::aligned_allocator<uint8_t, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<uint8_t, xsimd::aligned_allocator<uint8_t, 16ul>>,
-                                1ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<uint8_t, 1>>(
+    std::string_view, const xt::xtensor<uint8_t, 1>&, std::string_view, int);
 
 // Add missing 3D xtensor container for float
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                          3ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<float, xsimd::aligned_allocator<float, 16ul>>,
-                                3ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<float, 3>>(
+    std::string_view, const xt::xtensor<float, 3>&, std::string_view, int);
 
 // Add missing 3D xtensor container for uint16_t
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                          3ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<uint16_t, xsimd::aligned_allocator<uint16_t, 16ul>>,
-                                3ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<uint16_t, 3>>(
+    std::string_view, const xt::xtensor<uint16_t, 3>&, std::string_view, int);
 
-template void ObjectPrinter::register_container<xt::xtensor_container<
-    xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
-    1ul,
-    xt::layout_type::row_major,
-    xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<
-        xt::uvector<std::complex<float>, xsimd::aligned_allocator<std::complex<float>, 16ul>>,
-        1ul,
-        xt::layout_type::row_major,
-        xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<std::complex<float>, 1>>(
+    std::string_view, const xt::xtensor<std::complex<float>, 1>&, std::string_view, int);
 
 // Add missing 1D xtensor container for int16_t
-template void ObjectPrinter::register_container<
-    xt::xtensor_container<xt::uvector<int16_t, xsimd::aligned_allocator<int16_t, 16ul>>,
-                          1ul,
-                          xt::layout_type::row_major,
-                          xt::xtensor_expression_tag>>(
-    std::string_view,
-    const xt::xtensor_container<xt::uvector<int16_t, xsimd::aligned_allocator<int16_t, 16ul>>,
-                                1ul,
-                                xt::layout_type::row_major,
-                                xt::xtensor_expression_tag>&,
-    std::string_view,
-    int);
+template void ObjectPrinter::register_container<xt::xtensor<int16_t, 1>>(
+    std::string_view, const xt::xtensor<int16_t, 1>&, std::string_view, int);
 
 }
 }

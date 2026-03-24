@@ -22,6 +22,7 @@ sources = [
   'helper/container_intersection.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',
   'helper/downsampling.test.cpp',
+  'math/simd.test.cpp',
 ]
 
 foreach source : sources

@@ -23,7 +23,36 @@ sources = [
   'progressbars/progressindicator.cpp',
   'helper/container_intersection.cpp',
   'helper/downsampling.cpp',
+  'math/simd.cpp',
+  'math/simd_x86_64_v1.cpp',
 ]
+
+# -- simd per-architecture compilation units --
+# Following the xsimd dispatch pattern (see xsimd docs: Arch Dispatching):
+#   - Kernel template declared + defined (out-of-class) in simd.hpp
+#   - extern template suppresses implicit instantiation
+#   - Each x86-64 level gets its own .cpp compiled with -march=x86-64-vN
+#   - The dispatch call (simd.cpp) needs NO special flags
+simd_arch_libs = []
+if host_machine.cpu_family() == 'x86_64'
+  simd_arch_libs += static_library('tools_simd_v4',
+    'math/simd_x86_64_v4.cpp',
+    dependencies : [xtensor_dep, omp_dep],
+    cpp_args : tools_compile_args + ['-march=x86-64-v4'],
+    install : false)
+
+  simd_arch_libs += static_library('tools_simd_v3',
+    'math/simd_x86_64_v3.cpp',
+    dependencies : [xtensor_dep, omp_dep],
+    cpp_args : tools_compile_args + ['-march=x86-64-v3'],
+    install : false)
+
+  simd_arch_libs += static_library('tools_simd_v2',
+    'math/simd_x86_64_v2.cpp',
+    dependencies : [xtensor_dep, omp_dep],
+    cpp_args : tools_compile_args + ['-march=x86-64-v2'],
+    install : false)
+endif
 
 headers = [
   'timeconv.hpp',
@@ -110,6 +139,7 @@ headers = [
   'helper/.docstrings/variant.doc.hpp',
   'helper/.docstrings/xtensor.doc.hpp',
   'helper/.docstrings/xtensor_hash.doc.hpp',
+  'math/simd.hpp',
 ]
 
 # -- targets --
@@ -128,6 +158,8 @@ if build_machine.system() != 'linux'
                           fast_float_dep,
                           frozen_dep,
                           xxhash_cpp_dep],
+                        link_with : simd_arch_libs,
+                        cpp_args : tools_compile_args,
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -148,6 +180,8 @@ else
                           fast_float_dep,
                           frozen_dep,
                           xxhash_cpp_dep],
+                        link_with : simd_arch_libs,
+                        cpp_args : tools_compile_args,
                         override_options: [
                           'b_lundef=false'
                       ],
@@ -172,7 +206,7 @@ tools_dep = declare_dependency(
     frozen_dep,
     xxhash_cpp_dep
   ],
-  link_with : [tools_lib],
+  link_with : [tools_lib] + simd_arch_libs,
   compile_args : tools_compile_args,
   include_directories : ['../../']
   )

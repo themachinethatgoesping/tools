@@ -12,6 +12,7 @@
 #include "m_downsampling.hpp"
 #include "m_helper.hpp"
 #include "m_progressbars.hpp"
+#include "m_simd.hpp"
 #include "m_timeconv.hpp"
 #include "pyhelper/module.hpp"
 #include "vectorinterpolators/module.hpp"
@@ -65,6 +66,7 @@ NB_MODULE(MODULE_NAME, m)
     init_m_helper(m);
     init_m_container_intersection(m);
     init_m_downsampling(m);
+    init_m_simd(m);
     init_m_timeconv(m);
     init_m_progressbars(m);
 
