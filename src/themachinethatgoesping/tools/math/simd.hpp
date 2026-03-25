@@ -135,6 +135,71 @@ void fma_dispatch(T* out, const T* x, T slope, T base, size_t n);
 template<std::floating_point T>
 void fma_xtensor(T* out, const T* x, T slope, T base, size_t n);
 
+// ---------------------------------------------------------------------------
+// fmab_dispatch kernel — FMA with array base: out[i] = x[i] * slope + base[i]
+// ---------------------------------------------------------------------------
+
+struct fmab_dispatch_kernel
+{
+    template <class Arch, std::floating_point T>
+    void operator()(Arch, T* out, const T* x, T slope, const T* base, size_t n) const noexcept;
+};
+
+// Out-of-class definition
+template <class Arch, std::floating_point T>
+void fmab_dispatch_kernel::operator()(Arch, T* out, const T* x, T slope, const T* base, size_t n) const noexcept
+{
+    using batch_t              = xsimd::batch<T, Arch>;
+    constexpr size_t simd_size = batch_t::size;
+
+    const batch_t vslope = batch_t::broadcast(slope);
+
+    size_t i = 0;
+    for (; i + simd_size <= n; i += simd_size)
+    {
+        auto vx    = batch_t::load_unaligned(x + i);
+        auto vbase = batch_t::load_unaligned(base + i);
+        auto vr    = xsimd::fma(vx, vslope, vbase);
+        vr.store_unaligned(out + i);
+    }
+    // scalar tail
+    for (; i < n; ++i)
+        out[i] = std::fma(x[i], slope, base[i]);
+}
+
+// Suppress implicit instantiation — provided by per-arch .cpp files
+// x86-64-v4 (avx512bw)
+extern template void fmab_dispatch_kernel::operator()<xsimd::avx512bw, float>(xsimd::avx512bw, float*, const float*, float, const float*, size_t) const noexcept;
+extern template void fmab_dispatch_kernel::operator()<xsimd::avx512bw, double>(xsimd::avx512bw, double*, const double*, double, const double*, size_t) const noexcept;
+// x86-64-v3 (fma3<avx2>)
+extern template void fmab_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, float>(xsimd::fma3<xsimd::avx2>, float*, const float*, float, const float*, size_t) const noexcept;
+extern template void fmab_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, double>(xsimd::fma3<xsimd::avx2>, double*, const double*, double, const double*, size_t) const noexcept;
+// x86-64-v2 (sse4_2)
+extern template void fmab_dispatch_kernel::operator()<xsimd::sse4_2, float>(xsimd::sse4_2, float*, const float*, float, const float*, size_t) const noexcept;
+extern template void fmab_dispatch_kernel::operator()<xsimd::sse4_2, double>(xsimd::sse4_2, double*, const double*, double, const double*, size_t) const noexcept;
+// x86-64-v1 (sse2)
+extern template void fmab_dispatch_kernel::operator()<xsimd::sse2, float>(xsimd::sse2, float*, const float*, float, const float*, size_t) const noexcept;
+extern template void fmab_dispatch_kernel::operator()<xsimd::sse2, double>(xsimd::sse2, double*, const double*, double, const double*, size_t) const noexcept;
+
+// ---------------------------------------------------------------------------
+// fmab_dispatch — raw pointer interface (array base)
+// ---------------------------------------------------------------------------
+
+/**
+ * @brief Compute out[i] = x[i] * slope + base[i]  (fused multiply-add, array base)
+ *
+ * Like fma_dispatch but the addend is a per-element array instead of a scalar.
+ *
+ * @tparam T  Floating-point element type (float or double).
+ * @param out  Output array, must hold at least @p n elements.
+ * @param x    Input array, must hold at least @p n elements.
+ * @param slope  Scalar multiplier.
+ * @param base   Per-element addend array, must hold at least @p n elements.
+ * @param n      Number of elements to process.
+ */
+template<std::floating_point T>
+void fmab_dispatch(T* out, const T* x, T slope, const T* base, size_t n);
+
 // ---- Returning overloads (inline wrappers) --------------------------------
 
 /**
@@ -159,6 +224,17 @@ inline xt::xtensor<T, 1> fma_xtensor(const T* x, T slope, T base, size_t n)
     return out;
 }
 
+/**
+ * @brief Returning variant: out = fmab_dispatch(x, slope, base_arr)
+ */
+template<std::floating_point T>
+inline xt::xtensor<T, 1> fmab_dispatch(const T* x, T slope, const T* base, size_t n)
+{
+    auto out = xt::xtensor<T, 1>::from_shape({n});
+    fmab_dispatch(out.data(), x, slope, base, n);
+    return out;
+}
+
 // ---- View/expression overloads (write into existing container/view) -------
 
 /**
@@ -170,7 +246,7 @@ inline xt::xtensor<T, 1> fma_xtensor(const T* x, T slope, T base, size_t n)
 template<typename t_xtensor_out, std::floating_point T>
 inline void fma_dispatch(t_xtensor_out&& out, const T* x, T slope, T base)
 {
-    fma_dispatch(out.data(), x, slope, base, out.size());
+    fma_dispatch(out.data() + out.data_offset(), x, slope, base, out.size());
 }
 
 /**
@@ -179,7 +255,16 @@ inline void fma_dispatch(t_xtensor_out&& out, const T* x, T slope, T base)
 template<typename t_xtensor_out, std::floating_point T>
 inline void fma_xtensor(t_xtensor_out&& out, const T* x, T slope, T base)
 {
-    fma_xtensor(out.data(), x, slope, base, out.size());
+    fma_xtensor(out.data() + out.data_offset(), x, slope, base, out.size());
+}
+
+/**
+ * @brief Write into an xtensor view/container: fmab_dispatch(view, x, slope, base_arr)
+ */
+template<typename t_xtensor_out, std::floating_point T>
+inline void fmab_dispatch(t_xtensor_out&& out, const T* x, T slope, const T* base)
+{
+    fmab_dispatch(out.data() + out.data_offset(), x, slope, base, out.size());
 }
 
 } // namespace math

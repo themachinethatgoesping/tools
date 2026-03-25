@@ -13,6 +13,9 @@ namespace math {
 template void fma_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, float>(xsimd::fma3<xsimd::avx2>, float*, const float*, float, float, size_t) const noexcept;
 template void fma_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, double>(xsimd::fma3<xsimd::avx2>, double*, const double*, double, double, size_t) const noexcept;
 
+template void fmab_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, float>(xsimd::fma3<xsimd::avx2>, float*, const float*, float, const float*, size_t) const noexcept;
+template void fmab_dispatch_kernel::operator()<xsimd::fma3<xsimd::avx2>, double>(xsimd::fma3<xsimd::avx2>, double*, const double*, double, const double*, size_t) const noexcept;
+
 } // namespace math
 } // namespace tools
 } // namespace themachinethatgoesping

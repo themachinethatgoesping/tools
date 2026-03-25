@@ -1,4 +1,4 @@
-//sourcehash: 6b4c5adb98b4e8923a4cf42237b52a5bc3864be463d273d5fbf1de57c21696fb
+//sourcehash: 9a63ce8dca80ff174e731587c7be32cddd9bc68bd4c1a6d0f7aea788503f1aa4
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -64,7 +64,19 @@ static const char *mkd_doc_themachinethatgoesping_tools_math_fma_xtensor_2 =
 R"doc(Write into an xtensor view/container: fma_xtensor(view, x, slope,
 base))doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_math_fmab_dispatch = R"doc(Returning variant: out = fmab_dispatch(x, slope, base_arr))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_math_fmab_dispatch_2 =
+R"doc(Write into an xtensor view/container: fmab_dispatch(view, x, slope,
+base_arr))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_math_fmab_dispatch_kernel = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_math_fmab_dispatch_kernel_operator_call = R"doc()doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_math_operator_call = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_math_operator_call_2 = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

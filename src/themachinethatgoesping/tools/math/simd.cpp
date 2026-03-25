@@ -48,6 +48,20 @@ template void fma_dispatch<float>(float*, const float*, float, float, size_t);
 template void fma_dispatch<double>(double*, const double*, double, double, size_t);
 
 // ---------------------------------------------------------------------------
+// fmab_dispatch — FMA with array base
+// ---------------------------------------------------------------------------
+
+template <std::floating_point T>
+void fmab_dispatch(T* out, const T* x, T slope, const T* base, size_t n)
+{
+    xsimd::dispatch<dispatch_arch_list>(fmab_dispatch_kernel{})(out, x, slope, base, n);
+}
+
+// Explicit instantiations
+template void fmab_dispatch<float>(float*, const float*, float, const float*, size_t);
+template void fmab_dispatch<double>(double*, const double*, double, const double*, size_t);
+
+// ---------------------------------------------------------------------------
 // fma_xtensor — xt::fma, uses compile-time SIMD
 // ---------------------------------------------------------------------------
 template <std::floating_point T>
