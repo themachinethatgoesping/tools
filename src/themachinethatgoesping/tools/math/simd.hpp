@@ -23,6 +23,9 @@
  *   v2 — sse4_2 : Intel Nehalem+, AMD Bulldozer+
  *   v1 — sse2 : baseline (all x86-64)
  *
+ * Dispatch paths (AArch64):
+ *   neon64 : baseline (all AArch64, e.g. Apple Silicon)
+ *
  * @authors Peter Urban
  */
 
@@ -39,12 +42,27 @@
 #include <xsimd/xsimd.hpp>
 #include <xtensor/containers/xtensor.hpp>
 
+// Architecture detection macros
+#if defined(__x86_64__) || defined(_M_X64)
+#define TOOLS_SIMD_X86_64
+#elif defined(__aarch64__) || defined(_M_ARM64)
+#define TOOLS_SIMD_AARCH64
+#endif
+
 namespace themachinethatgoesping {
 namespace tools {
 namespace math {
 
-/// Architecture list for runtime SIMD dispatch (x86-64 levels v4, v3, v2, v1).
+/// Architecture list for runtime SIMD dispatch.
+/// x86-64: levels v4 (avx512bw), v3 (fma3<avx2>), v2 (sse4_2), v1 (sse2).
+/// AArch64: neon64 (baseline).
+#if defined(TOOLS_SIMD_X86_64)
 using dispatch_arch_list = xsimd::arch_list<xsimd::avx512bw, xsimd::fma3<xsimd::avx2>, xsimd::sse4_2, xsimd::sse2>;
+#elif defined(TOOLS_SIMD_AARCH64)
+using dispatch_arch_list = xsimd::arch_list<xsimd::neon64>;
+#else
+#error "Unsupported architecture for SIMD dispatch"
+#endif
 
 /**
  * @brief Return the name of the SIMD architecture selected by fma_dispatch at runtime.
@@ -86,6 +104,7 @@ void fma_dispatch_kernel::operator()(Arch, T* out, const T* x, T slope, T base, 
 }
 
 // Suppress implicit instantiation — provided by per-arch .cpp files
+#if defined(TOOLS_SIMD_X86_64)
 // x86-64-v4 (avx512bw)  — simd_x86_64_v4.cpp
 extern template void fma_dispatch_kernel::operator()<xsimd::avx512bw, float>(xsimd::avx512bw, float*, const float*, float, float, size_t) const noexcept;
 extern template void fma_dispatch_kernel::operator()<xsimd::avx512bw, double>(xsimd::avx512bw, double*, const double*, double, double, size_t) const noexcept;
@@ -98,6 +117,13 @@ extern template void fma_dispatch_kernel::operator()<xsimd::sse4_2, double>(xsim
 // x86-64-v1 (sse2)      — simd_x86_64_v1.cpp
 extern template void fma_dispatch_kernel::operator()<xsimd::sse2, float>(xsimd::sse2, float*, const float*, float, float, size_t) const noexcept;
 extern template void fma_dispatch_kernel::operator()<xsimd::sse2, double>(xsimd::sse2, double*, const double*, double, double, size_t) const noexcept;
+#elif defined(TOOLS_SIMD_AARCH64)
+// AArch64 (neon64)       — simd_aarch64_neon.cpp
+extern template void fma_dispatch_kernel::operator()<xsimd::neon64, float>(xsimd::neon64, float*, const float*, float, float, size_t) const noexcept;
+extern template void fma_dispatch_kernel::operator()<xsimd::neon64, double>(xsimd::neon64, double*, const double*, double, double, size_t) const noexcept;
+#else
+#error "Unsupported architecture for SIMD dispatch"
+#endif
 
 // ---------------------------------------------------------------------------
 // fma_dispatch — raw pointer interface
@@ -168,6 +194,7 @@ void fmab_dispatch_kernel::operator()(Arch, T* out, const T* x, T slope, const T
 }
 
 // Suppress implicit instantiation — provided by per-arch .cpp files
+#if defined(TOOLS_SIMD_X86_64)
 // x86-64-v4 (avx512bw)
 extern template void fmab_dispatch_kernel::operator()<xsimd::avx512bw, float>(xsimd::avx512bw, float*, const float*, float, const float*, size_t) const noexcept;
 extern template void fmab_dispatch_kernel::operator()<xsimd::avx512bw, double>(xsimd::avx512bw, double*, const double*, double, const double*, size_t) const noexcept;
@@ -180,6 +207,13 @@ extern template void fmab_dispatch_kernel::operator()<xsimd::sse4_2, double>(xsi
 // x86-64-v1 (sse2)
 extern template void fmab_dispatch_kernel::operator()<xsimd::sse2, float>(xsimd::sse2, float*, const float*, float, const float*, size_t) const noexcept;
 extern template void fmab_dispatch_kernel::operator()<xsimd::sse2, double>(xsimd::sse2, double*, const double*, double, const double*, size_t) const noexcept;
+#elif defined(TOOLS_SIMD_AARCH64)
+// AArch64 (neon64)
+extern template void fmab_dispatch_kernel::operator()<xsimd::neon64, float>(xsimd::neon64, float*, const float*, float, const float*, size_t) const noexcept;
+extern template void fmab_dispatch_kernel::operator()<xsimd::neon64, double>(xsimd::neon64, double*, const double*, double, const double*, size_t) const noexcept;
+#else
+#error "Unsupported architecture for SIMD dispatch"
+#endif
 
 // ---------------------------------------------------------------------------
 // fmab_dispatch — raw pointer interface (array base)
