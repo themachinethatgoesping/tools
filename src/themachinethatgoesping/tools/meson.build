@@ -24,7 +24,6 @@ sources = [
   'helper/container_intersection.cpp',
   'helper/downsampling.cpp',
   'math/simd.cpp',
-  'math/simd_x86_64_v1.cpp',
 ]
 
 # -- simd per-architecture compilation units --
@@ -52,6 +51,20 @@ if host_machine.cpu_family() == 'x86_64'
     dependencies : [xtensor_dep, omp_dep],
     cpp_args : tools_compile_args + ['-march=x86-64-v2'],
     install : false)
+
+  simd_arch_libs += static_library('tools_simd_v1',
+    'math/simd_x86_64_v1.cpp',
+    dependencies : [xtensor_dep, omp_dep],
+    cpp_args : tools_compile_args,
+    install : false)
+
+elif host_machine.cpu_family() == 'aarch64'
+  simd_arch_libs += static_library('tools_simd_neon64',
+    'math/simd_neon64.cpp',
+    dependencies : [xtensor_dep, omp_dep],
+    cpp_args : tools_compile_args,
+    install : false)
+
 endif
 
 headers = [
