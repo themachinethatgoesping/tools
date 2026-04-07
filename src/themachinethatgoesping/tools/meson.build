@@ -24,7 +24,6 @@ sources = [
   'helper/container_intersection.cpp',
   'helper/downsampling.cpp',
   'math/simd.cpp',
-  'math/simd_x86_64_v1.cpp',
 ]
 
 # -- simd per-architecture compilation units --
@@ -32,7 +31,11 @@ sources = [
 #   - Kernel template declared + defined (out-of-class) in simd.hpp
 #   - extern template suppresses implicit instantiation
 #   - Each x86-64 level gets its own .cpp compiled with -march=x86-64-vN
+#   - AArch64 uses a single neon64 .cpp (baseline, no special flags)
 #   - The dispatch call (simd.cpp) needs NO special flags
+if host_machine.cpu_family() == 'x86_64'
+  sources += 'math/simd_x86_64_v1.cpp'
+endif
 simd_arch_libs = []
 if host_machine.cpu_family() == 'x86_64'
   simd_arch_libs += static_library('tools_simd_v4',
@@ -52,6 +55,8 @@ if host_machine.cpu_family() == 'x86_64'
     dependencies : [xtensor_dep, omp_dep],
     cpp_args : tools_compile_args + ['-march=x86-64-v2'],
     install : false)
+elif host_machine.cpu_family() == 'aarch64'
+  sources += 'math/simd_aarch64_neon.cpp'
 endif
 
 headers = [
