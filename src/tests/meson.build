@@ -9,6 +9,7 @@ testcomponent = 'tools'
 sources = [
   'timeconv.test.cpp',
   'tutorial.test.cpp',
+  'math/simd.test.cpp',
   'classhelper/option.test.cpp',
   'vectorinterpolators/akima.test.cpp',
   'vectorinterpolators/bivector.test.cpp',
@@ -22,7 +23,6 @@ sources = [
   'helper/container_intersection.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',
   'helper/downsampling.test.cpp',
-  'math/simd.test.cpp',
 ]
 
 foreach source : sources

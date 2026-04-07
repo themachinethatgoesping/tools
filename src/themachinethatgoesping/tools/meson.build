@@ -9,6 +9,12 @@ headerdir = projectnamespace + '/tools'
 # -- source files --
 sources = [
   'timeconv.cpp',
+  'math/simd.cpp',
+  'math/simd_aarch64_neon.cpp',
+  'math/simd_x86_64_v1.cpp',
+  'math/simd_x86_64_v2.cpp',
+  'math/simd_x86_64_v3.cpp',
+  'math/simd_x86_64_v4.cpp',
   'classhelper/classversion.cpp',
   'classhelper/objectprinter.cpp',
   'vectorinterpolators/i_interpolator.cpp',
@@ -23,7 +29,6 @@ sources = [
   'progressbars/progressindicator.cpp',
   'helper/container_intersection.cpp',
   'helper/downsampling.cpp',
-  'math/simd.cpp',
 ]
 
 # -- simd per-architecture compilation units --
@@ -63,6 +68,8 @@ headers = [
   'timeconv.hpp',
   'exceptions/version_error.hpp',
   'exceptions/.docstrings/version_error.doc.hpp',
+  'math/simd.hpp',
+  'math/.docstrings/simd.doc.hpp',
   'classhelper/classversion.hpp',
   'classhelper/objectprinter.hpp',
   'classhelper/option.hpp',
@@ -144,7 +151,6 @@ headers = [
   'helper/.docstrings/variant.doc.hpp',
   'helper/.docstrings/xtensor.doc.hpp',
   'helper/.docstrings/xtensor_hash.doc.hpp',
-  'math/simd.hpp',
 ]
 
 # -- targets --
