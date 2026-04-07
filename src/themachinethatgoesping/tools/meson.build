@@ -10,11 +10,6 @@ headerdir = projectnamespace + '/tools'
 sources = [
   'timeconv.cpp',
   'math/simd.cpp',
-  'math/simd_aarch64_neon.cpp',
-  'math/simd_x86_64_v1.cpp',
-  'math/simd_x86_64_v2.cpp',
-  'math/simd_x86_64_v3.cpp',
-  'math/simd_x86_64_v4.cpp',
   'classhelper/classversion.cpp',
   'classhelper/objectprinter.cpp',
   'vectorinterpolators/i_interpolator.cpp',
