@@ -16,7 +16,7 @@
 // #include <iostream>
 // #include <indicators/block_progress_bar.hpp>
 // #include <indicators/progress_spinner.hpp>
-// #include <fmt/core.h>
+// #include <fmt/format.h>
 
 namespace themachinethatgoesping {
 namespace tools {

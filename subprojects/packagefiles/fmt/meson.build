@@ -1,9 +1,10 @@
-project('fmt', 'cpp', version: '12.1.0', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++23'])
+project('fmt', 'cpp', version: '12.2.0', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++23'])
 
 fmt_private_cpp_args = []
 fmt_interface_cpp_args = []
-fmt_private_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1']   # I don't know where this must go, so it is set for both
-fmt_interface_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1'] # I don't know where this must go, so it is set for both
+# This should be activated by default on fmt 12.2.0
+#fmt_private_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1']   # I don't know where this must go, so it is set for both
+#fmt_interface_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1'] # I don't know where this must go, so it is set for both
 
 # Suppress fopen warnings on Windows (C4996: 'fopen': This function or variable may be unsafe)
 if host_machine.system() == 'windows'

@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <cmath>
 #include <complex>
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <fmt/std.h>

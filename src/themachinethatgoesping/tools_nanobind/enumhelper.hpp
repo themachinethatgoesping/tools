@@ -15,7 +15,7 @@
 /* generated doc strings */
 #include ".docstrings/enumhelper.doc.hpp"
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <magic_enum/magic_enum.hpp>
 #include <nanobind/nanobind.h>
 #include <nanobind/operators.h>

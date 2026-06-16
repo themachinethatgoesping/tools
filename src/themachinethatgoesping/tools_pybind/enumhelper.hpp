@@ -15,7 +15,7 @@
 /* generated doc strings */
 #include ".docstrings/enumhelper.doc.hpp"
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <magic_enum/magic_enum.hpp>
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>

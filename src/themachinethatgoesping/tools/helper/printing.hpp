@@ -3,7 +3,7 @@
 /* generated doc strings */
 #include ".docstrings/printing.doc.hpp"
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <frozen/map.h>
 #include <string>
 #include <string_view>

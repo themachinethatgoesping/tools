@@ -14,7 +14,7 @@
 /* generated doc strings */
 #include ".docstrings/datetime.doc.hpp"
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/string_view.h>

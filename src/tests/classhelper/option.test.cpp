@@ -9,7 +9,7 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/random.hpp>
 #include <chrono>
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <numbers>
 
 #include <themachinethatgoesping/tools/classhelper/option.hpp>

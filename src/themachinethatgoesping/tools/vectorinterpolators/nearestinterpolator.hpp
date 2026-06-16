@@ -18,7 +18,7 @@
 
 #include <vector>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "i_pairinterpolator.hpp"
 
