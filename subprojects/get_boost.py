@@ -157,9 +157,9 @@ class BoostGetter:
         if platform.system().lower().startswith("win"):
             # Windows
             if os.path.exists("C:\\Program Files (x86)\\Microsoft Visual Studio"):
-                return "vc143"
+                return "vc145"
             elif os.path.exists("C:\\Program Files\\Microsoft Visual Studio"):
-                return "vc143"
+                return "vc145"
             else:
                 raise EnvironmentError("No compatible Visual Studio installation found.")
         elif platform.system().lower() == "linux":
