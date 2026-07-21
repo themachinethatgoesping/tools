@@ -1,4 +1,4 @@
-//sourcehash: 225af996dafbd4d5aa862ed5a78ed93884eaa8b89c53abd41a3526bc3e4b02ed
+//sourcehash: c92fd41d5b059eb814efd73ecbdde82b0abf2ea00e881858f77a12697858dedf
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -40,6 +40,18 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_adapt_xtensor_to_eigen =
+R"doc(Const (read-only) overload of adapt_xtensor_to_eigen.
+
+Args:
+    xyz: row-major [n, 3] xtensor
+
+Template Args:
+    t_float: floating point type
+
+Returns:
+    read-only Eigen::Map sharing storage with ``xyz``)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_get_quaternion_from_vector =
 R"doc(Create a quaternion that stores a 3D vector (x, y, z) in its imaginary
@@ -198,6 +210,21 @@ Template Args:
 
 Returns:
     rotated vector)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rotateXYZ_3 =
+R"doc(Vectorized: rotate a single vector by each quaternion in a batch.
+
+Args:
+    quaternions: per-element rotation quaternions (length n)
+    x: X component of the vector to rotate
+    y: Y component of the vector to rotate
+    z: Z component of the vector to rotate
+
+Template Args:
+    t_float: floating point type
+
+Returns:
+    [n, 3] tensor; row i is quaternions[i] applied to (x, y, z))doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_rotationfunctions_rpy_from_quaternion =
 R"doc(Convert quaternion to roll, pitch, yaw.

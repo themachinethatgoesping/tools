@@ -22,6 +22,9 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include <xtensor/containers/xadapt.hpp>
+#include <xtensor/containers/xtensor.hpp>
+
 #include "helper.hpp"
 
 namespace themachinethatgoesping {
@@ -247,6 +250,76 @@ Eigen::Matrix<t_float, 3, 1> rotateXYZ(EigenQuaternion<t_float> q, t_float x, t_
  */
 template<std::floating_point t_float>
 Eigen::Matrix<t_float, 3, 1> rotateXYZ(EigenQuaternion<t_float> q, EigenQuaternion<t_float> v);
+
+/**
+ * @brief Vectorized: rotate a single vector by each quaternion in a batch.
+ *
+ * @tparam t_float floating point type
+ * @param quaternions per-element rotation quaternions (length n)
+ * @param x X component of the vector to rotate
+ * @param y Y component of the vector to rotate
+ * @param z Z component of the vector to rotate
+ * @return [n, 3] tensor; row i is quaternions[i] applied to (x, y, z)
+ */
+template<std::floating_point t_float>
+xt::xtensor<t_float, 2> rotateXYZ(const std::vector<EigenQuaternion<t_float>>& quaternions,
+                                  t_float                                      x,
+                                  t_float                                      y,
+                                  t_float                                      z);
+
+// ----- Eigen <-> xtensor zero-copy adapters -----
+
+/**
+ * @brief View a row-major [n, 3] xtensor as an Eigen matrix (zero copy).
+ *
+ * The returned Eigen::Map shares storage with @p xyz, so writes through it modify
+ * the xtensor directly. Handy to run batched Eigen (quaternion) vector math and
+ * write the result straight into an xtensor output buffer without extra copies.
+ *
+ * @tparam t_float floating point type
+ * @param xyz row-major [n, 3] xtensor
+ * @return Eigen::Map sharing storage with @p xyz
+ */
+template<std::floating_point t_float>
+inline Eigen::Map<Eigen::Matrix<t_float, Eigen::Dynamic, 3, Eigen::RowMajor>> adapt_xtensor_to_eigen(
+    xt::xtensor<t_float, 2>& xyz)
+{
+    return Eigen::Map<Eigen::Matrix<t_float, Eigen::Dynamic, 3, Eigen::RowMajor>>(
+        xyz.data(), static_cast<Eigen::Index>(xyz.shape(0)), 3);
+}
+
+/**
+ * @brief Const (read-only) overload of adapt_xtensor_to_eigen.
+ *
+ * @tparam t_float floating point type
+ * @param xyz row-major [n, 3] xtensor
+ * @return read-only Eigen::Map sharing storage with @p xyz
+ */
+template<std::floating_point t_float>
+inline Eigen::Map<const Eigen::Matrix<t_float, Eigen::Dynamic, 3, Eigen::RowMajor>>
+adapt_xtensor_to_eigen(const xt::xtensor<t_float, 2>& xyz)
+{
+    return Eigen::Map<const Eigen::Matrix<t_float, Eigen::Dynamic, 3, Eigen::RowMajor>>(
+        xyz.data(), static_cast<Eigen::Index>(xyz.shape(0)), 3);
+}
+
+/**
+ * @brief View a row-major Eigen [n, 3] matrix as an [n, 3] xtensor (zero copy).
+ *
+ * The matrix must be row-major and outlive the returned view.
+ *
+ * @tparam t_float floating point type
+ * @param xyz row-major Eigen [n, 3] matrix
+ * @return xtensor view sharing storage with @p xyz
+ */
+template<std::floating_point t_float>
+inline auto adapt_eigen_to_xtensor(Eigen::Matrix<t_float, Eigen::Dynamic, 3, Eigen::RowMajor>& xyz)
+{
+    return xt::adapt(xyz.data(),
+                     static_cast<size_t>(xyz.size()),
+                     xt::no_ownership(),
+                     std::array<size_t, 2>{ static_cast<size_t>(xyz.rows()), size_t(3) });
+}
 
 } // namespace rotationfunctions
 } // namespace tools

@@ -227,6 +227,27 @@ Eigen::Matrix<t_float, 3, 1> rotateXYZ(EigenQuaternion<t_float> q, EigenQuaterni
     return r.vec();
 }
 
+template<std::floating_point t_float>
+xt::xtensor<t_float, 2> rotateXYZ(const std::vector<EigenQuaternion<t_float>>& quaternions,
+                                  t_float                                      x,
+                                  t_float                                      y,
+                                  t_float                                      z)
+{
+    const size_t            n      = quaternions.size();
+    xt::xtensor<t_float, 2> result = xt::xtensor<t_float, 2>::from_shape({ n, size_t(3) });
+
+    // Zero-copy view of the row-major output as an Eigen matrix: each rotated
+    // vector is written straight into the result buffer, with no per-element
+    // quaternion temporaries and no xtensor element indexing.
+    auto                               result_map       = adapt_xtensor_to_eigen(result);
+    const Eigen::Matrix<t_float, 3, 1> vector_to_rotate = { x, y, z };
+
+    for (size_t i = 0; i < n; ++i)
+        result_map.row(i) = (quaternions[i].normalized() * vector_to_rotate).transpose();
+
+    return result;
+}
+
 // Explicit instantiations (float, double)
 
 template EigenQuaternion<float>  quaternion_from_ypr<float>(std::array<float, 3>, bool);
@@ -291,6 +312,9 @@ template Eigen::Matrix<double, 3, 1> rotateXYZ<double>(EigenQuaternion<double>, 
 
 template Eigen::Matrix<float, 3, 1>  rotateXYZ<float>(EigenQuaternion<float>, EigenQuaternion<float>);
 template Eigen::Matrix<double, 3, 1> rotateXYZ<double>(EigenQuaternion<double>, EigenQuaternion<double>);
+
+template xt::xtensor<float, 2>  rotateXYZ<float>(const std::vector<EigenQuaternion<float>>&, float, float, float);
+template xt::xtensor<double, 2> rotateXYZ<double>(const std::vector<EigenQuaternion<double>>&, double, double, double);
 
 } // namespace rotationfunctions
 } // namespace tools
