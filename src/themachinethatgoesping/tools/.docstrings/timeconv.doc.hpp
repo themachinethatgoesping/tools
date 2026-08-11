@@ -1,4 +1,4 @@
-//sourcehash: 477afdadb4eeaebcb192d1a416f01cc30b3a70131765400315e8340ec53ea675
+//sourcehash: c9cf4032d1738bfa460c2c5a1939e5bb45003cdd7fb410ba22a98c5837125d4d
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -66,7 +66,7 @@ Args:
     unixtime: UNIX timestamp as double (seconds since
               1970-01-01T00:00:00Z)
     fractionalSecondsDigits: Number of digits for fractional seconds
-                             (default: 0)
+                             (default: 0, max: 6)
     format: Format string (default: "%z__%d-%m-%Y__%H:%M:%S")
 
 Returns:

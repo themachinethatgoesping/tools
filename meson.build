@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.31.5',
+  version: '0.32.0',
   default_options: ['warning_level=0', 'buildtype=release', 'cpp_std=c++23'],
   meson_version: '>=1.8.1' #there is a problem with meson 1.8.0 so just use a higher version,
 )
@@ -93,8 +93,6 @@ frozen_dep = subproject('frozen', default_options: 'default_library=static').get
 # indicators for pretty progress bars
 indicators_dep = dependency('indicators', static: true)
 
-#date (to be replaced with c++20 features)
-hinnant_date_dep = subproject('hinnant-date', default_options: 'header_only=true').get_variable('date_dep')
 
 #magic_enum (for enum reflection)
 magic_enum_dep = dependency('magic_enum')

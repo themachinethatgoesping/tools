@@ -62,7 +62,7 @@ double datestring_to_unixtime(std::string_view DateString,
 /**
  * @brief Converts a UNIX timestamp to a formatted date/time string.
  * @param unixtime UNIX timestamp as double (seconds since 1970-01-01T00:00:00Z)
- * @param fractionalSecondsDigits Number of digits for fractional seconds (default: 0)
+ * @param fractionalSecondsDigits Number of digits for fractional seconds (default: 0, max: 6)
  * @param format Format string (default: "%z__%d-%m-%Y__%H:%M:%S")
  * @return Formatted date/time string
  */

@@ -5,10 +5,8 @@
 
 #include "timeconv.hpp"
 
-#include <date/date.h>
+#include <format>
 #include <cmath>
-#include <sstream>
-#include <iomanip>
 #include <string_view>
 #include <utility>
 
@@ -22,9 +20,8 @@ namespace timeconv {
 
 std::chrono::system_clock::time_point unixtime_to_timepoint(double unixtime)
 {
-    std::chrono::duration<double> time_since_epoch(unixtime);
-    return std::chrono::system_clock::time_point(
-        std::chrono::duration_cast<std::chrono::microseconds>(time_since_epoch));
+    using fsec = std::chrono::duration<double>;
+    return std::chrono::floor<std::chrono::microseconds>(std::chrono::sys_time<fsec>{fsec{unixtime}});
 }
 
 double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint)
@@ -37,17 +34,17 @@ double timepoint_to_unixtime(std::chrono::system_clock::time_point TimePoint)
 
 double year_month_day_to_unixtime(int year, int month, int day, uint64_t micro_seconds)
 {
-    auto X  = date::year{ year } / month / day;
-    auto tp = date::sys_days{ X } + std::chrono::microseconds{ micro_seconds };
+    auto X  = std::chrono::year{ year } / month / day;
+    auto tp = std::chrono::sys_days{ X } + std::chrono::microseconds{ micro_seconds };
     return timepoint_to_unixtime(tp);
 }
 
 double datestring_to_unixtime(std::string_view DateString, const std::string& format)
 {
-    date::sys_time<std::chrono::microseconds> timePoint;
+    std::chrono::sys_time<std::chrono::microseconds> timepoint;
     helper::isviewstream is(DateString);
-    is >> date::parse(format, timePoint);
-    return timepoint_to_unixtime(timePoint);
+    is >> std::chrono::parse(format, timepoint);
+    return timepoint_to_unixtime(timepoint);
 }
 
 std::string unixtime_to_datestring(double             unixtime,
@@ -66,7 +63,7 @@ std::string unixtime_to_datestring(double             unixtime,
     unixtime /= digits;
 
     auto time = unixtime_to_timepoint(unixtime);
-    auto datestring = date::format(format, time);
+    auto datestring = std::vformat("{:" + format + "}", std::make_format_args(time));
 
     if (auto pos = datestring.find_last_of('.'); pos != std::string::npos)
     {
