@@ -1,0 +1,6 @@
+SPDX-FileCopyrightText: 2015-2021 Howard Hinnant and contributors
+SPDX-License-Identifier: MIT
+
+Vendored from https://github.com/HowardHinnant/date (tag v3.0.4),
+include/date/date.h. Used only as a fallback for date::parse when
+std::chrono::parse is unavailable (libc++, LLVM issue #166051).

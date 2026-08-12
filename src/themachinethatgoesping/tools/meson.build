@@ -92,6 +92,7 @@ headers = [
   'vectorinterpolators/.docstrings/nearestinterpolator.doc.hpp',
   'vectorinterpolators/.docstrings/slerpinterpolator.doc.hpp',
   '.docstrings/timeconv.doc.hpp',
+  'thirdparty/date/date.h',
   'rotationfunctions/helper.hpp',
   'rotationfunctions/quaternions.hpp',
   'rotationfunctions/.docstrings/helper.doc.hpp',

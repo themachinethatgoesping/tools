@@ -9,8 +9,15 @@
 #include <cmath>
 #include <string_view>
 #include <utility>
+#include <version>
 
 #include "helper/isviewstream.hpp"
+
+// std::chrono::parse is not implemented in libc++ yet (LLVM #166051); fall back to
+// the vendored Howard Hinnant date library when the C++20 feature is unavailable.
+#if !(defined(__cpp_lib_chrono) && __cpp_lib_chrono >= 201907L)
+#include "thirdparty/date/date.h"
+#endif
 
 namespace themachinethatgoesping {
 
@@ -43,7 +50,12 @@ double datestring_to_unixtime(std::string_view DateString, const std::string& fo
 {
     std::chrono::sys_time<std::chrono::microseconds> timepoint;
     helper::isviewstream is(DateString);
+#if defined(__cpp_lib_chrono) && __cpp_lib_chrono >= 201907L
     is >> std::chrono::parse(format, timepoint);
+#else
+    // qualified call avoids ADL clashing with a partial std::chrono::from_stream
+    date::from_stream(is, format.c_str(), timepoint);
+#endif
     return timepoint_to_unixtime(timepoint);
 }
 
