@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
 #include "m_helper.hpp"
-// automatically gernerated using  python -m pybind11_mkdoc -o docstrings.h <headerfiles>
 
 // -- c++ library headers
 #include <themachinethatgoesping/tools/helper/printing.hpp>

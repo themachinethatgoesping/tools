@@ -33,8 +33,8 @@ TEST_CASE("Option should support common functions", TESTTAG)
     classhelper::Option<TestEnum> opt("OptionTwo");
 
     // equal comparision
-    opt != classhelper::Option<TestEnum>();
-    opt == classhelper::Option<TestEnum>(opt);
+    REQUIRE(opt != classhelper::Option<TestEnum>());
+    REQUIRE(opt == classhelper::Option<TestEnum>(opt));
 
     // bool operators
     REQUIRE(opt);

@@ -31,7 +31,7 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace rotationfunctions {
 
-// Workaround alias: pybind11 doc generation is fragile with Eigen::Quaternion in signatures.
+// Workaround alias: nanobind doc generation is fragile with Eigen::Quaternion in signatures.
 template<std::floating_point t_float>
 using EigenQuaternion = Eigen::Quaternion<t_float>;
 

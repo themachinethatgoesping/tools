@@ -104,7 +104,6 @@ headers = [
   'progressbars/noindicator.hpp',
   'progressbars/progressbarchooser.hpp',
   'progressbars/progressindicator.hpp',
-  'progressbars/progresstqdm.hpp',
   'progressbars/progresstqdm_nano.hpp',
   'progressbars/.docstrings/consoleprogressbar.doc.hpp',
   'progressbars/.docstrings/i_progressbar.doc.hpp',

@@ -9,9 +9,7 @@ base_path = meson.current_source_dir()
 subdir('tools')
 
 
-# -- tools_pybind --
+# -- tools_nanobind --
 if get_option('build_pythonmodule').enabled()
-    #put module folders here
-    subdir('tools_pybind')
     subdir('tools_nanobind')
 endif

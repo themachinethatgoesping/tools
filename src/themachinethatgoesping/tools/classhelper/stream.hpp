@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 /**
- * @brief some macros to easily implement common class capabilities for for pybind classes
+ * @brief some macros to easily implement common class capabilities for for nanobind classes
  *
  * @authors Peter Urban
  */
