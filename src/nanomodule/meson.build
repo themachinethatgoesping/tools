@@ -24,6 +24,8 @@ sources = [
   'vectorinterpolators/module.cpp',
   'pyhelper/c_pyindexer.cpp',
   'pyhelper/module.cpp',
+  'rotationfunctions/c_rotation.cpp',
+  'rotationfunctions/module.cpp',
 ]
 
 # define python module

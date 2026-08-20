@@ -19,6 +19,7 @@ sources = [
   'vectorinterpolators/slerp.test.cpp',
   'rotationfunctions/helper.test.cpp',
   'rotationfunctions/quaternions.test.cpp',
+  'rotationfunctions/rotation.test.cpp',
   'pyhelper/pyindexer.test.cpp',
   'helper/container_intersection.test.cpp',
   'helper/defaultsharedpointermap.test.cpp',

@@ -1,4 +1,4 @@
-//sourcehash: 9829c8c262c86e040746d868fd7ac7805813c20796cfbc0bbc0ea34613fe75ff
+//sourcehash: b32c1286409bdab167717e7c4fe9867db64a2277df15f0155c82c56bf8a6bbdd
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -232,6 +232,26 @@ Args:
                            \)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_rotation =
+R"doc(get the interpolated orientation as a Rotation for the given x target
+
+Args:
+    target_x: find the corresponding Rotation for this x value
+
+Returns:
+    interpolated Rotation)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_rotation_2 =
+R"doc(get the interpolated orientation as Rotations for the given x targets
+(vectorized)
+
+Args:
+    targets_x: vector of x values; for each find the corresponding
+               Rotation
+
+Returns:
+    vector of interpolated Rotations)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
 R"doc(change the input data to these X, yaw, pitch, roll vectors (will be

@@ -70,6 +70,15 @@ void init_slerpinterpolator(nanobind::module_& m, const std::string& name)
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, ypr_2),
              nb::arg("targets_x"),
              nb::arg("output_in_degrees") = true)
+        .def("rotation",
+             nb::overload_cast<XType>(&t_SlerpInterpolator::rotation, nb::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, rotation),
+             nb::arg("target_x"))
+        .def("rotation",
+             nb::overload_cast<const std::vector<XType>&>(&t_SlerpInterpolator::rotation,
+                                                          nb::const_),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, rotation_2),
+             nb::arg("targets_x"))
         .def("set_extrapolation_mode",
              &t_SlerpInterpolator::set_extrapolation_mode,
              DOC(themachinethatgoesping,

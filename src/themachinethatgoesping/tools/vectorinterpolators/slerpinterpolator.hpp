@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "../rotationfunctions/quaternions.hpp"
+#include "../rotationfunctions/rotation.hpp"
 #include "i_pairinterpolator.hpp"
 
 #include "../classhelper/objectprinter.hpp"
@@ -167,6 +168,36 @@ class SlerpInterpolator : public I_PairInterpolator<XType, Eigen::Quaternion<YTy
         }
 
         return ypr_values;
+    }
+
+    /**
+     * @brief get the interpolated orientation as a Rotation for the given x target
+     *
+     * @param target_x find the corresponding Rotation for this x value
+     * @return interpolated Rotation
+     */
+    rotationfunctions::Rotation<YType> rotation(XType target_x) const
+    {
+        return rotationfunctions::Rotation<YType>(
+            I_PairInterpolator<XType, t_quaternion>::get_y(target_x));
+    }
+
+    /**
+     * @brief get the interpolated orientation as Rotations for the given x targets (vectorized)
+     *
+     * @param targets_x vector of x values; for each find the corresponding Rotation
+     * @return vector of interpolated Rotations
+     */
+    std::vector<rotationfunctions::Rotation<YType>> rotation(
+        const std::vector<XType>& targets_x) const
+    {
+        auto y_values = I_PairInterpolator<XType, t_quaternion>::operator()(targets_x);
+        std::vector<rotationfunctions::Rotation<YType>> rotations;
+        rotations.reserve(y_values.size());
+        for (const auto& q : y_values)
+            rotations.emplace_back(q);
+
+        return rotations;
     }
 
     // ------------------
