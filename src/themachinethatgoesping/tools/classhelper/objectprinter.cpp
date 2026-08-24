@@ -607,6 +607,89 @@ std::string ObjectPrinter::class_name() const
     return _name;
 }
 
+void ObjectPrinter::register_table(std::string_view                             name,
+                                   const std::vector<std::string>&              column_headers,
+                                   const std::vector<std::vector<std::string>>& rows,
+                                   bool                                         transpose,
+                                   int                                          pos)
+{
+    // assemble the grid (header row + data rows) and pad it to a rectangular shape
+    std::vector<std::vector<std::string>> grid;
+    grid.reserve(rows.size() + 1);
+    grid.emplace_back(column_headers.begin(), column_headers.end());
+    for (const auto& row : rows)
+        grid.push_back(row);
+
+    size_t ncols = 0;
+    for (const auto& row : grid)
+        ncols = std::max(ncols, row.size());
+    for (auto& row : grid)
+        row.resize(ncols, "");
+
+    if (transpose)
+    {
+        std::vector<std::vector<std::string>> transposed(
+            ncols, std::vector<std::string>(grid.size(), ""));
+        for (size_t r = 0; r < grid.size(); ++r)
+            for (size_t c = 0; c < ncols; ++c)
+                transposed[c][r] = grid[r][c];
+        grid.swap(transposed);
+        ncols = grid.empty() ? 0 : grid.front().size();
+    }
+
+    // column widths
+    std::vector<size_t> width(ncols, 0);
+    for (const auto& row : grid)
+        for (size_t c = 0; c < ncols; ++c)
+            width[c] = std::max(width[c], row[c].size());
+
+    // first column left-aligned (labels), the remaining columns right-aligned (values)
+    auto render_row = [&](const std::vector<std::string>& row) {
+        std::string line = "  ";
+        for (size_t c = 0; c < ncols; ++c)
+        {
+            if (c != 0)
+                line += "  ";
+            line += c == 0 ? fmt::format("{:<{}}", row[c], width[c])
+                           : fmt::format("{:>{}}", row[c], width[c]);
+        }
+        return line;
+    };
+
+    std::string block = "\n" + underline(std::string(name) + " ", '-');
+    if (!grid.empty())
+    {
+        block += "\n" + render_row(grid.front()); // header row
+        std::string sep = "  ";
+        for (size_t c = 0; c < ncols; ++c)
+        {
+            if (c != 0)
+                sep += "  ";
+            sep += std::string(width[c], '-');
+        }
+        block += "\n" + sep;
+        for (size_t r = 1; r < grid.size(); ++r)
+            block += "\n" + render_row(grid[r]);
+    }
+
+    if (pos < 0 || pos >= int(_fields.size()))
+    {
+        _fields.push_back(std::string(name));
+        _lines.push_back({ block });
+        _field_types.push_back(t_field::ttable);
+        _value_infos.push_back("");
+        _section_underliner.push_back('-');
+    }
+    else
+    {
+        _fields.insert(_fields.begin() + pos, std::string(name));
+        _lines.insert(_lines.begin() + pos, { block });
+        _field_types.insert(_field_types.begin() + pos, t_field::ttable);
+        _value_infos.insert(_value_infos.begin() + pos, "");
+        _section_underliner.insert(_section_underliner.begin() + pos, '-');
+    }
+}
+
 std::string ObjectPrinter::create_str() const
 {
     std::vector<std::string> str_lines; // individual lines
@@ -624,6 +707,8 @@ std::string ObjectPrinter::create_str() const
             max_len_field.push_back(0);
             continue;
         }
+        if (_field_types[i] == t_field::ttable)
+            continue; // a table carries its own column alignment
 
         if (_fields[i].size() > max_len_field.back())
             max_len_field.back() = _fields[i].size();
@@ -656,6 +741,10 @@ std::string ObjectPrinter::create_str() const
                     str_lines.push_back("\n" +
                                         underline(" " + _fields[i] + " ", _section_underliner[i]));
 
+                continue;
+            case t_field::ttable:
+                // pre-rendered aligned block, emitted verbatim (keeps its own column widths)
+                str_lines.push_back(_lines[i][0]);
                 continue;
             case t_field::tvalue:
                 str_lines.push_back(prefix + fmt::format("- {:<{}} {}",

@@ -1,4 +1,4 @@
-//sourcehash: b3f1e26616166af314f3bd6b65a5014f15f91feacd3f7b1d44a26095ac5ad785
+//sourcehash: 32845202746ca11751f142f5a463411af2c9870aba3e6fd30838d7c6e5b102d1
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -228,6 +228,28 @@ Args:
     max_visible_elements: maximum of chars that are printed (if 0, all
                           elements are printed))doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_table =
+R"doc(register an aligned table (grid of strings) for printing
+
+Renders ``rows`` as an aligned table with a header row
+(``column_headers)`` and a separator. The first column is left-aligned
+(labels), the remaining columns right-aligned (values). This is a
+reusable way to stack many similar records compactly instead of one
+section each.
+
+Args:
+    name: title printed above the table (underlined)
+    column_headers: the column titles
+    rows: the data rows; each row should have as many cells as there
+          are column_headers (short rows are padded with empty cells)
+    transpose: if true the grid is transposed (rows become columns):
+               the first column of the input becomes the header row,
+               so a per-column explanation ends up as the last column.
+               Handy to keep a units/explanation column with few, wide
+               records.
+    pos: position where the table is registered (if negative, it is
+         appended))doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_register_value =
 R"doc(register a single integer of floating point value for printing
 
@@ -269,6 +291,8 @@ static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinte
 static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tsection = R"doc(section break)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tstring = R"doc(formatted string field)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_ttable = R"doc(pre-rendered aligned table (register_table))doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_classhelper_ObjectPrinter_t_field_tvalue = R"doc(double or integer)doc";
 

@@ -127,7 +127,8 @@ class ObjectPrinter
         tenum,      ///< enumerator
         tcontainer, ///< 1D container (floating point or integer)
         tstring,    ///< formatted string field
-        tsection    ///< section break
+        tsection,   ///< section break
+        ttable      ///< pre-rendered aligned table (register_table)
     };
 
     std::string                           _name;        ///< name of the class that is to be printed
@@ -315,6 +316,28 @@ class ObjectPrinter
      * @param pos position where the value is registers (if negative, the value is appended)
      */
     void register_section(std::string_view name, char underliner = '-', int pos = -1);
+
+    /**
+     * @brief register an aligned table (grid of strings) for printing
+     *
+     * Renders @p rows as an aligned table with a header row (@p column_headers) and a separator.
+     * The first column is left-aligned (labels), the remaining columns right-aligned (values). This
+     * is a reusable way to stack many similar records compactly instead of one section each.
+     *
+     * @param name title printed above the table (underlined)
+     * @param column_headers the column titles
+     * @param rows the data rows; each row should have as many cells as there are column_headers
+     *             (short rows are padded with empty cells)
+     * @param transpose if true the grid is transposed (rows become columns): the first column of the
+     *                  input becomes the header row, so a per-column explanation ends up as the last
+     *                  column. Handy to keep a units/explanation column with few, wide records.
+     * @param pos position where the table is registered (if negative, it is appended)
+     */
+    void register_table(std::string_view                             name,
+                        const std::vector<std::string>&              column_headers,
+                        const std::vector<std::vector<std::string>>& rows,
+                        bool                                         transpose = false,
+                        int                                          pos       = -1);
 
     /**
      * @brief Get the registered name of the object
