@@ -22,10 +22,10 @@ sources = [
   'vectorinterpolators/c_nearestinterpolator.cpp',
   'vectorinterpolators/c_slerpinterpolator.cpp',
   'vectorinterpolators/module.cpp',
-  'pyhelper/c_pyindexer.cpp',
-  'pyhelper/module.cpp',
   'rotationfunctions/c_rotation.cpp',
   'rotationfunctions/module.cpp',
+  'pyhelper/c_pyindexer.cpp',
+  'pyhelper/module.cpp',
 ]
 
 # define python module
