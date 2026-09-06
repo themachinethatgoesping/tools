@@ -453,32 +453,37 @@ void ObjectPrinter::register_container(std::string_view   name,
                     std::copy(values.begin(), values.end(), v.begin());
                 }
 
-                // get statistics from nan/inf cleaned lists
-                auto minmax = std::minmax_element(std::begin(v), std::end(v));
-                auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
-
-                // compute median
-                size_t n_2 = v.size() / 2;
-                std::nth_element(v.begin(), v.begin() + n_2, v.end());
-
-                // -- print statistics 1 --
-                std::string line_format =
-                    fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
-                line_ref.push_back(fmt::vformat(
-                    line_format, fmt::make_format_args(*(minmax.first), *(minmax.second), mean)));
-
-                // print median (special case for even numbers)
-                if (v.size() % 2)
+                // get statistics from nan/inf cleaned lists (only if finite values remain;
+                // otherwise v is empty and min/max/median would dereference end())
+                if (!v.empty())
                 {
-                    std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
-                    auto median = (v[n_2] + v[n_2 + 1]) / 2;
-                    line_ref.back() +=
-                        fmt::vformat("| Median: " + format, fmt::make_format_args(median));
-                }
-                else
-                {
-                    line_ref.back() +=
-                        fmt::vformat(" | Median: " + format, fmt::make_format_args(v[n_2]));
+                    auto minmax = std::minmax_element(std::begin(v), std::end(v));
+                    auto mean   = std::reduce(std::begin(v), std::end(v)) / v.size();
+
+                    // compute median
+                    size_t n_2 = v.size() / 2;
+                    std::nth_element(v.begin(), v.begin() + n_2, v.end());
+
+                    // -- print statistics 1 --
+                    std::string line_format =
+                        fmt::format("... Min:  {} | Max: {} | Mean: {}", format, format, format);
+                    line_ref.push_back(fmt::vformat(
+                        line_format,
+                        fmt::make_format_args(*(minmax.first), *(minmax.second), mean)));
+
+                    // print median (special case for even numbers; guard size 1 to stay in bounds)
+                    if (v.size() % 2 && v.size() > 1)
+                    {
+                        std::nth_element(v.begin(), v.begin() + n_2 + 1, v.end());
+                        auto median = (v[n_2] + v[n_2 + 1]) / 2;
+                        line_ref.back() +=
+                            fmt::vformat("| Median: " + format, fmt::make_format_args(median));
+                    }
+                    else
+                    {
+                        line_ref.back() +=
+                            fmt::vformat(" | Median: " + format, fmt::make_format_args(v[n_2]));
+                    }
                 }
 
                 // -- print statistics 2 --
