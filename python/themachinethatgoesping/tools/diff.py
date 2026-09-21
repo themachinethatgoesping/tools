@@ -1,8 +1,3 @@
-try:
-    from diff_match_patch import diff_match_patch
-except ImportError as e:
-    raise ImportError("The diff_match_patch module is required for this functionality. "
-                      "Please install it using 'pip install diff-match-patch'.") from e
 
 def compare(object1, object2):
     """
@@ -12,6 +7,13 @@ def compare(object1, object2):
         object1: The first object to compare.
         object2: The second object to compare.
     """
+    try:
+        from diff_match_patch import diff_match_patch
+    except ImportError as e:
+        raise ImportError("compare: The diff_match_patch module is required for this functionality. "
+                          "Please install it using 'pip install diff-match-patch'.") from e
+
+
     dmp = diff_match_patch()
     diffs = dmp.diff_main(
         str(object1),
