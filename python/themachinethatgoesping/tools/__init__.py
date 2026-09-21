@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 from . import timeconv as timeconv_ext  # flake8: noqa
+from . import diff as diff
 
 # Import all symbols from the C++ module
 from themachinethatgoesping.tools_nanopy import *  # flake8: noqa
