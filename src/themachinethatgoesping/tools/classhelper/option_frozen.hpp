@@ -30,12 +30,23 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace classhelper {
 
+/** @brief Default formatter for unknown OptionFrozen values; emits a zero-padded hex literal. */
+struct DefaultUnknownFormatter
+{
+    template<typename T>
+    static std::string format(T v)
+    {
+        return fmt::format("unknown_0x{:0{}X}", v, sizeof(T) * 2);
+    }
+};
+
 template<typename t_enum_,
          std::size_t                                 __size,
          const std::array<t_enum_, __size>&          __enum_values,
          const std::array<std::string_view, __size>& __enum_names,
          const std::array<std::string_view, __size>& __enum_alt_names,
-         t_enum_                                     default_value_ = __enum_values[0]>
+         t_enum_                                     default_value_ = __enum_values[0],
+         typename t_unknown_formatter                               = DefaultUnknownFormatter>
 requires std::is_enum_v<t_enum_>
 struct OptionFrozen
 {
@@ -136,8 +147,48 @@ struct OptionFrozen
 
     void set(std::string_view v) { value = to_value(v); }
 
-    auto name() const { return _s_enum_to_name.at(value); }
-    auto alt_name() const { return _s_enum_to_alt_name.at(value); }
+    auto name() const
+    {
+        try
+        {
+            return _s_enum_to_name.at(value);
+        }
+        catch (const std::out_of_range&)
+        {
+            throw std::out_of_range(
+                fmt::format("Invalid enum value: {}. No corresponding name found.",
+                            t_unknown_formatter::format(static_cast<t_underlying>(value))));
+        }
+    }
+    auto alt_name() const
+    {
+        try
+        {
+            return _s_enum_to_alt_name.at(value);
+        }
+        catch (const std::out_of_range&)
+        {
+            throw std::out_of_range(
+                fmt::format("Invalid enum value: {}. No corresponding alt name found.",
+                            t_unknown_formatter::format(static_cast<t_underlying>(value))));
+        }
+    }
+
+    // safe variants: use t_unknown_formatter::format() instead of throwing for unknown values
+    std::string name_safe() const
+    {
+        auto it = _s_enum_to_name.find(value);
+        if (it == _s_enum_to_name.end())
+            return t_unknown_formatter::format(static_cast<t_underlying>(value));
+        return std::string(it->second);
+    }
+    std::string alt_name_safe() const
+    {
+        auto it = _s_enum_to_alt_name.find(value);
+        if (it == _s_enum_to_alt_name.end())
+            return t_unknown_formatter::format(static_cast<t_underlying>(value));
+        return std::string(it->second);
+    }
 
     static constexpr auto to_name(t_enum val) { return _s_enum_to_name.at(val); }
     static constexpr auto to_alt_name(t_enum val) { return _s_enum_to_alt_name.at(val); }
@@ -238,7 +289,6 @@ struct OptionFrozen
     __STREAM_DEFAULT_TOFROM_BINARY_FUNCTIONS__(OptionFrozen)
     __CLASSHELPER_DEFAULT_PRINTING_FUNCTIONS__
 };
-
 }
 }
 }

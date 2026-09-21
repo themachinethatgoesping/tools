@@ -1,4 +1,4 @@
-//sourcehash: a9ab4c2b88ffe0576b257cd2895b8a59565d7d121af9e9b4d208a67d9ba27863
+//sourcehash: f67fb5b2385870f5508165508eb2a65075a70e39ab4b0accc4d0c0192c5ac28e
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -40,6 +40,12 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
+
+static const char *mkd_doc_themachinethatgoesping_tools_classhelper_DefaultUnknownFormatter =
+R"doc(Default formatter for unknown OptionFrozen values; emits a zero-padded
+hex literal.)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_classhelper_DefaultUnknownFormatter_format = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
