@@ -4,7 +4,7 @@
 
 project(
     'xtensor-python', ['cpp'],
-    default_options: ['cpp_std=c++23'],
+    default_options: ['cpp_std=c++26'],
     version: '0.29.0.nanobind',
 )
 

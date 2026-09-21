@@ -5,7 +5,7 @@
 
 project(
     'xxhash_cpp', ['cpp'],
-    default_options: ['cpp_std=c++23'],
+    default_options: ['cpp_std=c++26'],
     version: '0.9.dev0',
 )
 

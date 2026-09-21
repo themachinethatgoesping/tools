@@ -5,7 +5,7 @@
 
 project(
     'fast_float', ['cpp'],
-    default_options: ['cpp_std=c++23'],
+    default_options: ['cpp_std=c++26'],
     version: '8.3.0',
 )
 
