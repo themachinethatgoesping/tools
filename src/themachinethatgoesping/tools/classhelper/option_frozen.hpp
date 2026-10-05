@@ -273,7 +273,8 @@ struct OptionFrozen
                               float_precision,
                               superscript_exponents);
 
-        printer.register_string("value", name(), alt_name());
+        // name_safe/alt_name_safe so that printing never throws for an unregistered value
+        printer.register_string("value", name_safe(), alt_name_safe());
 
         printer.register_section("Possible enum options");
         auto underlying = underlying_values();

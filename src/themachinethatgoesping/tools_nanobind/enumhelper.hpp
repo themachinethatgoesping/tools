@@ -32,6 +32,25 @@ namespace themachinethatgoesping {
 namespace tools {
 namespace nanobind_helper {
 
+/**
+ * @brief Return the enum value name of an Option/OptionFrozen, falling back to the raw numeric
+ *        value if the held value is not part of the registered enum. This keeps __str__/__repr__
+ *        from throwing for options that legitimately hold an unregistered value (e.g. a
+ *        proprietary datagram identifier read from a file).
+ */
+template<typename T_OPTION>
+std::string option_value_name(const T_OPTION& self)
+{
+    try
+    {
+        return static_cast<std::string>(self);
+    }
+    catch (const std::exception&)
+    {
+        return fmt::format("0x{:X}", static_cast<typename T_OPTION::t_underlying>(self.value));
+    }
+}
+
 template<typename T_OPTION>
 void make_option_class(nanobind::module_& m, const std::string& name)
 {
@@ -55,7 +74,6 @@ void make_option_class(nanobind::module_& m, const std::string& name)
             .def_ro_static("__default_value__",
                            &T_OPTION::default_value,
                            "default enum value when constructing without arguments")
-            .def("__str__", &T_OPTION::operator std::string)
 
             // __eq__ operators
             .def(nb::self == nb::self)
@@ -67,12 +85,41 @@ void make_option_class(nanobind::module_& m, const std::string& name)
         __PYCLASS_DEFAULT_COPY__(T_OPTION)
         // default binary functions
         __PYCLASS_DEFAULT_BINARY__(T_OPTION)
-        // default printing functions
-        __PYCLASS_DEFAULT_PRINTING__(T_OPTION)
-            .def("__repr__",
-                 [](T_OPTION& self) {
-                     nb::print(fmt::format("{}.{}", self.type_name(), self.name()).c_str());
-                 })
+            // string conversion (unknown-safe): an OptionFrozen may legitimately hold a value that
+            // is not part of the registered enum (e.g. a proprietary datagram identifier), in which
+            // case name() throws -> option_value_name falls back to the raw numeric value.
+            .def(
+                "__str__",
+                [](const T_OPTION& self) { return option_value_name(self); },
+                "Return the name of the enum value (safe for unregistered values)")
+            .def(
+                "__repr__",
+                [](const T_OPTION& self) {
+                    return fmt::format("{}.{}", self.type_name(), option_value_name(self));
+                },
+                "Return object information as string")
+            .def(
+                "info_string",
+                [](const T_OPTION& self,
+                   unsigned int    float_precision,
+                   bool            superscript_exponents) {
+                    return self.__printer__(float_precision, superscript_exponents).create_str();
+                },
+                "Return object information as string",
+                nb::arg("float_precision")       = 3,
+                nb::arg("superscript_exponents") = true)
+            .def(
+                "print",
+                [](const T_OPTION& self,
+                   unsigned int    float_precision,
+                   bool            superscript_exponents) {
+                    nb::print(self.__printer__(float_precision, superscript_exponents)
+                                  .create_str()
+                                  .c_str());
+                },
+                "Print object information",
+                nb::arg("float_precision")       = 3,
+                nb::arg("superscript_exponents") = true)
         // end
         ;
 }

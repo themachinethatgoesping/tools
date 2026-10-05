@@ -1,4 +1,4 @@
-//sourcehash: 0db3a5a25a1779e430f2f50532f5a3e9a020823744fe8644bf496bcc39706883
+//sourcehash: 2accd7781f4b0a5efc4339e13fdb79092df1cc2960054b053f0b51d4b8d45dd5
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -44,6 +44,14 @@
 static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_add_string_to_enum_conversion = R"doc(Extend a nanobind enum with string conversion helpers using magic_enum)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_make_option_class = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_option_value_name =
+R"doc(Return the enum value name of an Option/OptionFrozen, falling back to
+the raw numeric
+       value if the held value is not part of the registered enum.
+       This keeps __str__/__repr__ from throwing for options that
+       legitimately hold an unregistered value (e.g. a proprietary
+       datagram identifier read from a file).)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
