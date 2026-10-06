@@ -9,6 +9,7 @@ Catch2-*
 xxhash*/*
 xxhash_cpp-*
 boost_*
+frozen-*
 
 nanobind*/*
 robin-map*/*
@@ -26,7 +27,6 @@ nlohmann_json*/*
 pugixml*/*
 xsimd*/*
 xtl*/*
-frozen*/*
 sse2neon*/*
 
 #git repos
