@@ -124,8 +124,8 @@ nanobind_backend_module = 'nanobind_backend'
 nanobind_backend_pypi = 'nanobind-backend'
 
 # Stable ABI floor for split-mode extensions. Matches the project's
-# requires-python (>= 3.11).
-nanobind_stable_abi = '3.11'
+# requires-python (>= 3.12).
+nanobind_stable_abi = '3.12'
 
 nanobind_frontend_dep = declare_dependency(
   include_directories: [incdir],

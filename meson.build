@@ -121,7 +121,9 @@ if get_option('build_pythonmodule').enabled()
   # In classic (linked) mode use the combined dependency that compiles
   # libnanobind into every extension.
   # See https://nanobind.readthedocs.io/en/latest/split_mode.html
-  if get_option('split_mode').allowed()
+  # Only the top-level themachinethatgoesping package coordinates the shared
+  # backend, so a standalone subproject build (its own CI) stays in classic mode.
+  if get_option('split_mode').allowed() and meson.is_subproject()
     nanobind_subp = subproject('nanobind')
     nanobind_dep = nanobind_subp.get_variable('nanobind_frontend_dep')
     nanobind_limited_api = nanobind_subp.get_variable('nanobind_stable_abi')
