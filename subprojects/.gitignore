@@ -33,3 +33,5 @@ sse2neon*/*
 meta-*
 indicators-*
 xtensor-python-*
+# but keep the committed abi3 / limited-API patch for the nanobind xtensor-python caster
+!packagefiles/xtensor-python-abi3-limited-api.patch

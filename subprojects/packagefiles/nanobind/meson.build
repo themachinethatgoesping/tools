@@ -102,3 +102,45 @@ nanobind_dep = declare_dependency(
 )
 
 meson.override_dependency('nanobind', nanobind_dep)
+
+# ---------------------------------------------------------------------------
+# Split mode (nanobind >= 3.0): the frontend (binding code) and the backend
+# (libnanobind) live in separate Python modules. See
+# https://nanobind.readthedocs.io/en/latest/split_mode.html
+#
+# The frontend dependency below is header-only: it does NOT compile
+# 'nb_combined.cpp'. Instead each extension imports a shared backend module at
+# runtime (NB_BACKEND_MODULE). The consumer must additionally build its
+# extension with 'limited_api: nanobind_stable_abi' so that the module targets
+# the Python stable ABI (abi3), which split mode requires. The result is a
+# single abi3 wheel per platform that works on every Python >= the floor, and
+# multiple independently built extensions reliably share C++ types through the
+# common backend.
+#
+# Backend module name (import name, identical for the PyPI wheel and the conda
+# package) and the associated PyPI distribution name (used only to produce a
+# helpful "pip install" hint when the backend is missing).
+nanobind_backend_module = 'nanobind_backend'
+nanobind_backend_pypi = 'nanobind-backend'
+
+# Stable ABI floor for split-mode extensions. Matches the project's
+# requires-python (>= 3.11).
+nanobind_stable_abi = '3.11'
+
+nanobind_frontend_dep = declare_dependency(
+  include_directories: [incdir],
+  dependencies: [py_dep, robin_map_dep],
+  compile_args: dep_compile_args + [
+    '-DNB_BACKEND_MODULE=' + nanobind_backend_module,
+    '-DNB_BACKEND_PYPI=' + nanobind_backend_pypi,
+  ],
+  link_args: dep_link_args,
+  variables: {
+    'stubgen': meson.current_source_dir() / 'src/stubgen.py',
+    'stable_abi': nanobind_stable_abi,
+    'backend_module': nanobind_backend_module,
+    'backend_pypi': nanobind_backend_pypi,
+  },
+)
+
+meson.override_dependency('nanobind-frontend', nanobind_frontend_dep)

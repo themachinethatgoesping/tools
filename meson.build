@@ -9,7 +9,7 @@ project(
   'cpp',
   license: 'MPL-2.0',
 
-  version: '0.33.1',
+  version: '0.34.0.dev',
   default_options: ['warning_level=0', 'buildtype=release', 'cpp_std=c++26'],
   meson_version: '>=1.8.1' #there is a problem with meson 1.8.0 so just use a higher version,
 )
@@ -114,7 +114,21 @@ if get_option('build_pythonmodule').enabled()
   pymod = import('python').find_installation(get_option('python_path'), pure: false)
 
   python3_dep = pymod.dependency()
-  nanobind_dep = dependency('nanobind', static: true, version: '>=2.9.2') 
+
+  # nanobind: in split mode use the header-only frontend dependency (the
+  # libnanobind backend lives in a separate 'nanobind_backend' module imported
+  # at runtime) and build the extension against the Python stable ABI (abi3).
+  # In classic (linked) mode use the combined dependency that compiles
+  # libnanobind into every extension.
+  # See https://nanobind.readthedocs.io/en/latest/split_mode.html
+  if get_option('split_mode').allowed()
+    nanobind_subp = subproject('nanobind')
+    nanobind_dep = nanobind_subp.get_variable('nanobind_frontend_dep')
+    nanobind_limited_api = nanobind_subp.get_variable('nanobind_stable_abi')
+  else
+    nanobind_dep = dependency('nanobind', static: true, version: '>=2.9.2')
+    nanobind_limited_api = ''
+  endif
   xtensor_python_dep = dependency('xtensor-python', static: true, version: '==0.29.0.nanobind').as_system('system')
 
   # -- numpy (necessary for xtensor_python) --

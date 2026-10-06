@@ -43,6 +43,7 @@ py_tools = pymod.extension_module(
     install: true,
     subdir: projectnamespace,
     install_tag: 'python-runtime',
+    limited_api: nanobind_limited_api,
     override_options: ['unity=off']
 )
 

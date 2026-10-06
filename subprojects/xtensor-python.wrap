@@ -12,6 +12,11 @@ url = https://github.com/peter-urban/xtensor-python
 revision = xtensor-nanobind
 directory = xtensor-python-0.29.0.nanobind
 patch_directory = xtensor-python
+# Make the nanobind type caster compile against the Python stable ABI (abi3),
+# which nanobind split mode requires. Replaces the non-limited-API
+# PySequence_Fast_* fast-path macros in flatten_sequence() with the limited-API
+# sequence protocol. See https://nanobind.readthedocs.io/en/latest/split_mode.html
+diff_files = xtensor-python-abi3-limited-api.patch
 
 
 [provide]

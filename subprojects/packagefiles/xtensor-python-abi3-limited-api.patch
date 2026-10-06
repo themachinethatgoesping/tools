@@ -1,0 +1,30 @@
+--- a/include/xtensor-python/nanobind/pytensor.hpp
++++ b/include/xtensor-python/nanobind/pytensor.hpp
+@@ -1280,7 +1280,11 @@
+                 return false;
+             }
+ 
+-            Py_ssize_t length = PySequence_Fast_GET_SIZE(seq);
++            // Use the limited-API (stable ABI / abi3) sequence protocol so the
++            // caster also compiles for nanobind split-mode extensions. The
++            // PySequence_Fast_GET_SIZE / PySequence_Fast_ITEMS fast-path macros
++            // are not part of the limited API.
++            Py_ssize_t length = PySequence_Size(seq);
+             size_t extent = static_cast<size_t>(length);
+ 
+             if (shape[axis] == 0)
+@@ -1293,10 +1297,12 @@
+                 return false;
+             }
+ 
+-            PyObject** items = PySequence_Fast_ITEMS(seq);
+             for (Py_ssize_t i = 0; i < length; ++i)
+             {
+-                if (!flatten_sequence(items[i], axis + 1, shape, values))
++                PyObject* item = PySequence_GetItem(seq, i);
++                bool ok = (item != nullptr) && flatten_sequence(item, axis + 1, shape, values);
++                Py_XDECREF(item);
++                if (!ok)
+                 {
+                     Py_DECREF(seq);
+                     return false;
