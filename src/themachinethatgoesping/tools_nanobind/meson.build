@@ -61,11 +61,18 @@ headers = [
                       
 
 # -- internal dependency --
+# NOTE: python3_dep is taken as a partial dependency (include dirs + compile
+# args only, NOT the link library). The Python library is linked by each
+# consuming extension_module via its own top-level python dependency, which in
+# split mode Meson swaps to the stable python3.lib (limited_api). Linking the
+# full version-specific python3XX.lib here would leak a python3XX.dll
+# dependency into the abi3 modules and break loading on other Python versions
+# (Windows). See the nanobind frontend dependency for the same reasoning.
 tools_nanobind_dep = declare_dependency(
   dependencies : [
                 tools_dep,
                 nanobind_dep,
-                python3_dep,
+                python3_dep.partial_dependency(compile_args : true, includes : true),
                 xtensor_python_dep, 
                 xtensor_dep,
                 numpy_dep

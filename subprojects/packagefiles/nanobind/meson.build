@@ -129,7 +129,17 @@ nanobind_stable_abi = '3.12'
 
 nanobind_frontend_dep = declare_dependency(
   include_directories: [incdir],
-  dependencies: [py_dep, robin_map_dep],
+  # Headers only: provide the Python *include dirs* (partial_dependency) but NOT
+  # the Python link library. In split mode every consumer is an abi3
+  # extension_module whose own (limited_api) Python dependency links the stable
+  # python3.lib. Linking the full version-specific python3XX.lib here as well
+  # would make the module depend on python3XX.dll, breaking the
+  # one-abi3-module-per-platform promise on Windows (it would only load on the
+  # build's Python version).
+  dependencies: [
+    py_dep.partial_dependency(compile_args: true, includes: true),
+    robin_map_dep,
+  ],
   compile_args: dep_compile_args + [
     '-DNB_BACKEND_MODULE=' + nanobind_backend_module,
     '-DNB_BACKEND_PYPI=' + nanobind_backend_pypi,
