@@ -642,23 +642,61 @@ void ObjectPrinter::register_table(std::string_view                             
         ncols = grid.empty() ? 0 : grid.front().size();
     }
 
-    // column widths
+    // split a cell into its physical lines; cells may contain '\n' to span several rows while
+    // keeping the column alignment (multi-line cells)
+    auto split_cell = [](const std::string& cell) {
+        std::vector<std::string> sublines;
+        size_t                   start = 0;
+        while (true)
+        {
+            const size_t nl = cell.find('\n', start);
+            if (nl == std::string::npos)
+            {
+                sublines.push_back(cell.substr(start));
+                break;
+            }
+            sublines.push_back(cell.substr(start, nl - start));
+            start = nl + 1;
+        }
+        return sublines;
+    };
+
+    // column widths (based on the widest physical line of each cell)
     std::vector<size_t> width(ncols, 0);
     for (const auto& row : grid)
         for (size_t c = 0; c < ncols; ++c)
-            width[c] = std::max(width[c], row[c].size());
+            for (const auto& subline : split_cell(row[c]))
+                width[c] = std::max(width[c], subline.size());
 
-    // first column left-aligned (labels), the remaining columns right-aligned (values)
+    // first column left-aligned (labels), the remaining columns right-aligned (values); a cell with
+    // embedded newlines is spread over as many physical lines as it has, the other cells stay blank
+    // on the continuation lines
+    static const std::string empty_cell;
     auto render_row = [&](const std::vector<std::string>& row) {
-        std::string line = "  ";
+        std::vector<std::vector<std::string>> cells(ncols);
+        size_t                                height = 1;
         for (size_t c = 0; c < ncols; ++c)
         {
-            if (c != 0)
-                line += "  ";
-            line += c == 0 ? fmt::format("{:<{}}", row[c], width[c])
-                           : fmt::format("{:>{}}", row[c], width[c]);
+            cells[c] = split_cell(row[c]);
+            height   = std::max(height, cells[c].size());
         }
-        return line;
+
+        std::string block;
+        for (size_t h = 0; h < height; ++h)
+        {
+            if (h != 0)
+                block += "\n";
+            block += "  ";
+            for (size_t c = 0; c < ncols; ++c)
+            {
+                if (c != 0)
+                    block += "  ";
+                const std::string& cell = h < cells[c].size() ? cells[c][h] : empty_cell;
+                block += c == 0 ? fmt::format("{:<{}}", cell, width[c])
+                                : fmt::format("{:>{}}", cell, width[c]);
+            }
+        }
+        return block;
     };
 
     std::string block = "\n" + underline(std::string(name) + " ", '-');

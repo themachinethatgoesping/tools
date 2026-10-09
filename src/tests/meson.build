@@ -11,6 +11,7 @@ sources = [
   'tutorial.test.cpp',
   'math/simd.test.cpp',
   'classhelper/option.test.cpp',
+  'classhelper/objectprinter.test.cpp',
   'vectorinterpolators/akima.test.cpp',
   'vectorinterpolators/bivector.test.cpp',
   'vectorinterpolators/common.test.cpp',
