@@ -1,4 +1,4 @@
-//sourcehash: 2accd7781f4b0a5efc4339e13fdb79092df1cc2960054b053f0b51d4b8d45dd5
+//sourcehash: bd079366778b4695bdb328c0aafbb30b79fc36dd86205998ab4963aa1a0cec41
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -43,15 +43,37 @@
 
 static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_add_string_to_enum_conversion = R"doc(Extend a nanobind enum with string conversion helpers using magic_enum)doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_invalid_enum_name_message =
+R"doc(Build a helpful "did you mean" error message for an invalid enum value
+name. Suggests substring matches first, otherwise the closest names by
+edit distance.
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_levenshtein_distance =
+R"doc(Levenshtein edit distance between two strings (used for did-you-mean
+suggestions).
+
+)doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_make_option_class = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_option_from_string_verbose =
+R"doc(Cast a string to an Option, throwing a helpful "did you mean"
+ValueError if the name is not a valid enum value. Use in bindings (as
+an explicit std::string overload) to avoid nanobind's opaque "implicit
+conversion failed" TypeError for invalid option strings.
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_nanobind_helper_option_value_name =
 R"doc(Return the enum value name of an Option/OptionFrozen, falling back to
-the raw numeric
-       value if the held value is not part of the registered enum.
-       This keeps __str__/__repr__ from throwing for options that
-       legitimately hold an unregistered value (e.g. a proprietary
-       datagram identifier read from a file).)doc";
+the raw numeric value if the held value is not part of the registered
+enum. This keeps __str__/__repr__ from throwing for options that
+legitimately hold an unregistered value (e.g. a proprietary datagram
+identifier read from a file).
+
+)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

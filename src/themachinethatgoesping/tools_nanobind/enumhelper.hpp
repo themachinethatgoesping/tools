@@ -21,8 +21,12 @@
 #include <nanobind/operators.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/string_view.h>
+#include <algorithm>
 #include <new>
 #include <string>
+#include <string_view>
+#include <utility>
+#include <vector>
 
 #include <themachinethatgoesping/tools/classhelper/option.hpp>
 #include <themachinethatgoesping/tools_nanobind/classhelper.hpp>
@@ -31,6 +35,76 @@
 namespace themachinethatgoesping {
 namespace tools {
 namespace nanobind_helper {
+
+/**
+ * @brief Levenshtein edit distance between two strings (used for did-you-mean suggestions).
+ */
+inline std::size_t levenshtein_distance(std::string_view a, std::string_view b)
+{
+    std::vector<std::size_t> prev(b.size() + 1), curr(b.size() + 1);
+    for (std::size_t j = 0; j <= b.size(); ++j)
+        prev[j] = j;
+    for (std::size_t i = 1; i <= a.size(); ++i)
+    {
+        curr[0] = i;
+        for (std::size_t j = 1; j <= b.size(); ++j)
+        {
+            const std::size_t cost = (a[i - 1] == b[j - 1]) ? 0 : 1;
+            curr[j] = std::min({ prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost });
+        }
+        std::swap(prev, curr);
+    }
+    return prev[b.size()];
+}
+
+/**
+ * @brief Build a helpful "did you mean" error message for an invalid enum value name. Suggests
+ *        substring matches first, otherwise the closest names by edit distance.
+ */
+template<typename t_enum>
+std::string invalid_enum_name_message(std::string_view name, std::string_view what)
+{
+    const auto all_names = magic_enum::enum_names<t_enum>();
+
+    std::vector<std::string_view> suggestions;
+    for (auto n : all_names)
+        if (!n.empty() && (n.find(name) != std::string_view::npos ||
+                           (!name.empty() && name.find(n) != std::string_view::npos)))
+            suggestions.push_back(n);
+
+    if (suggestions.empty())
+    {
+        std::vector<std::pair<std::size_t, std::string_view>> scored;
+        for (auto n : all_names)
+            scored.emplace_back(levenshtein_distance(name, n), n);
+        std::sort(scored.begin(), scored.end(), [](const auto& l, const auto& r) {
+            return l.first < r.first;
+        });
+        for (std::size_t i = 0; i < std::min<std::size_t>(3, scored.size()); ++i)
+            suggestions.push_back(scored[i].second);
+    }
+
+    return fmt::format("'{}' is not a valid {}.\n  Did you mean: [{}]?\n  Possible values: [{}]",
+                       name,
+                       what,
+                       fmt::join(suggestions, ", "),
+                       fmt::join(all_names, ", "));
+}
+
+/**
+ * @brief Cast a string to an Option, throwing a helpful "did you mean" ValueError if the name is
+ *        not a valid enum value. Use in bindings (as an explicit std::string overload) to avoid
+ *        nanobind's opaque "implicit conversion failed" TypeError for invalid option strings.
+ */
+template<typename T_OPTION>
+T_OPTION option_from_string_verbose(std::string_view name, std::string_view what)
+{
+    const auto value = magic_enum::enum_cast<typename T_OPTION::t_enum>(name);
+    if (!value.has_value())
+        throw nanobind::value_error(
+            invalid_enum_name_message<typename T_OPTION::t_enum>(name, what).c_str());
+    return T_OPTION(value.value());
+}
 
 /**
  * @brief Return the enum value name of an Option/OptionFrozen, falling back to the raw numeric
