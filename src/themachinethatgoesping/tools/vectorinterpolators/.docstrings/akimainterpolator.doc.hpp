@@ -1,4 +1,4 @@
-//sourcehash: 6a14ebbd144f99c667289c29b20486d77b1dec17eb5a7902a5fe4e5e7be039ed
+//sourcehash: 1409932a2c4dfc41df9c3e008ca909abde522652278539b31863518320452ce2
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -49,13 +49,17 @@ interpolator if less than 4 values are stored.
 Template Args:
     XYType:: type of the x and y values (must be floating point)))doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_2 = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_3 = R"doc()doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator = R"doc(Construct a new (uninitialized) Akima Interpolator object)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_AkimaInterpolator_2 =
 R"doc(Construct a new Akima Spline Interpolator object from a vector of
-pairs This class uses the modified akima interpolation of boost c++
-https://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/
-      makima.html
+pairs This class uses the modified akima interpolation of boost c++ ht
+tps://www.boost.org/doc/libs/1_79_0/libs/math/doc/html/math_toolkit/ma
+kima.html
 usage: interpolated_y_value = interpolator(x_value)
 
 Args:
@@ -65,7 +69,9 @@ Args:
        size as X!
     extrapolation_mode: :py:class:`t_extr_mode <themachinethatgoesping
                         .tools.vectorinterpolators.t_extr_mode>`
-                        object that describes the extrapolation mode)doc";
+                        object that describes the extrapolation mode
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_X = R"doc()doc";
 
@@ -73,19 +79,39 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_Akim
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_akima_spline = R"doc()doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_append = R"doc()doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_binary_hash =
 R"doc(compute a 64 bit hash of the object using xxhash and the       \
 to_binary function. This  function is called binary because the
-\ to_binary  function of the object is used)doc";
+\ to_binary  function of the object is used
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_class_name = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_extend_unsorted =
+R"doc(Append data without sorting, validation, or spline rebuild (for
+deferred merge).
+
+Data is simply concatenated to the internal X/Y vectors. The akima
+spline is NOT updated. Call sort_and_finalize() after all data has
+been appended.
+
+Args:
+    X: x values to append
+    Y: corresponding y values to append
+
+)doc";
+
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_binary =
 R"doc(convert object to vector of bytes
-\
-                                                                                            \
+\ \
+
 Args:
     check_buffer_is_read_completely: variable for interface
                                      compatibility, does not do    \
@@ -94,7 +120,27 @@ Args:
 
 Returns:
     vector of bytes
-    \)doc";
+    \
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_from_stream = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_X =
+R"doc(return the x component of the internal data vector
+
+Returns:
+    std::vector<XYType>
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_data_Y =
+R"doc(return the y component of the internal data vector
+
+Returns:
+    std::vector<XYType>
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_get_y = R"doc()doc";
 
@@ -102,6 +148,7 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_Akim
 R"doc(                                                                                           \
 return an info string using the class __printer__ object
 \
+
 Args:
     float_precision: number of digits for floating point values
                      \
@@ -110,7 +157,16 @@ Args:
 
 Returns:
     std::string
-        \)doc";
+    \
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_init_linearextrapolators =
+R"doc(internal function to initialize the linear extrapolation objects _X,
+_Y and the _akima_spline must be set/initialized before calling this
+function
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_max_linearextrapolator = R"doc()doc";
 
@@ -123,7 +179,9 @@ Args:
     target_x: find the corresponding y value for this x value
 
 Returns:
-    corresponding y value)doc";
+    corresponding y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call_2 =
 R"doc(get nearest y values for given x targets (vectorized call)
@@ -135,7 +193,27 @@ Args:
               Default is 1.
 
 Returns:
-    corresponding y values)doc";
+    corresponding y values
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_call_3 =
+R"doc(get interpolated y values for given x targets (xtensor vectorized
+call)
+
+Args:
+    targets_x: xtensor of x values. For each of these values find the
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1.
+
+Template Args:
+    XTensor: An xtensor-compatible 1D container type
+
+Returns:
+    xt::xtensor<XYType, 1> corresponding y values as a 1D xtensor
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_operator_eq = R"doc()doc";
 
@@ -144,15 +222,63 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_Akim
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_print =
 R"doc(                                                                                           \
 print the object information to the given outpustream
-\
-                                                                                            \
+\ \
+
 Args:
     os: output stream, e.g. file stream or std::out or std::cerr
         \
     float_precision: number of digits for floating point values
                      \
     superscript_exponents: print exponents in superscript
-                           \)doc";
+                           \
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_printer = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_set_data_XY =
+R"doc(change the input data to these X and Y vectors
+
+Args:
+    X:: x vector (must be same size)
+    Y:: y vector (must be same size)
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_sort_and_finalize =
+R"doc(Sort accumulated data by X, remove duplicates and rebuild the akima
+spline.
+
+Call this once after all extend_unsorted() calls are complete. Exact
+(x, y) duplicates are dropped silently; a conflict (same x, different
+y) is resolved via ``duplicate_mode`` (throw by default, or keep the
+first / last occurrence).
+
+Fast path: if the accumulated x values are already strictly increasing
+(sorted + unique), the data is moved straight into the spline without
+sorting, de-duplicating or allocating temporaries.
+
+Args:
+    duplicate_mode: conflict resolution for same-x / different-y
+                    (default: fail)
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_binary =
+R"doc(convert object to vector of bytes
+\ \
+
+Args:
+    resize_buffer: variable for interface compatibility, does not do
+                   anything             \ \
+
+Returns:
+    vector of bytes
+    \
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_AkimaInterpolator_to_stream = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

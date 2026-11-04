@@ -219,21 +219,41 @@ class Test_tools_vectorinterpolators_all:
             assert interpolator == orig_interpolator
 
             # --- inserting --- (like extending but does not have to be sorted)
-            # check of exceptions are raised for inserting items
+            # a conflict (same x, different y) raises by default (duplicate_mode=fail)
+            interpolator = interpolatorType(X, Y)
             with pytest.raises(ValueError):
                 interpolator.insert([11, 12], [-2, -3])
             assert interpolator == orig_interpolator, interpolator.info_string() + "\n" + orig_interpolator.info_string()
 
-            # check of exceptions are raised for inserting items
-            with pytest.raises(ValueError):
-                interpolator.insert([12, 13], [-1, -1])
-            assert interpolator == orig_interpolator
+            # an EXACT duplicate (same x AND same y, here x=12/y=-1) is silently dropped
+            interpolator = interpolatorType(X, Y)
+            interpolator.insert([12, 13], [-1, -1])
+            assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13])
+            assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1])
 
-            # check of exceptions are raised for inserting items
+            # inserting new (unsorted) values
+            interpolator = interpolatorType(X, Y)
             interpolator.insert([14, 13], [1, -1])
             assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13, 14])
             assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -1, -1, 1])
             assert interpolator != orig_interpolator
+
+            # conflict resolution: keep_first keeps the existing value at x=12
+            interpolator = interpolatorType(X, Y)
+            interpolator.insert([11, 12], [-2, -3], duplicate_mode=vip.t_dup_mode.keep_first)
+            assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 11, 12])
+            assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -2, -1])
+
+            # conflict resolution: keep_last keeps the newly inserted value at x=12
+            interpolator = interpolatorType(X, Y)
+            interpolator.insert([11, 12], [-2, -3], duplicate_mode=vip.t_dup_mode.keep_last)
+            assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 11, 12])
+            assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -2, -3])
+
+            # duplicate_mode also accepts a string (Option auto-conversion)
+            interpolator = interpolatorType(X, Y)
+            interpolator.insert([11, 12], [-2, -3], duplicate_mode="keep_last")
+            assert interpolator.get_data_Y() == approx([1, 0, 1, 0, -2, -3])
 
             # check of exceptions are raised for inserting nan x values
             interpolator = interpolatorType(X, Y)
@@ -311,11 +331,12 @@ class Test_tools_vectorinterpolators_all:
             interpolator.extend([13, 14], [[np.nan, -1, -1], [1, 1, 1]])
         assert interpolator == orig_interpolator
 
-        # insert same behavior for vectorized calls
-        with pytest.raises(ValueError):
-            interpolator.insert([12, 13], [[-1, -1, -1], [1, 1, 1]])
-        assert interpolator == orig_interpolator
+        # insert: an exact duplicate (x=12 with the same ypr) is dropped silently
+        interpolator.insert([12, 13], [[-1, -1, -1], [1, 1, 1]])
+        assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 13])
 
+        # inserting new (unsorted) values
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         interpolator.insert([11, 13], [[-1, -1, -1], [1, 1, 1]])
         assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 11, 12, 13])
         assert interpolator != orig_interpolator
@@ -330,6 +351,14 @@ class Test_tools_vectorinterpolators_all:
             interpolator.insert([14, 14], [[-1, -1, -1], [1, 1, 1]])
         assert interpolator == orig_interpolator
 
+        # a conflict can be resolved with keep_first / keep_last
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
+        interpolator.insert(
+            [14, 14], [[-1, -1, -1], [1, 1, 1]], duplicate_mode=vip.t_dup_mode.keep_first
+        )
+        assert interpolator.get_data_X() == approx([-10, -5, 0, 6, 12, 14])
+
+        interpolator.set_data_XYPR(x, yaw, pitch, roll)
         with pytest.raises(ValueError):
             interpolator.insert([np.nan, 14], [[-1, -1, -1], [1, 1, 1]])
         assert interpolator == orig_interpolator

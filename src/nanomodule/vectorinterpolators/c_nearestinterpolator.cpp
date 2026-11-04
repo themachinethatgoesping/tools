@@ -135,10 +135,11 @@ void init_nearestinterpolator(nanobind::module_& m, const std::string& name)
              nb::arg("Y"))
         .def("insert",
              &t_NearestInterpolator::insert,
-             DOC(themachinethatgoesping, tools, vectorinterpolators, I_PairInterpolator, insert),
+             DOC(themachinethatgoesping, tools, vectorinterpolators, I_Interpolator, insert),
              nb::arg("X"),
              nb::arg("Y"),
-             nb::arg("bool") = false)
+             nb::arg("bool")           = false,
+             nb::arg("duplicate_mode") = t_dup_mode::fail)
         .def("__eq__",
              &t_NearestInterpolator::operator==,
              DOC(themachinethatgoesping,

@@ -1,4 +1,4 @@
-//sourcehash: 1047b093c516e5786754fb9e973c309a2afc038237505969871d04214836e715
+//sourcehash: 22fbb1dc0dc5c3d099c82981d70763602da7ce6ef24906ae33f235e26d97c124
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -41,7 +41,7 @@
 #endif
 
 
-static const char *mkd_doc__unnamed_class_at_themachinethatgoesping_tools_vectorinterpolators_i_interpolator_hpp_310_67 = R"doc()doc";
+
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator =
 R"doc(Interface class for interpolator classes Create an interpolator object
@@ -52,22 +52,27 @@ corresponding y value at this x position.
 Template Args:
     XType:: type of the x values (must be floating point)
     YType:: type of the y values (typically double or float, but will
-          be a vector for the slerp interpolator class))doc";
+            be a vector for the slerp interpolator class))doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_I_Interpolator =
 R"doc(Construct a new Interpolator object from two vectors
 usage: interpolated_y_value = interpolator.interpolate(x_value)
 
 Args:
-    extrapolation_mode: extrapolation mode (nearest or fail))doc";
+    extrapolation_mode: extrapolation mode (nearest or fail)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_append =
 R"doc(append an x- and the corresponding y value to the interpolator data.
+
 Exception: raises domain error, strong exception guarantee
 
 Args:
     x: value, must be > than all existing x values
-    y: corresponding y value)doc";
+    y: corresponding y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_check_XY = R"doc(check if input data is valid (e.g. sorted, no duplicated x values))doc";
 
@@ -75,7 +80,25 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_In
 R"doc(Get the interpolator name (for debugging)
 
 Returns:
-    std::string_view)doc";
+    std::string_view
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_collapse_sorted_pairs =
+R"doc(Collapse groups of equal x in an already-sorted pair vector.
+
+Exact (x, y) duplicates are dropped; a conflict (same x, different y)
+is resolved via ``duplicate_mode`` (throw in fail mode, else keep the
+first / last occurrence). The output (out_X / out_Y) is sorted with
+unique x values.
+
+Args:
+    pairs: input pairs, already sorted ascending by x
+    duplicate_mode: conflict resolution for same-x / different-y
+    out_X: output x values (sorted, unique)
+    out_Y: output y values (same size as out_X)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extend =
 R"doc(append x and y value lists to the interpolator data (vectorized call)
@@ -85,7 +108,9 @@ Args:
     X: list of x values. Must be sorted in ascending order. All x
        values must be larger than the largest x value in the
        interpolator data.
-    Y: list of corresponding Y values. Must be same size as X)doc";
+    Y: list of corresponding Y values. Must be same size as X
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_extr_mode = R"doc(extrapolation mode)doc";
 
@@ -93,19 +118,25 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_In
 R"doc(return the x component of the internal data vector
 
 Returns:
-    std::vector<XType>)doc";
+    std::vector<XType>
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_data_Y =
 R"doc(return the y component of the internal data vector
 
 Returns:
-    std::vector<YType>)doc";
+    std::vector<YType>
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_extrapolation_mode =
 R"doc(Get the currently set extrapolation mode
 
 Returns:
-    :o_extr_mode)doc";
+    :o_extr_mode
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_get_sampled_X =
 R"doc(Get downsampled x values from the interpolator data.
@@ -123,17 +154,20 @@ Args:
 
 Returns:
     xt::xtensor<XType, 1> A 1D tensor containing the downsampled x
-       values
+    values
 
-@note The returned values are actual x values from the data, not
-interpolated positions.
-      Use these values with the interpolator to get corresponding y
-      values.)doc";
+Note:
+    The returned values are actual x values from the data, not
+    interpolated positions. Use these values with the interpolator to
+    get corresponding y values.
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_info_string =
 R"doc(                                                                                           \
 return an info string using the class __printer__ object
 \
+
 Args:
     float_precision: number of digits for floating point values
                      \
@@ -142,20 +176,64 @@ Args:
 
 Returns:
     std::string
-        \)doc";
+    \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_insert =
-R"doc(append x and y value lists to the interpolator data (vectorized call)
-This call is much more expensive than extend as it requires copying
-data and sorting.
-Exception: raises domain error, strong exception guarantee
+R"doc(Insert x and y value lists into the interpolator data (vectorized
+call).
+
+The new values are merged into the existing (already sorted) data.
+Only the NEW values are sorted and then merged with the existing run,
+which is much faster than re-sorting everything.
+
+EXACT duplicates (same x AND exactly the same y) are always dropped
+silently. A CONFLICT (same x but a DIFFERENT y) is resolved according
+to ``duplicate_mode.``
+
+Exception: raises domain_error, strong exception guarantee.
 
 Args:
-    X: list of x values. (Does not have to be sorted. But must be
-       unique)
-    Y: list of corresponding Y values. Must be same size as X
-    is_sorted: this indicates that X is already sorted in ascending
-               order. (default: false))doc";
+    X: list of x values. Does not have to be sorted.
+    Y: list of corresponding Y values. Must be the same size as X.
+    is_sorted: set to true if X is already sorted in ascending order
+               (skips sorting the new values). (default: false)
+    duplicate_mode: how to resolve a conflict where the same x value
+                    is present with a different y value: fail (throw,
+                    the default), keep_first or keep_last. Exact (x,
+                    y) duplicates are always removed regardless of
+                    this.
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_is_strictly_increasing =
+R"doc(Return true if X is strictly increasing (no equal or decreasing
+neighbours).
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_merge_insert =
+R"doc(Merge the already-sorted existing data with the new data.
+
+Only the new values are sorted; they are then merged with the existing
+run (O(n + m log m)). Exact (x, y) duplicates are dropped; conflicts
+(same x, different y) are resolved via ``duplicate_mode`` (or throw in
+fail mode). The result (out_X / out_Y) is sorted by x with unique x
+values.
+
+Args:
+    old_X: existing x values (sorted ascending, unique)
+    old_Y: existing y values (same size as old_X)
+    X: new x values to merge in
+    Y: new y values (same size as X)
+    is_sorted: set to true if X is already sorted ascending (skips
+               sorting)
+    duplicate_mode: conflict resolution for same-x / different-y
+    out_X: output x values (sorted, unique)
+    out_Y: output y values (same size as out_X)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call =
 R"doc(get the interpolated y value for given x target
@@ -164,7 +242,9 @@ Args:
     target_x: find the corresponding y value for this x value
 
 Returns:
-    corresponding y value)doc";
+    corresponding y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call_2 =
 R"doc(get interpolated y values for given x targets (vectorized call)
@@ -177,7 +257,9 @@ Args:
               enable parallel interpolation.
 
 Returns:
-    std::vector<YType> corresponding y values)doc";
+    std::vector<YType> corresponding y values
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_operator_call_3 =
 R"doc(get interpolated y values for given x targets (xtensor vectorized
@@ -200,23 +282,27 @@ Template Args:
 Returns:
     xt::xtensor<YType, 1> corresponding y values as a 1D xtensor
 
-@note This function requires YType to be a scalar type (not a compound
-type like Quaternion).
-      For SlerpInterpolator, use the vector overload or the ypr()
-      method instead.)doc";
+Note:
+    This function requires YType to be a scalar type (not a compound
+    type like Quaternion). For SlerpInterpolator, use the vector
+    overload or the ypr() method instead.
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_print =
 R"doc(                                                                                           \
 print the object information to the given outpustream
-\
-                                                                                            \
+\ \
+
 Args:
     os: output stream, e.g. file stream or std::out or std::cerr
         \
     float_precision: number of digits for floating point values
                      \
     superscript_exponents: print exponents in superscript
-                           \)doc";
+                           \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_printer =
 R"doc(return a printer object
@@ -225,15 +311,19 @@ Args:
     float_precision: number of digits for floating point numbers
 
 Returns:
-    classhelper::ObjectPrinter)doc";
+    classhelper::ObjectPrinter
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors
 
 Args:
     X:: x vector (must be same size, must be sorted in ascending
-      order)
-    Y:: y vector (must be same size))doc";
+        order)
+    Y:: y vector (must be same size)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_set_extrapolation_mode =
 R"doc(Set the extrapolation mode
@@ -242,7 +332,63 @@ Args:
     extrapolation_mode: :py:class:`t_extr_mode <themachinethatgoesping
                         .tools.vectorinterpolators.t_extr_mode>`
                         object (enumerator) that describes the
-                        extrapolation mode)doc";
+                        extrapolation mode
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_sort_and_dedup =
+R"doc(Sort a single (possibly unsorted) X/Y vector and remove duplicates.
+
+Used by the deferred-merge finalizer (sort_and_finalize): sorts the
+accumulated data once (O(n log n)), drops exact (x, y) duplicates and
+resolves same-x / different-y conflicts via ``duplicate_mode.`` A
+stable sort is used so keep_first / keep_last follow the original
+append order.
+
+Args:
+    X: accumulated x values (any order)
+    Y: accumulated y values (same size as X)
+    duplicate_mode: conflict resolution for same-x / different-y
+    out_X: output x values (sorted, unique)
+    out_Y: output y values (same size as out_X)
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_validate_finite =
+R"doc(Validate that X (and floating-point Y) contain only finite values.
+
+Throws domain_error on NaN / infinite values so such inputs are never
+sorted (keeps a strong exception guarantee: nothing is modified before
+this check).
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Interpolator_y_values_equal =
+R"doc(Equality test for two y values.
+
+Handles the different y types used by the interpolators: a plain
+operator== (arithmetic types), Eigen::Quaternion (compare
+coefficients, slerp) and nanobind::object (Python equality, nearest-
+object interpolator). Types for which no equality can be determined
+are never treated as equal, so same-x values are handled as a conflict
+rather than silently merged.
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_t_dup_mode =
+R"doc(Duplicate-handling mode for insert().
+
+insert() always silently drops EXACT duplicates (same x AND exactly
+the same y). This mode only controls what happens on a genuine
+CONFLICT: the same x value present with a DIFFERENT y value.)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_t_dup_mode_fail = R"doc(throw a domain_error on a conflicting duplicate x value (default))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_t_dup_mode_keep_first = R"doc(on conflict keep the first occurrence (the existing / earlier value))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_t_dup_mode_keep_last =
+R"doc(on conflict keep the last occurrence (the newly inserted / later
+value))doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_t_extr_mode = R"doc(extrapolation mode type.)doc";
 

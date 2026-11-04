@@ -180,24 +180,28 @@ void init_slerpinterpolator(nanobind::module_& m, const std::string& name)
                                const std::vector<YType>&,
                                const std::vector<YType>&,
                                bool,
-                               bool>(&t_SlerpInterpolator::insert),
+                               bool,
+                               o_dup_mode>(&t_SlerpInterpolator::insert),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert),
              nb::arg("X"),
              nb::arg("Yaw"),
              nb::arg("Pitch"),
              nb::arg("Roll"),
              nb::arg("input_in_degrees") = true,
-             nb::arg("bool")             = false)
+             nb::arg("bool")             = false,
+             nb::arg("duplicate_mode")   = t_dup_mode::fail)
         .def("insert",
              nb::overload_cast<const std::vector<XType>&,
                                const std::vector<std::array<YType, 3>>&,
                                bool,
-                               bool>(&t_SlerpInterpolator::insert),
+                               bool,
+                               o_dup_mode>(&t_SlerpInterpolator::insert),
              DOC(themachinethatgoesping, tools, vectorinterpolators, SlerpInterpolator, insert_2),
              nb::arg("X"),
              nb::arg("YPR"),
              nb::arg("input_in_degrees") = true,
-             nb::arg("bool")             = false)
+             nb::arg("bool")             = false,
+             nb::arg("duplicate_mode")   = t_dup_mode::fail)
         .def(
             "__eq__",
             &t_SlerpInterpolator::operator==,

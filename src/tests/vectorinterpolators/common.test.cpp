@@ -238,29 +238,38 @@ TEST_CASE("VectorInterpolators: should throw expected exceptions", TESTTAG)
             cerr << "same for extending lists: 10" << endl;
             interpolator->set_data_XY(x, y);
 
-            // // same for inserting lists (does not have to be sorted, but must be unique)
-            // REQUIRE_THROWS(interpolator->insert({ 12, 13 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // interpolator->insert({ 11, 13 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() ==
-            //         std::vector<double>({ -10, -5, 0, 6, 11, 12, 13 }));
-            // REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-            //     interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 })));
-            // interpolator->set_data_XY(x, y);
-            // interpolator->insert({ 14, 13 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() ==
-            //         std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
-            // REQUIRE(themachinethatgoesping::tools::helper::approx_container(
-            //     interpolator->get_data_Y(), std::vector<double>({ 1, 0, 1, 0, -1, 1, -1 })));
-            // interpolator->set_data_XY(x, y);
-            // REQUIRE_THROWS(interpolator->insert({ 14, 14 }, { -1, 1 }));
-            // REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
-            // REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
-            // interpolator->insert({ 13, 14 }, { -1, 1 });
-            // REQUIRE(interpolator->get_data_X() != x);
-            // REQUIRE(interpolator->get_data_Y() != y);
-            // interpolator->set_data_XY(x, y);
+            // same for inserting lists (does not have to be sorted; exact (x, y)
+            // duplicates are dropped silently, x-conflicts are resolved via duplicate_mode)
+
+            // a conflict (same x, different y) throws by default (duplicate_mode=fail)
+            REQUIRE_THROWS(interpolator->insert({ 11, 12 }, { -2, -3 }));
+            REQUIRE(interpolator->get_data_X() == x); // strong exception guarantee
+            REQUIRE(interpolator->get_data_Y() == y); // strong exception guarantee
+
+            // an exact duplicate (x=12, y=-1 already present) is dropped silently
+            interpolator->insert({ 12, 13 }, { -1, -1 });
+            REQUIRE(interpolator->get_data_X() == std::vector<double>({ -10, -5, 0, 6, 12, 13 }));
+            REQUIRE(interpolator->get_data_Y() == std::vector<double>({ 1, 0, 1, 0, -1, -1 }));
+            interpolator->set_data_XY(x, y);
+
+            // inserting new (unsorted) values
+            interpolator->insert({ 14, 13 }, { 1, -1 });
+            REQUIRE(interpolator->get_data_X() ==
+                    std::vector<double>({ -10, -5, 0, 6, 12, 13, 14 }));
+            REQUIRE(interpolator->get_data_Y() == std::vector<double>({ 1, 0, 1, 0, -1, -1, 1 }));
+            interpolator->set_data_XY(x, y);
+
+            // conflict resolution: keep_first keeps the existing value at x=12
+            interpolator->insert({ 11, 12 }, { -2, -3 }, false, vectorinterpolators::t_dup_mode::keep_first);
+            REQUIRE(interpolator->get_data_X() == std::vector<double>({ -10, -5, 0, 6, 11, 12 }));
+            REQUIRE(interpolator->get_data_Y() == std::vector<double>({ 1, 0, 1, 0, -2, -1 }));
+            interpolator->set_data_XY(x, y);
+
+            // conflict resolution: keep_last keeps the newly inserted value at x=12
+            interpolator->insert({ 11, 12 }, { -2, -3 }, false, vectorinterpolators::t_dup_mode::keep_last);
+            REQUIRE(interpolator->get_data_X() == std::vector<double>({ -10, -5, 0, 6, 11, 12 }));
+            REQUIRE(interpolator->get_data_Y() == std::vector<double>({ 1, 0, 1, 0, -2, -3 }));
+            interpolator->set_data_XY(x, y);
 
             // // initialize test data (wrong order)
             // std::vector<double> x_wrong_order_ = { -5, -10, 0, 6, 12 };
@@ -464,4 +473,67 @@ TEST_CASE("VectorInterpolators should hashable", TESTTAG)
     // test_interpolator_serialize(lip);
     // test_interpolator_serialize(aip);
     // test_interpolator_serialize(slerp);
+}
+
+TEST_CASE("VectorInterpolators deferred merge (sort_and_finalize) should deduplicate", TESTTAG)
+{
+    using vectorinterpolators::t_dup_mode;
+
+    // --- LinearInterpolator (pair-interpolator path) ---
+
+    SECTION("exact (x, y) duplicates are collapsed, unsorted input is sorted")
+    {
+        vectorinterpolators::LinearInterpolator<double, double> lip({ 0, 1, 2 }, { 0, 10, 20 });
+        lip.extend_unsorted({ 5, 4, 3 }, { 50, 40, 30 }); // unsorted new block
+        lip.extend_unsorted({ 2, 6 }, { 20, 60 });        // (2, 20) is an exact duplicate
+
+        lip.sort_and_finalize();
+        REQUIRE(lip.get_data_X() == std::vector<double>({ 0, 1, 2, 3, 4, 5, 6 }));
+        REQUIRE(lip.get_data_Y() == std::vector<double>({ 0, 10, 20, 30, 40, 50, 60 }));
+    }
+
+    SECTION("fast path: already strictly increasing")
+    {
+        vectorinterpolators::LinearInterpolator<double, double> lip({ 0, 1 }, { 0, 10 });
+        lip.extend_unsorted({ 2, 3 }, { 20, 30 });
+        lip.sort_and_finalize();
+        REQUIRE(lip.get_data_X() == std::vector<double>({ 0, 1, 2, 3 }));
+        REQUIRE(lip.get_data_Y() == std::vector<double>({ 0, 10, 20, 30 }));
+    }
+
+    SECTION("conflict (same x, different y) throws by default (fail)")
+    {
+        vectorinterpolators::LinearInterpolator<double, double> lip({ 0, 1 }, { 0, 10 });
+        lip.extend_unsorted({ 1 }, { 999 }); // x=1 with a DIFFERENT y
+        REQUIRE_THROWS_AS(lip.sort_and_finalize(), std::domain_error);
+    }
+
+    SECTION("conflict resolved with keep_first / keep_last")
+    {
+        vectorinterpolators::LinearInterpolator<double, double> lip1({ 0, 1 }, { 0, 10 });
+        lip1.extend_unsorted({ 1 }, { 999 });
+        lip1.sort_and_finalize(t_dup_mode::keep_first);
+        REQUIRE(lip1.get_data_X() == std::vector<double>({ 0, 1 }));
+        REQUIRE(lip1.get_data_Y() == std::vector<double>({ 0, 10 })); // existing (10) kept
+
+        vectorinterpolators::LinearInterpolator<double, double> lip2({ 0, 1 }, { 0, 10 });
+        lip2.extend_unsorted({ 1 }, { 999 });
+        lip2.sort_and_finalize(t_dup_mode::keep_last);
+        REQUIRE(lip2.get_data_X() == std::vector<double>({ 0, 1 }));
+        REQUIRE(lip2.get_data_Y() == std::vector<double>({ 0, 999 })); // new (999) kept
+    }
+
+    // --- AkimaInterpolator (shares the same base deferred-merge logic) ---
+
+    SECTION("akima: exact duplicates collapse, conflicts throw")
+    {
+        vectorinterpolators::AkimaInterpolator<double> aip({ 0, 1, 2, 3 }, { 0, 10, 20, 30 });
+        aip.extend_unsorted({ 3, 5, 4 }, { 30, 50, 40 }); // (3, 30) exact dup + unsorted new
+        aip.sort_and_finalize();
+        REQUIRE(aip.get_data_X() == std::vector<double>({ 0, 1, 2, 3, 4, 5 }));
+        REQUIRE(aip.get_data_Y() == std::vector<double>({ 0, 10, 20, 30, 40, 50 }));
+
+        aip.extend_unsorted({ 2 }, { 999 }); // conflict at x=2
+        REQUIRE_THROWS_AS(aip.sort_and_finalize(), std::domain_error);
+    }
 }

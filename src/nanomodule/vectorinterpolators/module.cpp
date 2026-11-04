@@ -28,6 +28,7 @@ void init_c_slerpinterpolator(nanobind::module_& m);    // c_linearinterpolator.
 void init_c_bivectorinterpolator(nanobind::module_& m); // c_bivectorinterpolator.cpp
 
 #define DOC_extr_mode(ARG) DOC(themachinethatgoesping, tools, vectorinterpolators, t_extr_mode, ARG)
+#define DOC_dup_mode(ARG) DOC(themachinethatgoesping, tools, vectorinterpolators, t_dup_mode, ARG)
 
 // -- create submodule --
 void init_m_vectorinterpolators(nanobind::module_& m)
@@ -49,6 +50,18 @@ void init_m_vectorinterpolators(nanobind::module_& m)
         // end
         ;
     tools::nanobind_helper::make_option_class<o_extr_mode>(m_vectorinterpolators, "o_extr_mode");
+
+    auto pyenum_dup_mode =
+        nanobind::enum_<t_dup_mode>(
+            m_vectorinterpolators,
+            "t_dup_mode",
+            DOC(themachinethatgoesping, tools, vectorinterpolators, t_dup_mode))
+            .value("fail", t_dup_mode::fail, DOC_dup_mode(fail))
+            .value("keep_first", t_dup_mode::keep_first, DOC_dup_mode(keep_first))
+            .value("keep_last", t_dup_mode::keep_last, DOC_dup_mode(keep_last))
+        // end
+        ;
+    tools::nanobind_helper::make_option_class<o_dup_mode>(m_vectorinterpolators, "o_dup_mode");
 
     // interpolator classes
     init_c_nearestinterpolator(m_vectorinterpolators);

@@ -1,4 +1,4 @@
-//sourcehash: b32c1286409bdab167717e7c4fe9867db64a2277df15f0155c82c56bf8a6bbdd
+//sourcehash: 00302594d057fa5f52a73edce3dd06be54339e71ae75ed967df3c3c69041ee45
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -42,16 +42,28 @@
 
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator =
-R"doc(Class that implements a slerp interpolation for vectors. Data is
-internally represented in quaternions using lib eigen. Interfaces to
-represent the data in yaw, pitch, roll angles are provided. the
-__call__ equivalent to get interpolated yaw pitch roll is the ypr
+R"doc(Class that implements a slerp interpolation for vectors.
+
+Data is internally represented in quaternions using lib eigen.
+
+Interfaces to represent the data in yaw, pitch, roll angles are
+provided.
+
+the __call__ equivalent to get interpolated yaw pitch roll is the ypr
 function
 
 Template Args:
     XType:: type of the x values (must be floating point)
     YType:: floating point type of the y quaternion values (must be
-          floating point))doc";
+            floating point))doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_2 = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_3 = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_4 = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_5 = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator = R"doc(Constructor to make default initialization possible (necessary?))doc";
 
@@ -73,7 +85,9 @@ Args:
                       otherwise [rad]
     extrapolation_mode: :py:class:`t_extr_mode <themachinethatgoesping
                         .tools.vectorinterpolators.t_extr_mode>`
-                        object that describes the extrapolation mode)doc";
+                        object that describes the extrapolation mode
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_SlerpInterpolator_4 =
 R"doc(Construct a new Slerp Interpolator object using vectors of x, yaw,
@@ -87,7 +101,9 @@ Args:
                       otherwise [rad]
     extrapolation_mode: :py:class:`t_extr_mode <themachinethatgoesping
                         .tools.vectorinterpolators.t_extr_mode>`
-                        object that describes the extrapolation mode)doc";
+                        object that describes the extrapolation mode
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_append =
 R"doc(append an x, yaw, pitch, roll data point
@@ -98,7 +114,9 @@ Args:
     pitch: rotation around y axis
     roll: rotation around x axis
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_append_2 =
 R"doc(append an x, yaw, pitch, roll data point
@@ -107,12 +125,16 @@ Args:
     X: must be larger than all internal data points
     ypr: array with one yaw, pitch and roll data point
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_binary_hash =
 R"doc(compute a 64 bit hash of the object using xxhash and the       \
 to_binary function. This  function is called binary because the
-\ to_binary  function of the object is used)doc";
+\ to_binary  function of the object is used
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_class_name = R"doc()doc";
 
@@ -128,7 +150,9 @@ Args:
     roll: vector with roll data (rotation around x axis). Must be same
           size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_extend_2 =
 R"doc(append data with list of x, yaw, pitch, roll data (vectorized call)
@@ -138,12 +162,14 @@ Args:
     ypr: vector with yaw, pitch and roll data points. Must be same
          size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_binary =
 R"doc(convert object to vector of bytes
-\
-                                                                                            \
+\ \
+
 Args:
     check_buffer_is_read_completely: variable for interface
                                      compatibility, does not do    \
@@ -152,7 +178,9 @@ Args:
 
 Returns:
     vector of bytes
-    \)doc";
+    \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_from_stream = R"doc()doc";
 
@@ -164,12 +192,15 @@ Args:
                        = True)
 
 Returns:
-    std::vector<std::array<3, YType>> YPR)doc";
+    std::vector<std::array<3, YType>> YPR
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_info_string =
 R"doc(                                                                                           \
 return an info string using the class __printer__ object
 \
+
 Args:
     float_precision: number of digits for floating point values
                      \
@@ -178,7 +209,9 @@ Args:
 
 Returns:
     std::string
-        \)doc";
+    \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_insert =
 R"doc(append data with lists of x, yaw, pitch, roll data (vectorized call)
@@ -192,7 +225,9 @@ Args:
     roll: vector with roll data (rotation around x axis). Must be same
           size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_insert_2 =
 R"doc(append data with list of x, yaw, pitch, roll data (vectorized call)
@@ -202,17 +237,22 @@ Args:
     ypr: vector with yaw, pitch and roll data points. Must be same
          size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_interpolate_pair =
 R"doc(Interpolate: Slerp interpolation between two values
+
 Args:
     target_x:: the target point [0.0 - 1.0]
     y1: : first quaternion (target_x = 0)
     y2: : second quaternion (target_x = 01)
 
 Returns:
-    Interpolated value for target position)doc";
+    Interpolated value for target position
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_operator_eq = R"doc()doc";
 
@@ -221,15 +261,17 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_Sler
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_print =
 R"doc(                                                                                           \
 print the object information to the given outpustream
-\
-                                                                                            \
+\ \
+
 Args:
     os: output stream, e.g. file stream or std::out or std::cerr
         \
     float_precision: number of digits for floating point values
                      \
     superscript_exponents: print exponents in superscript
-                           \)doc";
+                           \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_printer = R"doc()doc";
 
@@ -240,7 +282,9 @@ Args:
     target_x: find the corresponding Rotation for this x value
 
 Returns:
-    interpolated Rotation)doc";
+    interpolated Rotation
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_rotation_2 =
 R"doc(get the interpolated orientation as Rotations for the given x targets
@@ -251,7 +295,9 @@ Args:
                Rotation
 
 Returns:
-    vector of interpolated Rotations)doc";
+    vector of interpolated Rotations
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR =
 R"doc(change the input data to these X, yaw, pitch, roll vectors (will be
@@ -266,7 +312,9 @@ Args:
     roll: vector with roll data (rotation around x axis). Must be same
           size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_set_data_XYPR_2 =
 R"doc(change the input data to these X, yaw, pitch, roll vectors (will be
@@ -281,19 +329,23 @@ Args:
     roll: vector with roll data (rotation around x axis). Must be same
           size as X!
     input_in_degrees: if true, yaw pitch and roll input values are in
-                      ° otherwise rad)doc";
+                      ° otherwise rad
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_binary =
 R"doc(convert object to vector of bytes
-\
-                                                                                            \
+\ \
+
 Args:
     resize_buffer: variable for interface compatibility, does not do
                    anything             \ \
 
 Returns:
     vector of bytes
-    \)doc";
+    \
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_to_stream = R"doc()doc";
 
@@ -306,7 +358,9 @@ Args:
                        ° otherwise rad
 
 Returns:
-    corresponding y value)doc";
+    corresponding y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_SlerpInterpolator_ypr_2 =
 R"doc(get the interpolated yaw, pitch and roll values for given x target
@@ -319,7 +373,9 @@ Args:
                        ° otherwise rad
 
 Returns:
-    corresponding y value)doc";
+    corresponding y value
+
+)doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop

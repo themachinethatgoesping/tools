@@ -193,61 +193,6 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
         }
     }
 
-    void insert(const std::vector<XType>& X,
-                const std::vector<YType>& Y,
-                bool                      is_sorted = false) final
-    {
-        if (X.empty())
-            return;
-
-        if (_X.empty())
-        {
-            return set_data_XY(X, Y);
-        }
-
-        // if data is sorted and the first element is larger than the last element of the internal
-        // the existing data can be extended, which is faster than inserting
-        if (is_sorted)
-        {
-            if (X.front() > _X.back())
-            {
-                return extend(X, Y);
-            }
-        }
-
-        if (X.size() != Y.size())
-            throw(std::domain_error("ERROR[Interpolator::insert]: list sizes do not match"));
-
-        std::vector<std::pair<XType, YType>> XY;
-        XY.reserve(_X.size() + X.size());
-
-        // sort _X and _Y by _X (ascending)
-        for (size_t i = 0; i < _X.size(); ++i)
-        {
-            XY.push_back(std::pair<XType, YType>(_X[i], _Y[i]));
-        }
-        for (size_t i = 0; i < X.size(); ++i)
-        {
-            XY.push_back(std::pair<XType, YType>(X[i], Y[i]));
-        }
-
-        std::sort(
-            XY.begin(), XY.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
-
-        // copy back to _X and _Y
-        std::vector<XType> X_new;
-        std::vector<YType> Y_new;
-        X_new.resize(XY.size());
-        Y_new.resize(XY.size());
-        for (size_t i = 0; i < XY.size(); ++i)
-        {
-            X_new[i] = XY[i].first;
-            Y_new[i] = XY[i].second;
-        }
-
-        set_data_XY(std::move(X_new), std::move(Y_new));
-    }
-
     // -----------------------
     // deferred merge functions
     // -----------------------
@@ -268,12 +213,19 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
     }
 
     /**
-     * @brief Sort accumulated data by X and rebuild the interpolator.
+     * @brief Sort accumulated data by X, remove duplicates and rebuild the interpolator.
      *
-     * Call this once after all extend_unsorted() calls are complete.
-     * If data is already sorted, no sorting is performed.
+     * Call this once after all extend_unsorted() calls are complete. Exact (x, y)
+     * duplicates are dropped silently; a conflict (same x, different y) is resolved
+     * via @p duplicate_mode (throw by default, or keep the first / last occurrence).
+     *
+     * Fast path: if the accumulated x values are already strictly increasing
+     * (sorted + unique), the data is moved straight into the interpolator without
+     * sorting, de-duplicating or allocating temporaries.
+     *
+     * @param duplicate_mode conflict resolution for same-x / different-y (default: fail)
      */
-    void sort_and_finalize()
+    void sort_and_finalize(o_dup_mode duplicate_mode = t_dup_mode::fail)
     {
         if (_X.size() < 2)
         {
@@ -282,30 +234,20 @@ class I_PairInterpolator : public I_Interpolator<XType, YType>
             return;
         }
 
-        if (!std::is_sorted(_X.begin(), _X.end()))
-        {
-            // Sort X,Y pairs by X (ascending)
-            std::vector<std::pair<XType, YType>> XY;
-            XY.reserve(_X.size());
-            for (size_t i = 0; i < _X.size(); ++i)
-                XY.emplace_back(_X[i], _Y[i]);
-
-            std::sort(XY.begin(), XY.end(),
-                      [](const auto& a, const auto& b) { return a.first < b.first; });
-
-            std::vector<XType> X_new(_X.size());
-            std::vector<YType> Y_new(_Y.size());
-            for (size_t i = 0; i < XY.size(); ++i)
-            {
-                X_new[i] = XY[i].first;
-                Y_new[i] = XY[i].second;
-            }
-            set_data_XY(std::move(X_new), std::move(Y_new));
-        }
-        else
+        // Fast path: already strictly increasing (sorted + unique) → no sort,
+        // no dedup, no temporaries; set_data_XY still re-validates (finite).
+        if (I_Interpolator<XType, YType>::_is_strictly_increasing(_X))
         {
             set_data_XY(std::move(_X), std::move(_Y));
+            return;
         }
+
+        // General path: sort once and drop exact duplicates / resolve conflicts.
+        std::vector<XType> X_new;
+        std::vector<YType> Y_new;
+        I_Interpolator<XType, YType>::_sort_and_dedup(
+            _X, _Y, duplicate_mode.value, X_new, Y_new);
+        set_data_XY(std::move(X_new), std::move(Y_new));
     }
 
     // -----------------------

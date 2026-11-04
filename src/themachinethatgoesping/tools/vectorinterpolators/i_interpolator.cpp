@@ -22,3 +22,6 @@ namespace vectorinterpolators {
 // Explicit template instantiation for Option<t_extr_mode>
 template class themachinethatgoesping::tools::classhelper::Option<
     themachinethatgoesping::tools::vectorinterpolators::t_extr_mode>;
+// Explicit template instantiation for Option<t_dup_mode>
+template class themachinethatgoesping::tools::classhelper::Option<
+    themachinethatgoesping::tools::vectorinterpolators::t_dup_mode>;

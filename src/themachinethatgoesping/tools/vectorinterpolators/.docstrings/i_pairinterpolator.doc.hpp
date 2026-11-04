@@ -1,4 +1,4 @@
-//sourcehash: 87ac5cea64cdea7a28f52e4e9b386d03023f7e1fb645c86e6640db5a3c7b8d94
+//sourcehash: 10c6d9748ad7c28d718a57d7c7c416897819979c0861cd9f482005417f74bae2
 
 /*
   This file contains docstrings for use in the Python bindings.
@@ -53,7 +53,7 @@ between these pairs.
 Template Args:
     XType:: type of the x values (must be floating point)
     YType:: type of the y values (typically double or float, but will
-          be a vector for the slerp interpolator class))doc";
+            be a vector for the slerp interpolator class))doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator =
 R"doc(Construct a new Interpolator object from a vector of pairs
@@ -66,7 +66,9 @@ Args:
        size as X!
     extrapolation_mode: :option o_extr_mode <themachinethatgoesping.to
                         ols.vectorinterpolators.t_extr_mode>` object
-                        that describes the extrapolation mode)doc";
+                        that describes the extrapolation mode
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_I_PairInterpolator_2 = R"doc()doc";
 
@@ -75,6 +77,8 @@ static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_Pa
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_Y = R"doc(main data vector containing pairs of corresponding y datapoints)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_append = R"doc()doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_class_name = R"doc()doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_empty = R"doc(check if the interpolator contains data)doc";
 
@@ -88,23 +92,41 @@ sort_and_finalize() after all data has been appended.
 
 Args:
     X: x values to append
-    Y: corresponding y values to append)doc";
+    Y: corresponding y values to append
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_X =
 R"doc(return the x component of the internal data vector
 
 Returns:
-    std::vector<XType>)doc";
+    std::vector<XType>
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_data_Y =
 R"doc(return the y component of the internal data vector
 
 Returns:
-    std::vector<YType>)doc";
+    std::vector<YType>
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_get_y = R"doc()doc";
 
-static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_insert = R"doc()doc";
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_interpolate_pair =
+R"doc(Interface for implementing an interpolation between two y values using
+a given interpolation factor
+
+Args:
+    target_x: interpolation factor. 0 means return smaller y value, 1
+              means return larger y value
+    y1: smaller y value y1: larger y value
+
+Returns:
+    interpolated y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call =
 R"doc(get the interpolated y value for given x target
@@ -113,7 +135,9 @@ Args:
     target_x: find the corresponding y value for this x value
 
 Returns:
-    corresponding y value)doc";
+    corresponding y value
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call_2 =
 R"doc(get nearest y values for given x targets (vectorized call)
@@ -128,7 +152,30 @@ Args:
               Default is 1.
 
 Returns:
-    corresponding y values)doc";
+    corresponding y values
+
+)doc";
+
+static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_operator_call_3 =
+R"doc(get interpolated y values for given x targets (xtensor vectorized
+call)
+
+This overload accepts xtensor containers and returns an xtensor
+result. Only available when YType is a scalar type.
+
+Args:
+    targets_x: xtensor of x values. For each of these values find the
+               corresponding y value
+    mp_cores: Number of OpenMP threads to use for parallelization.
+              Default is 1.
+
+Template Args:
+    XTensor: An xtensor-compatible 1D container type
+
+Returns:
+    xt::xtensor<YType, 1> corresponding y values as a 1D xtensor
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_set_data_XY =
 R"doc(change the input data to these X and Y vectors
@@ -136,14 +183,29 @@ Exception: raises domain error, strong exception guarantee
 
 Args:
     X:: x vector (must be same size, must be sorted in ascending
-      order)
-    Y:: y vector (must be same size))doc";
+        order)
+    Y:: y vector (must be same size)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_sort_and_finalize =
-R"doc(Sort accumulated data by X and rebuild the interpolator.
+R"doc(Sort accumulated data by X, remove duplicates and rebuild the
+interpolator.
 
-Call this once after all extend_unsorted() calls are complete. If data
-is already sorted, no sorting is performed.)doc";
+Call this once after all extend_unsorted() calls are complete. Exact
+(x, y) duplicates are dropped silently; a conflict (same x, different
+y) is resolved via ``duplicate_mode`` (throw by default, or keep the
+first / last occurrence).
+
+Fast path: if the accumulated x values are already strictly increasing
+(sorted + unique), the data is moved straight into the interpolator
+without sorting, de-duplicating or allocating temporaries.
+
+Args:
+    duplicate_mode: conflict resolution for same-x / different-y
+                    (default: fail)
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair = R"doc()doc";
 
@@ -155,7 +217,9 @@ Args:
               factor
 
 Returns:
-    interpolation factor)doc";
+    interpolation factor
+
+)doc";
 
 static const char *mkd_doc_themachinethatgoesping_tools_vectorinterpolators_I_PairInterpolator_t_x_pair_t_x_pair = R"doc()doc";
 
