@@ -1,8 +1,8 @@
-project('fmt', 'cpp', version: '12.2.0', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++26'])
+project('fmt', 'cpp', version: '12.2.1', license: 'MIT WITH fmt-exception', default_options: ['cpp_std=c++26'])
 
 fmt_private_cpp_args = []
 fmt_interface_cpp_args = []
-# This should be activated by default on fmt 12.2.0
+# This should be activated by default on fmt 12.2.1
 #fmt_private_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1']   # I don't know where this must go, so it is set for both
 #fmt_interface_cpp_args = ['-DFMT_USE_FULL_CACHE_DRAGONBOX=1'] # I don't know where this must go, so it is set for both
 
