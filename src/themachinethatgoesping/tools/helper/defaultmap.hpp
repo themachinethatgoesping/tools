@@ -10,12 +10,11 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 
 namespace themachinethatgoesping {
 namespace tools {
 namespace helper {
-
-    
 
 template<typename t_key, typename t_value>
 class DefaultMap : public std::map<t_key, t_value>
@@ -42,7 +41,7 @@ class DefaultMap : public std::map<t_key, t_value>
         return it->second;
     }
 
-    t_value at_const(
+    const t_value& at_const(
         const t_key& key) const // TODO: this function is lying about constness. While the map is
                                 // const, the return pointer and return value are not.
     {
